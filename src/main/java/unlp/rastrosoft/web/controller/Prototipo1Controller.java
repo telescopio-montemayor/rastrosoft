@@ -22,5 +22,15 @@ public class Prototipo1Controller {
 	public String printWelcome3(ModelMap model) {                  
 		return "prototipo3";
 	}
+        
+        @RequestMapping(value = "/prototipo4", method = RequestMethod.GET)
+	public String printWelcome4(ModelMap model) {                  
+		return "prototipo4";
+	}
+        
+        @RequestMapping(value = "/prototipo5", method = RequestMethod.GET)
+	public String printWelcome5(ModelMap model) {                  
+		return "prototipo5";
+	}
 
 }
