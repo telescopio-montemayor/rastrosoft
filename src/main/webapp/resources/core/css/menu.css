@@ -99,8 +99,10 @@ body {
   transition-delay: 0;
 }
 .top-bar {
-  height: 25px;
-  background: rgba(0, 0, 0, 0.1);
+  height: 50px;
+  text-align: center;
+  padding-top: 20px;
+  color: white;
 }
 /* -- Google typography ------------------------------- */
 .headline {
@@ -776,8 +778,8 @@ body {
   transform: translate3d(-280px, 0, 0);
 }
 .sidebar.open {
-  min-width: 280px;
-  width: 280px;
+  min-width: 260px;
+  width: 260px;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
@@ -847,4 +849,21 @@ body {
 
 .hidden {
     visibility: hidden;
+}
+.preview-image{    
+    text-align:center; 
+    padding-top:3%;
+}
+.preview-image-image{
+    border: 50px solid;
+    border-color: #8080804d;
+}
+.cine{
+    background-color: #292424;
+}
+.white{
+    color: white;
+}
+.sidebar-inside{
+    padding: 3px;
 }
