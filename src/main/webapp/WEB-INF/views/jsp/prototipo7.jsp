@@ -434,7 +434,33 @@
                       </label>
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
+                    
                   </form>
+                
+                    <div class="input-group">
+                        <div class="input-group-addon joystick">
+                                <button class="icon joystick-left ">
+                                    <i class="fa fa-angle-left" aria-hidden="true" ></i>
+                                </button>
+                                <button class="icon joystick-up">
+                                    <i class="fa fa-angle-up" aria-hidden="true" ></i>
+                                </button>
+                                <button class="icon joystick-right">
+                                    <i class="fa fa-angle-right" aria-hidden="true" ></i>
+                                </button>
+                                <button class="icon joystick-down">
+                                    <i class="fa fa-angle-down" aria-hidden="true" ></i>
+                                </button>
+                        </div>
+                        <input type="text" class="form-control" placeholder="RA"/>
+                        <span class="input-group-addon">-</span>
+                        <input type="text" class="form-control" placeholder="DEC"/>
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                    
+                
         </aside>
     </div>
     <div class="col-md-8">  

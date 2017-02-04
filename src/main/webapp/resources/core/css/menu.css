@@ -830,12 +830,13 @@ body {
   }
   .sidebar .sidebar-image img {
     width: 44px;
-    height: 44px;
+    height: 44px;    
   }
 }
 .icon{
   background: none;
   border: none;
+  outline: none;
 }
 .icons {
   display: inline;  
@@ -846,6 +847,7 @@ body {
   width: 40px;
   font-size: 20px;
   opacity: 0.7;
+  outline: none;
 }
 
 .visible {
@@ -862,10 +864,10 @@ body {
 }
 .preview-image-image{
     border: 50px solid;
-    border-color: #8080804d;
+    border-color: rgba(158, 158, 158, 0.25);
 }
 .cine{
-    background-color: #292424;
+    background-color: #222;
 }
 .white{
     color: white;
@@ -874,6 +876,7 @@ body {
     padding: 3px;
 }
 .sidebar-toggle-left{
+    left: 0;
     display: block;
     position: fixed;
     top: 10%;
@@ -919,6 +922,31 @@ body {
     left: 0;
     color: white;
     top: 0;
+}
+.joystick{
+    width: 15%;
+    
+}
+.icon.joystick-left{
+    position: absolute;
+    left: 0;
+    top: 10px;
+}
+.icon.joystick-up{
+    position: absolute;
+    top: 0;
+    left: 8.5px;
+    
+}
+.icon.joystick-right{
+    position: absolute;
+    left: 21px;
+    top: 10px;
+}
+.icon.joystick-down{
+    position: absolute; 
+    left: 8.5px;
+    top: 20px;
 }
 
 @media (max-width: 1250px) {
