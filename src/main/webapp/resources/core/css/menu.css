@@ -833,7 +833,10 @@ body {
     height: 44px;
   }
 }
-
+.icon{
+  background: none;
+  border: none;
+}
 .icons {
   display: inline;  
   position: relative;
@@ -901,8 +904,22 @@ body {
     -o-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
 }
-
-
+.left-btn-toggle-inside{
+    position: fixed;
+    right: 0;
+    color: white;
+}
+.right-btn-toggle-inside{
+    position: fixed;
+    left: 0;
+    color: white;
+}
+.right-btn-toggle-inside-size{
+    position: fixed;
+    left: 0;
+    color: white;
+    top: 0;
+}
 
 @media (max-width: 1250px) {
   .sidebar.open {
