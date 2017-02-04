@@ -367,14 +367,22 @@
             $('#sidebarRight').toggleClass('open');
             $('#cine-button').toggleClass('white');
         }
-        
+//        $(window).resize(function() {
+//            if ($(window).width() < 1250) {
+//               $('.open').removeClass('open');
+//            }
+//        });
 </script>
 
 </head>
 
 <body>
     
-
+    <div class="sidebar-toggle-left">
+    <a class="btn btn-primary left-btn-toggle" href="#navigation-main" aria-label="Skip to main navigation">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </a>
+    </div>    
     <div class="col-md-2">
        <!-- Material sidebar -->
         <aside id="sidebarLeft" class="sidebar sidebar-default sidebar-stacked" role="navigation">
@@ -430,12 +438,17 @@
             <div style="clear:both; margin-top: -2px"><button id="cine-button" class="icons" onclick="cine();"><i class="fa fa-television"></i></button></div>
         </div>
     </div>
-    <div class="col-md-2">
-        <aside id="sidebarRight" class="sidebar sidebar-default sidebar-stacked-right" role="navigation">
+    <div class="sidebar-toggle-right">
+    <a class="btn btn-danger right-btn-toggle" href="#navigation-main" aria-label="Skip to main navigation">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </a>
+    </div>        
+    <div class="col-md-2" >
+        <aside id="sidebarRight" class="sidebar sidebar-default sidebar-stacked-right" role="navigation" >
             <!-- Top bar -->
             <div class="top-bar label-danger">Opciones avanzadas</div>
             <fieldset disabled>
-            <form class="small sidebar-inside">
+            <form class="small sidebar-inside" onclick="notify('Usted no posee los privilegios para operar estas funciones.', 'danger');">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email address</label>
                   <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">

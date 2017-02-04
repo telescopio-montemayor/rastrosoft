@@ -10,6 +10,32 @@
 // Sidebar toggle
 //
 // -------------------
+    $(document).ready(function() {
+//        $('#sidebarLeft').change(function() {
+//            windowsize = $('#sidebarLeft').width();
+//            if (windowsize < 1) {
+//                alert();
+//              $('.sidebar-toggle-left').css("visibility","visible");
+//            }else{
+//              $('.sidebar-toggle-left').css("visibility","hidden");  
+//            }
+//        });
+    $('.sidebar-toggle-left').on('click', function() {
+        $('#sidebarLeft').css("min-width","260px");
+        $('#sidebarLeft').css("width","260px");
+        $('.sidebar-toggle-left').css("visibility","hidden");
+    });
+    $('.sidebar-toggle-right').on('click', function() {
+        $('#sidebarRight').css("min-width","260px");
+        $('#sidebarRight').css("width","260px");
+        $('.sidebar-toggle-right').css("visibility","hidden");
+    });
+
+});
+
+// Sidebar toggle old
+//
+// -------------------
 $(document).ready(function() {
     var overlay = $('.sidebar-overlay');
     
@@ -131,5 +157,9 @@ function init_menu(){
     $('#sidebarLeft').addClass('open');
     $('#sidebarRight').addClass('open');
     $('body').css('display', 'initial');
-    $('.sidebar-toggle').css('display', 'inline');
+    $('.sidebar-toggle').css('display', 'none');
 }
+
+
+
+
