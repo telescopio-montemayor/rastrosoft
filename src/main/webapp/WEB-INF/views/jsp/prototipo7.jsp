@@ -394,10 +394,19 @@
                 <div class="top-bar label-primary">
                     <button class="icon left-btn-toggle-inside" onclick="toggle_left();">
                         <i class="fa fa-bars" aria-hidden="true" ></i>
-                    </button>
+                    </button>                    
                     <span>Opciones</span>
                 </div>
-                
+                <div class="logout">
+                    <c:url var="logoutUrl" value="/logout"/>
+                    <form class="form-inline" action="${logoutUrl}" method="post">                      
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-sign-out fa-fw"></i></span>
+                        <input class="form-control logout-icon" type="submit" value="Cerrar sesion"/>
+                      </div>
+                      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    </form>
+                </div>                       
                 <form class="small sidebar-inside">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Email address</label>

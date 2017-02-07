@@ -40,5 +40,4 @@ public class Prototipo1Controller {
 	public String printWelcome7(ModelMap model) {                  
 		return "prototipo7";
 	}
-
 }
