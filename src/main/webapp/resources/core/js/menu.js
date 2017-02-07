@@ -197,6 +197,15 @@ function init_menu(){
     $('.sidebar-toggle').css('display', 'none');
 }
 
-
-
+function loading_effect_preview(bool){
+    $('#previewImage').toggleClass('loading-icon');    
+    if (bool){
+        $('#preview').css('display','none');
+        $('#loading').fadeIn( "slow" );
+       
+    }else{
+        $('#loading').css('display','none');
+        $('#preview').fadeIn( "slow" );        
+    }
+}
 

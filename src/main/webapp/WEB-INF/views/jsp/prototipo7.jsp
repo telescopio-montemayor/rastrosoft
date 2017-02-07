@@ -31,8 +31,10 @@
 <spring:url value="/resources/core/font-awesome-4.7.0/css/font-awesome.min.css" var="fontawesomeCss" />
 <link href="${fontawesomeCss}" rel="stylesheet" />
 
+<script src="https://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js" integrity="sha256-Wp3wC/dKYQ/dCOUD7VUXXp4neLI5t0uUEF1pg0dFnAE=" crossorigin="anonymous"></script>
+
 <script>
-	jQuery(document).ready(function($) {
+	jQuery(document).ready(function($) {                
                 listaDispositivos();
 		$("#search-form").submit(function(event) {
 
@@ -367,6 +369,7 @@
             $('#sidebarRight').toggleClass('open');
             $('#cine-button').toggleClass('white');
         }
+        
 //        $(window).resize(function() {
 //            if ($(window).width() < 1250) {
 //               $('.open').removeClass('open');
@@ -377,7 +380,6 @@
 </head>
 
 <body>
-    
     <div class="sidebar-toggle-left">
     <button class="btn btn-primary left-btn-toggle">
         <i class="fa fa-bars" aria-hidden="true"></i>
@@ -434,39 +436,82 @@
                       </label>
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
-                    
-                  </form>
-                
-                    <div class="input-group">
-                        <div class="input-group-addon joystick">
-                                <button class="icon joystick-left ">
-                                    <i class="fa fa-angle-left" aria-hidden="true" ></i>
-                                </button>
-                                <button class="icon joystick-up">
-                                    <i class="fa fa-angle-up" aria-hidden="true" ></i>
-                                </button>
-                                <button class="icon joystick-right">
-                                    <i class="fa fa-angle-right" aria-hidden="true" ></i>
-                                </button>
-                                <button class="icon joystick-down">
-                                    <i class="fa fa-angle-down" aria-hidden="true" ></i>
-                                </button>
-                        </div>
-                        <input type="text" class="form-control" placeholder="RA"/>
-                        <span class="input-group-addon">-</span>
-                        <input type="text" class="form-control" placeholder="DEC"/>
-                        <span class="input-group-btn">
-                          <button class="btn btn-default" type="button">Go!</button>
-                        </span>
+                            
+                    <div class="form-group">
+                       <select class="form-control input-sm">
+                        <option disabled selected value> -- select an option -- </option>   
+                        <option>Luna</option>
+                        <option>Júpiter</option>
+                        <option>Marte</option>
+                        <option>Saturno</option>
+                        <option>Plutón</option>
+                        <option>Luna</option>
+                        <option>Júpiter</option>
+                        <option>Marte</option>
+                        <option>Saturno</option>
+                        <option>Plutón</option>
+                        <option>Luna</option>
+                        <option>Júpiter</option>
+                        <option>Marte</option>
+                        <option>Saturno</option>
+                        <option>Plutón</option>
+                        <option>Luna</option>
+                        <option>Júpiter</option>
+                        <option>Marte</option>
+                        <option>Saturno</option>
+                        <option>Plutón</option>
+                        <option>Luna</option>
+                        <option>Júpiter</option>
+                        <option>Marte</option>
+                        <option>Saturno</option>
+                        <option>Plutón</option>
+                        <option>Luna</option>
+                        <option>Júpiter</option>
+                        <option>Marte</option>
+                        <option>Saturno</option>
+                        <option>Plutón</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon joystick">
+                                    <button class="icon joystick-left ">
+                                        <i class="fa fa-angle-left" aria-hidden="true" ></i>
+                                    </button>
+                                    <button class="icon joystick-up">
+                                        <i class="fa fa-angle-up" aria-hidden="true" ></i>
+                                    </button>
+                                    <button class="icon joystick-right">
+                                        <i class="fa fa-angle-right" aria-hidden="true" ></i>
+                                    </button>
+                                    <button class="icon joystick-down">
+                                        <i class="fa fa-angle-down" aria-hidden="true" ></i>
+                                    </button>
+                            </div>
+                            <input type="text" class="form-control" placeholder="RA"/>
+                            <span class="input-group-addon" onclick="loading_effect_preview(false);">-</span>
+                            <input type="text" class="form-control" placeholder="DEC"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="loading_effect_preview(true);">Go!</button>
+                            </span>                            
+                        </div>                        
                     </div>
                     
+                </form>    
                 
         </aside>
     </div>
     <div class="col-md-8">  
         <div id="previewImage" class="preview-image">
-            <img src="<c:url value="/resources/images/preview.jpg"/>" width="90%" height="90%" class="img-rounded preview-image-image">
-            <div style="clear:both; margin-top: -2px"><button id="cine-button" class="icons" onclick="cine();"><i class="fa fa-television"></i></button></div>
+            <div id="preview">
+                <img src="<c:url value="/resources/images/preview.jpg"/>" width="90%" height="90%" class="img-rounded preview-image-image">
+                <div style="clear:both; margin-top: -2px"><button id="cine-button" class="icons" onclick="cine();"><i class="fa fa-television"></i></button></div>
+            </div>
+            <div id="loading" style="display: none;">
+                 <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+                <span class="sr-only">Loading...</span>
+            </div>    
+            
         </div>
     </div>
     <div class="sidebar-toggle-right">

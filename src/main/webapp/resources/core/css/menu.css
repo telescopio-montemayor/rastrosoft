@@ -949,6 +949,12 @@ body {
     top: 20px;
 }
 
+.loading-icon{
+    font-size:240px; 
+    color:#60a5e9; 
+    padding-top:20%;
+}
+
 @media (max-width: 1250px) {
   .sidebar.open {
     min-width: 0px;
