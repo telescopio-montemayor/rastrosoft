@@ -153,25 +153,46 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 		}
 		return false;
 	}*/
-        public boolean enviar_mensaje_modificar_valor(String dispositivo, String propiedad, String elemento1, String valor1, String elemento2, String valor2 ) throws IOException, INDIValueException{
+//        public boolean enviar_mensaje_modificar_valor(String dispositivo, String propiedad, String elemento1, String valor1, String elemento2, String valor2 ) throws IOException, INDIValueException{
+//		for(int i=0 ; i < propiedades.size(); i++) {
+//			if ( (propiedades.get(i).getName().equals(propiedad)) & (propiedades.get(i).getDevice().getName().equals(dispositivo)) ){
+//				
+//					if (propiedades.get(i).getElement(elemento1).checkCorrectValue(valor1)==false){
+//						System.out.println("ERROR EN EL VALOR!");
+//						return false;
+//					}					
+//					propiedades.get(i).getElement(elemento1).setDesiredValue(valor1);
+//					
+//                                        if (propiedades.get(i).getElement(elemento2).checkCorrectValue(valor2)==false){
+//						System.out.println("ERROR EN EL VALOR!");
+//						return false;
+//					}					
+//					propiedades.get(i).getElement(elemento2).setDesiredValue(valor2);
+//                                        
+//                                        propiedades.get(i).sendChangesToDriver();			
+//					
+//					return true;
+//			}
+//		}
+//		return false;
+//	}
+        public boolean commitStringValor(String dispositivo, String propiedad, String elemento1, String valor1){
 		for(int i=0 ; i < propiedades.size(); i++) {
 			if ( (propiedades.get(i).getName().equals(propiedad)) & (propiedades.get(i).getDevice().getName().equals(dispositivo)) ){
 				
-					if (propiedades.get(i).getElement(elemento1).checkCorrectValue(valor1)==false){
-						System.out.println("ERROR EN EL VALOR!");
-						return false;
-					}					
-					propiedades.get(i).getElement(elemento1).setDesiredValue(valor1);
-					
-                                        if (propiedades.get(i).getElement(elemento2).checkCorrectValue(valor2)==false){
-						System.out.println("ERROR EN EL VALOR!");
-						return false;
-					}					
-					propiedades.get(i).getElement(elemento2).setDesiredValue(valor2);
-                                        
-                                        propiedades.get(i).sendChangesToDriver();			
-					
-					return true;
+                            try {
+                                if (propiedades.get(i).getElement(elemento1).checkCorrectValue(valor1)==false){
+                                    System.out.println("ERROR EN EL VALOR!");
+                                    return false;
+                                }
+                                propiedades.get(i).getElement(elemento1).setDesiredValue(valor1);
+                                
+                                propiedades.get(i).sendChangesToDriver();
+                                
+                                return true;
+                            } catch (INDIValueException | IOException ex) {
+                                Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
+                            }
 			}
 		}
 		return false;

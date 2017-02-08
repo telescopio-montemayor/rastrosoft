@@ -21,6 +21,15 @@
 	var="bootstrapNotify" />
 <script src="${bootstrapNotify}"></script>
 
+<spring:url value="/resources/core/js/ajaxFunctions.js"
+	var="ajaxFunctions" />
+<script src="${ajaxFunctions}"></script>
+<spring:url value="/resources/core/js/notifyFunctions.js"
+	var="notifyFunctions" />
+<script src="${notifyFunctions}"></script>
+
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 
 <nav class="navbar navbar-inverse">
@@ -78,6 +87,8 @@
                                         class="btn btn-success btn-lg pull-right" onclick="previewImage();">Preview</button>
                                <button type="button" id="bth-search"
                                         class="btn btn-success btn-lg pull-right " onclick="displayPreview('data');">Refresh</button>
+                                <button type="button" id="bth-search"
+                                        class="btn btn-success btn-lg pull-right " onclick="modificarString();">Modificar String</button>
                                             
                                         
                                         
@@ -99,335 +110,46 @@
 <div class="alert alert-success" style="display: none" id="alert-label"></div> 
 
 <script>
-	jQuery(document).ready(function($) {
-                listaDispositivos();
-		$("#search-form").submit(function(event) {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
 
-			// Disble the search button
-			enableSearchButton(false);
+    jQuery(document).ready(function($) {
+        listaDispositivos();
+        $("#search-form").submit(function(event) {
+            // Disble the search button
+            enableSearchButton(false);
+            // Prevent the form from submitting via the browser.
+            event.preventDefault();
+        });
 
-			// Prevent the form from submitting via the browser.
-			event.preventDefault();
-
-			searchViaAjax();
-
-		});
-
-	});
+    });
               
-        function alertSuccess(bool, title, msg) {
-                $("#alert-label").empty();
-                text = "<strong>"+ title +"</strong> " + msg;
-                $("#alert-label").append(text);                
-                if (bool){
-                    $("#alert-label").removeClass("alert-danger");
-                    $("#alert-label").addClass("alert-success");
-                }else{
-                    $("#alert-label").removeClass("alert-success");
-                    $("#alert-label").addClass("alert-danger");
-                }
-                $("#alert-label").show( "slow" );
-                var delay=5000; //5 segundos
-                setTimeout(function() {
-                  $("#alert-label").hide( "slow" );
-                }, delay);
-                
-	}
-        
-        function notify(msg, type){
-            $.notify({
-                    // options
-                    message: msg 
-            },{
-                    // settings
-                    type: type
-            });
-        }
-        
-        function display(data){
-        	var json    =   JSON.stringify(data, null, 4);
-                var jsonmod =   "<h4>Ajax Response</h4><pre>"
-				+ json + "</pre>"; 
-		$('#feedback').html(jsonmod);
-                $('#log').append("<br>").append(new Date($.now())).append(json); 
-                
-        }    
-        
-	function displayDispositivos(data) {
-                $.each(data, function(key, value) {
-                    $.each(value, function(key2, value2) {
-                        $('#dispositivo')
-                            .append($("<option></option>")
-                            .attr("value",value2)
-                            .text(value2));
-                   });
-               });
-               
-	}
-        
-        function displayPropiedades(data) {
-                $('#propiedad').empty();
-                $.each(data, function(key, value) {
-                    $.each(value, function(key2, value2) {
-                        $('#propiedad')
-                            .append($("<option></option>")
-                            .attr("value",value2)
-                            .text(value2));
-                   });
-               });
-               
-	}
-        
-        function displayElementos(data) {
-                $('#elemento').empty();
-                $.each(data, function(key, value) {
-                    $.each(value, function(key2, value2) {
-                        $('#elemento')
-                            .append($("<option></option>")
-                            .attr("value",value2)
-                            .text(value2));
-                   });
-               });
-               
-	}
-        
-        function displayValor(data) {
-                $('#valor').empty();
-                $.each(data, function(key, value) {
-                    $('#valor').val(value);
-                });  
-	}
-        function displayCommitValor(data) {
-                
-                if (confirm('Esta seguro de querer cambiar el valor?')) {
-                    pushValor();
-                } else {
-                    // Do nothing!
-                }
-                
-                
-	}
-        function displayPushValor(data) {
-                if ( (data['operacion']).toString() === 'true' ){
-                    searchViaAjaxValor();
-                    notify('Se ha cambiado el valor exitosamente.', 'success');
-                }else{
-                    notify('Se ha producido un error al intentar cambiar el valor.', 'danger');
-                }   
-	}
-        function displayPreview(data){
-            var img = $("<img />").attr('src', '<c:url value="/resources/images/preview.jpg"/>').attr('width','20%').attr('height','20%')
-            .on('load', function() {
-                if (!this.complete || typeof this.naturalWidth === "undefined" || this.naturalWidth === 0) {
-                    alert('broken image!');
-                } else {
-                    $("#previewImage").empty();
-                    $("#previewImage").append(img);
-                }
-            });
-        }
-        
-        function listaDispositivos(){
-            var lista = [];
-            var search = {};
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : "${home}listaDispositivos",
-			data : JSON.stringify(search),
-			dataType : 'json',
-			timeout : 100000,
-			success : function(list) {
-				console.log("SUCCESS: ", list);
-				displayDispositivos(list);
-                                //lista = list;
-                                //agregarDispositivos()
-			},
-			error : function(e) {
-				console.log("ERROR: ", e);
-				display(e);
-			},
-			done : function(e) {
-				console.log("DONE");
-				enableSearchButton(true);
-			}
-		});
-            return lista;
-        }
-        
-        function listaPropiedades(){
-            var lista = [];
-            var search = {};
-            search["dispositivo"] = $("#dispositivo").val();
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : "${home}listaPropiedades",
-			data : JSON.stringify(search),
-			dataType : 'json',
-			timeout : 100000,
-			success : function(list) {
-				console.log("SUCCESS: ", list);
-				displayPropiedades(list);
-                                //lista = list;
-                                //agregarDispositivos()
-			},
-			error : function(e) {
-				console.log("ERROR: ", e);
-				display(e);
-			},
-			done : function(e) {
-				console.log("DONE");
-				enableSearchButton(true);
-			}
-		});
-            return lista;
-        }
-        
-        function listaElementos(){
-            var lista = [];
-            var search = {};
-            search["dispositivo"] = $("#dispositivo").val();
-            search["propiedad"] = $("#propiedad").val();
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : "${home}listaElementos",
-			data : JSON.stringify(search),
-			dataType : 'json',
-			timeout : 100000,
-			success : function(list) {
-				console.log("SUCCESS: ", list);
-				displayElementos(list);
-                                //lista = list;
-                                //agregarDispositivos()
-			},
-			error : function(e) {
-				console.log("ERROR: ", e);
-				display(e);
-			},
-			done : function(e) {
-				console.log("DONE");
-				enableSearchButton(true);
-			}
-		});
-            return lista;
-        }
-        
-        function searchViaAjaxValor() {
-
-		var search = {};
-		search["dispositivo"] = $("#dispositivo").val();
-		search["propiedad"] = $("#propiedad").val();
-                search["elemento"] = $("#elemento").val();
-
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : "${home}buscarValor",
-			data : JSON.stringify(search),
-			dataType : 'json',
-			timeout : 100000,
-			success : function(data) {
-				console.log("SUCCESS: ", data);
-				displayValor(data);
-			},
-			error : function(e) {
-				console.log("ERROR: ", e);
-				display(e);
-			},
-			done : function(e) {
-				console.log("DONE");
-				enableSearchButton(true);
-			}
-		});
-
-        }
-        
-        function commitValor() {
-
-		var search = {};
-		search["dispositivo"] = $("#dispositivo").val();
-		search["propiedad"] = $("#propiedad").val();
-                search["elemento"] = $("#elemento").val();
-                search["valor"] = $("#valor").val();
-
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : "${home}commitValor",
-			data : JSON.stringify(search),
-			dataType : 'json',
-			timeout : 100000,
-			success : function(data) {
-				console.log("SUCCESS: ", data);
-				displayCommitValor(data);
-			},
-			error : function(e) {
-				console.log("ERROR: ", e);
-				display(e);
-			},
-			done : function(e) {
-				console.log("DONE");
-				enableSearchButton(true);
-			}
-		});
-
-        }
-        function pushValor() {
-
-		var search = {};
-		search["dispositivo"] = $("#dispositivo").val();
-		search["propiedad"] = $("#propiedad").val();
-
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : "${home}pushValor",
-			data : JSON.stringify(search),
-			dataType : 'json',
-			timeout : 100000,
-			success : function(data) {
-				console.log("SUCCESS: ", data);
-				displayPushValor(data);
-			},
-			error : function(e) {
-				console.log("ERROR: ", e);
-				display(e);
-			},
-			done : function(e) {
-				console.log("DONE");
-				enableSearchButton(true);
-			}
-		});
-
-        }
-        function previewImage() {
-
-		var search = {};
-
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : "${home}previewImage",
-			data : JSON.stringify(search),
-			dataType : 'json',
-			timeout : 100000,
-			success : function(data) {
-				console.log("SUCCESS: ", data);
-				displayPreview(data);
-			},
-			error : function(e) {
-				console.log("ERROR: ", e);
-				display(e);
-			},
-			done : function(e) {
-				console.log("DONE");
-				enableSearchButton(true);
-			}
-		});
-
-        }
+    function sendAjax(search, funcion, tipo){
+        $.ajax({
+            type : "POST",
+            contentType : "application/json",
+            url : "${home}"+funcion+"",
+            data : JSON.stringify(search),
+            dataType : 'json',
+            timeout : 100000,
+             beforeSend: function(xhr) {
+                // here it is
+                xhr.setRequestHeader(header, token);
+            },
+            success : function(list) {
+                    console.log("SUCCESS: ", list);
+                    displayTipo(list, tipo);
+            },
+            error : function(e) {
+                    console.log("ERROR: ", e);
+                    display(e);
+            },
+            done : function(e) {
+                    console.log("DONE");
+                    enableSearchButton(true);
+            }
+        });
+    }
         
 </script>
 

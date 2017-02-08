@@ -32,6 +32,7 @@ import laazotea.indi.client.INDIValueException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import unlp.rastrosoft.web.model.client;
 
 @RestController
 public class AjaxController {
@@ -265,8 +266,7 @@ public class AjaxController {
                     cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
                 } catch (INDIValueException | IOException ex) {
                     Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-               
+                }           
                 cliente.commitBooleanValor("CCD Simulator", "UPLOAD_MODE", "UPLOAD_LOCAL", "ON");
                 cliente.pushValor("CCD Simulator", "UPLOAD_MODE");                
                 cliente.commitDoubleValor("CCD Simulator", "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", "1");
@@ -326,4 +326,16 @@ public class AjaxController {
 
 		return valid;
 	}
+        
+        @JsonView(Views.Public.class)
+	@RequestMapping(value = "/modificarString", method=RequestMethod.POST)
+	public AjaxResponseBodyIndiExecute modificarString(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
+
+		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
+                
+                client cliente = new client();
+                cliente.modificarString("CCD Simulator", "UPLOAD_SETTINGS", "UPLOAD_DIR", "/home");                
+		return result;
+	}
+        
 }
