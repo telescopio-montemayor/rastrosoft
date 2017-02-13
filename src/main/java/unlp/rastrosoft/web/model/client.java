@@ -53,8 +53,8 @@ public class client {
         return this.modificarBoolean(ccd, "CCD_ABORT_EXPOSURE", "ABORT", "ON");
     }
     public boolean setSize( String width, String height ){
-        if( !(this.modificarDouble(ccd, "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", width)))
+        if( !(this.modificarDouble(ccd, "CCD_FRAME", "WIDTH", width)))
             return false;
-        return false != (this.modificarDouble(ccd, "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", height));
+        return false != (this.modificarDouble(ccd, "CCD_FRAME", "HEIGHT", height));
     }
 }
