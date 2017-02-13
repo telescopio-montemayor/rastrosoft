@@ -277,7 +277,7 @@ public class AjaxController {
 		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
                 
                 client cliente = new client();
-                cliente.setSize("1024", "10s24");
+                cliente.setSize("1024", "1024");
 		return result;
 	}
         
