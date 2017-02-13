@@ -23,7 +23,7 @@ public class connect_indi {
      * @throws IOException
      */
     private static indi_client cliente;
-    public static indi_client connect(String telescopio, String ccd, String focuser) throws INDIValueException, IOException {
+    public static indi_client connect(String telescopio, String ccd, String focuser){
         if (cliente == null){
             try {
                 cliente = new indi_client("localhost", 7624);
@@ -32,7 +32,7 @@ public class connect_indi {
                 cliente.conectar(ccd);
                 cliente.conectar(focuser);
                 Thread.sleep(500);
-            } catch (InterruptedException ex) {
+            } catch (InterruptedException | IOException | INDIValueException ex) {
                 Logger.getLogger(connect_indi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

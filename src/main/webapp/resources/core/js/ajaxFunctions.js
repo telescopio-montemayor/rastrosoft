@@ -64,7 +64,7 @@ function displayTipo(data, tipo) {
                 }
             });
             break;    
-        case 'modificarString':
+        case 'test':
             break;
         default:
             break;
@@ -116,8 +116,8 @@ function previewImage() {
     var search = {};
     sendAjax(search,'previewImage','preview');  
 }
-function modificarString() {
+function test() {
     var search = {};
-    sendAjax(search,'modificarString','modificarString');  
+    sendAjax(search,'test','test');  
 }
 

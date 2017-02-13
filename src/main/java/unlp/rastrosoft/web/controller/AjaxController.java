@@ -48,26 +48,21 @@ public class AjaxController {
 		AjaxResponseBodyIndi result = new AjaxResponseBodyIndi();
 
                 if (isValidSearchCriteria(search)) {
-			
-                    try {
                         
-                        indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
-                                                
-                        String dispositivo, propiedad, elemento, valor;
-                        
-                        dispositivo = search.getDispositivo();
-                        propiedad = search.getPropiedad();
-                        elemento = search.getElemento();          
-                        valor = cliente.enviar_mensaje(dispositivo, propiedad, elemento);
-                        //cliente.verPropiedades();
-                        result.setDispositivo(dispositivo);
-                        result.setPropiedad(propiedad);
-                        result.setElemento(elemento);
-                        result.setValor(valor);
-                        
-                    } catch (IOException | INDIValueException ex) {
-                        Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
+
+                    String dispositivo, propiedad, elemento, valor;
+
+                    dispositivo = search.getDispositivo();
+                    propiedad = search.getPropiedad();
+                    elemento = search.getElemento();          
+                    valor = cliente.enviar_mensaje(dispositivo, propiedad, elemento);
+                    //cliente.verPropiedades();
+                    result.setDispositivo(dispositivo);
+                    result.setPropiedad(propiedad);
+                    result.setElemento(elemento);
+                    result.setValor(valor);                   
+                  
 			
 		}
 
@@ -83,29 +78,25 @@ public class AjaxController {
 		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
 
                 if (isValidExecuteCriteria(execute)) {
-                    try {
                         
-                        indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
-                                                
-                        String dispositivo, propiedad, elemento, valor;
-                        
-                        dispositivo = execute.getDispositivo();
-                        propiedad = execute.getPropiedad();
-                        elemento = execute.getElemento();  
-                        valor = execute.getValor();
-                        if(cliente.commitBooleanValor(dispositivo, propiedad, elemento, valor)){
-                            result.setOperacion(Boolean.TRUE);
-                        }else{
-                            result.setOperacion(Boolean.FALSE);
-                        }
-                        result.setDispositivo(dispositivo);
-                        result.setPropiedad(propiedad);
-                        result.setElemento(elemento);
-                        result.setValor(valor);
-                        
-                    } catch (IOException | INDIValueException ex) {
-                        Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
+                    indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
+
+                    String dispositivo, propiedad, elemento, valor;
+
+                    dispositivo = execute.getDispositivo();
+                    propiedad = execute.getPropiedad();
+                    elemento = execute.getElemento();  
+                    valor = execute.getValor();
+                    if(cliente.commitBooleanValor(dispositivo, propiedad, elemento, valor)){
+                        result.setOperacion(Boolean.TRUE);
+                    }else{
+                        result.setOperacion(Boolean.FALSE);
                     }
+                    result.setDispositivo(dispositivo);
+                    result.setPropiedad(propiedad);
+                    result.setElemento(elemento);
+                    result.setValor(valor);
+                  
                 } 
 		//AjaxResponseBody will be converted into json format and send back to client.
 		return result;
@@ -117,27 +108,20 @@ public class AjaxController {
 
 		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
 
-                if (true) { //CAMBIAR
-                    try {
-                        
-                        indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
-                                                
-                        String dispositivo, propiedad;
-                        
-                        dispositivo = execute.getDispositivo();
-                        propiedad = execute.getPropiedad();                       
-                        if(cliente.pushValor(dispositivo, propiedad)){
-                            result.setOperacion(Boolean.TRUE);
-                        }else{
-                            result.setOperacion(Boolean.FALSE);
-                        }
-                        result.setDispositivo(dispositivo);
-                        result.setPropiedad(propiedad);
-                        
-                    } catch (IOException | INDIValueException ex) {
-                        Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } 
+                indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
+
+                String dispositivo, propiedad;
+
+                dispositivo = execute.getDispositivo();
+                propiedad = execute.getPropiedad();                       
+                if(cliente.pushValor(dispositivo, propiedad)){
+                    result.setOperacion(Boolean.TRUE);
+                }else{
+                    result.setOperacion(Boolean.FALSE);
+                }
+                result.setDispositivo(dispositivo);
+                result.setPropiedad(propiedad);
+                
 		//AjaxResponseBody will be converted into json format and send back to client.
 		return result;
 	}
@@ -147,24 +131,13 @@ public class AjaxController {
 	public AjaxResponseBodyIndiListaDispositivos getListaDispositivosViaAjax(@RequestBody SearchCriteria search) {
 
 		AjaxResponseBodyIndiListaDispositivos result = new AjaxResponseBodyIndiListaDispositivos();
+     
+                indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
 
-                if (true) {
-			
-                    try {
-                        
-                        indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
-                                                
-                        List<String> dispositivos;
-                        dispositivos = cliente.listaDispositivos();
-                        result.setDispositivos(dispositivos);
-                        
-                        
-                    } catch (IOException | INDIValueException ex) {
-                        Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-			
-		}
-
+                List<String> dispositivos;
+                dispositivos = cliente.listaDispositivos();
+                result.setDispositivos(dispositivos);
+                 
 		//AjaxResponseBody will be converted into json format and send back to client.
 		return result;
 
@@ -175,22 +148,11 @@ public class AjaxController {
 	public AjaxResponseBodyIndiListaPropiedades getListaPropiedadesViaAjax(@RequestBody SearchCriteria search) {
 
 		AjaxResponseBodyIndiListaPropiedades result = new AjaxResponseBodyIndiListaPropiedades();
-
-                if (true) {
-			
-                    try {
                         
-                        indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
-                        List<String> propiedades;
-                        propiedades = cliente.listaPropiedades(search.getDispositivo());
-                        result.setPropiedades(propiedades);
-                        
-                        
-                    } catch (IOException | INDIValueException ex) {
-                        Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-			
-		}
+                indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
+                List<String> propiedades;
+                propiedades = cliente.listaPropiedades(search.getDispositivo());
+                result.setPropiedades(propiedades);
 
 		//AjaxResponseBody will be converted into json format and send back to client.
 		return result;
@@ -203,21 +165,10 @@ public class AjaxController {
 
 		AjaxResponseBodyIndiListaElementos result = new AjaxResponseBodyIndiListaElementos();
 
-                if (true) {
-			
-                    try {
-                        
-                        indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
-                        List<String> elementos;
-                        elementos = cliente.listaElementos(search.getDispositivo(), search.getPropiedad());
-                        result.setElementos(elementos);
-                        
-                        
-                    } catch (IOException | INDIValueException ex) {
-                        Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-			
-		}
+                indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
+                List<String> elementos;
+                elementos = cliente.listaElementos(search.getDispositivo(), search.getPropiedad());
+                result.setElementos(elementos);
 
 		//AjaxResponseBody will be converted into json format and send back to client.
 		return result;
@@ -232,21 +183,15 @@ public class AjaxController {
 
                 if (isValidSearchCriteria(search)) {
 			
-                    try {
-                        
-                        indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
-                                                
-                        String dispositivo, propiedad, elemento, valor;
-                        
-                        dispositivo = search.getDispositivo();
-                        propiedad = search.getPropiedad();
-                        elemento = search.getElemento();          
-                        valor = cliente.enviar_mensaje(dispositivo, propiedad, elemento);
-                        result.setValor(valor);
-                        
-                    } catch (IOException | INDIValueException ex) {
-                        Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
+
+                    String dispositivo, propiedad, elemento, valor;
+
+                    dispositivo = search.getDispositivo();
+                    propiedad = search.getPropiedad();
+                    elemento = search.getElemento();          
+                    valor = cliente.enviar_mensaje(dispositivo, propiedad, elemento);
+                    result.setValor(valor);
 			
 		}
 
@@ -262,11 +207,9 @@ public class AjaxController {
 		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
                 
                 indi_client cliente = null;
-                try {
-                    cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
-                } catch (INDIValueException | IOException ex) {
-                    Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-                }           
+
+                cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
+         
                 cliente.commitBooleanValor("CCD Simulator", "UPLOAD_MODE", "UPLOAD_LOCAL", "ON");
                 cliente.pushValor("CCD Simulator", "UPLOAD_MODE");                
                 cliente.commitDoubleValor("CCD Simulator", "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", "1");
@@ -328,13 +271,13 @@ public class AjaxController {
 	}
         
         @JsonView(Views.Public.class)
-	@RequestMapping(value = "/modificarString", method=RequestMethod.POST)
-	public AjaxResponseBodyIndiExecute modificarString(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
+	@RequestMapping(value = "/test", method=RequestMethod.POST)
+	public AjaxResponseBodyIndiExecute test(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
 
 		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
                 
                 client cliente = new client();
-                cliente.modificarString("CCD Simulator", "UPLOAD_SETTINGS", "UPLOAD_DIR", "/home");                
+                cliente.abortExposure();
 		return result;
 	}
         

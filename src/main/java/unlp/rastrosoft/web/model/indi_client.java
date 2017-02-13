@@ -137,55 +137,17 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 			}
 		}
 	}
-	/*public boolean enviar_mensaje(String dispositivo, String propiedad, String elemento, String valor ) throws IOException, INDIValueException{
-		for(int i=0 ; i < propiedades.size(); i++) {
-			if ( (propiedades.get(i).getName().equals(propiedad)) & (propiedades.get(i).getDevice().getName().equals(dispositivo)) ){
-				
-					if (propiedades.get(i).getElement(elemento).checkCorrectValue(valor)==false){
-						System.out.println("ERROR EN EL VALOR!");
-						return false;
-					}					
-					propiedades.get(i).getElement(elemento).setDesiredValue(new Double(12));
-					propiedades.get(i).sendChangesToDriver();			
-					
-					return true;
-			}
-		}
-		return false;
-	}*/
-//        public boolean enviar_mensaje_modificar_valor(String dispositivo, String propiedad, String elemento1, String valor1, String elemento2, String valor2 ) throws IOException, INDIValueException{
-//		for(int i=0 ; i < propiedades.size(); i++) {
-//			if ( (propiedades.get(i).getName().equals(propiedad)) & (propiedades.get(i).getDevice().getName().equals(dispositivo)) ){
-//				
-//					if (propiedades.get(i).getElement(elemento1).checkCorrectValue(valor1)==false){
-//						System.out.println("ERROR EN EL VALOR!");
-//						return false;
-//					}					
-//					propiedades.get(i).getElement(elemento1).setDesiredValue(valor1);
-//					
-//                                        if (propiedades.get(i).getElement(elemento2).checkCorrectValue(valor2)==false){
-//						System.out.println("ERROR EN EL VALOR!");
-//						return false;
-//					}					
-//					propiedades.get(i).getElement(elemento2).setDesiredValue(valor2);
-//                                        
-//                                        propiedades.get(i).sendChangesToDriver();			
-//					
-//					return true;
-//			}
-//		}
-//		return false;
-//	}
-        public boolean commitStringValor(String dispositivo, String propiedad, String elemento1, String valor1){
+	
+        public boolean commitStringValor(String dispositivo, String propiedad, String elemento, String valor){
 		for(int i=0 ; i < propiedades.size(); i++) {
 			if ( (propiedades.get(i).getName().equals(propiedad)) & (propiedades.get(i).getDevice().getName().equals(dispositivo)) ){
 				
                             try {
-                                if (propiedades.get(i).getElement(elemento1).checkCorrectValue(valor1)==false){
+                                if (propiedades.get(i).getElement(elemento).checkCorrectValue(valor)==false){
                                     System.out.println("ERROR EN EL VALOR!");
                                     return false;
                                 }
-                                propiedades.get(i).getElement(elemento1).setDesiredValue(valor1);
+                                propiedades.get(i).getElement(elemento).setDesiredValue(valor);
                                 
                                 propiedades.get(i).sendChangesToDriver();
                                 
@@ -199,32 +161,56 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	}
         
         public boolean commitDoubleValor(String dispositivo, String propiedad, String elemento, String valor){
-            for(int i=0 ; i < dispositivos.size(); i++) {                
-                if (dispositivos.get(i).getName().equals(dispositivo)){
-                    List<INDIProperty> propiedadesDispositivo = dispositivos.get(i).getPropertiesAsList();
-                    for(int j=0 ; j < propiedadesDispositivo.size(); j++) {
-                        if(propiedadesDispositivo.get(j).getName().equals(propiedad)){
+		for(int i=0 ; i < propiedades.size(); i++) {
+			if ( (propiedades.get(i).getName().equals(propiedad)) & (propiedades.get(i).getDevice().getName().equals(dispositivo)) ){
+				
                             try {
-                                if (propiedadesDispositivo.get(j).getElement(elemento).checkCorrectValue(new Double(valor))==false){
+                                if (propiedades.get(i).getElement(elemento).checkCorrectValue(new Double(valor))==false){
                                     System.out.println("ERROR EN EL VALOR!");
                                     return false;
-                                }else{
-                                    propiedadesDispositivo.get(j).getElement(elemento).setDesiredValue(new Double(valor));
-                                    return true;
                                 }
-                            } catch (INDIValueException ex) {					
+                                propiedades.get(i).getElement(elemento).setDesiredValue(new Double(valor));
+                                
+                                propiedades.get(i).sendChangesToDriver();
+                                
+                                return true;
+                            } catch (INDIValueException | IOException ex) {
                                 Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
-                            }		 
-                        }
-                    }
-                    
-                }
-            }
-            return false;
-        }
+                            }
+			}
+		}
+		return false;
+	}
+//      
         
+//        public boolean commitDoubleValor(String dispositivo, String propiedad, String elemento, String valor){
+//            for(int i=0 ; i < dispositivos.size(); i++) {                
+//                if (dispositivos.get(i).getName().equals(dispositivo)){
+//                    List<INDIProperty> propiedadesDispositivo = dispositivos.get(i).getPropertiesAsList();
+//                    for(int j=0 ; j < propiedadesDispositivo.size(); j++) {
+//                        if(propiedadesDispositivo.get(j).getName().equals(propiedad)){
+//                            try {
+//                                if (propiedadesDispositivo.get(j).getElement(elemento).checkCorrectValue(new Double(valor))==false){
+//                                    System.out.println("ERROR EN EL VALOR!");
+//                                    return false;
+//                                }else{
+//                                    propiedadesDispositivo.get(j).getElement(elemento).setDesiredValue(new Double(valor));
+//                                    return true;
+//                                }
+//                            } catch (INDIValueException ex) {					
+//                                Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
+//                            }		 
+//                        }
+//                    }
+//                    
+//                }
+//            }
+//            return false;
+//        }
+//        
         public boolean commitBooleanValor(String dispositivo, String propiedad, String elemento, String valor){
-            Object value;
+            SwitchStatus value ;
+//          value = Constants.parseSwitchStatus("On");
             switch (valor) {
                 case "ON":
                     value = SwitchStatus.ON;
@@ -235,28 +221,25 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
                 default:
                     return false;
             }     
-            for(int i=0 ; i < dispositivos.size(); i++) {                
-                if (dispositivos.get(i).getName().equals(dispositivo)){
-                    List<INDIProperty> propiedadesDispositivo = dispositivos.get(i).getPropertiesAsList();
-                    for(int j=0 ; j < propiedadesDispositivo.size(); j++) {
-                        if(propiedadesDispositivo.get(j).getName().equals(propiedad)){
+            for(int i=0 ; i < propiedades.size(); i++) {
+			if ( (propiedades.get(i).getName().equals(propiedad)) & (propiedades.get(i).getDevice().getName().equals(dispositivo)) ){
+				
                             try {
-                                if (propiedadesDispositivo.get(j).getElement(elemento).checkCorrectValue(value)==false){
+                                if (propiedades.get(i).getElement(elemento).checkCorrectValue(value)==false){
                                     System.out.println("ERROR EN EL VALOR!");
                                     return false;
-                                }else{
-                                    propiedadesDispositivo.get(j).getElement(elemento).setDesiredValue(value);
-                                    return true;
                                 }
-                            } catch (INDIValueException ex) {					
+                                propiedades.get(i).getElement(elemento).setDesiredValue(value);
+                                
+                                propiedades.get(i).sendChangesToDriver();
+                                
+                                return true;
+                            } catch (INDIValueException | IOException ex) {
                                 Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
-                            }		 
-                        }
-                    }
-                    
-                }
-            }
-            return false;
+                            }
+			}
+		}
+		return false;
         }
         
         public boolean pushValor(String dispositivo, String propiedad){
@@ -320,5 +303,6 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
                 }
                 return listaElementos;
 	}
-
+       
+        
 }
