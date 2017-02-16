@@ -148,11 +148,9 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
                                     return false;
                                 }
                                 propiedades.get(i).getElement(elemento).setDesiredValue(valor);
-                                
-                                propiedades.get(i).sendChangesToDriver();
-                                
+                                                                
                                 return true;
-                            } catch (INDIValueException | IOException ex) {
+                            } catch (INDIValueException ex) {
                                 Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
                             }
 			}
@@ -160,6 +158,7 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 		return false;
 	}
         
+
         public boolean commitDoubleValor(String dispositivo, String propiedad, String elemento, String valor){
 		for(int i=0 ; i < propiedades.size(); i++) {
 			if ( (propiedades.get(i).getName().equals(propiedad)) & (propiedades.get(i).getDevice().getName().equals(dispositivo)) ){
@@ -171,43 +170,18 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
                                 }
                                 propiedades.get(i).getElement(elemento).setDesiredValue(new Double(valor));
                                 
-                                propiedades.get(i).sendChangesToDriver();
+                                
                                 
                                 return true;
-                            } catch (INDIValueException | IOException ex) {
+                            } catch (INDIValueException ex) {
                                 Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
                             }
 			}
 		}
 		return false;
 	}
-//      
         
-//        public boolean commitDoubleValor(String dispositivo, String propiedad, String elemento, String valor){
-//            for(int i=0 ; i < dispositivos.size(); i++) {                
-//                if (dispositivos.get(i).getName().equals(dispositivo)){
-//                    List<INDIProperty> propiedadesDispositivo = dispositivos.get(i).getPropertiesAsList();
-//                    for(int j=0 ; j < propiedadesDispositivo.size(); j++) {
-//                        if(propiedadesDispositivo.get(j).getName().equals(propiedad)){
-//                            try {
-//                                if (propiedadesDispositivo.get(j).getElement(elemento).checkCorrectValue(new Double(valor))==false){
-//                                    System.out.println("ERROR EN EL VALOR!");
-//                                    return false;
-//                                }else{
-//                                    propiedadesDispositivo.get(j).getElement(elemento).setDesiredValue(new Double(valor));
-//                                    return true;
-//                                }
-//                            } catch (INDIValueException ex) {					
-//                                Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
-//                            }		 
-//                        }
-//                    }
-//                    
-//                }
-//            }
-//            return false;
-//        }
-//        
+
         public boolean commitBooleanValor(String dispositivo, String propiedad, String elemento, String valor){
             SwitchStatus value ;
 //          value = Constants.parseSwitchStatus("On");
@@ -231,10 +205,8 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
                                 }
                                 propiedades.get(i).getElement(elemento).setDesiredValue(value);
                                 
-                                propiedades.get(i).sendChangesToDriver();
-                                
                                 return true;
-                            } catch (INDIValueException | IOException ex) {
+                            } catch (INDIValueException ex) {
                                 Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
                             }
 			}
