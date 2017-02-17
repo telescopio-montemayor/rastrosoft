@@ -32,7 +32,9 @@ import laazotea.indi.client.INDIValueException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import unlp.rastrosoft.web.model.client;
+import unlp.rastrosoft.web.model.Telescope;
+import unlp.rastrosoft.web.model.Ccd;
+import unlp.rastrosoft.web.model.Focuser;
 
 @RestController
 public class AjaxController {
@@ -276,7 +278,7 @@ public class AjaxController {
 
 		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
                 
-                client cliente = new client();
+                Telescope cliente = new Telescope();
                 cliente.setRaDec("10.345", "11.555");
 		return result;
 	}
