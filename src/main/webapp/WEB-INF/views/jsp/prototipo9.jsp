@@ -148,20 +148,20 @@
                         <i class="fa fa-bars" aria-hidden="true" ></i>
                     </button>                    
                     <span>Opciones</span>
-                </div>
-                <button onClick="test();" class="btn btn-default">TEST</button>
+                </div>         
+                <p></p>
                 <div class="form-group">
-                    <div class="logout">
-                        <c:url var="logoutUrl" value="/logout"/>
-                        <form class="form-inline" action="${logoutUrl}" method="post">                      
-                          <div class="input-group">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <c:url var="logoutUrl" value="/logout"/>
+                            <form action="${logoutUrl}" method="post">
+                                <input class="form-control logout-icon" type="submit" value="Cerrar sesion" title="Cerrar sesion de USER"/>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
                             <span class="input-group-addon"><i class="fa fa-sign-out fa-fw"></i></span>
-                            <input class="form-control logout-icon" type="submit" value="Cerrar sesion"/>
-                          </div>
-                          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form>
-                    </div>                       
-                </div>
+                        </div>
+                    </div>                                      
+                </div>                 
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
@@ -223,7 +223,7 @@
                         <span class="input-group-addon">-</span>
                         <input type="text" class="form-control" placeholder="DEC"/>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" onclick="takePreviewImage();">Go!</button>
+                            <button class="btn btn-default" type="button" >Go!</button>
                         </span>                            
                     </div>                        
                 </div>
@@ -236,9 +236,16 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-camera fa-fw"></i></span>
-                        <button class="form-control logout-icon" type="button">Take preview</button>
+                        <button class="form-control logout-icon" type="button" onclick="takePreviewImage();">Take preview</button>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-download fa-fw"></i></span>
+                        <button class="form-control logout-icon" type="button">Download</button>
+                    </div>
+                </div>
+                <div style="float: right"><button onClick="test();" class="btn btn-default">TEST</button></div>
         </aside>
     </div>
     <div class="col-md-8">  
@@ -381,6 +388,14 @@
                     <input type="number" class="form-control" id="exposureTime" placeholder="Focus timer">
                     <span class="input-group-addon">Seconds</span>
                 </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">                    
+                    <input type="number" class="form-control" placeholder="Seeing"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Set</button>
+                    </span>                            
+                </div>  
             </div>
         </aside>  
     </div>
