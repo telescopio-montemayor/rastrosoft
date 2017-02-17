@@ -112,10 +112,10 @@ function pushValor() {
     sendAjax(search,'pushValor','pushValor');  		
 
 }
-function previewImage() {
-    var search = {};
-    sendAjax(search,'previewImage','preview');  
-}
+//function previewImage() {
+//    var search = {};
+//    sendAjax(search,'previewImage','preview');  
+//}
 function test() {
     var search = {};
     sendAjax(search,'test','test');  

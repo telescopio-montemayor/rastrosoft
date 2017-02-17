@@ -40,4 +40,12 @@ public class Prototipo1Controller {
 	public String printWelcome7(ModelMap model) {                  
 		return "prototipo7";
 	}
+        @RequestMapping(value = "/prototipo8", method = RequestMethod.GET)
+	public String printWelcome8(ModelMap model) {                  
+		return "prototipo8";
+	}
+        @RequestMapping(value = "/prototipo9", method = RequestMethod.GET)
+	public String printWelcome9(ModelMap model) {                  
+		return "prototipo9";
+	}
 }

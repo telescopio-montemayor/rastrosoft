@@ -202,28 +202,40 @@ public class AjaxController {
 
 	}
         
-        @JsonView(Views.Public.class)
+//        @JsonView(Views.Public.class)
+//	@RequestMapping(value = "/previewImage", method=RequestMethod.POST)
+//	public AjaxResponseBodyIndiExecute getPreviewImageViaAjax(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
+//
+//		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
+//                
+//                indi_client cliente = null;
+//
+//                cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
+//         
+//                cliente.commitBooleanValor("CCD Simulator", "UPLOAD_MODE", "UPLOAD_LOCAL", "ON");
+//                cliente.pushValor("CCD Simulator", "UPLOAD_MODE");                
+//                cliente.commitDoubleValor("CCD Simulator", "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", "1");
+//                cliente.pushValor("CCD Simulator", "CCD_EXPOSURE");
+//                
+//                String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp";
+//                
+//                String source= path+"/resources/images/fits/"; 
+//                
+//                String dest = path+"/resources/images/";
+//                
+//                new Fits().fitsToJpg(source, dest, "IMAGE.fits");    
+//                
+//		return result;
+//	}
+        
+         @JsonView(Views.Public.class)
 	@RequestMapping(value = "/previewImage", method=RequestMethod.POST)
 	public AjaxResponseBodyIndiExecute getPreviewImageViaAjax(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
 
 		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
                 
-                indi_client cliente = null;
-
-                cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
-         
-                cliente.commitBooleanValor("CCD Simulator", "UPLOAD_MODE", "UPLOAD_LOCAL", "ON");
-                cliente.pushValor("CCD Simulator", "UPLOAD_MODE");                
-                cliente.commitDoubleValor("CCD Simulator", "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", "1");
-                cliente.pushValor("CCD Simulator", "CCD_EXPOSURE");
-                
-                String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp";
-                
-                String source= path+"/resources/images/fits/"; 
-                
-                String dest = path+"/resources/images/";
-                
-                new Fits().fitsToJpg(source, dest, "IMAGE.fits");    
+                Ccd cliente = new Ccd();
+                cliente.takePreview();
                 
 		return result;
 	}
@@ -278,8 +290,10 @@ public class AjaxController {
 
 		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
                 
-                Telescope cliente = new Telescope();
-                cliente.setRaDec("10.345", "11.555");
+                //Telescope cliente = new Telescope();
+                //cliente.setRaDec("10.345", "11.555");
+                Ccd cliente = new Ccd();
+                cliente.takePreview();
 		return result;
 	}
         

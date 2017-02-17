@@ -110,7 +110,6 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	        }
 	      }
 
-		
 	}
 	
 	public void conectar(String device_name) throws IOException, INDIValueException{

@@ -35,6 +35,10 @@ public class Telescope extends Device {
         return this.modificarBoolean("ON_COORD_SET", "SYNC", "ON");
     }
     
+    public boolean abortMotion(){
+        return this.modificarBoolean("TELESCOPE_ABORT_MOTION", "ABORT", "ON");
+    }
+    
     public boolean setRaDec( String ra , String dec ){
         cliente = connect_indi.connect(dispositivo);
         cliente.commitDoubleValor(dispositivo, "EQUATORIAL_EOD_COORD", "RA", ra);

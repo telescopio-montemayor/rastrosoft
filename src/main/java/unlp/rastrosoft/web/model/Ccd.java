@@ -5,6 +5,9 @@
  */
 package unlp.rastrosoft.web.model;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ip300
@@ -17,7 +20,6 @@ public class Ccd extends Device {
     
     public boolean setExposure( String time ){
         return this.modificarDouble( "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", time);
-        
     }
     public boolean setLocalMode( ){
         return this.modificarBoolean("UPLOAD_MODE", "UPLOAD_LOCAL", "ON");
@@ -35,5 +37,28 @@ public class Ccd extends Device {
         if( !(this.modificarDouble("CCD_FRAME", "WIDTH", width)))
             return false;
         return false != (this.modificarDouble("CCD_FRAME", "HEIGHT", height));
+    }
+    public boolean takeCapture( String time ){
+        return this.setExposure(time);
+    }
+    public boolean takePreview( ){
+        try {
+            String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp";
+            String source= path+"/resources/images/fits/";
+            String dest = path+"/resources/images/";
+            this.setLocalMode();
+            this.setUploadDirectory("/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp/resources/images/fits");
+            this.setPrefix("preview");
+            Thread.sleep(500);
+            this.modificarDouble( "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", "1");
+            Thread.sleep(1500);
+            new Fits().fitsToJpg(source, dest, "preview.fits");
+            Thread.sleep(1500);
+            this.setPrefix("IMAGE_XXX");
+            
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
 }

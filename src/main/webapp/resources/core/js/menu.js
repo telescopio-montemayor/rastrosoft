@@ -208,4 +208,11 @@ function loading_effect_preview(bool){
         $('#preview').fadeIn( "slow" );        
     }
 }
-
+var imagePreviewSource;
+$(document).ready(function() {
+    imagePreviewSource = $('#previewImageSrc').attr('src');
+});
+function update_preview_image(){
+    var imageSource = imagePreviewSource + '?' +  new Date().getTime();
+    $("#previewImageSrc").attr("src", imageSource);
+}

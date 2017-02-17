@@ -199,65 +199,8 @@
                     </div>
                     
                             
-                    <div class="form-group">
-                       <select class="form-control input-sm">
-                        <option disabled selected value> -- select an option -- </option>   
-                        <option>Luna</option>
-                        <option>Júpiter</option>
-                        <option>Marte</option>
-                        <option>Saturno</option>
-                        <option>Plutón</option>
-                        <option>Luna</option>
-                        <option>Júpiter</option>
-                        <option>Marte</option>
-                        <option>Saturno</option>
-                        <option>Plutón</option>
-                        <option>Luna</option>
-                        <option>Júpiter</option>
-                        <option>Marte</option>
-                        <option>Saturno</option>
-                        <option>Plutón</option>
-                        <option>Luna</option>
-                        <option>Júpiter</option>
-                        <option>Marte</option>
-                        <option>Saturno</option>
-                        <option>Plutón</option>
-                        <option>Luna</option>
-                        <option>Júpiter</option>
-                        <option>Marte</option>
-                        <option>Saturno</option>
-                        <option>Plutón</option>
-                        <option>Luna</option>
-                        <option>Júpiter</option>
-                        <option>Marte</option>
-                        <option>Saturno</option>
-                        <option>Plutón</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-addon joystick">
-                                    <button class="icon joystick-left ">
-                                        <i class="fa fa-angle-left" aria-hidden="true" ></i>
-                                    </button>
-                                    <button class="icon joystick-up">
-                                        <i class="fa fa-angle-up" aria-hidden="true" ></i>
-                                    </button>
-                                    <button class="icon joystick-right">
-                                        <i class="fa fa-angle-right" aria-hidden="true" ></i>
-                                    </button>
-                                    <button class="icon joystick-down">
-                                        <i class="fa fa-angle-down" aria-hidden="true" ></i>
-                                    </button>
-                            </div>
-                            <input type="text" class="form-control" placeholder="RA"/>
-                            <span class="input-group-addon">-</span>
-                            <input type="text" class="form-control" placeholder="DEC"/>
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="takePreviewImage();">Go!</button>
-                            </span>                            
-                        </div>                        
-                    </div>
+                    
+                    
                     
                 </form>    
                 
@@ -293,97 +236,164 @@
                 </button>
                 <span>Opciones avanzadas</span>
             </div>
-            <fieldset disabled>
-            <form class="small sidebar-inside" onclick="notify('Usted no posee los privilegios para operar estas funciones.', 'danger');">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputFile">File input</label>
-                  <input type="file" id="exampleInputFile">
-                  <p class="help-block">Example block-level help text here.</p>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Check me out
-                  </label>
-                </div>
-                 <div class="input-group margin-bottom-sm">
-                    <span class="input-group-addon input-sm"><i class="fa fa-envelope-o fa-fw"></i></span>
-                    <input class="form-control input-sm" type="text" placeholder="Email address">
-                  </div>
-                  <div class="input-group">
-                    <span class="input-group-addon input-sm"><i class="fa fa-key fa-fw"></i></span>
-                    <input class="form-control input-sm" type="password" placeholder="Password">
-                  </div>
-                <div class="form-group">
-                  <label for="exampleInputFile">File input</label>
-                  <input type="file" id="exampleInputFile">
-                  <p class="help-block">Example block-level help text here.</p>
-                </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Check me out
-                  </label>
-                </div>
+            
+            <label>Telescopio</label>
+            <div class="form-group">
                 <select class="form-control input-sm">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                 <option disabled selected value> -- select an option -- </option>   
+                 <option>Luna</option>
+                 <option>Júpiter</option>
+                 <option>Marte</option>
+                 <option>Saturno</option>
+                 <option>Plutón</option>
+                 <option>Luna</option>
+                 <option>Júpiter</option>
+                 <option>Marte</option>
+                 <option>Saturno</option>
+                 <option>Plutón</option>
+                 <option>Luna</option>
+                 <option>Júpiter</option>
+                 <option>Marte</option>
+                 <option>Saturno</option>
+                 <option>Plutón</option>
+                 <option>Luna</option>
+                 <option>Júpiter</option>
+                 <option>Marte</option>
+                 <option>Saturno</option>
+                 <option>Plutón</option>
+                 <option>Luna</option>
+                 <option>Júpiter</option>
+                 <option>Marte</option>
+                 <option>Saturno</option>
+                 <option>Plutón</option>
+                 <option>Luna</option>
+                 <option>Júpiter</option>
+                 <option>Marte</option>
+                 <option>Saturno</option>
+                 <option>Plutón</option>
+               </select>
+             </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon joystick">
+                            <button class="icon joystick-left ">
+                                <i class="fa fa-angle-left" aria-hidden="true" ></i>
+                            </button>
+                            <button class="icon joystick-up">
+                                <i class="fa fa-angle-up" aria-hidden="true" ></i>
+                            </button>
+                            <button class="icon joystick-right">
+                                <i class="fa fa-angle-right" aria-hidden="true" ></i>
+                            </button>
+                            <button class="icon joystick-down">
+                                <i class="fa fa-angle-down" aria-hidden="true" ></i>
+                            </button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="RA"/>
+                    <span class="input-group-addon">-</span>
+                    <input type="text" class="form-control" placeholder="DEC"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" onclick="takePreviewImage();">Go!</button>
+                    </span>                            
+                </div>                        
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
+                    <button class="form-control logout-icon" type="button">Abort motion</button>
                 </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <button class="form-control logout-icon" type="button">Park</button>
+                    <span class="input-group-addon"></span>
+                    <button class="form-control logout-icon" type="button">Unpark</button>
                 </div>
-                <div class="form-group">
-                  <label for="exampleInputFile">File input</label>
-                  <input type="file" id="exampleInputFile">
-                  <p class="help-block">Example block-level help text here.</p>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <button class="form-control logout-icon" type="button">Track</button>
+                    <span class="input-group-addon"></span>
+                    <button class="form-control logout-icon" type="button">Slew</button>
+                    <span class="input-group-addon"></span>
+                    <button class="form-control logout-icon" type="button">Sync</button>
                 </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Check me out
-                  </label>
+            </div>
+            
+            <label>CCD</label>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-camera fa-fw"></i></span>
+                    <button class="form-control logout-icon" type="button">Take preview</button>
                 </div>
-                 <div class="input-group margin-bottom-sm">
-                    <span class="input-group-addon input-sm"><i class="fa fa-envelope-o fa-fw"></i></span>
-                    <input class="form-control input-sm" type="text" placeholder="Email address">
-                  </div>
-                  <div class="input-group">
-                    <span class="input-group-addon input-sm"><i class="fa fa-key fa-fw"></i></span>
-                    <input class="form-control input-sm" type="password" placeholder="Password">
-                  </div>
-                <div class="form-group">
-                  <label for="exampleInputFile">File input</label>
-                  <input type="file" id="exampleInputFile">
-                  <p class="help-block">Example block-level help text here.</p>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-folder-o fa-fw"></i></span>
+                    <input type="text" class="form-control" id="uploadDirectory" placeholder="Set upload directory">
                 </div>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Check me out
-                  </label>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-file-image-o fa-fw"></i></span>
+                    <input type="text" class="form-control" id="uploadPrefix" placeholder="Set prefix">
                 </div>
+            </div>
+                
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
+                    <input type="number" class="form-control" id="exposureTime" placeholder="Exposure">
+                    <span class="input-group-addon">Seconds</span>
+                </div>
+            </div>
+            <div class="form-group">
                 <select class="form-control input-sm">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
-                <button type="submit" class="btn btn-sm ">Submit</button>
-              </form>
-            </fieldset>
+                 <option disabled selected value> -- select type -- </option>   
+                 <option>Light</option>
+                 <option>Bias</option>  
+                 <option>Dark</option>
+                 <option>Flat</option>
+               </select>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-thermometer-half fa-fw"></i></span>
+                    <input type="number" class="form-control" id="exposureTime" placeholder="Temperature">
+                    <span class="input-group-addon">°C</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">                    
+                    <input type="number" class="form-control" placeholder="Width"/>
+                    <span class="input-group-addon">-</span>
+                    <input type="number" class="form-control" placeholder="Height"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Set</button>
+                    </span>                            
+                </div>  
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
+                    <button class="form-control logout-icon" type="button">Abort exposure</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-play fa-fw"></i></span>
+                    <button class="form-control logout-icon" type="button">Capture</button>
+                </div>
+            </div>
+            <label>Focuser</label>
+            <div class="form-group">
+                <div class="input-group">                    
+                    <input type="number" class="form-control" placeholder="Ticks"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Set</button>
+                    </span>                            
+                </div>  
+            </div>
         </aside>  
     </div>
 

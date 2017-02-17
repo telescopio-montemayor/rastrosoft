@@ -14,24 +14,5 @@ public class Focuser extends Device {
     public Focuser (){
         super("Focuser Simulator");
     }
-    
-    public boolean park(){
-        return this.modificarBoolean("TELESCOPE_PARK", "PARK", "ON");
-    }
-    
-    public boolean unPark(){
-        return this.modificarBoolean("TELESCOPE_PARK", "UNPARK", "ON");
-    }
-    
-    public boolean track( ){
-        return this.modificarBoolean("ON_COORD_SET", "TRACK", "ON");
-    }
-    
-    public boolean slew( ){
-        return this.modificarBoolean("ON_COORD_SET", "SLEW", "ON");
-    }
-    
-    public boolean sync( ){
-        return this.modificarBoolean("ON_COORD_SET", "SYNC", "ON");
-    }
+   
 }
