@@ -120,4 +120,3 @@ function test() {
     var search = {};
     sendAjax(search,'test','test');  
 }
-

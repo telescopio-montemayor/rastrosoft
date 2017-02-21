@@ -245,7 +245,8 @@
                         <button class="form-control logout-icon" type="button">Download</button>
                     </div>
                 </div>
-                <div style="float: right"><button onClick="test();" class="btn btn-default">TEST</button></div>
+                <div style="float: left; padding-top: 140%;"><button onClick="fade();" class="btn btn-default">Modo escuela</button></div>
+                <div style="float: right;  padding-top: 140%;"><button onClick="test();" class="btn btn-default">TEST</button></div>
         </aside>
     </div>
     <div class="col-md-8">  
@@ -278,18 +279,18 @@
                 </button>
                 <span>Opciones avanzadas</span>
             </div>
-            
+            <div id="fade" class="fadebox"></div>
             <label>Telescopio</label>
             <div class="form-group">
                 <div class="input-group">
                     <button class="form-control logout-icon" type="button">Park</button>
                     <span class="input-group-addon"></span>
-                    <button class="form-control logout-icon" type="button">Unpark</button>
+                    <button class="form-control logout-icon selected" type="button">Unpark</button>
                 </div>
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <button class="form-control logout-icon" type="button">Track</button>
+                    <button class="form-control logout-icon selected" type="button">Track</button>
                     <span class="input-group-addon"></span>
                     <button class="form-control logout-icon" type="button">Slew</button>
                     <span class="input-group-addon"></span>

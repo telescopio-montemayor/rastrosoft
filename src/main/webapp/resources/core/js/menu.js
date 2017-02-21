@@ -216,3 +216,7 @@ function update_preview_image(){
     var imageSource = imagePreviewSource + '?' +  new Date().getTime();
     $("#previewImageSrc").attr("src", imageSource);
 }
+
+function fade() {
+     $( ".fadebox" ).toggle();
+}
