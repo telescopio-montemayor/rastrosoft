@@ -75,9 +75,9 @@
                     // here it is
                     xhr.setRequestHeader(header, token);
                 },
-                success : function(list) {
-                        console.log("SUCCESS: ", list);
-                        displayTipo(list, tipo);
+                success : function(result) {
+                        console.log("SUCCESS: ", result);
+                        displayTipo(result, tipo);
                 },
                 error : function(e) {
                         console.log("ERROR: ", e);

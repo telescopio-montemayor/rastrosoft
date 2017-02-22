@@ -79,36 +79,36 @@ function listaDispositivos(){
 }
 function listaPropiedades(){
     var search = {};
-    search["dispositivo"] = $("#dispositivo").val();
+    search["device"] = $("#dispositivo").val();
     sendAjax(search,'listaPropiedades','propiedades');
 }
 function listaElementos(){
     var search = {};
-    search["dispositivo"] = $("#dispositivo").val();
-    search["propiedad"] = $("#propiedad").val();
+    search["device"] = $("#dispositivo").val();
+    search["property"] = $("#propiedad").val();
     sendAjax(search,'listaElementos','elementos');
 }
 
 function searchViaAjaxValor() {
     var search = {};
-    search["dispositivo"] = $("#dispositivo").val();
-    search["propiedad"] = $("#propiedad").val();
-    search["elemento"] = $("#elemento").val();
+    search["device"] = $("#dispositivo").val();
+    search["property"] = $("#propiedad").val();
+    search["element"] = $("#elemento").val();
     sendAjax(search,'buscarValor','valor');
 }
 
 function commitValor() {
     var search = {};
-    search["dispositivo"] = $("#dispositivo").val();
-    search["propiedad"] = $("#propiedad").val();
-    search["elemento"] = $("#elemento").val();
-    search["valor"] = $("#valor").val();
+    search["device"] = $("#dispositivo").val();
+    search["property"] = $("#propiedad").val();
+    search["element"] = $("#elemento").val();
+    search["value"] = $("#valor").val();
     sendAjax(search,'commitValor','commitValor');  
 }
 function pushValor() {
     var search = {};
-    search["dispositivo"] = $("#dispositivo").val();
-    search["propiedad"] = $("#propiedad").val();
+    search["device"] = $("#dispositivo").val();
+    search["property"] = $("#propiedad").val();
     sendAjax(search,'pushValor','pushValor');  		
 
 }

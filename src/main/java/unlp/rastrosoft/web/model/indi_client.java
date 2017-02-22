@@ -85,7 +85,7 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	}
 	
 	public void propertyChanged(INDIProperty property) {
-	    //System.out.println("Property Changed: " + property.getNameStateAndValuesAsString());
+	    //System.out.println("Property Changed: " + property.getNameStateAndValuesAsString());               
 	}	
 	
 	public void newProperty(INDIDevice device, INDIProperty property) {

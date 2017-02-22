@@ -19,7 +19,6 @@ import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.SearchCriteria;
 import unlp.rastrosoft.web.model.connect_indi;
 import unlp.rastrosoft.web.model.indi_client;
-import unlp.rastrosoft.web.model.Fits;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,13 +27,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
-import laazotea.indi.client.INDIValueException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import unlp.rastrosoft.web.model.Telescope;
 import unlp.rastrosoft.web.model.Ccd;
-import unlp.rastrosoft.web.model.Focuser;
 
 @RestController
 public class AjaxController {
@@ -53,17 +49,17 @@ public class AjaxController {
                         
                     indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
 
-                    String dispositivo, propiedad, elemento, valor;
+                    String device, property, element, value;
 
-                    dispositivo = search.getDispositivo();
-                    propiedad = search.getPropiedad();
-                    elemento = search.getElemento();          
-                    valor = cliente.enviar_mensaje(dispositivo, propiedad, elemento);
+                    device = search.getDevice();
+                    property = search.getProperty();
+                    element = search.getElement();          
+                    value = cliente.enviar_mensaje(device, property, element);
                     //cliente.verPropiedades();
-                    result.setDispositivo(dispositivo);
-                    result.setPropiedad(propiedad);
-                    result.setElemento(elemento);
-                    result.setValor(valor);                   
+                    result.setDispositivo(device);
+                    result.setPropiedad(property);
+                    result.setElemento(element);
+                    result.setValor(value);                   
                   
 			
 		}
@@ -83,21 +79,21 @@ public class AjaxController {
                         
                     indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
 
-                    String dispositivo, propiedad, elemento, valor;
+                    String device, property, element, value;
 
-                    dispositivo = execute.getDispositivo();
-                    propiedad = execute.getPropiedad();
-                    elemento = execute.getElemento();  
-                    valor = execute.getValor();
-                    if(cliente.commitBooleanValor(dispositivo, propiedad, elemento, valor)){
+                    device = execute.getDevice();
+                    property = execute.getProperty();
+                    element = execute.getElement();  
+                    value = execute.getValue();
+                    if(cliente.commitBooleanValor(device, property, element, value)){
                         result.setOperacion(Boolean.TRUE);
                     }else{
                         result.setOperacion(Boolean.FALSE);
                     }
-                    result.setDispositivo(dispositivo);
-                    result.setPropiedad(propiedad);
-                    result.setElemento(elemento);
-                    result.setValor(valor);
+                    result.setDispositivo(device);
+                    result.setPropiedad(property);
+                    result.setElemento(element);
+                    result.setValor(value);
                   
                 } 
 		//AjaxResponseBody will be converted into json format and send back to client.
@@ -112,17 +108,17 @@ public class AjaxController {
 
                 indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
 
-                String dispositivo, propiedad;
+                String device, property;
 
-                dispositivo = execute.getDispositivo();
-                propiedad = execute.getPropiedad();                       
-                if(cliente.pushValor(dispositivo, propiedad)){
+                device = execute.getDevice();
+                property = execute.getProperty();                       
+                if(cliente.pushValor(device, property)){
                     result.setOperacion(Boolean.TRUE);
                 }else{
                     result.setOperacion(Boolean.FALSE);
                 }
-                result.setDispositivo(dispositivo);
-                result.setPropiedad(propiedad);
+                result.setDispositivo(device);
+                result.setPropiedad(property);
                 
 		//AjaxResponseBody will be converted into json format and send back to client.
 		return result;
@@ -153,7 +149,7 @@ public class AjaxController {
                         
                 indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
                 List<String> propiedades;
-                propiedades = cliente.listaPropiedades(search.getDispositivo());
+                propiedades = cliente.listaPropiedades(search.getDevice());
                 result.setPropiedades(propiedades);
 
 		//AjaxResponseBody will be converted into json format and send back to client.
@@ -169,7 +165,7 @@ public class AjaxController {
 
                 indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
                 List<String> elementos;
-                elementos = cliente.listaElementos(search.getDispositivo(), search.getPropiedad());
+                elementos = cliente.listaElementos(search.getDevice(), search.getProperty());
                 result.setElementos(elementos);
 
 		//AjaxResponseBody will be converted into json format and send back to client.
@@ -187,13 +183,13 @@ public class AjaxController {
 			
                     indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
 
-                    String dispositivo, propiedad, elemento, valor;
+                    String device, property, element, value;
 
-                    dispositivo = search.getDispositivo();
-                    propiedad = search.getPropiedad();
-                    elemento = search.getElemento();          
-                    valor = cliente.enviar_mensaje(dispositivo, propiedad, elemento);
-                    result.setValor(valor);
+                    device = search.getDevice();
+                    property = search.getProperty();
+                    element = search.getElement();            
+                    value = cliente.enviar_mensaje(device, property, element);
+                    result.setValor(value);
 			
 		}
 
@@ -202,32 +198,7 @@ public class AjaxController {
 
 	}
         
-//        @JsonView(Views.Public.class)
-//	@RequestMapping(value = "/previewImage", method=RequestMethod.POST)
-//	public AjaxResponseBodyIndiExecute getPreviewImageViaAjax(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
-//
-//		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
-//                
-//                indi_client cliente = null;
-//
-//                cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
-//         
-//                cliente.commitBooleanValor("CCD Simulator", "UPLOAD_MODE", "UPLOAD_LOCAL", "ON");
-//                cliente.pushValor("CCD Simulator", "UPLOAD_MODE");                
-//                cliente.commitDoubleValor("CCD Simulator", "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", "1");
-//                cliente.pushValor("CCD Simulator", "CCD_EXPOSURE");
-//                
-//                String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp";
-//                
-//                String source= path+"/resources/images/fits/"; 
-//                
-//                String dest = path+"/resources/images/";
-//                
-//                new Fits().fitsToJpg(source, dest, "IMAGE.fits");    
-//                
-//		return result;
-//	}
-        
+
          @JsonView(Views.Public.class)
 	@RequestMapping(value = "/previewImage", method=RequestMethod.POST)
 	public AjaxResponseBodyIndiExecute getPreviewImageViaAjax(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
@@ -263,7 +234,7 @@ public class AjaxController {
 			valid = false;
 		}
 
-		if ((StringUtils.isEmpty(search.getDispositivo())) && (StringUtils.isEmpty(search.getPropiedad())) && (StringUtils.isEmpty(search.getElemento()))) {
+		if ((StringUtils.isEmpty(search.getDevice())) && (StringUtils.isEmpty(search.getProperty())) && (StringUtils.isEmpty(search.getElement()))) {
 			valid = false;
 		}
 
@@ -277,7 +248,7 @@ public class AjaxController {
 			valid = false;
 		}
 
-		if ((StringUtils.isEmpty(execute.getDispositivo())) && (StringUtils.isEmpty(execute.getPropiedad())) && (StringUtils.isEmpty(execute.getElemento())) && (StringUtils.isEmpty(execute.getValor()))) {
+		if ((StringUtils.isEmpty(execute.getDevice())) && (StringUtils.isEmpty(execute.getProperty())) && (StringUtils.isEmpty(execute.getElement())) && (StringUtils.isEmpty(execute.getValue()))) {
 			valid = false;
 		}
 

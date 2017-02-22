@@ -1,37 +1,37 @@
 package unlp.rastrosoft.web.model;
 public class SearchCriteria {
 
-	String dispositivo;
-	String propiedad;
-        String elemento;
+	String device;
+	String property;
+        String element;
 
-        public String getDispositivo() {
-            return dispositivo;
+        public String getDevice() {
+            return device;
         }
 
-        public void setDispositivo(String dispositivo) {
-            this.dispositivo = dispositivo;
+        public void setDevice(String device) {
+            this.device = device;
         }
 
-        public String getPropiedad() {
-            return propiedad;
+        public String getProperty() {
+            return property;
         }
 
-        public void setPropiedad(String propiedad) {
-            this.propiedad = propiedad;
+        public void setProperty(String property) {
+            this.property = property;
         }
 
-        public String getElemento() {
-            return elemento;
+        public String getElement() {
+            return element;
         }
 
-        public void setElemento(String elemento) {
-            this.elemento = elemento;
+        public void setElement(String element) {
+            this.element = element;
         }
-
+                
 	@Override
 	public String toString() {
-		return "SearchCriteria [dispositivo=" + dispositivo + ", propiedad=" + propiedad + ", elemento=" + elemento + "]";
+		return "SearchCriteria [device=" + device + ", property=" + property + ", element=" + element + "]";
 	}
 
 }
