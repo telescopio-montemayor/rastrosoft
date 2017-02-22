@@ -65,11 +65,19 @@ function displayTipo(data, tipo) {
             });
             break; 
         case 'setRaDec':
-            $('#ra').empty();
-            $('#dec').empty();
+            $('#getRa').empty();
+            $('#getDec').empty();
             $.each(data, function(key, value) {
-                $('#ra').val(value[0]);
-                $('#dec').val(value[1]);
+                $('#getRa').append(value[0]);
+                $('#getDec').append(value[1]);
+            });
+            break;
+        case 'refreshValues':
+            $('#getRa').empty();
+            $('#getDec').empty();
+            $.each(data, function(key, value) {
+                $('#getRa').append(value[0]);
+                $('#getDec').append(value[1]);
             });
             break;
         case 'test':
@@ -130,7 +138,11 @@ function test() {
 }
 function setRaDec() {
     var search = {};
-    search["value"] = $("#ra").val();
-    search["value2"] = $("#dec").val();
+    search["value"] = $("#setRa").val();
+    search["value2"] = $("#setDec").val();
     sendAjax(search,'setRaDec','setRaDec');  
+}
+function refreshValues() {
+    var search = {};
+    sendAjax(search,'refreshValues','refreshValues');  
 }

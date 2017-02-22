@@ -6,8 +6,6 @@
 package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,10 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import unlp.rastrosoft.web.jsonview.Views;
 import unlp.rastrosoft.web.model.AjaxResponse;
 import unlp.rastrosoft.web.model.ExecuteCriteriaTwoValues;
-import unlp.rastrosoft.web.model.SearchCriteria;
 import unlp.rastrosoft.web.model.Telescope;
-import unlp.rastrosoft.web.model.connect_indi;
-import unlp.rastrosoft.web.model.indi_client;
 
 /**
  *

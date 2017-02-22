@@ -11,6 +11,9 @@ package unlp.rastrosoft.web.model;
  */
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.logging.Logger;
 import laazotea.indi.Constants;
 import laazotea.indi.Constants.SwitchStatus;
 import laazotea.indi.client.*;
+import unlp.rastrosoft.web.controller.SSEController;
 
 
 public class indi_client implements INDIServerConnectionListener, INDIDeviceListener, INDIPropertyListener {
@@ -85,7 +89,8 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	}
 	
 	public void propertyChanged(INDIProperty property) {
-	    //System.out.println("Property Changed: " + property.getNameStateAndValuesAsString());               
+	    //System.out.println("Property Changed: " + property.getNameStateAndValuesAsString()); 
+            
 	}	
 	
 	public void newProperty(INDIDevice device, INDIProperty property) {

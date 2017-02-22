@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import unlp.rastrosoft.web.model.AjaxResponse;
 import unlp.rastrosoft.web.model.Ccd;
+import unlp.rastrosoft.web.model.ExecuteCriteriaTwoValues;
+import unlp.rastrosoft.web.model.Telescope;
 
 @RestController
 public class AjaxController {
@@ -283,6 +285,21 @@ public class AjaxController {
                 cliente.takePreview();
 		return result;
 	}
+        
+        
+        @JsonView(Views.Public.class)
+        @RequestMapping(value = "/refreshValues", method=RequestMethod.POST)
+        public AjaxResponse refreshValues(@RequestBody SearchCriteria search) {
+
+            AjaxResponse result = new AjaxResponse();
+
+            Telescope telescope = new Telescope();
+            
+            result.setElementos(telescope.getRaDec());
+            
+            return result;
+
+        }
         
         
 }

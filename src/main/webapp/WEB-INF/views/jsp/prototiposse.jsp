@@ -46,7 +46,7 @@
 <script>
 	
         function test() {
-                var source = new EventSource('SSEController');
+                var source = new EventSource('SSEController1?par=true');
                 source.onopen = function(event) {
                     console.log("eventsource opened!");
                 };

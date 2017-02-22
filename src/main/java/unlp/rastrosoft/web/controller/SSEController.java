@@ -53,7 +53,7 @@ public class SSEController extends HttpServlet {
             out = res.getWriter();
             String next = "data: " + 
               String.valueOf(random.nextInt(100) + 1) +
-              "num of clients = " + longReqs.size() + "\n\n";
+              "holllaa = " + longReqs.size() + "\n\n";
             out.write(next);
             //checkError calls flush, 
             //and flush() does not throw IOException

@@ -57,6 +57,9 @@
 			searchViaAjax();
 
 		});
+                setInterval(function() {
+                        refreshValues();
+                  }, 200);
 
 	});
         
@@ -203,6 +206,7 @@
                      <option>Plutón</option>
                    </select>
                  </div>
+                            
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon joystick">
@@ -218,15 +222,17 @@
                                 <button class="icon joystick-down">
                                     <i class="fa fa-angle-down" aria-hidden="true" ></i>
                                 </button>
-                        </div>
-                        <input id="ra" type="text" class="form-control" placeholder="RA"/>
+                        </div>                        
+                        <input id="setRa" type="text" class="form-control" placeholder="RA"/>
                         <span class="input-group-addon">-</span>
-                        <input id="dec" type="text" class="form-control" placeholder="DEC"/>
+                        <input id="setDec" type="text" class="form-control" placeholder="DEC"/>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" onclick="setRaDec();" >Go!</button>
                         </span>                            
-                    </div>                        
+                    </div>  
+                    <span style="float:right; font-weight: 300; font-size: 12px; color: grey">RA: <span id="getRa">13</span> - DEC: <span id="getDec">13</span></span>
                 </div>
+                <div style="clear: both"></div>
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
