@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import unlp.rastrosoft.web.jsonview.Views;
 import unlp.rastrosoft.web.model.AjaxResponse;
+import unlp.rastrosoft.web.model.ExecuteCriteriaTwoValues;
 import unlp.rastrosoft.web.model.SearchCriteria;
+import unlp.rastrosoft.web.model.Telescope;
 import unlp.rastrosoft.web.model.connect_indi;
 import unlp.rastrosoft.web.model.indi_client;
 
@@ -25,26 +27,20 @@ import unlp.rastrosoft.web.model.indi_client;
 @RestController
 public class AjaxTelescope {
     @JsonView(Views.Public.class)
-    @RequestMapping(value = "/buscarValor2", method=RequestMethod.POST)
-    public AjaxResponse getValorViaAjax2(@RequestBody SearchCriteria search) {
+    @RequestMapping(value = "/setRaDec", method=RequestMethod.POST)
+    public AjaxResponse getValorViaAjax2(@RequestBody ExecuteCriteriaTwoValues execute) {
 
         AjaxResponse result = new AjaxResponse();
-
-        indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
-
-        String device, property, element, value;
-
-        device = search.getDevice();
-        property = search.getProperty();
-        element = search.getElement();            
-        value = cliente.enviar_mensaje(device, property, element);
-
-        List<String> elementos = new ArrayList<>();
-        elementos.add(value);
-        result.setElementos(elementos);                    
-
-
-
+        
+        String ra, dec;       
+        ra = execute.getValue();
+        dec = execute.getValue2();
+        
+        Telescope telescope = new Telescope();
+        if (telescope.setRaDec(ra, dec)){
+            result.setElementos(telescope.getRaDec());
+        }
+        
         //AjaxResponse will be converted into json format and send back to client.
         return result;
 

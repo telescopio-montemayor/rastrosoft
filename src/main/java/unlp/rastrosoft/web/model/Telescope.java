@@ -5,6 +5,9 @@
  */
 package unlp.rastrosoft.web.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author ip300
@@ -45,5 +48,12 @@ public class Telescope extends Device {
         cliente.commitDoubleValor(dispositivo, "EQUATORIAL_EOD_COORD", "DEC", dec);
         cliente.pushValor(dispositivo, "EQUATORIAL_EOD_COORD");
         return true;
+    }
+    public List<String> getRaDec(){        
+        List<String> result = new ArrayList<>();
+        cliente = connect_indi.connect(dispositivo);
+        result.add(cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "RA"));
+        result.add(cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "DEC"));
+        return result;
     }
 }

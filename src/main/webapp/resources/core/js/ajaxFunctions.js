@@ -63,7 +63,15 @@ function displayTipo(data, tipo) {
                     $("#previewImage").append(img);
                 }
             });
-            break;    
+            break; 
+        case 'setRaDec':
+            $('#ra').empty();
+            $('#dec').empty();
+            $.each(data, function(key, value) {
+                $('#ra').val(value[0]);
+                $('#dec').val(value[1]);
+            });
+            break;
         case 'test':
             break;
         default:
@@ -119,4 +127,10 @@ function pushValor() {
 function test() {
     var search = {};
     sendAjax(search,'test','test');  
+}
+function setRaDec() {
+    var search = {};
+    search["value"] = $("#ra").val();
+    search["value2"] = $("#dec").val();
+    sendAjax(search,'setRaDec','setRaDec');  
 }

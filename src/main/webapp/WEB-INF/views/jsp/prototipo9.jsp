@@ -219,11 +219,11 @@
                                     <i class="fa fa-angle-down" aria-hidden="true" ></i>
                                 </button>
                         </div>
-                        <input type="text" class="form-control" placeholder="RA"/>
+                        <input id="ra" type="text" class="form-control" placeholder="RA"/>
                         <span class="input-group-addon">-</span>
-                        <input type="text" class="form-control" placeholder="DEC"/>
+                        <input id="dec" type="text" class="form-control" placeholder="DEC"/>
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" >Go!</button>
+                            <button class="btn btn-default" type="button" onclick="setRaDec();" >Go!</button>
                         </span>                            
                     </div>                        
                 </div>
