@@ -14,7 +14,6 @@ import unlp.rastrosoft.web.model.AjaxResponseBodyIndiExecute;
 import unlp.rastrosoft.web.model.AjaxResponseBodyIndiListaDispositivos;
 import unlp.rastrosoft.web.model.AjaxResponseBodyIndiListaElementos;
 import unlp.rastrosoft.web.model.AjaxResponseBodyIndiListaPropiedades;
-import unlp.rastrosoft.web.model.AjaxResponseBodyIndiValor;
 import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.SearchCriteria;
 import unlp.rastrosoft.web.model.connect_indi;
@@ -23,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import unlp.rastrosoft.web.model.AjaxResponse;
 import unlp.rastrosoft.web.model.Ccd;
 
 @RestController
@@ -173,44 +174,59 @@ public class AjaxController {
 
 	}
         
+//        @JsonView(Views.Public.class)
+//	@RequestMapping(value = "/buscarValor", method=RequestMethod.POST)
+//	public AjaxResponseBodyIndiValor getValorViaAjax(@RequestBody SearchCriteria search) {
+//
+//		AjaxResponseBodyIndiValor result = new AjaxResponseBodyIndiValor();
+//
+//                if (isValidSearchCriteria(search)) {
+//			
+//                    indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
+//
+//                    String device, property, element, value;
+//
+//                    device = search.getDevice();
+//                    property = search.getProperty();
+//                    element = search.getElement();            
+//                    value = cliente.enviar_mensaje(device, property, element);
+//                    result.setValor(value);
+//			
+//		}
+//
+//		//AjaxResponseBody will be converted into json format and send back to client.
+//		return result;
+//
+//	}
+//        
         @JsonView(Views.Public.class)
 	@RequestMapping(value = "/buscarValor", method=RequestMethod.POST)
-	public AjaxResponseBodyIndiValor getValorViaAjax(@RequestBody SearchCriteria search) {
+	public AjaxResponse getValorViaAjax(@RequestBody SearchCriteria search) {
 
-		AjaxResponseBodyIndiValor result = new AjaxResponseBodyIndiValor();
+            AjaxResponse result = new AjaxResponse();
 
-                if (isValidSearchCriteria(search)) {
-			
-                    indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
+            if (isValidSearchCriteria(search)) {
 
-                    String device, property, element, value;
+                indi_client cliente = connect_indi.connect("Telescope Simulator", "CCD Simulator", "Focuser Simulator");
 
-                    device = search.getDevice();
-                    property = search.getProperty();
-                    element = search.getElement();            
-                    value = cliente.enviar_mensaje(device, property, element);
-                    result.setValor(value);
-			
-		}
+                String device, property, element, value;
 
-		//AjaxResponseBody will be converted into json format and send back to client.
-		return result;
+                device = search.getDevice();
+                property = search.getProperty();
+                element = search.getElement();            
+                value = cliente.enviar_mensaje(device, property, element);
+
+                List<String> elementos = new ArrayList<>();
+                elementos.add(value);
+                result.setElementos(elementos);                    
+
+            }
+
+            //AjaxResponse will be converted into json format and send back to client.
+            return result;
 
 	}
-        
-
-         @JsonView(Views.Public.class)
-	@RequestMapping(value = "/previewImage", method=RequestMethod.POST)
-	public AjaxResponseBodyIndiExecute getPreviewImageViaAjax(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
-
-		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
                 
-                Ccd cliente = new Ccd();
-                cliente.takePreview();
-                
-		return result;
-	}
-        
         @RequestMapping(value = "/getImage/{imageId}")
         @ResponseBody
         public byte[] getImage(@PathVariable long imageId, HttpServletRequest request)  {
@@ -267,5 +283,6 @@ public class AjaxController {
                 cliente.takePreview();
 		return result;
 	}
+        
         
 }
