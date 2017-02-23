@@ -48,7 +48,7 @@ public class Device {
     
     
     //VERIFICAR
-    private String decimalToTime (String decimal){
+    protected String decimalToTime (String decimal){
         double finalBuildTime = new Double (decimal);
         int hours = (int) finalBuildTime;
         int minutes = (int) (finalBuildTime * 60) % 60;
@@ -56,7 +56,7 @@ public class Device {
         return ( hours +":" + minutes + ":" + seconds ); 
     }
     //VERIFICAR
-    private String timeToDecimal (String time){
+    protected String timeToDecimal (String time){
        
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 

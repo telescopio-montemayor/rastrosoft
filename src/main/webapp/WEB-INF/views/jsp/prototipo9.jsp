@@ -8,7 +8,6 @@
 
 <c:url var="home" value="/" scope="request" />
 
-
 <spring:url value="/resources/core/css/bootstrap.min.css" var="bootstrapCss" />
 <link href="${bootstrapCss}" rel="stylesheet" />
 
@@ -31,7 +30,12 @@
 <spring:url value="/resources/core/font-awesome-4.7.0/css/font-awesome.min.css" var="fontawesomeCss" />
 <link href="${fontawesomeCss}" rel="stylesheet" />
 
-<script src="https://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js" integrity="sha256-Wp3wC/dKYQ/dCOUD7VUXXp4neLI5t0uUEF1pg0dFnAE=" crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js" integrity="sha256-Wp3wC/dKYQ/dCOUD7VUXXp4neLI5t0uUEF1pg0dFnAE=" crossorigin="anonymous"></script>-->
+
+<spring:url value="/resources/core/js/jquery.color.plus-names-2.1.2.min.js"
+	var="jqueryColorPlus" />
+<script src="${jqueryColorPlus}"></script>
+
 
 <spring:url value="/resources/core/js/ajaxFunctions.js"
 	var="ajaxFunctions" />

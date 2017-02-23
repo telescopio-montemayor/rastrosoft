@@ -52,8 +52,10 @@ public class Telescope extends Device {
     public List<String> getRaDec(){        
         List<String> result = new ArrayList<>();
         cliente = connect_indi.connect(dispositivo);
-        result.add(cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "RA"));
-        result.add(cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "DEC"));
+        String ra = this.decimalToTime(cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "RA"));
+        String dec = this.decimalToTime(cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "DEC"));
+        result.add(ra);
+        result.add(dec);
         return result;
     }
 }
