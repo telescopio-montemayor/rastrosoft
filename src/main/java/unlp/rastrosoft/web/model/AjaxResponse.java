@@ -16,6 +16,16 @@ public class AjaxResponse {
         public void setElementos(List<String> elementos) {
             this.elementos = elementos;
         }
+        
+        public void addElemento(String e){
+            this.elementos.add(e); 
+        }
+        
+        public void addElementos(List<String> elementos){
+            elementos.forEach((e) -> {
+                this.elementos.add(e);
+            });           
+        }
 
 	@Override
 	public String toString() {

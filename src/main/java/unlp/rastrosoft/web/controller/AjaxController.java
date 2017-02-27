@@ -31,9 +31,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import unlp.rastrosoft.web.model.AjaxResponse;
-import unlp.rastrosoft.web.model.Ccd;
-import unlp.rastrosoft.web.model.ExecuteCriteriaTwoValues;
+import unlp.rastrosoft.web.model.Database;
 import unlp.rastrosoft.web.model.Telescope;
+import unlp.rastrosoft.web.model.User;
+import unlp.rastrosoft.web.model.UserDB;
 
 @RestController
 public class AjaxController {
@@ -279,10 +280,12 @@ public class AjaxController {
 
 		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
                 
-                //Telescope cliente = new Telescope();
-                //cliente.setRaDec("10.345", "11.555");
-                Ccd cliente = new Ccd();
-                cliente.takePreview();
+                UserDB db = new UserDB();
+                db.connect();
+                //System.out.println(db.getUser("alex").getUserId());
+                User user = db.getUser("alex");
+                db.modifyUser(user.getUserId(), user.getUsername(), "00001", user.getRole());
+                
 		return result;
 	}
         
@@ -296,7 +299,11 @@ public class AjaxController {
             Telescope telescope = new Telescope();
             
             result.setElementos(telescope.getRaDec());
-            
+            result.addElemento(telescope.getPark());
+            result.addElemento(telescope.getUnPark());
+            result.addElemento(telescope.getTrak());
+            result.addElemento(telescope.getSlew());
+            result.addElemento(telescope.getSync());
             return result;
 
         }

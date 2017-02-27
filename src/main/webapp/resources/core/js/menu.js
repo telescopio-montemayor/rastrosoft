@@ -185,7 +185,7 @@ init_menu();
 			removeClass.call(this, value);
 		}
 		return this;
-	}
+	};
 
 })(jQuery.fn.removeClass);
 
@@ -200,10 +200,12 @@ function init_menu(){
 function loading_effect_preview(bool){
     $('#previewImage').toggleClass('loading-icon');    
     if (bool){
+        $('#button-preview').prop( "disabled", true );
         $('#preview').css('display','none');
         $('#loading').fadeIn( "slow" );
        
     }else{
+        $('#button-preview').prop( "disabled", false );
         $('#loading').css('display','none');
         $('#preview').fadeIn( "slow" );        
     }

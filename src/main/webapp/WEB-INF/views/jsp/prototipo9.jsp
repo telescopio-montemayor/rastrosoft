@@ -61,9 +61,9 @@
 			searchViaAjax();
 
 		});
-                setInterval(function() {
-                        refreshValues();
-                  }, 200);
+//                setInterval(function() {
+//                        refreshValues();
+//                  }, 200);
 
 	});
         
@@ -246,7 +246,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-camera fa-fw"></i></span>
-                        <button class="form-control logout-icon" type="button" onclick="takePreviewImage();">Take preview</button>
+                        <button id="button-preview" class="form-control logout-icon" type="button" onclick="takePreviewImage();">Take preview</button>
                     </div>
                 </div>
                 <div class="form-group">

@@ -58,4 +58,24 @@ public class Telescope extends Device {
         result.add(dec);
         return result;
     }
+    public String getPark(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "TELESCOPE_PARK", "PARK"));
+    }
+    public String getUnPark(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "TELESCOPE_PARK", "UNPARK"));
+    }
+    public String getTrak(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "ON_COORD_SET", "TRACK"));
+    }
+    public String getSlew(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "ON_COORD_SET", "SLEW"));
+    }
+    public String getSync(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "ON_COORD_SET", "SYNC"));
+    }
 }
