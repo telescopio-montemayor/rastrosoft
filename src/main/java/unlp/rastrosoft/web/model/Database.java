@@ -12,7 +12,15 @@ import com.mysql.cj.jdbc.MysqlDataSource;
  * @author ip300
  */
 public class Database {
-    protected MysqlDataSource dataSource;
+    public MysqlDataSource dataSource;
+
+    public MysqlDataSource getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(MysqlDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public Database() {
         this.dataSource = null;
