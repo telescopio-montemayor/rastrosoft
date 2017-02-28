@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.*;
+import unlp.rastrosoft.web.model.Database;
 
 @EnableWebSecurity
 public class SecurityConfig {
@@ -23,12 +24,9 @@ public class SecurityConfig {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         
         MysqlDataSource dataSource;
-        dataSource = new MysqlDataSource();
-        dataSource.setUser("root");
-        dataSource.setPassword("");
-        dataSource.setServerName("localhost");
-        dataSource.setPort(3306);
-        dataSource.setDatabaseName("rastrosoft");
+        Database db = new Database();
+        db.connect();
+        dataSource = db.getDataSource();
         
         auth.jdbcAuthentication().dataSource((DataSource)dataSource)
 		.usersByUsernameQuery(

@@ -7,11 +7,15 @@ package unlp.rastrosoft.web.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 /**
  *
  * @author ip300
  */
+
 public class Telescope extends Device {
     
     public Telescope (){

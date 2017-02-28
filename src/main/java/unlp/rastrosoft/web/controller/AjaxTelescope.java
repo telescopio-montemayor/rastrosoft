@@ -6,6 +6,8 @@
 package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,9 +22,11 @@ import unlp.rastrosoft.web.model.Telescope;
  * @author ip300
  */
 @RestController
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class AjaxTelescope {
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/setRaDec", method=RequestMethod.POST)
+    @Secured("ROLE_ADVANCED")
     public AjaxResponse getValorViaAjax2(@RequestBody ExecuteCriteriaTwoValues execute) {
 
         AjaxResponse result = new AjaxResponse();

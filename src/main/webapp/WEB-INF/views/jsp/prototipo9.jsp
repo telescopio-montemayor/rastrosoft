@@ -61,9 +61,9 @@
 			searchViaAjax();
 
 		});
-//                setInterval(function() {
-//                        refreshValues();
-//                  }, 200);
+                setInterval(function() {
+                        refreshValues();
+                  }, 200);
 
 	});
         
