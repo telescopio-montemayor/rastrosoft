@@ -7,6 +7,8 @@ package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +23,11 @@ import unlp.rastrosoft.web.model.ExecuteCriteria;
  * @author ip300
  */
 @RestController
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AjaxCcd {
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/previewImage", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponseBodyIndiExecute getPreviewImageViaAjax(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
 
         AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();

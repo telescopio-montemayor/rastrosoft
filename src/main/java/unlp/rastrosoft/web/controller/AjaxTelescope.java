@@ -6,7 +6,7 @@
 package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +22,11 @@ import unlp.rastrosoft.web.model.Telescope;
  * @author ip300
  */
 @RestController
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AjaxTelescope {
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/setRaDec", method=RequestMethod.POST)
-    @Secured("ROLE_ADVANCED")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
     public AjaxResponse getValorViaAjax2(@RequestBody ExecuteCriteriaTwoValues execute) {
 
         AjaxResponse result = new AjaxResponse();
@@ -40,7 +40,6 @@ public class AjaxTelescope {
             result.setElementos(telescope.getRaDec());
         }
         
-        //AjaxResponse will be converted into json format and send back to client.
         return result;
 
     }
