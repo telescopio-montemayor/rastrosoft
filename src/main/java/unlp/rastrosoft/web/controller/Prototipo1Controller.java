@@ -52,4 +52,8 @@ public class Prototipo1Controller {
 	public String prototiposse(ModelMap model) {                  
 		return "prototiposse";
 	}
+        @RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(ModelMap model) {                  
+		return "login";
+	}
 }

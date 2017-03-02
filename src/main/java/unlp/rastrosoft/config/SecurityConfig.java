@@ -39,13 +39,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .withUser("user").password("password").roles("USER");
     }
     
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 //        http
 //            .authorizeRequests()
 //                .anyRequest().authenticated()
 //                .and()
 //            .formLogin()
 //                .loginPage("/login");
-//    }
+        http.authorizeRequests()
+        .antMatchers("/login").permitAll()
+        .and().formLogin().loginPage("/login")
+        .usernameParameter("ssoId").passwordParameter("password")
+        .and().csrf();
+    }
 }
