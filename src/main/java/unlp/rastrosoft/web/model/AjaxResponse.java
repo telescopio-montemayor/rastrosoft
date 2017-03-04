@@ -1,6 +1,7 @@
 package unlp.rastrosoft.web.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import java.util.ArrayList;
 import unlp.rastrosoft.web.jsonview.Views;
 import java.util.List;
 
@@ -9,6 +10,10 @@ public class AjaxResponse {
 	@JsonView(Views.Public.class)
 	List<String> elementos;
 
+        public AjaxResponse(){
+            this.elementos = new ArrayList<>();
+        }
+        
         public List<String> getElementos() {
             return elementos;
         }

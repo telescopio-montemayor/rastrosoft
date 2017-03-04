@@ -80,6 +80,12 @@ function displayTipo(data, tipo) {
                 $('#getDec').append(value[1]);
             });
             break;
+        case 'getUsername':
+            $('#username').empty();            
+            $.each(data, function(key, value) {
+                $('#username').append(value[0]);                
+            });
+            break;
         case 'test':
             break;
         default:
@@ -145,4 +151,9 @@ function setRaDec() {
 function refreshValues() {
     var search = {};
     sendAjax(search,'refreshValues','refreshValues');  
+}
+
+function getUsername() {
+    var search = {};
+    sendAjax(search,'getUsername','getUsername');  
 }

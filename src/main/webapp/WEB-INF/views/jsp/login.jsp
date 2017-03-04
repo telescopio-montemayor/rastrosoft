@@ -31,12 +31,19 @@
 	var="jqueryColorPlus" />
 <script src="${jqueryColorPlus}"></script>
 
+<spring:url value="/resources/core/css/calendar.css" var="calendarCss" />
+<link href="${calendarCss}" rel="stylesheet" />
+<spring:url value="/resources/core/js/calendar.js"
+	var="calendarJs" />
+<script src="${calendarJs}"></script>
 
 </head>
 
 <body>
+
     <div class="container">
         <div class="login-form">
+            
             <c:url var="loginUrl" value="/login" />
             <form action="${loginUrl}" method="post" class="form-horizontal">
                 <c:if test="${param.error != null}">
@@ -64,7 +71,9 @@
                         class="btn btn-block btn-primary btn-default" value="Log in">
                 </div>
             </form>
+           
         </div>
+                
     </div>
 </body>
   

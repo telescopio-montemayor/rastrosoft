@@ -56,4 +56,8 @@ public class Prototipo1Controller {
 	public String login(ModelMap model) {                  
 		return "login";
 	}
+        @RequestMapping(value = "/prototipo10", method = RequestMethod.GET)
+	public String printWelcome10(ModelMap model) {                  
+		return "prototipo10";
+	}
 }

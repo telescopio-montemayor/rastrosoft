@@ -27,7 +27,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -288,17 +291,32 @@ public class AjaxController {
                 db.modifyUser(user.getUserId(), user.getUsername(), "00001", user.getRole());
                 
 		return result;
+
 	}
         
+        @JsonView(Views.Public.class)
+        @RequestMapping(value = "/getUsername", method=RequestMethod.POST)
+        public AjaxResponse getUsername(@RequestBody SearchCriteria search) {            
+            
+            AjaxResponse result = new AjaxResponse();
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (!(authentication instanceof AnonymousAuthenticationToken)) {
+                String currentUserName = authentication.getName();
+                result.addElemento(currentUserName);            
+            }
+            return result;
+        }
         
         @JsonView(Views.Public.class)
         @RequestMapping(value = "/refreshValues", method=RequestMethod.POST)
         public AjaxResponse refreshValues(@RequestBody SearchCriteria search) {
-
+            
+            
             AjaxResponse result = new AjaxResponse();
 
             Telescope telescope = new Telescope();
-            
+                
             result.setElementos(telescope.getRaDec());
             result.addElemento(telescope.getPark());
             result.addElemento(telescope.getUnPark());
@@ -308,6 +326,5 @@ public class AjaxController {
             return result;
 
         }
-        
         
 }

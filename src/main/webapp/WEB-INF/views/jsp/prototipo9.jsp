@@ -1,6 +1,7 @@
 <%@page session="false"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,7 +61,8 @@
 
 			searchViaAjax();
 
-		});
+		});       
+                getUsername();
                 setInterval(function() {
                         refreshValues();
                   }, 200);
@@ -157,6 +159,7 @@
                     <span>Opciones</span>
                 </div>         
                 <p></p>
+                <span>Conectado como: <i id="username" style="color:green;">...</i></span>
                 <div class="form-group">
                     <div class="form-group">
                         <div class="input-group">
@@ -314,19 +317,18 @@
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-folder-o fa-fw"></i></span>
                     <input type="text" class="form-control" id="uploadDirectory" placeholder="Set upload directory">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" onclick="" >Set</button>
+                    </span>   
                 </div>
             </div>
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-file-image-o fa-fw"></i></span>
                     <input type="text" class="form-control" id="uploadPrefix" placeholder="Set prefix">
-                </div>
-            </div>                
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
-                    <input type="number" class="form-control" id="exposureTime" placeholder="Exposure">
-                    <span class="input-group-addon">Seconds</span>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" onclick="" >Set</button>
+                    </span>     
                 </div>
             </div>
             <div class="form-group">
@@ -351,8 +353,10 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-thermometer-half fa-fw"></i></span>
-                    <input type="number" class="form-control" id="exposureTime" placeholder="Temperature">
-                    <span class="input-group-addon">°C</span>
+                    <input type="number" class="form-control" id="exposureTime" placeholder="Temperature">                    
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">°C</button>
+                    </span>  
                 </div>
             </div>
             <div class="form-group">
@@ -364,6 +368,13 @@
                         <button class="btn btn-default" type="button">Set</button>
                     </span>                            
                 </div>  
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
+                    <input type="number" class="form-control" id="exposureTime" placeholder="Exposure">
+                    <span class="input-group-addon">Seconds</span>
+                </div>
             </div>
             <div class="form-group">
                 <div class="input-group">
@@ -397,7 +408,9 @@
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
                     <input type="number" class="form-control" id="exposureTime" placeholder="Focus timer">
-                    <span class="input-group-addon">Seconds</span>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Seconds</button>
+                    </span>  
                 </div>
             </div>
             <div class="form-group">
