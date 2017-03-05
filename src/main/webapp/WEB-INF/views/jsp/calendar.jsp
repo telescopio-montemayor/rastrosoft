@@ -53,7 +53,8 @@
             
 <!--            <div id="my-calendar"></div>-->
             <h3>Set options runtime DateTimePicker</h3>
-            <input type="text" id="datetimepicker7"/>
+            <input type="text" id="datetimepicker"/>
+            <input type="button" onclick="changeDisableDate('[\'05-03-2017 16:00\',\'05-03-2017 15:00\']');"
         </div>
                 
     </div>
@@ -73,12 +74,23 @@ var logic = function( currentDateTime ){
 		});
 };
 
-var desableDateTimeList = ['05-03-2017 15:00','05-03-2017 20:00','06-03-2017 15:00' ];
-
-$('#datetimepicker7').datetimepicker({
+var disableDateTimeList = ['05-03-2017 15:00','05-03-2017 20:00','06-03-2017 15:00' ];
+function changeDisableDate( disableDate ){
+    jQuery('#datetimepicker').datetimepicker('destroy');
+//    disableDate = ['05-03-2017 16:00'];
+    disableDateTimeList = disableDate;
+    jQuery('#datetimepicker').datetimepicker({
 	onChangeDateTime:logic,
 	onShow:logic,
-        disabledDates: desableDateTimeList,
+        disabledDates: disableDateTimeList,
+        formatDate:'d-m-Y H:i'
+        });
+}
+
+$('#datetimepicker').datetimepicker({
+	onChangeDateTime:logic,
+	onShow:logic,
+        disabledDates: disableDateTimeList,
         formatDate:'d-m-Y H:i'
 });
 
