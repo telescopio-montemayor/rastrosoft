@@ -553,13 +553,13 @@ $.fn.zabuto_calendar_defaults = function () {
     var year = now.getFullYear();
     var month = now.getMonth() + 1;
     var settings = {
-        language: false,
+        language: 'en',
         year: year,
         month: month,
         show_previous: true,
         show_next: true,
         cell_border: false,
-        today: false,
+        today: true,
         show_days: true,
         weekstartson: 1,
         nav_icon: false,
@@ -590,6 +590,12 @@ $.fn.zabuto_calendar_language = function (lang) {
             return {
                 month_labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
                 dow_labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+            };
+            break;
+        case 'es':
+            return {
+                month_labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "October", "Noviembre", "Deciembre"],
+                dow_labels: ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"]
             };
             break;
 

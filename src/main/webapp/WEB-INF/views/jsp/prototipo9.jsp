@@ -258,8 +258,8 @@
                         <button class="form-control logout-icon" type="button">Download</button>
                     </div>
                 </div>
-                <div style="float: left; padding-top: 140%;"><button onClick="fade();" class="btn btn-default">Modo escuela</button></div>
-                <div style="float: right;  padding-top: 140%;"><button onClick="test();" class="btn btn-default">TEST</button></div>
+                <div style="float: left; padding-top: 130%;"><button onClick="fade();" class="btn btn-default">Modo escuela</button></div>
+                <div style="float: right;  padding-top: 130%;"><button onClick="test();" class="btn btn-default">TEST</button></div>
         </aside>
     </div>
     <div class="col-md-8">  
