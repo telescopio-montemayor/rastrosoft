@@ -43,9 +43,7 @@
 <script src="${datetimepickerJs}"></script>
 
 
-
 </head>
-
 <body>
 
     <div class="container">
@@ -62,39 +60,21 @@
   
 <script>
 
-
-var logic = function( currentDateTime ){
-	if (currentDateTime && currentDateTime.getDay() == 6){
-		this.setOptions({
-			minTime:'11:00'
-		});
-	}else
-		this.setOptions({
-			minTime:'8:00'
-		});
-};
-
-var disableDateTimeList = ['05-03-2017 15:00','05-03-2017 20:00','06-03-2017 15:00' ];
 function changeDisableDate( disableDate ){
     jQuery('#datetimepicker').datetimepicker('destroy');
-//    disableDate = ['05-03-2017 16:00'];
     disableDateTimeList = disableDate;
     jQuery('#datetimepicker').datetimepicker({
-	onChangeDateTime:logic,
-	onShow:logic,
         disabledDates: disableDateTimeList,
-        formatDate:'d-m-Y H:i'
-        });
+        format:'d-m-Y H:i',
+        minDate:0,
+        minTime:0
+    });
 }
 
-$('#datetimepicker').datetimepicker({
-	onChangeDateTime:logic,
-	onShow:logic,
-        disabledDates: disableDateTimeList,
-        formatDate:'d-m-Y H:i'
+jQuery(document).ready(function($) {     
+    var disableDateTimeList = ['05-03-2017 15:00','05-03-2017 20:00','06-03-2017 15:00' ];
+    changeDisableDate( disableDateTimeList );
 });
-
-
 
 </script>
 </html>

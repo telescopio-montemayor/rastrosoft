@@ -31,8 +31,6 @@
 <spring:url value="/resources/core/font-awesome-4.7.0/css/font-awesome.min.css" var="fontawesomeCss" />
 <link href="${fontawesomeCss}" rel="stylesheet" />
 
-<!--<script src="https://code.jquery.com/color/jquery.color.plus-names-2.1.2.min.js" integrity="sha256-Wp3wC/dKYQ/dCOUD7VUXXp4neLI5t0uUEF1pg0dFnAE=" crossorigin="anonymous"></script>-->
-
 <spring:url value="/resources/core/js/jquery.color.plus-names-2.1.2.min.js"
 	var="jqueryColorPlus" />
 <script src="${jqueryColorPlus}"></script>
@@ -44,6 +42,11 @@
 <spring:url value="/resources/core/js/notifyFunctions.js"
 	var="notifyFunctions" />
 <script src="${notifyFunctions}"></script>
+
+<spring:url value="/resources/core/css/jquery.datetimepicker.css" var="datetimepickerCss" />
+<link href="${datetimepickerCss}" rel="stylesheet" />
+<spring:url value="/resources/core/js/jquery.datetimepicker.full.js" var="datetimepickerJs" />
+<script src="${datetimepickerJs}"></script>
 
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -135,6 +138,22 @@
             $('#cine-button').toggleClass('white');
         }
         
+        function changeDisableDate( disableDate ){
+            jQuery('#datetimepicker').datetimepicker('destroy');
+            disableDateTimeList = disableDate;
+            jQuery('#datetimepicker').datetimepicker({
+                disabledDates: disableDateTimeList,
+                format:'d-m-Y H:i',
+                minDate:0,
+                minTime:0
+            });
+        }
+
+        jQuery(document).ready(function($) {     
+            var disableDateTimeList = ['05-03-2017 15:00','05-03-2017 20:00','06-03-2017 15:00' ];
+            changeDisableDate( disableDateTimeList );
+        });
+
 
 </script>
 
@@ -175,7 +194,10 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-                        <input type="date" class="form-control" id="turno" placeholder="01/01/2017">
+                        <input type="text" class="form-control" id="datetimepicker" placeholder="Turnos"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" onclick="" >Set</button>
+                        </span>  
                     </div>
                 </div>  
                 <div class="form-group">
