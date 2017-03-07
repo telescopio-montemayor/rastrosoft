@@ -2312,9 +2312,6 @@ var DateFormatter;
 							}
                                                         
 //<<<<--------------------------------------------------ESTO ES LO QUE AGREGO PARA QUE FUNCIONE DESHABILITAR FECHA Y HORA-------------------------------------------------
-//                                                        if (options.disabledDates.indexOf(dateHelper.formatDate(optionDateTime, options.formatDate)) !== -1) {
-//                                                                classes.push('xdsoft_disabled');
-//                                                        }   
                                                         if (options.disabledDates.indexOf(dateHelper.formatDate(optionDateTime, options.formatDate2)) !== -1) {
                                                                 classes.push('xdsoft_disabled');
                                                         }
