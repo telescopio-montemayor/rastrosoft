@@ -89,7 +89,9 @@ function displayTipo(data, tipo) {
         case 'getShifts':
             var shifts = [];           
             $.each(data, function(key, value) {
-                shifts.push(value[0]);
+                for (i=0;i<value.length;i++){                    
+                    shifts.push(value[i]);
+                }
             });
             changeDisableDate( shifts );
             break;    

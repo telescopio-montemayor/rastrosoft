@@ -145,15 +145,15 @@
                 disabledDates: disableDate,
                 minDate:0,
                 format:'d-m-Y H:i',
-                formatDate2:'d-m-Y H:i'
+                formatDate2:'Y-m-d H:i'
             });            
             
         }
 
         jQuery(document).ready(function($) {     
-            var disableDateTimeList = ['08-03-2017 15:00','09-03-2017 20:00','10-03-2017 15:00', '11-03-2017 11:00'];
-            changeDisableDate( disableDateTimeList );
-            //getShifts();         
+//            var disableDateTimeList = ['08-03-2017 15:00','09-03-2017 20:00','10-03-2017 15:00', '11-03-2017 11:00'];
+//            changeDisableDate( disableDateTimeList );
+            getShifts();         
         });
         
 

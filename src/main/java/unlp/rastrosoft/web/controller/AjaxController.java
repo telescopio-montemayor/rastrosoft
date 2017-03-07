@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -318,7 +319,7 @@ public class AjaxController {
             
             CalendarDB shifts = new CalendarDB();    
             shifts.connect();
-            result.addElementos(shifts.getShifts());
+            result.addElementos(shifts.getShifts(LocalDateTime.now().toString()));
             return result;
         }
         
