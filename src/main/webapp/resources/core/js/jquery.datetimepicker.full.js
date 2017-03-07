@@ -2293,12 +2293,7 @@ var DateFormatter;
 								classes.push('xdsoft_disabled');
 							}
                                                         
-//<<<<--------------------------------------------------ESTO ES LO QUE AGREGO PARA QUE FUNCIONE DESHABILITAR FECHA Y HORA-------------------------------------------------
-                                                        if (options.disabledDates.indexOf(dateHelper.formatDate(optionDateTime, options.formatDate)) !== -1) {
-                                                        classes.push('xdsoft_disabled');
-                                                        }   
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------------->>>>
-							current_time = new Date(_xdsoft_datetime.currentTime);
+                                                        current_time = new Date(_xdsoft_datetime.currentTime);
 							current_time.setHours(parseInt(_xdsoft_datetime.currentTime.getHours(), 10));
 
 							if (!isALlowTimesInit) {
@@ -2315,7 +2310,15 @@ var DateFormatter;
 							if (parseInt(today.getHours(), 10) === parseInt(h, 10) && parseInt(today.getMinutes(), 10) === parseInt(m, 10)) {
 								classes.push('xdsoft_today');
 							}
+                                                        
+//<<<<--------------------------------------------------ESTO ES LO QUE AGREGO PARA QUE FUNCIONE DESHABILITAR FECHA Y HORA-------------------------------------------------
+                                                        if (options.disabledDates.indexOf(dateHelper.formatDate(optionDateTime, options.formatDate)) !== -1) {
+                                                                classes.push('xdsoft_disabled');
+                                                        }   
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------->>>>
+							
 							time += '<div class="xdsoft_time ' + classes.join(' ') + '" data-hour="' + h + '" data-minute="' + m + '">' + dateHelper.formatDate(now, options.formatTime) + '</div>';
+                                                        
 						};
 
 						if (!options.allowTimes || !$.isArray(options.allowTimes) || !options.allowTimes.length) {

@@ -86,6 +86,13 @@ function displayTipo(data, tipo) {
                 $('#username').append(value[0]);                
             });
             break;
+        case 'getShifts':
+            var shifts = [];           
+            $.each(data, function(key, value) {
+                shifts.push(value[0]);
+            });
+            changeDisableDate( shifts );
+            break;    
         case 'test':
             break;
         default:
@@ -156,4 +163,9 @@ function refreshValues() {
 function getUsername() {
     var search = {};
     sendAjax(search,'getUsername','getUsername');  
+}
+
+function getShifts() {
+    var search = {};
+    sendAjax(search,'getShifts','getShifts');  
 }

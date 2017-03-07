@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>RastroSoft Test</title>
 
 <c:url var="home" value="/" scope="request" />
@@ -140,20 +141,28 @@
         
         function changeDisableDate( disableDate ){
             jQuery('#datetimepicker').datetimepicker('destroy');
-            disableDateTimeList = disableDate;
             jQuery('#datetimepicker').datetimepicker({
-                disabledDates: disableDateTimeList,
-                format:'d-m-Y H:i',
+                disabledDates: disableDate,
                 minDate:0,
-                minTime:0
-            });
+                format:'d-m-Y H:i',
+                formatDate:'d-m-Y H:i'
+            });            
+            
         }
 
         jQuery(document).ready(function($) {     
-            var disableDateTimeList = ['05-03-2017 15:00','05-03-2017 20:00','06-03-2017 15:00' ];
+            var disableDateTimeList = ['08-03-2017 15:00','09-03-2017 20:00','10-03-2017 15:00', '11-03-2017 11:00'];
             changeDisableDate( disableDateTimeList );
+            //getShifts();
+            $('#datetimepicker').change(function() {               
+//                $(this).animate( { color: '#3c763d', backgroundColor: '#dff0d8', borderColor: '#d6e9c6' }, {duration:100});
+                $(this).animate( { color: '#fff', backgroundColor: ' #33aaff', borderColor: '#d6e9c6' }, {duration:900});
+            });
+            $('#datetimepicker').blur(function() {
+                $(this).animate( { color: '#555', backgroundColor: '#fff', borderColor: '#ccc' }, {duration:300});
+            });
         });
-
+        
 
 </script>
 

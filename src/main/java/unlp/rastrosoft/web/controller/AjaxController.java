@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import unlp.rastrosoft.web.model.AjaxResponse;
+import unlp.rastrosoft.web.model.CalendarDB;
 import unlp.rastrosoft.web.model.Telescope;
 import unlp.rastrosoft.web.model.User;
 import unlp.rastrosoft.web.model.UserDB;
@@ -307,6 +308,20 @@ public class AjaxController {
             }
             return result;
         }
+        
+        @JsonView(Views.Public.class)
+        @RequestMapping(value = "/getShifts", method=RequestMethod.POST)
+        public AjaxResponse getShifts(@RequestBody SearchCriteria search) {            
+            
+            AjaxResponse result = new AjaxResponse();
+
+            
+            CalendarDB shifts = new CalendarDB();    
+            shifts.connect();
+            result.addElementos(shifts.getShifts());
+            return result;
+        }
+        
         
         @JsonView(Views.Public.class)
         @RequestMapping(value = "/refreshValues", method=RequestMethod.POST)
