@@ -145,7 +145,7 @@
                 disabledDates: disableDate,
                 minDate:0,
                 format:'d-m-Y H:i',
-                formatDate:'d-m-Y H:i'
+                formatDate2:'d-m-Y H:i'
             });            
             
         }
@@ -153,14 +153,7 @@
         jQuery(document).ready(function($) {     
             var disableDateTimeList = ['08-03-2017 15:00','09-03-2017 20:00','10-03-2017 15:00', '11-03-2017 11:00'];
             changeDisableDate( disableDateTimeList );
-            //getShifts();
-            $('#datetimepicker').change(function() {               
-//                $(this).animate( { color: '#3c763d', backgroundColor: '#dff0d8', borderColor: '#d6e9c6' }, {duration:100});
-                $(this).animate( { color: '#fff', backgroundColor: ' #33aaff', borderColor: '#d6e9c6' }, {duration:900});
-            });
-            $('#datetimepicker').blur(function() {
-                $(this).animate( { color: '#555', backgroundColor: '#fff', borderColor: '#ccc' }, {duration:300});
-            });
+            //getShifts();         
         });
         
 
