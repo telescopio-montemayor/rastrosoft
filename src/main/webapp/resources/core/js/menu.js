@@ -29,14 +29,30 @@
     }
     function toggle_right_size(){
         windowsize = $('#sidebarRight').width();
+        
         if (windowsize > 260) {
           $('#sidebarRight').css("min-width","260px");
           $('#sidebarRight').css("width","260px");
           $('#size-btn-toggle-right').removeClass('fa-angle-right').addClass('fa-angle-left');
+          
+          $('#sidebar-right-container').removeClass('container');
+          $('#sidebar-right-container').css("padding-top","");
+          $('.sidebar-box').css("float","");
+          $('.sidebar-box').css("margin-left","");
+          $('.form-group').css("width","");
+          $('#sidebar-preview').css("display","none");
         }else{
           $('#size-btn-toggle-right').removeClass('fa-angle-left').addClass('fa-angle-right');
           $('#sidebarRight').css("min-width","720px");
           $('#sidebarRight').css("width","100%");
+          
+          
+          $('#sidebar-right-container').addClass('container');
+          $('#sidebar-right-container').css("padding-top","50px");
+          $('.sidebar-box').css("float","left");
+          $('.sidebar-box').css("margin-left","50px");
+          $('.form-group').css("width","500px");
+          $('#sidebar-preview').css("display","block");
         }
     }
     $(document).ready(function() {

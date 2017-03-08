@@ -317,133 +317,142 @@
                 <span>Opciones avanzadas</span>
             </div>
             <div id="fade" class="fadebox"></div>
-            <label>Telescopio</label>
-            <div class="form-group">
-                <div class="input-group">
-                    <button class="form-control logout-icon" type="button">Park</button>
-                    <span class="input-group-addon"></span>
-                    <button class="form-control logout-icon selected" type="button">Unpark</button>
+            <div id="sidebar-right-container">
+                <div class="sidebar-box">
+                    <label>Telescopio</label>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <button class="form-control logout-icon" type="button">Park</button>
+                            <span class="input-group-addon"></span>
+                            <button class="form-control logout-icon selected" type="button">Unpark</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <button class="form-control logout-icon selected" type="button">Track</button>
+                            <span class="input-group-addon"></span>
+                            <button class="form-control logout-icon" type="button">Slew</button>
+                            <span class="input-group-addon"></span>
+                            <button class="form-control logout-icon" type="button">Sync</button>
+                        </div>
+                    </div>
+
+                    <label>CCD</label>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-folder-o fa-fw"></i></span>
+                            <input type="text" class="form-control" id="uploadDirectory" placeholder="Set upload directory">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="" >Set</button>
+                            </span>   
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-file-image-o fa-fw"></i></span>
+                            <input type="text" class="form-control" id="uploadPrefix" placeholder="Set prefix">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="" >Set</button>
+                            </span>     
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">                    
+                            <input type="number" class="form-control" placeholder="H"/>
+                            <span class="input-group-addon">-</span>
+                            <input type="number" class="form-control" placeholder="V"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Binning</button>
+                            </span>                            
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control">
+                         <option disabled selected value> -- select type -- </option>   
+                         <option>Light</option>
+                         <option>Bias</option>  
+                         <option>Dark</option>
+                         <option>Flat</option>
+                       </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-thermometer-half fa-fw"></i></span>
+                            <input type="number" class="form-control" id="exposureTime" placeholder="Temperature">                    
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">°C</button>
+                            </span>  
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">                    
+                            <input type="number" class="form-control" placeholder="Width"/>
+                            <span class="input-group-addon">-</span>
+                            <input type="number" class="form-control" placeholder="Height"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Set</button>
+                            </span>                            
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
+                            <input type="number" class="form-control" id="exposureTime" placeholder="Exposure">
+                            <span class="input-group-addon">Seconds</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
+                            <button class="form-control logout-icon" type="button">Abort exposure</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-play fa-fw"></i></span>
+                            <button class="form-control logout-icon" type="button">Capture</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <button class="form-control logout-icon selected" type="button">Track</button>
-                    <span class="input-group-addon"></span>
-                    <button class="form-control logout-icon" type="button">Slew</button>
-                    <span class="input-group-addon"></span>
-                    <button class="form-control logout-icon" type="button">Sync</button>
+                <div class="sidebar-box">
+                    <label>Focuser</label>
+                    <div class="form-group">
+                        <div class="input-group">                    
+                            <input type="number" class="form-control" placeholder="Ticks"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Set</button>
+                            </span>                            
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <button class="form-control logout-icon" type="button">Focus in</button>
+                            <span class="input-group-addon"></span>
+                            <button class="form-control logout-icon" type="button">Focus out</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
+                            <input type="number" class="form-control" id="exposureTime" placeholder="Focus timer">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Seconds</button>
+                            </span>  
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">                    
+                            <input type="number" class="form-control" placeholder="Seeing"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Set</button>
+                            </span>                            
+                        </div>  
+                    </div>
+                    <div id="sidebar-preview" class="form-group">
+                        <img src="/rastrosoft/resources/images/preview.jpg" id="" class="" width="100%" height="100%">
+                    </div>
                 </div>
-            </div>
-            
-            <label>CCD</label>
-            
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-folder-o fa-fw"></i></span>
-                    <input type="text" class="form-control" id="uploadDirectory" placeholder="Set upload directory">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="" >Set</button>
-                    </span>   
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-file-image-o fa-fw"></i></span>
-                    <input type="text" class="form-control" id="uploadPrefix" placeholder="Set prefix">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="" >Set</button>
-                    </span>     
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">                    
-                    <input type="number" class="form-control" placeholder="H"/>
-                    <span class="input-group-addon">-</span>
-                    <input type="number" class="form-control" placeholder="V"/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Binning</button>
-                    </span>                            
-                </div>  
-            </div>
-            <div class="form-group">
-                <select class="form-control">
-                 <option disabled selected value> -- select type -- </option>   
-                 <option>Light</option>
-                 <option>Bias</option>  
-                 <option>Dark</option>
-                 <option>Flat</option>
-               </select>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-thermometer-half fa-fw"></i></span>
-                    <input type="number" class="form-control" id="exposureTime" placeholder="Temperature">                    
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">°C</button>
-                    </span>  
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">                    
-                    <input type="number" class="form-control" placeholder="Width"/>
-                    <span class="input-group-addon">-</span>
-                    <input type="number" class="form-control" placeholder="Height"/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Set</button>
-                    </span>                            
-                </div>  
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
-                    <input type="number" class="form-control" id="exposureTime" placeholder="Exposure">
-                    <span class="input-group-addon">Seconds</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
-                    <button class="form-control logout-icon" type="button">Abort exposure</button>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-play fa-fw"></i></span>
-                    <button class="form-control logout-icon" type="button">Capture</button>
-                </div>
-            </div>
-            <label>Focuser</label>
-            <div class="form-group">
-                <div class="input-group">                    
-                    <input type="number" class="form-control" placeholder="Ticks"/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Set</button>
-                    </span>                            
-                </div>  
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <button class="form-control logout-icon" type="button">Focus in</button>
-                    <span class="input-group-addon"></span>
-                    <button class="form-control logout-icon" type="button">Focus out</button>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
-                    <input type="number" class="form-control" id="exposureTime" placeholder="Focus timer">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Seconds</button>
-                    </span>  
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">                    
-                    <input type="number" class="form-control" placeholder="Seeing"/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Set</button>
-                    </span>                            
-                </div>  
             </div>
         </aside>  
     </div>
