@@ -1018,19 +1018,24 @@ body {
     margin-left: 765px;
 }
 
-.container .sidebar-right-fullscreen {
-    padding-top: 50px;
+.container{
+    -webkit-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
 }
 
 
-.sidebar-box .sidebar-right-fullscreen {
-    float:left; 
-    margin-left:50px;
+.sidebar-box {
+    -webkit-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
 }
 
-.form-group .sidebar-right-fullscreen {
-    width:500px;
+.form-group {
+   -webkit-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
 }
 #sidebar-preview{
-        display: none;
+    display: none;
 }

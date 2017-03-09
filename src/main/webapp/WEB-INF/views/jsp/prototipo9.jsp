@@ -153,12 +153,20 @@
         jQuery(document).ready(function($) {     
 //            var disableDateTimeList = ['08-03-2017 15:00','09-03-2017 20:00','10-03-2017 15:00', '11-03-2017 11:00'];
 //            changeDisableDate( disableDateTimeList );
-            getShifts();         
+            getShifts();  
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf("MSIE ");
+            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
+            {
+                alert("Usted posee un navegador en desuso, por favor instale Firefox, Chrome o Microsoft Edge para poder tilizar este sitio.");
+                window.location = 'http://www.mozilla.org/firefox';
+            }
         });
         
 
 </script>
 
+ 
 </head>
 
 <body>
