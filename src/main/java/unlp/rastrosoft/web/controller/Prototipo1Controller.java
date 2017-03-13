@@ -60,4 +60,8 @@ public class Prototipo1Controller {
 	public String calendar(ModelMap model) {                  
 		return "calendar";
 	}
+        @RequestMapping(value = "/info", method = RequestMethod.GET)
+	public String info(ModelMap model) {                  
+		return "info";
+	}
 }

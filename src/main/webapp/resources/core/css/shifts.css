@@ -1,0 +1,22 @@
+.container{
+/*   max-width: 825px;*/
+}
+.shifts-picker{
+    margin-top: 50px;
+    text-align: center;
+}
+.table-shifts-{
+    max-height: 450px !important;
+    overflow-y: scroll;
+}
+.table-captures-{
+    max-height: 450px !important;
+    overflow-y: scroll;
+}
+#label-1{
+    font-size: 30px; 
+    display: none;
+}
+td,th{
+    text-align: center;
+}
