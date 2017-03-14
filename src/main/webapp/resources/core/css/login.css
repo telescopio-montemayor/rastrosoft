@@ -7,3 +7,7 @@
 .container{
     text-align: center;
 }
+.button{
+    float: left;
+    width:50%;
+}

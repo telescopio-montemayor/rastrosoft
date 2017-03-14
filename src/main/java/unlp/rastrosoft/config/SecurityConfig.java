@@ -49,4 +49,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .usernameParameter("ssoId").passwordParameter("password")
         .and().csrf();
     }
+    
 }

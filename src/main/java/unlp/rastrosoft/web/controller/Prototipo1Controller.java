@@ -1,5 +1,6 @@
 package unlp.rastrosoft.web.controller;
 
+import java.util.logging.Level;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +54,9 @@ public class Prototipo1Controller {
 		return "prototiposse";
 	}
         @RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(ModelMap model) {                  
+	public String login(ModelMap model) { 
+                java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
+                java.util.logging.Logger.getLogger("org.spring").setLevel(Level.OFF);
 		return "login";
 	}
         @RequestMapping(value = "/calendar", method = RequestMethod.GET)

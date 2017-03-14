@@ -67,8 +67,8 @@
                 <input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
 
                 <div class="form-actions">
-                    <input type="submit"
-                        class="btn btn-block btn-primary btn-default" value="Log in">
+                    <input type="submit" class="btn btn-primary btn-default button" value="Log in">
+                    <input type="button" class="btn btn-success btn-default button" value="Create account">
                 </div>
             </form>
            

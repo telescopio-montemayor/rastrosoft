@@ -84,11 +84,12 @@
             </div>  
 
         </div>
+        <div id="accordion">
         <div class="table-shifts">
-            <caption>Turnos otorgados</caption>
+            <h4 style="color:white" class="label-primary text-center">Turnos otorgados</h4>
             <table id="shifts" class="table">
-                <thead>
-                  <tr>
+                <thead>  
+                  <tr>                      
                     <th>#</th>
                     <th>Nombre</th>
                     <th>Fecha</th>
@@ -191,7 +192,7 @@
             </table>
         </div>
         <div class="table-captures">
-            <caption>Mis capturas</caption>
+            <h4 style="color:white" class="label-primary text-center">Mis capturas</h4>
             <table id="captures" class="table">
                 <thead>
                   <tr>
@@ -287,6 +288,7 @@
                 </tbody>
             </table>
         </div>
+        </div>
     </div>
     
 </body>
@@ -335,6 +337,7 @@
         jQuery(document).ready(function($) {     
 //            var disableDateTimeList = ['08-03-2017 15:00','09-03-2017 20:00','10-03-2017 15:00', '11-03-2017 11:00'];
 //            changeDisableDate( disableDateTimeList );
+            $( "#accordion" ).accordion();
             getShifts();  
             var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
