@@ -31,51 +31,135 @@
 	var="jqueryColorPlus" />
 <script src="${jqueryColorPlus}"></script>
 
-<spring:url value="/resources/core/css/calendar.css" var="calendarCss" />
-<link href="${calendarCss}" rel="stylesheet" />
-<spring:url value="/resources/core/js/calendar.js"
-	var="calendarJs" />
-<script src="${calendarJs}"></script>
+<spring:url value="/resources/core/css/jquery-ui.css" var="jqueryuiCss" />
+<link href="${jqueryuiCss}" rel="stylesheet" />
+<spring:url value="/resources/core/js/jquery-ui.js" var="jqueryuiJs" />
+<script src="${jqueryuiJs}"></script>
 
 </head>
 
 <body>
 
     <div class="container">
+        
         <div class="login-form">
-            
-            <c:url var="loginUrl" value="/login" />
-            <form action="${loginUrl}" method="post" class="form-horizontal">
-                <c:if test="${param.error != null}">
-                    <div class="alert alert-danger">
-                        <p>Invalid username and password.</p>
-                    </div>
-                </c:if>
-                <c:if test="${param.logout != null}">
-                    <div class="alert alert-success">
-                        <p>You have been logged out successfully.</p>
-                    </div>
-                </c:if>
-                <div class="input-group input-sm">
-                    <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
-                    <input type="text" class="form-control" id="username" name="ssoId" placeholder="Enter Username" required>
-                </div>
-                <div class="input-group input-sm">
-                    <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
-                </div>
-                <input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
+            <h2><i class="fa fa-tint"></i> Rastrosoft</h2>
+            <div id="login">                
+                <c:url var="loginUrl" value="/login" />
+                <form action="${loginUrl}" method="post" class="form-horizontal">
+                    <c:if test="${param.error != null}">
+                        <div class="alert alert-danger">
+                            <p>Usuario y contraseña incorrectos.</p>
+                        </div>
+                    </c:if>
+                    <c:if test="${param.logout != null}">
+                        <div class="alert alert-success">
+                            <p>Has cerrado sesion correctamente.</p>
+                        </div>
+                    </c:if>
 
-                <div class="form-actions">
-                    <input type="submit" class="btn btn-primary btn-default button" value="Log in">
-                    <input type="button" class="btn btn-success btn-default button" value="Create account">
+                    <div class="input-group input-sm">
+                        <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
+                        <input type="text" class="form-control" id="username" name="ssoId" placeholder="Nombre de usuario" required>
+                    </div>
+                    <div class="input-group input-sm">
+                        <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+                    </div>
+                    <input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
+
+                    <div class="form-actions">
+                        <input type="submit" class="btn btn-primary btn-default button button-rounded button-left" value="Ingresar">
+                        <input type="button" onclick="showSignup();" class="btn btn-success btn-default button button-rounded button-right" value="Crear cuenta">
+                    </div>
+                    <div class="message-forget">
+                        <p>¿Olvidaste tu contraseña? <a href="#" onclick="showForget();">Restaurar ahora</a></p>
+                    </div>
+                </form>
+            </div>
+            <div id="signup">
+                <div class="input-group input-sm">
+                    <label class="input-group-addon"><i class="fa fa-id-card-o"></i></label>
+                    <input type="text" class="form-control" id="username" name="name" placeholder="Nombre" required>
+                    <label class="input-group-addon"><i class="fa fa-address-card-o"></i></label>
+                    <input type="text" class="form-control" id="username" name="lastname" placeholder="Apellido" required>
                 </div>
-            </form>
-           
+                <div class="input-group input-sm">
+                    <label class="input-group-addon"><i class="fa fa-envelope-o"></i></label>
+                    <input type="text" class="form-control" id="mail" name="mail" placeholder="Correo electrónico" required>
+                </div>
+                <div class="input-group input-sm">
+                    <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+                </div>
+                <div class="input-group input-sm">
+                    <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
+                    <input type="password" class="form-control" id="password_re" name="password_re" placeholder="Confirmar contraseña" required>
+                </div>                
+                <div class="form-actions">
+                    <input type="button" onclick="alert();" class="btn btn-success btn-default btn-block button-rounded" value="Crear cuenta">                    
+                </div>
+                <div class="message-login">
+                    <p>¿Ya tienes una cuenta?<a href="#" onclick="showLogin();">Iniciar sesión</a></p>
+                </div>
+            </div>
+            <div id="forget"> 
+                <div id="forget-header">
+                    <h4>Restablecimiento de contraseña</h4>
+                    <h6>Pon la dirección de correo electrónico que usaste para registrarte. Te enviaremos un mensaje con un enlace para restablecer tu contraseña.</h6>
+                </div> 
+                <div class="input-group input-sm">
+                    <label class="input-group-addon"><i class="fa fa-envelope-o"></i></label>
+                    <input type="text" class="form-control" id="mail" name="mail" placeholder="Correo electrónico" required>
+                </div>                
+                <div class="form-actions">
+                    <input type="button" onclick="alert();" class="btn btn-success btn-default btn-block button-rounded" value="Enviar">                    
+                </div>
+                <div class="message-login">
+                    <p>¿Ya recuerdas la contraseña?<a href="#" onclick="showLogin();">Iniciar sesión</a></p>
+                </div>
+                 
+            </div>
         </div>
                 
     </div>
 </body>
   
-
+<script>
+    function showSignup(){
+        $('#login')
+        .hide( "slide", 200, 
+            function() {
+                $('#signup').show("slide", { direction: "right" }, 300);
+            }
+        );
+    }    
+    function showLogin(){ 
+        if ($('#forget').css('display') !== 'none'){
+            $('#forget')
+            .hide( "slide", 200, 
+                function() {
+                    $('#login').show("slide", { direction: "right" }, 300);
+                }
+            );     
+        }else{
+            $('#signup')
+            .hide( "slide", 200, 
+                function() {
+                    $('#login').show("slide", { direction: "right" }, 300);
+                }
+            ); 
+        }
+               
+    }
+    function showForget(){
+        $('#login')
+        .hide( "slide", 200, 
+            function() {
+                $('#forget').show("slide", { direction: "right" }, 300);
+            }
+        );
+        
+    } 
+</script>
 </html>
