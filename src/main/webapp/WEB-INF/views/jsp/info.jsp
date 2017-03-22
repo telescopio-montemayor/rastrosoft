@@ -64,7 +64,7 @@
             <div id="label-1">Usted no posee un turno asignado.<a href="#" onclick="showAddShift();">¿Desea agregar uno?</a></div>
             
 
-            <div class="form-group" id="selected-shift" style="">
+            <div class="form-group" id="selected-shift">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i> Turno otorgado</span>
                     <input type="text" class="form-control" value="2017-03-09 19:00" disabled="disabled"/>
@@ -73,12 +73,12 @@
                     </span>  
                 </div>
             </div>
-            <div class="form-group" id="select-shift" style="display: none">
+            <div class="form-group" id="select-shift">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
                     <input type="text" class="form-control" id="datetimepicker" placeholder="Turnos"/>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="" ><i class="fa fa-plus text-success"></i></button>
+                        <button class="btn btn-default" type="button" onclick="showLabelRemoveShift();" ><i class="fa fa-plus text-success"></i></button>
                     </span>  
                 </div>
             </div>  
@@ -363,6 +363,15 @@
                 );
             }
         } 
+        
+        function showLabelRemoveShift(){            
+            $('#select-shift')
+            .hide( "slide", 200, 
+                function() {
+                    $('#selected-shift').show("slide", { direction: "right" }, 300);
+                }
+            );            
+        }
         
         $(document).ready(function() {
             $('.table').DataTable( {

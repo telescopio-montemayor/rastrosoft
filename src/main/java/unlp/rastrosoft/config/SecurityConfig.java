@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import unlp.rastrosoft.web.model.Database;
 
 @EnableWebSecurity
@@ -28,10 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         Database db = new Database();
         db.connect();
         dataSource = db.getDataSource();
-        
         auth.jdbcAuthentication().dataSource((DataSource)dataSource)
 		.usersByUsernameQuery(
-			"select username,password, enabled from users where username=?")
+			"select username,password, enabled from users where username=?").passwordEncoder(new BCryptPasswordEncoder())
 		.authoritiesByUsernameQuery(
 			"select username, role_name from user_roles INNER JOIN roles ON ( user_roles.role = roles.role ) where username=?");
         

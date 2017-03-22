@@ -13,13 +13,24 @@
     max-height: 450px !important;
     overflow-y: scroll;
 }
-#label-1{
-    font-size: 30px; 
-    display: none;
-}
 td,th{
     text-align: center;
 }
 caption{
     font-size: 30px; 
+}
+.label-danger {
+    background-color: #d9534f1a;
+}
+.label-primary{
+    background-color: #337ab74d;
+}
+#label-1{
+    font-size: 30px;     
+}
+#select-shift{
+    display: none;
+}
+#selected-shift{
+    display: none;
 }

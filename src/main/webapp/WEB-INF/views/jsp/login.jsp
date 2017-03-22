@@ -100,7 +100,7 @@
                     <input type="button" onclick="alert();" class="btn btn-success btn-default btn-block button-rounded" value="Crear cuenta">                    
                 </div>
                 <div class="message-login">
-                    <p>¿Ya tienes una cuenta?<a href="#" onclick="showLogin();">Iniciar sesión</a></p>
+                    <p>¿Ya tienes una cuenta? <a href="#" onclick="showLogin();">Iniciar sesión</a></p>
                 </div>
             </div>
             <div id="forget"> 
@@ -116,7 +116,7 @@
                     <input type="button" onclick="alert();" class="btn btn-success btn-default btn-block button-rounded" value="Enviar">                    
                 </div>
                 <div class="message-login">
-                    <p>¿Ya recuerdas la contraseña?<a href="#" onclick="showLogin();">Iniciar sesión</a></p>
+                    <p>¿Ya recuerdas la contraseña? <a href="#" onclick="showLogin();">Iniciar sesión</a></p>
                 </div>
                  
             </div>
