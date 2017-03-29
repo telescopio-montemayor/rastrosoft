@@ -377,7 +377,7 @@
                     </div>
                     <div class="form-group">
                         <select class="form-control">
-                         <option disabled selected value> -- select type -- </option>   
+                         <option disabled selected value> -- select exposure mode -- </option>   
                          <option>Light</option>
                          <option>Bias</option>  
                          <option>Dark</option>
@@ -387,7 +387,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-thermometer-half fa-fw"></i></span>
-                            <input type="number" class="form-control" id="exposureTime" placeholder="Temperature">                    
+                            <input type="number" class="form-control" id="exposureTime" title="Set time to exposure" placeholder="Temperature">                    
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">°C</button>
                             </span>  

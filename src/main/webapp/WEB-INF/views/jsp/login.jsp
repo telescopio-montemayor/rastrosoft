@@ -36,14 +36,23 @@
 <spring:url value="/resources/core/js/jquery-ui.js" var="jqueryuiJs" />
 <script src="${jqueryuiJs}"></script>
 
+
 </head>
 
-<body>
-
-    <div class="container">
-        
+<body>   
+<!--    <div id="header" style="background-color: white">
+    </div>-->
+    
+    <video id="bgvid" autoplay="autoplay" loop="loop" poster="/rastrosoft/resources/images/background/Sunset-Lapse.jpg">        
+        <source type="video/mp4" src="/rastrosoft/resources/images/background/Sunset-Lapse.mp4">
+        <source type="video/webm" src="/rastrosoft/resources/images/background/Sunset-Lapse.webm">
+        <source type="video/ogg" src="/rastrosoft/resources/images/background/Sunset-Lapse.ogv">
+    </video>
+    
+    <div class="container">         
         <div class="login-form">
             <h2><i class="fa fa-tint"></i> Rastrosoft</h2>
+            
             <div id="login">                
                 <c:url var="loginUrl" value="/login" />
                 <form action="${loginUrl}" method="post" class="form-horizontal">
@@ -123,6 +132,7 @@
         </div>
                 
     </div>
+
 </body>
   
 <script>
@@ -161,5 +171,6 @@
         );
         
     } 
+    document.querySelector('video').playbackRate = 1;
 </script>
 </html>

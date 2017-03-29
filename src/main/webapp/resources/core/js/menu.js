@@ -218,3 +218,51 @@ function update_preview_image(){
 function fade() {
      $( ".fadebox" ).toggle();
 }
+
+function showSetExposureTime(){
+    $('#exposureTime')
+    .hide( "slide", 200, 
+        function() {
+            $('#exposureTimeHidden').show("slide", { direction: "right" }, 300);
+            $('#exposureTimeHidden').focus();
+            $('#exposureTimeHidden').val($('#exposureTime').val());
+        }
+    );
+}  
+function showCurrentExposureTime(){
+    $('#exposureTimeHidden')
+    .hide( "slide", 200, 
+        function() {
+            $('#exposureTime').show("slide", { direction: "right" }, 300);
+            $('#exposureTime').val($('#exposureTimeHidden').val());
+        }
+    );
+}  
+
+$(document).ready(function() {
+    $('#h-binning').focus(function(){ 
+        $('#help-h-binning').show("slide", { direction: "right" }, 200); 
+    });
+    $('#h-binning').blur(function(){ 
+        $('#help-h-binning').hide("slide", { direction: "left" }, 100); 
+    });
+    $('#v-binning').focus(function(){ 
+        $('#help-v-binning').show("slide", { direction: "right" }, 200); 
+    });
+    $('#v-binning').blur(function(){ 
+        $('#help-v-binning').hide("slide", { direction: "left" }, 100); 
+    });
+    $('#temperature').focus(function(){ 
+        $('#help-temperature').show("slide", { direction: "right" }, 200); 
+    });
+    $('#temperature').blur(function(){ 
+        $('#help-temperature').hide("slide", { direction: "left" }, 100); 
+    });
+    $('#exposureTime').mouseenter(function(){ 
+        showSetExposureTime(); 
+    });
+    $('#exposureTimeHidden').mouseleave(function(){ 
+        showCurrentExposureTime(); 
+    });
+});
+
