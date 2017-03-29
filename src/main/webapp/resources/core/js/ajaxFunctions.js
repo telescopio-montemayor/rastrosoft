@@ -73,11 +73,11 @@ function displayTipo(data, tipo) {
             });
             break;
         case 'refreshValues':
-            $('#getRa').empty();
-            $('#getDec').empty();
             $.each(data, function(key, value) {
-                $('#getRa').append(value[0]);
-                $('#getDec').append(value[1]);
+                if (($('#setRa').is(":focus")===false)&($('#setDec').is(":focus")===false)){
+                    $('#setRa').val(value[0]);
+                    $('#setDec').val(value[1]);
+                };                
             });
             break;
         case 'getUsername':

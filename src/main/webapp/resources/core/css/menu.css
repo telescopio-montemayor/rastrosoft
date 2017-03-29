@@ -1036,7 +1036,7 @@ body {
     -o-transition: all 1s ease-in-out;
     transition: all 1s ease-in-out;
 }
-#sidebar-preview, #exposureTimeHidden{
+#sidebar-preview{
     display: none;
 }
 
@@ -1051,6 +1051,9 @@ input[type="number"].currentNumber {
 
 .input-help{
     margin-bottom: 0px;
+    margin-top: 0px;
+    font-size: 12px;
+    color: #acacac;
 }
 .help-label{
     z-index: 99999;

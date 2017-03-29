@@ -58,6 +58,7 @@
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 <script>
+    
 	jQuery(document).ready(function($) {                
                 listaDispositivos();
 		$("#search-form").submit(function(event) {
@@ -154,7 +155,7 @@
             });            
             
         }
-
+        
         jQuery(document).ready(function($) {     
 //            var disableDateTimeList = ['08-03-2017 15:00','09-03-2017 20:00','10-03-2017 15:00', '11-03-2017 11:00'];
 //            changeDisableDate( disableDateTimeList );
@@ -252,6 +253,7 @@
                  </div>
                             
                 <div class="form-group">
+                    <p class="input-help">RA & DEC</p>
                     <div class="input-group">
                         <div class="input-group-addon joystick">
                                 <button class="icon joystick-left ">
@@ -266,15 +268,16 @@
                                 <button class="icon joystick-down">
                                     <i class="fa fa-angle-down" aria-hidden="true" ></i>
                                 </button>
-                        </div>                        
-                        <input id="setRa" type="text" class="form-control" placeholder="RA"/>
+                        </div>                                                
+                        <input id="setRa" type="text" class="form-control"  >
+                        <p class="help-label">Set RA</p>
                         <span class="input-group-addon">-</span>
-                        <input id="setDec" type="text" class="form-control" placeholder="DEC"/>
+                        <input id="setDec" type="text" class="form-control"  >
+                        <p class="help-label">Set DEC</p>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" onclick="setRaDec();" >Go!</button>
                         </span>                            
-                    </div>  
-                    <span style="float:right; font-weight: 300; font-size: 12px; color: grey">RA: <span id="getRa">13</span> - DEC: <span id="getDec">13</span></span>
+                    </div>
                 </div>
                 <div style="clear: both"></div>
                 <div class="form-group">
@@ -353,6 +356,7 @@
                     <label>CCD</label>
 
                     <div class="form-group">
+                        <p class="input-help">Directory to upload files</p>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-folder-o fa-fw"></i></span>
                             <input type="text" class="form-control" id="uploadDirectory" placeholder="Set upload directory">
@@ -362,6 +366,7 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <p class="input-help">Prefix for saven files</p>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-file-image-o fa-fw"></i></span>
                             <input type="text" class="form-control" id="uploadPrefix" placeholder="Set prefix">
@@ -371,12 +376,13 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <p class="input-help">CCD h & v for binning</p>
                         <div class="input-group">                    
-                            <input id="h-binning" type="number" class="form-control  currentNumber" placeholder="H"/>
-                            <p id="help-h-binning" class="help-label">Set H for binning</p>
-                            <span class="input-group-addon">-</span>
-                            <input id="v-binning" type="number" class="form-control  currentNumber" placeholder="V"/>
-                            <p id="help-v-binning" class="help-label">Set V for binning</p>
+                            <input id="h-binning" type="number" class="form-control " placeholder="H"/>
+                            <p class="help-label">Set H for binning</p>
+                            <span class="input-group-addon">x</span>
+                            <input id="v-binning" type="number" class="form-control " placeholder="V"/>
+                            <p class="help-label">Set V for binning</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">Binning</button>
                             </span>                            
@@ -393,9 +399,10 @@
                        </select>
                     </div>
                     <div class="form-group">
+                        <p class="input-help">CCD temperature</p>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-thermometer-half fa-fw"></i></span>
-                            <input type="number" class="form-control  currentNumber" id="temperature" placeholder="Temperature">                    
+                            <input type="number" class="form-control " id="temperature" placeholder="Temperature" value="-15">                    
                             <p id="help-temperature" class="help-label">Set temperature for the CCD</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">°C</button>
@@ -404,12 +411,15 @@
                         
                     </div>
                     <div class="form-group">
+                        <p class="input-help">CCD size (width & height)</p>
                         <div class="input-group">                    
-                            <input type="number" class="form-control  currentNumber" id="" placeholder="Width"/>
-                            <span class="input-group-addon">-</span>
-                            <input type="number" class="form-control  currentNumber" placeholder="Height"/>
+                            <input type="number" class="form-control " placeholder="Width" value="1024"/>
+                            <p class="help-label">Set image width</p>
+                            <span class="input-group-addon">x</span>
+                            <input type="number" class="form-control " placeholder="Height" value="1024"/>
+                            <p class="help-label">Set image height</p>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Set</button>
+                                <button class="btn btn-default" type="button">Pixels</button>
                                 
                             </span>                            
                         </div>  
@@ -420,9 +430,8 @@
                         <div class="input-group" id="exposure-time">
                             
                             <span class="input-group-addon" title="Time to exposure"><i class="fa fa-clock-o fa-fw"></i></span>
-                            <input type="number" class="form-control currentNumber" id="exposureTime" title="Set time to exposure" placeholder="Exposure" value="10" readonly >
-                            <input type="number" class="form-control" id="exposureTimeHidden" title="Set time to exposure" placeholder="Exposure" >
-                            
+                            <input type="number" class="form-control" title="Set time to exposure" placeholder="Exposure" value="10">                            
+                            <p class="help-label">Set time to exposure</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">Seconds</button>
                             </span> 
@@ -482,7 +491,6 @@
             </div>
         </aside>  
     </div>
-
 
 </body>
   
