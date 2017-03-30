@@ -75,6 +75,5 @@ public class Device {
         String decimal = String.valueOf(timeInDecimal);
        
         return decimal;
-    }
-        
+    }       
 }

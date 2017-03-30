@@ -54,6 +54,11 @@
 <spring:url value="/resources/core/js/jquery-ui.js" var="jqueryuiJs" />
 <script src="${jqueryuiJs}"></script>
 
+<spring:url value="/resources/core/js/geopoint.js" var="geopointJs" />
+<script src="${geopointJs}"></script>
+<spring:url value="/resources/core/js/jquery.mask.js" var="jquerymaskJs" />
+<script src="${jquerymaskJs}"></script>
+
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
@@ -75,7 +80,7 @@
                 getUsername();
                 setInterval(function() {
                         refreshValues();
-                  }, 200);
+                  }, 1000);
 
 	});
         
@@ -194,7 +199,7 @@
                     <span>Opciones</span>
                 </div>         
                 <p></p>
-                <span>Conectado como: <i id="username" style="color:green;">...</i></span>
+                <span>Connected as: <i id="username" style="color:green;">...</i></span>
                 <div class="form-group">
                     <div class="form-group">
                         <div class="input-group">
@@ -206,17 +211,9 @@
                             <span class="input-group-addon"><i class="fa fa-sign-out fa-fw"></i></span>
                         </div>
                     </div>                                      
-                </div>                 
+                </div>                                 
                 <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
-                        <input type="text" class="form-control" id="datetimepicker" placeholder="Turnos"/>
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" onclick="" >Set</button>
-                        </span>  
-                    </div>
-                </div>  
-                <div class="form-group">
+                    <p class="input-help">Quick access targets</p>
                     <select class="form-control">
                      <option disabled selected value> -- select an option -- </option>   
                      <option>Luna</option>
@@ -253,7 +250,7 @@
                  </div>
                             
                 <div class="form-group">
-                    <p class="input-help">RA & DEC</p>
+                    <p class="input-help">Right Ascension & Declination</p>
                     <div class="input-group">
                         <div class="input-group-addon joystick">
                                 <button class="icon joystick-left ">
@@ -269,10 +266,10 @@
                                     <i class="fa fa-angle-down" aria-hidden="true" ></i>
                                 </button>
                         </div>                                                
-                        <input id="setRa" type="text" class="form-control"  >
+                        <input id="setRa" type="text" class="form-control radec-input"  >
                         <p class="help-label">Set RA</p>
                         <span class="input-group-addon">-</span>
-                        <input id="setDec" type="text" class="form-control"  >
+                        <input id="setDec" type="text" class="form-control radec-input"  >
                         <p class="help-label">Set DEC</p>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" onclick="setRaDec();" >Go!</button>
@@ -376,7 +373,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <p class="input-help">CCD h & v for binning</p>
+                        <p class="input-help">Binning (horizontal & vertical)</p>
                         <div class="input-group">                    
                             <input id="h-binning" type="number" class="form-control " placeholder="H"/>
                             <p class="help-label">Set H for binning</p>
@@ -390,6 +387,7 @@
                         
                     </div>
                     <div class="form-group">
+                        <p class="input-help">Exposure mode</p>
                         <select class="form-control">
                          <option disabled selected value> -- select exposure mode -- </option>   
                          <option>Light</option>
@@ -411,7 +409,7 @@
                         
                     </div>
                     <div class="form-group">
-                        <p class="input-help">CCD size (width & height)</p>
+                        <p class="input-help">Image size (width & height)</p>
                         <div class="input-group">                    
                             <input type="number" class="form-control " placeholder="Width" value="1024"/>
                             <p class="help-label">Set image width</p>

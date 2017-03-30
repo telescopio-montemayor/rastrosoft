@@ -73,3 +73,7 @@
         width: 100%;
         height: 80px;
     }
+    
+    :focus {
+        outline:none !important;
+    }

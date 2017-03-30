@@ -247,32 +247,39 @@ $(document).ready(function() {
     $( "input" ).focusout(function() {
         $( this ).next( ".help-label" ).hide();
     });
-//    $('#exposureTime').mouseenter(function(){ 
-//        showSetExposureTime(); 
-//    });
-//    $('#exposureTimeHidden').mouseleave(function(){ 
-//        showCurrentExposureTime(); 
-//    });
-//    
-//    $( ".set-mod-input" ).css('display','none');
-//    $( ".mod-input" ).focus(function(){
-//       $( this ).hide( "slide", 200, 
-//            function() {
-//                $(this).blur();
-//                $( this ).next( ".set-mod-input" ).show("slide", { direction: "right" }, 300);                
-//                $( this ).next( ".set-mod-input" ).val($(this).val());
-//                $( this ).next( ".set-mod-input" ).focus();
-//            }
-//        );
-//    });
-//    $( ".set-mod-input" ).focusout(function(){
-//       $( this ).hide( "slide", 200, 
-//        function() { 
-//            $("#username").focus();
-//            $( this ).prev( ".mod-input" ).show("slide", { direction: "right" }, 300);
-//            $( this ).prev( ".mod-input" ).val($(this).val());
-//        }
-//    );
-//    });
+    $('#setRa').mask('00:00:00');
+//    $('#setDec').mask('00\xB0 00\' 00\"', { clearIfNotMatch: true, selectOnFocus: true });
 });
 
+function decimalToDegrees(D){
+    return [0|D, '\xB0 ', 0|(D<0?D=-D:D)%1*60, "' ", 0|(Math.round(((D<0?D=-D:D)*60%1*60)* 1 )/1 ), '" '].join('');
+}
+function decimalToHours(D){
+    var n = new Date(0,0);
+    n.setSeconds(Math.round( (+D * 60 * 60) * 1 )/1 );
+    return(n.toTimeString().slice(0, 8));
+}
+function degreesToDecimal(d) {    
+//    var coord = d.match(/[0-9]+/g);
+//    if (d.charAt(0)==='-'){
+//        coord.insert(0, parseFloat(coord[0])*(-1));
+//    };
+//    alert(coord[0]);
+
+    var coord = d.split("\xB0");
+    var degrees = parseFloat(coord[0]);
+    var minutes = parseFloat(coord[1].split("'")[0]);
+    var seconds = parseFloat(coord[1].split("'")[1].split('"')[0]);
+    
+    if (d.charAt(0)==='-'){
+        degrees = (degrees *(-1));        
+        return (((parseFloat(degrees) + (parseFloat(minutes)/60.0) + (parseFloat(seconds)/3600.0)))*(-1));
+    }else{
+        return ((parseFloat(degrees) + (parseFloat(minutes)/60.0) + (parseFloat(seconds)/3600.0)));
+    }
+
+}
+function hoursToDecimal(H){
+    var a = H.split(':'); 
+    return ((parseFloat(a[0]) + (parseFloat(a[1])/60.0) + (parseFloat(a[2])/3600.0)));
+}

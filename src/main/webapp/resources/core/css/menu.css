@@ -1052,7 +1052,7 @@ input[type="number"].currentNumber {
 .input-help{
     margin-bottom: 0px;
     margin-top: 0px;
-    font-size: 12px;
+    font-size: 1em;
     color: #acacac;
 }
 .help-label{
@@ -1065,4 +1065,9 @@ input[type="number"].currentNumber {
     padding: 2px;
     display:none;
     top:34px;
+}
+.radec-input{
+    padding-left: 0px;
+    padding-right: 0px;
+    text-align: center;
 }

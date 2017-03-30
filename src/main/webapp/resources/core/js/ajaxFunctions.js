@@ -75,8 +75,8 @@ function displayTipo(data, tipo) {
         case 'refreshValues':
             $.each(data, function(key, value) {
                 if (($('#setRa').is(":focus")===false)&($('#setDec').is(":focus")===false)){
-                    $('#setRa').val(value[0]);
-                    $('#setDec').val(value[1]);
+                    $('#setRa').val(decimalToHours(value[0]));
+                    $('#setDec').val(decimalToDegrees(value[1]));
                 };                
             });
             break;
@@ -153,8 +153,10 @@ function test() {
 }
 function setRaDec() {
     var search = {};
-    search["value"] = $("#setRa").val();
-    search["value2"] = $("#setDec").val();
+    search["value"] = hoursToDecimal($("#setRa").val());
+    search["value2"] = degreesToDecimal($("#setDec").val());
+//    var point = new GeoPoint($("#setDec").val(), null);
+//    search["value2"] = point.getLonDec();
     sendAjax(search,'setRaDec','setRaDec');  
 }
 function refreshValues() {
