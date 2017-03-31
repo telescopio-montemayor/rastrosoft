@@ -10,7 +10,7 @@ public class WelcomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
-		return "prototipo9";
+		return "prototipo10";
 	}
 
 }

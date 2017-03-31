@@ -267,10 +267,10 @@
                                 </button>
                         </div>                                                
                         <input id="setRa" type="text" class="form-control radec-input"  >
-                        <p class="help-label">Set RA</p>
+                        <p class="help-label">Set right ascension</p>
                         <span class="input-group-addon">-</span>
                         <input id="setDec" type="text" class="form-control radec-input"  >
-                        <p class="help-label">Set DEC</p>
+                        <p class="help-label">Set declination</p>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" onclick="setRaDec();" >Go!</button>
                         </span>                            
@@ -295,8 +295,27 @@
                         <button class="form-control logout-icon" type="button">Download</button>
                     </div>
                 </div>
-                <div style="float: left; padding-top: 130%;"><button onClick="fade();" class="btn btn-default">Modo escuela</button></div>
-                <div style="float: right;  padding-top: 130%;"><button onClick="test();" class="btn btn-default">TEST</button></div>
+                
+                <div class="form-group">
+                    <div><button style="float:left" class="btn btn-default"><span style="color:red"><i class="fa fa-globe fa-fw"></i>Live transmit</span></button></div>
+                    <div><button style="float:left" class="btn btn-default" disabled="disabled"><i class="fa fa-comments-o fa-fw"></i>Enable chat</button></div>
+                    
+                    <textarea class="form-control" style="height:200px; resize: none;" placeholder="Message"></textarea>
+                    
+                    <div class="form-group">
+                        <div class="input-group">                            
+                            <input type="text" class="form-control" placeholder="Message...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"><i class="fa fa-paper-plane fa-fw"></i></button>
+                            </span>  
+                        </div>
+                        
+                    </div>
+                </div>
+                <div style="float: left;"><button onClick="fade();" class="btn btn-default"><i class="fa fa-graduation-cap fa-fw"></i></button></div>
+                <div style="float: right;"><button onClick="test();" class="btn btn-default"><i class="fa fa-free-code-camp fa-fw"></i></button></div>
+                
+                
         </aside>
     </div>
     <div class="col-md-8">  
@@ -335,18 +354,18 @@
                     <label>Telescopio</label>
                     <div class="form-group">
                         <div class="input-group">
-                            <button class="form-control logout-icon" type="button">Park</button>
+                            <button id="park" class="form-control logout-icon" type="button">Park</button>
                             <span class="input-group-addon"></span>
-                            <button class="form-control logout-icon selected" type="button">Unpark</button>
+                            <button id="unpark" class="form-control logout-icon" type="button">Unpark</button>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <button class="form-control logout-icon selected" type="button">Track</button>
+                            <button id="track" class="form-control logout-icon" type="button">Track</button>
                             <span class="input-group-addon"></span>
-                            <button class="form-control logout-icon" type="button">Slew</button>
+                            <button id="slew" class="form-control logout-icon" type="button">Slew</button>
                             <span class="input-group-addon"></span>
-                            <button class="form-control logout-icon" type="button">Sync</button>
+                            <button id="sync" class="form-control logout-icon" type="button">Sync</button>
                         </div>
                     </div>
 
@@ -356,7 +375,8 @@
                         <p class="input-help">Directory to upload files</p>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-folder-o fa-fw"></i></span>
-                            <input type="text" class="form-control" id="uploadDirectory" placeholder="Set upload directory">
+                            <input type="text" class="form-control" id="uploadDir" placeholder="Set upload directory">
+                            <p class="help-label">Set upload directory</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="" >Set</button>
                             </span>   
@@ -367,19 +387,20 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-file-image-o fa-fw"></i></span>
                             <input type="text" class="form-control" id="uploadPrefix" placeholder="Set prefix">
+                            <p class="help-label">Set prefix for saven files</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="" >Set</button>
                             </span>     
                         </div>
                     </div>
                     <div class="form-group">
-                        <p class="input-help">Binning (horizontal & vertical)</p>
+                        <p class="input-help">Ccd binning (horizontal & vertical)</p>
                         <div class="input-group">                    
-                            <input id="h-binning" type="number" class="form-control " placeholder="H"/>
-                            <p class="help-label">Set H for binning</p>
+                            <input id="hBinning" type="number" class="form-control " placeholder="H"/>
+                            <p class="help-label">Set horizontal binning</p>
                             <span class="input-group-addon">x</span>
-                            <input id="v-binning" type="number" class="form-control " placeholder="V"/>
-                            <p class="help-label">Set V for binning</p>
+                            <input id="vBinning" type="number" class="form-control " placeholder="V"/>
+                            <p class="help-label">Set vertical binning</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">Binning</button>
                             </span>                            
@@ -387,21 +408,21 @@
                         
                     </div>
                     <div class="form-group">
-                        <p class="input-help">Exposure mode</p>
-                        <select class="form-control">
-                         <option disabled selected value> -- select exposure mode -- </option>   
-                         <option>Light</option>
-                         <option>Bias</option>  
-                         <option>Dark</option>
-                         <option>Flat</option>
+                        <p class="input-help">Frame type</p>
+                        <select class="form-control" id="frameType">
+                         <option disabled selected value> -- select ccd frame type -- </option>   
+                         <option value="frameLight">Light</option>
+                         <option value="frameBias">Bias</option>  
+                         <option value="frameDark">Dark</option>
+                         <option value="frameFlat" disabled="disabled">Flat</option>
                        </select>
                     </div>
                     <div class="form-group">
                         <p class="input-help">CCD temperature</p>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-thermometer-half fa-fw"></i></span>
-                            <input type="number" class="form-control " id="temperature" placeholder="Temperature" value="-15">                    
-                            <p id="help-temperature" class="help-label">Set temperature for the CCD</p>
+                            <input type="number" class="form-control " id="ccdTemperature" placeholder="Temperature" value="-15">                    
+                            <p class="help-label">Set temperature for the CCD</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">°C</button>
                             </span>  
@@ -409,12 +430,26 @@
                         
                     </div>
                     <div class="form-group">
+                        <p class="input-help">Image origin (X & Y)</p>
+                        <div class="input-group">                    
+                            <input type="number" class="form-control " placeholder="X" />
+                            <p class="help-label">Set image X origin</p>
+                            <span class="input-group-addon">x</span>
+                            <input type="number" class="form-control " placeholder="Y" />
+                            <p class="help-label">Set image Y origin</p>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Set</button>
+                                
+                            </span>                            
+                        </div>  
+                    </div>
+                    <div class="form-group">
                         <p class="input-help">Image size (width & height)</p>
                         <div class="input-group">                    
-                            <input type="number" class="form-control " placeholder="Width" value="1024"/>
+                            <input type="number" class="form-control " placeholder="Width" />
                             <p class="help-label">Set image width</p>
                             <span class="input-group-addon">x</span>
-                            <input type="number" class="form-control " placeholder="Height" value="1024"/>
+                            <input type="number" class="form-control " placeholder="Height" />
                             <p class="help-label">Set image height</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">Pixels</button>
@@ -452,7 +487,8 @@
                     <label>Focuser</label>
                     <div class="form-group">
                         <div class="input-group">                    
-                            <input type="number" class="form-control currentNumber" placeholder="Ticks"/>
+                            <input type="number" class="form-control" placeholder="Ticks"/>
+                            <p class="help-label">Set ticks for focus</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">Set</button>
                             </span>                            

@@ -61,4 +61,43 @@ public class Ccd extends Device {
         }
         return true;
     }
+    
+    public String getUploadDirectory(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "UPLOAD_SETTINGS", "UPLOAD_DIR"));
+    }
+    public String getUploadPrefix(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "UPLOAD_SETTINGS", "UPLOAD_PREFIX"));
+    }
+    
+    public String getHBinning(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_BINNING", "HOR_BIN"));
+    }
+    public String getVBinning(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_BINNING", "VER_BIN"));
+    }
+    public String getTemperature(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_TEMPERATURE", "CCD_TEMPERATURE_VALUE"));
+    }
+    public String getFrameLight(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_FRAME_TYPE", "FRAME_LIGHT"));
+    }
+    public String getFrameBias(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_FRAME_TYPE", "FRAME_BIAS"));
+    }
+    public String getFrameDark(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_FRAME_TYPE", "FRAME_DARK"));
+    }
+    public String getFrameFlat(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_FRAME_TYPE", "FRAME_FLAT"));
+    }
+    
 }

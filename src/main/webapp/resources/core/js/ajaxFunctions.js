@@ -73,12 +73,7 @@ function displayTipo(data, tipo) {
             });
             break;
         case 'refreshValues':
-            $.each(data, function(key, value) {
-                if (($('#setRa').is(":focus")===false)&($('#setDec').is(":focus")===false)){
-                    $('#setRa').val(decimalToHours(value[0]));
-                    $('#setDec').val(decimalToDegrees(value[1]));
-                };                
-            });
+            updateValues(data);
             break;
         case 'getUsername':
             $('#username').empty();            
@@ -172,4 +167,72 @@ function getUsername() {
 function getShifts() {
     var search = {};
     sendAjax(search,'getShifts','getShifts');  
+}
+
+function updateValues(data){
+    $.each(data, function(key, value) {
+        var ra, dec, park, unpark, track, slew, sync, uploadDir, uploadPrefix, hBinning, vBinning, ccdTemperature, frameLight, frameBias, frameDark, frameFlat;
+        ra              = value[0];
+        dec             = value[1];
+        park            = value[2];
+        unpark          = value[3];
+        track           = value[4];
+        slew            = value[5];
+        sync            = value[6];
+        uploadDir       = value[7];
+        uploadPrefix    = value[8];
+        hBinning        = value[9];
+        vBinning        = value[10];
+        ccdTemperature  = value[11];        
+        frameLight      = value[12];
+        frameBias       = value[13];
+        frameDark       = value[14];
+        frameFlat       = value[15];
+        
+        if (($('#setRa').is(":focus")===false)&($('#setDec').is(":focus")===false)){
+            $('#setRa').val(decimalToHours(ra));
+            $('#setDec').val(decimalToDegrees(dec));
+        }; 
+        
+        
+        if (park==="ON"){
+            $("#park").addClass('selected');
+            $("#unpark").removeClass('selected');
+        }else if (unpark==="ON"){
+            $("#unpark").addClass('selected');
+            $("#park").removeClass('selected');
+        }
+        
+        
+        if (track==="ON"){
+            $("#track").addClass('selected');
+            $("#slew").removeClass('selected');
+            $("#sync").removeClass('selected');
+        }else if (slew==="ON"){
+            $("#track").removeClass('selected');
+            $("#slew").addClass('selected');
+            $("#sync").removeClass('selected');
+        }else if (sync==="ON"){
+            $("#track").removeClass('selected');
+            $("#slew").removeClass('selected');
+            $("#sync").addClass('selected');
+        }
+        
+        $("#uploadDir").val(uploadDir);
+        $("#uploadPrefix").val(uploadPrefix);
+        $("#hBinning").val(hBinning);
+        $("#vBinning").val(vBinning);
+        $("#ccdTemperature").val(ccdTemperature);      
+        
+        if (frameLight==="ON"){
+            $('#frameType option[value="frameLight"]').prop('selected', true);
+        }else if(frameBias==="ON"){
+            $('#frameType option[value="frameBias"]').prop('selected', true);
+        }else if(frameDark==="ON"){
+            $('#frameType option[value="frameDark"]').prop('selected', true);
+        }else if(frameFlat==="ON"){
+            $('#frameType option[value="frameFlat"]').prop('selected', true);
+            
+        }        
+    });
 }

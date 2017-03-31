@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import unlp.rastrosoft.web.model.AjaxResponse;
 import unlp.rastrosoft.web.model.CalendarDB;
+import unlp.rastrosoft.web.model.Ccd;
 import unlp.rastrosoft.web.model.SendMailSSL;
 import unlp.rastrosoft.web.model.SendMailTLS;
 import unlp.rastrosoft.web.model.Telescope;
@@ -517,6 +518,18 @@ public class AjaxController {
             result.addElemento(telescope.getTrak());
             result.addElemento(telescope.getSlew());
             result.addElemento(telescope.getSync());
+            
+            Ccd ccd = new Ccd();
+            
+            result.addElemento(ccd.getUploadDirectory());
+            result.addElemento(ccd.getUploadPrefix());
+            result.addElemento(ccd.getHBinning());
+            result.addElemento(ccd.getVBinning());
+            result.addElemento(ccd.getTemperature());
+            result.addElemento(ccd.getFrameLight());
+            result.addElemento(ccd.getFrameBias());
+            result.addElemento(ccd.getFrameDark());
+            result.addElemento(ccd.getFrameFlat());
             return result;
 
         }
