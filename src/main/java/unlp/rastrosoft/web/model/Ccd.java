@@ -99,5 +99,25 @@ public class Ccd extends Device {
         cliente = connect_indi.connect(dispositivo);
         return (cliente.enviar_mensaje(dispositivo, "CCD_FRAME_TYPE", "FRAME_FLAT"));
     }
+    public String getX(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_FRAME", "X"));
+    }
+    public String getY(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_FRAME", "Y"));
+    }
+    public String getWidth(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_FRAME", "WIDTH"));
+    }
+    public String getHeight(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_FRAME", "HEIGHT"));
+    }    
+    public String getExposureTime(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE"));
+    }
     
 }

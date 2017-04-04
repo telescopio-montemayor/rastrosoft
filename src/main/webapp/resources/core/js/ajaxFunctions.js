@@ -171,7 +171,9 @@ function getShifts() {
 
 function updateValues(data){
     $.each(data, function(key, value) {
-        var ra, dec, park, unpark, track, slew, sync, uploadDir, uploadPrefix, hBinning, vBinning, ccdTemperature, frameLight, frameBias, frameDark, frameFlat;
+        var ra, dec, park, unpark, track, slew, sync, uploadDir, uploadPrefix, 
+            hBinning, vBinning, ccdTemperature, frameLight, frameBias, frameDark, 
+            frameFlat, x, y, width, height, exposureTime;
         ra              = value[0];
         dec             = value[1];
         park            = value[2];
@@ -188,6 +190,11 @@ function updateValues(data){
         frameBias       = value[13];
         frameDark       = value[14];
         frameFlat       = value[15];
+        x               = value[16];
+        y               = value[17];
+        width           = value[18];
+        height          = value[19];
+        exposureTime    = value[20];
         
         if (($('#setRa').is(":focus")===false)&($('#setDec').is(":focus")===false)){
             $('#setRa').val(decimalToHours(ra));
@@ -218,21 +225,44 @@ function updateValues(data){
             $("#sync").addClass('selected');
         }
         
-        $("#uploadDir").val(uploadDir);
-        $("#uploadPrefix").val(uploadPrefix);
-        $("#hBinning").val(hBinning);
-        $("#vBinning").val(vBinning);
-        $("#ccdTemperature").val(ccdTemperature);      
+        if (($('#uploadDir').is(":focus")===false))
+            $("#uploadDir").val(uploadDir);
+        if (($('#uploadPrefix').is(":focus")===false))
+            $("#uploadPrefix").val(uploadPrefix);
+        if (($('#hBinning').is(":focus")===false))    
+            $("#hBinning").val(hBinning);
+        if (($('#vBinning').is(":focus")===false))
+            $("#vBinning").val(vBinning);
+          
+        if (($('#frameType').is(":focus")===false)){
+            if (frameLight==="ON"){
+                $('#frameType option[value="frameLight"]').prop('selected', true);
+            }else if(frameBias==="ON"){
+                $('#frameType option[value="frameBias"]').prop('selected', true);
+            }else if(frameDark==="ON"){
+                $('#frameType option[value="frameDark"]').prop('selected', true);
+            }else if(frameFlat==="ON"){
+                $('#frameType option[value="frameFlat"]').prop('selected', true);
+
+            }
+        }
+                
+        if (($('#ccdTemperature').is(":focus")===false))
+            $("#ccdTemperature").val(ccdTemperature);    
         
-        if (frameLight==="ON"){
-            $('#frameType option[value="frameLight"]').prop('selected', true);
-        }else if(frameBias==="ON"){
-            $('#frameType option[value="frameBias"]').prop('selected', true);
-        }else if(frameDark==="ON"){
-            $('#frameType option[value="frameDark"]').prop('selected', true);
-        }else if(frameFlat==="ON"){
-            $('#frameType option[value="frameFlat"]').prop('selected', true);
-            
-        }        
+        if (($('#frameX').is(":focus")===false)&($('#frameY').is(":focus")===false)){
+            $('#frameX').val(x);
+            $('#frameY').val(y);
+        }; 
+        
+        if (($('#frameWidth').is(":focus")===false)&($('#frameHeight').is(":focus")===false)){
+            $('#frameWidth').val(width);
+            $('#frameHeight').val(height);
+        }; 
+        
+        if (($('#exposureTime').is(":focus")===false)){
+            $('#exposureTime').val(exposureTime);
+        }; 
+        
     });
 }

@@ -248,7 +248,18 @@ $(document).ready(function() {
         $( this ).next( ".help-label" ).hide();
     });
     $('#setRa').mask('00:00:00');
-//    $('#setDec').mask('00\xB0 00\' 00\"', { clearIfNotMatch: true, selectOnFocus: true });
+    
+    $('#exposureButton').click(function() {  
+        var max = $('#exposureTime').val();
+        var min = 0;
+        var refreshId = setInterval(function() {
+            var properID =  $('#exposureTime').val();
+            if (properID == 0) {
+              clearInterval(refreshId);
+            }
+            updateProgressExposure(min, max);
+        }, 1000);
+    });
 });
 
 function decimalToDegrees(D){
@@ -282,4 +293,10 @@ function degreesToDecimal(d) {
 function hoursToDecimal(H){
     var a = H.split(':'); 
     return ((parseFloat(a[0]) + (parseFloat(a[1])/60.0) + (parseFloat(a[2])/3600.0)));
+}
+function updateProgressExposure(min, max){
+    var exposureValue, percent;
+    exposureValue = $('#exposureTime').val();
+    percent = exposureValue * 100 / max;
+    $('#progressExposure').css('width', percent+'%').attr('aria-valuenow', percent).attr('aria-valuemin', min).attr('aria-valuemax', max);  
 }

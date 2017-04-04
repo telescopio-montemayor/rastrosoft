@@ -319,14 +319,14 @@
         </aside>
     </div>
     <div class="col-md-8">  
-        <div id="previewImage" class="preview-image">
+        <div id="previewImage" class="preview-image">            
             <div id="preview">
                 <img id="previewImageSrc" src="<c:url value="/resources/images/preview.jpg"/>" width="90%" height="90%" class="img-rounded preview-image-image">
                 <div style="clear:both; margin-top: -2px"><button id="cine-button" class="icons" onclick="cine();"><i class="fa fa-television"></i></button></div>
             </div>
             <div id="loading" style="display: none;">
                  <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">Loading...</span>                
             </div>    
             
         </div>
@@ -430,12 +430,12 @@
                         
                     </div>
                     <div class="form-group">
-                        <p class="input-help">Image origin (X & Y)</p>
+                        <p class="input-help">Frame (X & Y)</p>
                         <div class="input-group">                    
-                            <input type="number" class="form-control " placeholder="X" />
+                            <input id="frameX" type="number" class="form-control " placeholder="X" />
                             <p class="help-label">Set image X origin</p>
                             <span class="input-group-addon">x</span>
-                            <input type="number" class="form-control " placeholder="Y" />
+                            <input id="frameY" type="number" class="form-control " placeholder="Y" />
                             <p class="help-label">Set image Y origin</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">Set</button>
@@ -446,10 +446,10 @@
                     <div class="form-group">
                         <p class="input-help">Image size (width & height)</p>
                         <div class="input-group">                    
-                            <input type="number" class="form-control " placeholder="Width" />
+                            <input id="frameWidth" type="number" class="form-control " placeholder="Width" />
                             <p class="help-label">Set image width</p>
                             <span class="input-group-addon">x</span>
-                            <input type="number" class="form-control " placeholder="Height" />
+                            <input id="frameHeight" type="number" class="form-control " placeholder="Height" />
                             <p class="help-label">Set image height</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">Pixels</button>
@@ -460,15 +460,19 @@
                     
                     <div class="form-group">
                         <p class="input-help">Exposure time</p>
-                        <div class="input-group" id="exposure-time">
+                        <div class="input-group">
                             
                             <span class="input-group-addon" title="Time to exposure"><i class="fa fa-clock-o fa-fw"></i></span>
-                            <input type="number" class="form-control" title="Set time to exposure" placeholder="Exposure" value="10">                            
+                            <input id="exposureTime" type="number" class="form-control" title="Set time to exposure" placeholder="Exposure">                            
                             <p class="help-label">Set time to exposure</p>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Seconds</button>
+                                <button id="exposureButton" class="btn btn-default" type="button">Seconds</button>
                             </span> 
-                        </div>                        
+                        </div>  
+                        <div class="progress">
+                            <div id="progressExposure" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%">                        
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
@@ -504,7 +508,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
-                            <input type="number" class="form-control currentNumber" id="exposureTime" placeholder="Focus timer">
+                            <input type="number" class="form-control currentNumber" placeholder="Focus timer">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">Seconds</button>
                             </span>  

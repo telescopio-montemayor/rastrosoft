@@ -38,7 +38,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import unlp.rastrosoft.web.model.AjaxResponse;
 import unlp.rastrosoft.web.model.CalendarDB;
 import unlp.rastrosoft.web.model.Ccd;
-import unlp.rastrosoft.web.model.SendMailSSL;
 import unlp.rastrosoft.web.model.SendMailTLS;
 import unlp.rastrosoft.web.model.Telescope;
 
@@ -530,6 +529,11 @@ public class AjaxController {
             result.addElemento(ccd.getFrameBias());
             result.addElemento(ccd.getFrameDark());
             result.addElemento(ccd.getFrameFlat());
+            result.addElemento(ccd.getX());
+            result.addElemento(ccd.getY());
+            result.addElemento(ccd.getWidth());
+            result.addElemento(ccd.getHeight());
+            result.addElemento(ccd.getExposureTime());
             return result;
 
         }
