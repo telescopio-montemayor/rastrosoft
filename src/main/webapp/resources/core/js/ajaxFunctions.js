@@ -260,9 +260,9 @@ function updateValues(data){
             $('#frameHeight').val(height);
         }; 
         
-        if (($('#exposureTime').is(":focus")===false)){
-            $('#exposureTime').val(exposureTime);
-        }; 
+        
+        $('#exposureTimeHidden').val(Math.floor(exposureTime)).trigger('change');
+        
         
     });
 }

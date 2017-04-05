@@ -465,12 +465,13 @@
                             <span class="input-group-addon" title="Time to exposure"><i class="fa fa-clock-o fa-fw"></i></span>
                             <input id="exposureTime" type="number" class="form-control" title="Set time to exposure" placeholder="Exposure">                            
                             <p class="help-label">Set time to exposure</p>
+                            <input id="exposureTimeHidden" type="hidden" class="form-control" title="Set time to exposure" placeholder="Exposure" value="0">                            
                             <span class="input-group-btn">
                                 <button id="exposureButton" class="btn btn-default" type="button">Seconds</button>
                             </span> 
                         </div>  
                         <div class="progress">
-                            <div id="progressExposure" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%">                        
+                            <div id="progressExposure" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%">                        
                             </div>
                         </div>
                     </div>

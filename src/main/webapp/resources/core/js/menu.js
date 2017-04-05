@@ -249,15 +249,48 @@ $(document).ready(function() {
     });
     $('#setRa').mask('00:00:00');
     
-    $('#exposureButton').click(function() {  
-        var max = $('#exposureTime').val();
+//    var first   =   true;    
+//    $('#exposureTimeHidden').change(function() {  
+//        var fin     =   false;
+//        var max, min;
+//        if ($('#exposureTimeHidden').val() == 0){
+//            fin     =   true;
+//            first   =   true;
+//            update_preview_image();
+//            loading_effect_preview(false);            
+//        }
+//        if (fin == false){
+//            if (first){
+//                first   =   false;
+//                loading_effect_preview(true);
+//                max =   $('#exposureTimeHidden').val();
+//                min =   0;
+//            }            
+//            updateProgressExposure(min, max);           
+//        }
+//        
+//    });
+    
+    $('#exposureButton').click(function() { 
+        loading_effect_preview(true);
+        var max = $('#exposureTimeHidden').val();
         var min = 0;
         var refreshId = setInterval(function() {
-            var properID =  $('#exposureTime').val();
+            updateProgressExposure(min, max);
+            var properID =  $('#exposureTimeHidden').val();
             if (properID == 0) {
               clearInterval(refreshId);
+              update_preview_image();
+              loading_effect_preview(false);
+              //VER!!
+              $('#progressExposure').empty();
+              $('#progressExposure').append('Done!').show('slow', function() {
+                    $('#progressExposure').empty();
+                    $('#progressExposure').css('width', '0%').attr('aria-valuenow', '0').attr('aria-valuemin', '0').attr('aria-valuemax', '0');  
+              });
+
             }
-            updateProgressExposure(min, max);
+            
         }, 1000);
     });
 });
@@ -295,8 +328,11 @@ function hoursToDecimal(H){
     return ((parseFloat(a[0]) + (parseFloat(a[1])/60.0) + (parseFloat(a[2])/3600.0)));
 }
 function updateProgressExposure(min, max){
-    var exposureValue, percent;
-    exposureValue = $('#exposureTime').val();
-    percent = exposureValue * 100 / max;
-    $('#progressExposure').css('width', percent+'%').attr('aria-valuenow', percent).attr('aria-valuemin', min).attr('aria-valuemax', max);  
+    var exposureValue, percent, progress;
+    exposureValue = parseInt($('#exposureTimeHidden').val());    
+    percent = exposureValue * 100 / parseInt(max);
+    progress = Math.floor(100 - percent);
+    $('#progressExposure').empty();
+    $('#progressExposure').append(progress+'% - '+exposureValue+' sec');
+    $('#progressExposure').css('width', progress+'%').attr('aria-valuenow', progress).attr('aria-valuemin', min).attr('aria-valuemax', max);  
 }
