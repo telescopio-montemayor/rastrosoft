@@ -318,19 +318,19 @@
                 
         </aside>
     </div>
-    <div class="col-md-8">  
-        <div id="previewImage" class="preview-image">            
-            <div id="preview">
-                <img id="previewImageSrc" src="<c:url value="/resources/images/preview.jpg"/>" width="90%" height="90%" class="img-rounded preview-image-image">
+    <div class="col-md-8">         
+        <div class="previewImage preview-image">            
+            <div class="preview">
+                <img src="<c:url value="/resources/images/preview.jpg"/>" width="90%" height="90%" class="previewImageSrc img-rounded preview-image-image">
                 <div style="clear:both; margin-top: -2px"><button id="cine-button" class="icons" onclick="cine();"><i class="fa fa-television"></i></button></div>
             </div>
-            <div id="loading" style="display: none;">
+            <div class="loading">                
                  <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
-                <span class="sr-only">Loading...</span>                
-            </div>    
-            
-        </div>
+                <span class="sr-only">Loading...</span>                  
+            </div>  
+        </div>          
     </div>
+     
     <div class="sidebar-toggle-right">
     <button class="btn btn-danger right-btn-toggle">
         <i class="fa fa-bars" aria-hidden="true"></i>
@@ -523,8 +523,14 @@
                             </span>                            
                         </div>  
                     </div>
-                    <div id="sidebar-preview" class="form-group">
-                        <img src="/rastrosoft/resources/images/preview.jpg" id="" class="" width="100%" height="100%">
+                    <div class="form-group previewImage sidebar-fullscreen previewImageFullscreen">            
+                        <div class="preview">
+                            <img src="<c:url value="/resources/images/preview.jpg"/>" width="100%" height="100%" class="previewImageSrc">                            
+                        </div>
+                        <div class="loading">                
+                             <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+                            <span class="sr-only">Loading...</span>                  
+                        </div>  
                     </div>
                 </div>
             </div>

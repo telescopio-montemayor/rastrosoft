@@ -40,7 +40,7 @@
           $('.sidebar-box').css("float","");
           $('.sidebar-box').css("margin-left","");
           $('.form-group').css("width","");
-          $('#sidebar-preview').css("display","none");
+          $('.sidebar-fullscreen').css("display","none");
         }else{
           $('#size-btn-toggle-right').removeClass('fa-angle-left').addClass('fa-angle-right');
           $('#sidebarRight').css("min-width","720px");
@@ -52,7 +52,7 @@
           $('.sidebar-box').css("float","left");
           $('.sidebar-box').css("margin-left","50px");
           $('.form-group').css("width","500px");
-          $('#sidebar-preview').css("display","block");
+          $('.sidebar-fullscreen').css("display","block");
         }
     }
     $(document).ready(function() {
@@ -194,25 +194,27 @@ function init_menu(){
 }
 
 function loading_effect_preview(bool){
-    $('#previewImage').toggleClass('loading-icon');    
+     
     if (bool){
+        $('.previewImage').addClass('loading-icon');
         $('#button-preview').prop( "disabled", true );
-        $('#preview').css('display','none');
-        $('#loading').fadeIn( "slow" );
+        $('.preview').css('display','none');
+        $('.loading').fadeIn( "fast" );
        
     }else{
+        $('.previewImage').removeClass('loading-icon');
         $('#button-preview').prop( "disabled", false );
-        $('#loading').css('display','none');
-        $('#preview').fadeIn( "slow" );        
+        $('.loading').css('display','none');
+        $('.preview').fadeIn( "fast" );        
     }
 }
 var imagePreviewSource;
 $(document).ready(function() {
-    imagePreviewSource = $('#previewImageSrc').attr('src');
+    imagePreviewSource = $('.previewImageSrc').attr('src');
 });
 function update_preview_image(){
     var imageSource = imagePreviewSource + '?' +  new Date().getTime();
-    $("#previewImageSrc").attr("src", imageSource);
+    $(".previewImageSrc").attr("src", imageSource);
 }
 
 function fade() {
@@ -239,7 +241,7 @@ function fade() {
 //        }
 //    );
 //}  
-
+var executeExposureProgressBar = true;
 $(document).ready(function() {
     $( "input" ).focusin(function() {
         $( this ).next( ".help-label" ).show();
@@ -249,51 +251,57 @@ $(document).ready(function() {
     });
     $('#setRa').mask('00:00:00');
     
-//    var first   =   true;    
-//    $('#exposureTimeHidden').change(function() {  
-//        var fin     =   false;
-//        var max, min;
-//        if ($('#exposureTimeHidden').val() == 0){
-//            fin     =   true;
-//            first   =   true;
-//            update_preview_image();
-//            loading_effect_preview(false);            
-//        }
-//        if (fin == false){
-//            if (first){
-//                first   =   false;
-//                loading_effect_preview(true);
-//                max =   $('#exposureTimeHidden').val();
-//                min =   0;
-//            }            
-//            updateProgressExposure(min, max);           
-//        }
-//        
-//    });
-    
-    $('#exposureButton').click(function() { 
-        loading_effect_preview(true);
-        var max = $('#exposureTimeHidden').val();
-        var min = 0;
-        var refreshId = setInterval(function() {
-            updateProgressExposure(min, max);
-            var properID =  $('#exposureTimeHidden').val();
-            if (properID == 0) {
-              clearInterval(refreshId);
-              update_preview_image();
-              loading_effect_preview(false);
-              //VER!!
-              $('#progressExposure').empty();
-              $('#progressExposure').append('Done!').show('slow', function() {
-                    $('#progressExposure').empty();
-                    $('#progressExposure').css('width', '0%').attr('aria-valuenow', '0').attr('aria-valuemin', '0').attr('aria-valuemax', '0');  
-              });
-
-            }
-            
-        }, 1000);
+    $("#exposureTimeHidden").change(function(){
+        if (($("#exposureTimeHidden").val() > 0)&(executeExposureProgressBar)){
+            executeExposureProgressBar = false;
+            resetExposureProgressBar();
+        }            
     });
+    
+//    $('#exposureButton').click(function() { 
+//        loading_effect_preview(true);
+//        var max = $('#exposureTimeHidden').val();
+//        var min = 0;
+//        var refreshId = setInterval(function() {
+//            updateProgressExposure(min, max);
+//            var properID =  $('#exposureTimeHidden').val();
+//            if (properID == 0) {
+//              clearInterval(refreshId);
+//              update_preview_image();
+//              loading_effect_preview(false);
+//              //VER!!
+//              $('#progressExposure').empty();
+//              $('#progressExposure').append('Done!').show('slow', function() {
+//                    $('#progressExposure').empty();
+//                    $('#progressExposure').css('width', '0%').attr('aria-valuenow', '0').attr('aria-valuemin', '0').attr('aria-valuemax', '0');  
+//              });
+//
+//            }
+//            
+//        }, 1000);
+//    });
 });
+function resetExposureProgressBar() {
+    loading_effect_preview(true);
+    var max = $('#exposureTimeHidden').val();
+    var min = 0;
+    var refreshId = setInterval(function() {
+        updateProgressExposure(min, max);
+        var properID =  $('#exposureTimeHidden').val();
+        if (properID == 0) {
+          clearInterval(refreshId);
+          update_preview_image();
+          loading_effect_preview(false);
+          //VER!!
+          executeExposureProgressBar=true;
+          $('#progressExposure').empty();
+          $('#progressExposure').append('Done!').show('slow', function() {
+                $('#progressExposure').empty();
+                $('#progressExposure').css('width', '0%').attr('aria-valuenow', '0').attr('aria-valuemin', '0').attr('aria-valuemax', '0');  
+          });
+        }
+    }, 500);
+}
 
 function decimalToDegrees(D){
     return [0|D, '\xB0 ', 0|(D<0?D=-D:D)%1*60, "' ", 0|(Math.round(((D<0?D=-D:D)*60%1*60)* 1 )/1 ), '" '].join('');

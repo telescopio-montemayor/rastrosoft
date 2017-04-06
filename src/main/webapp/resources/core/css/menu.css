@@ -866,6 +866,9 @@ body {
     border: 50px solid;
     border-color: rgba(158, 158, 158, 0.25);
 }
+.previewImageFullscreen{
+    padding-top: 0 !important;
+}
 .cine{
     background-color: #222;
 }
@@ -954,6 +957,10 @@ body {
     color:#60a5e9; 
     padding-top:20%;
 }
+.loading{
+    display:none;
+    text-align: center;
+}
 .logout{
     text-align: center;
     padding-top: 2%;
@@ -1036,7 +1043,7 @@ body {
     -o-transition: all 1s ease-in-out;
     transition: all 1s ease-in-out;
 }
-#sidebar-preview{
+.sidebar-fullscreen{
     display: none;
 }
 
