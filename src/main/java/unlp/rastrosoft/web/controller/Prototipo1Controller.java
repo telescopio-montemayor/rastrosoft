@@ -71,4 +71,5 @@ public class Prototipo1Controller {
 	public String info(ModelMap model) {                  
 		return "info";
 	}
+        
 }

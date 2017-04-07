@@ -64,7 +64,7 @@
 
 <script>
     
-	jQuery(document).ready(function($) {                
+	jQuery(document).ready(function($) {
                 listaDispositivos();
 		$("#search-form").submit(function(event) {
 
@@ -197,7 +197,9 @@
                         <i class="fa fa-bars" aria-hidden="true" ></i>
                     </button>                    
                     <span>Opciones</span>
-                </div>         
+                </div>  
+        <div id="normalScreenContainer">
+            <div id="normalScreen">
                 <p></p>
                 <span>Connected as: <i id="username" style="color:green;">...</i></span>
                 <div class="form-group">
@@ -248,39 +250,41 @@
                      <option>Plutón</option>
                    </select>
                  </div>
-                            
-                <div class="form-group">
-                    <p class="input-help">Right Ascension & Declination</p>
-                    <div class="input-group">
-                        <div class="input-group-addon joystick">
-                                <button class="icon joystick-left ">
-                                    <i class="fa fa-angle-left" aria-hidden="true" ></i>
-                                </button>
-                                <button class="icon joystick-up">
-                                    <i class="fa fa-angle-up" aria-hidden="true" ></i>
-                                </button>
-                                <button class="icon joystick-right">
-                                    <i class="fa fa-angle-right" aria-hidden="true" ></i>
-                                </button>
-                                <button class="icon joystick-down">
-                                    <i class="fa fa-angle-down" aria-hidden="true" ></i>
-                                </button>
-                        </div>                                                
-                        <input id="setRa" type="text" class="form-control radec-input"  >
-                        <p class="help-label">Set right ascension</p>
-                        <span class="input-group-addon">-</span>
-                        <input id="setDec" type="text" class="form-control radec-input"  >
-                        <p class="help-label">Set declination</p>
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" onclick="setRaDec();" >Go!</button>
-                        </span>                            
+                         
+                <div id="setRaDecNormal">
+                    <div id="setRaDec" class="form-group">
+                        <p class="input-help">Right Ascension & Declination</p>
+                        <div class="input-group">
+                            <div class="input-group-addon joystick">
+                                    <button class="icon joystick-left ">
+                                        <i class="fa fa-angle-left" aria-hidden="true" ></i>
+                                    </button>
+                                    <button class="icon joystick-up">
+                                        <i class="fa fa-angle-up" aria-hidden="true" ></i>
+                                    </button>
+                                    <button class="icon joystick-right">
+                                        <i class="fa fa-angle-right" aria-hidden="true" ></i>
+                                    </button>
+                                    <button class="icon joystick-down">
+                                        <i class="fa fa-angle-down" aria-hidden="true" ></i>
+                                    </button>
+                            </div>                                                
+                            <input id="setRa" type="text" class="form-control radec-input"  >
+                            <p class="help-label">Set right ascension</p>
+                            <span class="input-group-addon">-</span>
+                            <input id="setDec" type="text" class="form-control radec-input"  >
+                            <p class="help-label">Set declination</p>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="setRaDec();" >Go!</button>
+                            </span>                            
+                        </div>
                     </div>
                 </div>
-                <div style="clear: both"></div>
+                <div style="clear: both"></div>                
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
-                        <button class="form-control logout-icon" type="button">Abort motion</button>
+                        <button id="abortMotion" class="form-control logout-icon" type="button">Abort motion</button>
                     </div>
                 </div>
                 <div class="form-group">
@@ -295,7 +299,8 @@
                         <button class="form-control logout-icon" type="button">Download</button>
                     </div>
                 </div>
-                
+            </div>  
+        </div>                    
                 <div class="form-group">
                     <div><button style="float:left" class="btn btn-default"><span style="color:red"><i class="fa fa-globe fa-fw"></i>Live transmit</span></button></div>
                     <div><button style="float:left" class="btn btn-default" disabled="disabled"><i class="fa fa-comments-o fa-fw"></i>Enable chat</button></div>
@@ -312,8 +317,10 @@
                         
                     </div>
                 </div>
+            
+        
                 <div style="float: left;"><button onClick="fade();" class="btn btn-default"><i class="fa fa-graduation-cap fa-fw"></i></button></div>
-                <div style="float: right;"><button onClick="test();" class="btn btn-default"><i class="fa fa-free-code-camp fa-fw"></i></button></div>
+                <div style="float: right;"><button onClick="initialize();" class="btn btn-default"><i class="fa fa-free-code-camp fa-fw"></i></button></div>
                 
                 
         </aside>
@@ -349,9 +356,9 @@
                 <span>Opciones avanzadas</span>
             </div>
             <div id="fade" class="fadebox"></div>
-            <div id="sidebar-right-container">
-                <div class="sidebar-box">
-                    <label>Telescopio</label>
+            <div id="sidebar-right-container">   
+                <div class="sidebar-box">                    
+                    <label>Telescope</label>
                     <div class="form-group">
                         <div class="input-group">
                             <button id="park" class="form-control logout-icon" type="button">Park</button>
@@ -368,7 +375,7 @@
                             <button id="sync" class="form-control logout-icon" type="button">Sync</button>
                         </div>
                     </div>
-
+                    <div id="setRaDecFullscreen"></div>
                     <label>CCD</label>
 
                     <div class="form-group">
@@ -478,7 +485,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
-                            <button class="form-control logout-icon" type="button">Abort exposure</button>
+                            <button id="abortExposure" class="form-control logout-icon" type="button">Abort exposure</button>
                         </div>
                     </div>
                     <div class="form-group">
@@ -491,38 +498,29 @@
                 <div class="sidebar-box">
                     <label>Focuser</label>
                     <div class="form-group">
+                        <p class="input-help">Current absolute focus position</p>
                         <div class="input-group">                    
-                            <input type="number" class="form-control" placeholder="Ticks"/>
-                            <p class="help-label">Set ticks for focus</p>
+                            <input id="focusAbsolute" type="number" class="form-control" placeholder="Ticks"/>
+                            <p class="help-label">Set ticks for absolute focus position</p>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">Set</button>
                             </span>                            
                         </div>  
                     </div>
+                    
                     <div class="form-group">
+                        <p class="input-help">Step</p>
+                        
                         <div class="input-group">
-                            <button class="form-control logout-icon" type="button">Focus in</button>
-                            <span class="input-group-addon"></span>
-                            <button class="form-control logout-icon" type="button">Focus out</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
-                            <input type="number" class="form-control currentNumber" placeholder="Focus timer">
+                            <input id="focusRelative" type="number" class="form-control" placeholder="Ticks"/>
+                            <p class="help-label">Set ticks for step</p>  
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Seconds</button>
-                            </span>  
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">                    
-                            <input type="number" class="form-control currentNumber" placeholder="Seeing"/>
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Set</button>
-                            </span>                            
-                        </div>  
-                    </div>
+                                <button id="focusIn"  class="btn btn-default" type="button">Focus in</button> 
+                                <button id="focusOut" class="btn btn-default" type="button">Focus out</button>
+                            </span> 
+                        </div> 
+                        
+                    </div>                    
                     <div class="form-group previewImage sidebar-fullscreen previewImageFullscreen">            
                         <div class="preview">
                             <img src="<c:url value="/resources/images/preview.jpg"/>" width="100%" height="100%" class="previewImageSrc">                            
@@ -532,6 +530,9 @@
                             <span class="sr-only">Loading...</span>                  
                         </div>  
                     </div>
+                    
+                    <div id="fullscreenContainer"></div>   
+                    
                 </div>
             </div>
         </aside>  

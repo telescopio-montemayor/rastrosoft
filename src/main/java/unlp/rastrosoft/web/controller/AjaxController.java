@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import unlp.rastrosoft.web.model.AjaxResponse;
 import unlp.rastrosoft.web.model.CalendarDB;
 import unlp.rastrosoft.web.model.Ccd;
+import unlp.rastrosoft.web.model.Focuser;
 import unlp.rastrosoft.web.model.SendMailTLS;
 import unlp.rastrosoft.web.model.Telescope;
 
@@ -518,6 +519,7 @@ public class AjaxController {
             result.addElemento(telescope.getSlew());
             result.addElemento(telescope.getSync());
             
+            
             Ccd ccd = new Ccd();
             
             result.addElemento(ccd.getUploadDirectory());
@@ -534,8 +536,31 @@ public class AjaxController {
             result.addElemento(ccd.getWidth());
             result.addElemento(ccd.getHeight());
             result.addElemento(ccd.getExposureTime());
+            
+            
+            Focuser focuser = new Focuser();
+            result.addElemento(focuser.getFocusIn());
+            result.addElemento(focuser.getFocusOut());
+            result.addElemento(focuser.getAbsolutePosition());
+            result.addElemento(focuser.getRelativePosition());
+           
             return result;
 
         }
         
+        @JsonView(Views.Public.class)
+        @RequestMapping(value = "/initialize", method=RequestMethod.POST)
+        public AjaxResponse initialize(@RequestBody SearchCriteria search) {
+            
+            
+            AjaxResponse result = new AjaxResponse();
+
+            Ccd ccd = new Ccd();
+            
+            ccd.setExposure("1");
+            ccd.setTemperature("-15");
+       
+            return result;
+
+        }
 }

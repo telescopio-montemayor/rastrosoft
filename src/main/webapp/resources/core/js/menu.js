@@ -41,6 +41,9 @@
           $('.sidebar-box').css("margin-left","");
           $('.form-group').css("width","");
           $('.sidebar-fullscreen').css("display","none");
+          $("#setRaDec").appendTo("#setRaDecNormal");
+          $("#normalScreen").appendTo("#normalScreenContainer");
+          
         }else{
           $('#size-btn-toggle-right').removeClass('fa-angle-left').addClass('fa-angle-right');
           $('#sidebarRight').css("min-width","720px");
@@ -53,16 +56,19 @@
           $('.sidebar-box').css("margin-left","50px");
           $('.form-group').css("width","500px");
           $('.sidebar-fullscreen').css("display","block");
+          $("#setRaDec").appendTo("#setRaDecFullscreen");
+          $("#normalScreen").appendTo("#fullscreenContainer");
         }
     }
-    $(document).ready(function() {
+$(document).ready(function() {
 
     $('.sidebar-toggle-left').on('click', function() {
         toggle_left();
     });
     $('.sidebar-toggle-right').on('click', function() {
         toggle_right();
-    });
+    });   
+    
 
 });
 
@@ -142,6 +148,7 @@ $(document).ready(function() {
         }
     });
 init_menu();
+
 });
 
 (function($) {
@@ -221,26 +228,6 @@ function fade() {
      $( ".fadebox" ).toggle();
 }
 
-//function showSetExposureTime(){
-//    $('#exposureTime')
-//    .hide( "slide", 200, 
-//        function() {
-//            $('#exposureTimeHidden').show("slide", { direction: "right" }, 300);
-//            $('#exposureTimeHidden').focus();
-//            $('#exposureTimeHidden').val($('#exposureTime').val());
-//        }
-//    );
-//}  
-//function showCurrentExposureTime(){
-//    $('#exposureTimeHidden').blur();
-//    $('#exposureTimeHidden')
-//    .hide( "slide", 200, 
-//        function() {            
-//            $('#exposureTime').show("slide", { direction: "right" }, 300);
-//            $('#exposureTime').val($('#exposureTimeHidden').val());
-//        }
-//    );
-//}  
 var executeExposureProgressBar = true;
 $(document).ready(function() {
     $( "input" ).focusin(function() {
@@ -257,29 +244,7 @@ $(document).ready(function() {
             resetExposureProgressBar();
         }            
     });
-    
-//    $('#exposureButton').click(function() { 
-//        loading_effect_preview(true);
-//        var max = $('#exposureTimeHidden').val();
-//        var min = 0;
-//        var refreshId = setInterval(function() {
-//            updateProgressExposure(min, max);
-//            var properID =  $('#exposureTimeHidden').val();
-//            if (properID == 0) {
-//              clearInterval(refreshId);
-//              update_preview_image();
-//              loading_effect_preview(false);
-//              //VER!!
-//              $('#progressExposure').empty();
-//              $('#progressExposure').append('Done!').show('slow', function() {
-//                    $('#progressExposure').empty();
-//                    $('#progressExposure').css('width', '0%').attr('aria-valuenow', '0').attr('aria-valuemin', '0').attr('aria-valuemax', '0');  
-//              });
-//
-//            }
-//            
-//        }, 1000);
-//    });
+  
 });
 function resetExposureProgressBar() {
     loading_effect_preview(true);
@@ -312,11 +277,6 @@ function decimalToHours(D){
     return(n.toTimeString().slice(0, 8));
 }
 function degreesToDecimal(d) {    
-//    var coord = d.match(/[0-9]+/g);
-//    if (d.charAt(0)==='-'){
-//        coord.insert(0, parseFloat(coord[0])*(-1));
-//    };
-//    alert(coord[0]);
 
     var coord = d.split("\xB0");
     var degrees = parseFloat(coord[0]);

@@ -11,9 +11,6 @@ package unlp.rastrosoft.web.model;
  */
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +20,6 @@ import java.util.logging.Logger;
 import laazotea.indi.Constants;
 import laazotea.indi.Constants.SwitchStatus;
 import laazotea.indi.client.*;
-import unlp.rastrosoft.web.controller.SSEController;
 
 
 public class indi_client implements INDIServerConnectionListener, INDIDeviceListener, INDIPropertyListener {
@@ -155,7 +151,7 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
                                                                 
                                 return true;
                             } catch (INDIValueException ex) {
-                                Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
+//                                Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
                             }
 			}
 		}
@@ -178,7 +174,7 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
                                 
                                 return true;
                             } catch (INDIValueException ex) {
-                                Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
+//                               Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
                             }
 			}
 		}
@@ -211,7 +207,7 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
                                 
                                 return true;
                             } catch (INDIValueException ex) {
-                                Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
+//                                Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
                             }
 			}
 		}
@@ -228,7 +224,7 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
                                 propiedadesDispositivo.get(j).sendChangesToDriver();
                                 return true;
                             } catch (INDIValueException | IOException ex) {
-                                Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
+//                                Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }

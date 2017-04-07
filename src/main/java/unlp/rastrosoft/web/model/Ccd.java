@@ -17,9 +17,32 @@ public class Ccd extends Device {
     public Ccd (){
         super("CCD Simulator");
     }
-    
+    public boolean setBinning(String hor, String ver){
+        cliente = connect_indi.connect(dispositivo);
+        cliente.commitDoubleValor(dispositivo, "CCD_BINNING", "HOR_BIN", hor);
+        cliente.commitDoubleValor(dispositivo, "CCD_BINNING", "VER_BIN", ver);
+        cliente.pushValor(dispositivo, "CCD_BINNING");
+        return true;
+    }
+    public boolean setFrame(String x, String y){
+        if( !(this.modificarDouble("CCD_FRAME", "X", x)))
+            return false;
+        return false != (this.modificarDouble("CCD_FRAME", "Y", y));
+    }    
     public boolean setExposure( String time ){
-        return this.modificarDouble( "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", time);
+        return this.modificarDouble( "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", time);        
+    }
+    public boolean setFrameLight(){        
+        return this.modificarBoolean("CCD_FRAME_TYPE", "FRAME_LIGHT", "ON");
+    }
+    public boolean setFrameBias(){        
+        return this.modificarBoolean("CCD_FRAME_TYPE", "FRAME_BIAS", "ON");
+    }
+    public boolean setFrameDark(){        
+        return this.modificarBoolean("CCD_FRAME_TYPE", "FRAME_DARK", "ON");
+    }
+    public boolean setFrameFlat(){        
+        return this.modificarBoolean("CCD_FRAME_TYPE", "FRAME_FLAT", "ON");
     }
     public boolean setLocalMode( ){
         return this.modificarBoolean("UPLOAD_MODE", "UPLOAD_LOCAL", "ON");
@@ -30,13 +53,19 @@ public class Ccd extends Device {
     public boolean setPrefix( String prefix ){
         return this.modificarString("UPLOAD_SETTINGS", "UPLOAD_PREFIX", prefix);        
     }
-    public boolean abortExposure( ){
-        return this.modificarBoolean("CCD_ABORT_EXPOSURE", "ABORT", "ON");
-    }
     public boolean setSize( String width, String height ){
         if( !(this.modificarDouble("CCD_FRAME", "WIDTH", width)))
             return false;
         return false != (this.modificarDouble("CCD_FRAME", "HEIGHT", height));
+    }
+    public boolean setTemperature( String temperature){
+        return this.modificarDouble("CCD_TEMPERATURE", "CCD_TEMPERATURE_VALUE", temperature);
+    }
+    
+    
+    
+    public boolean abortExposure( ){
+        return this.modificarBoolean("CCD_ABORT_EXPOSURE", "ABORT", "ON");
     }
     public boolean takeCapture( String time ){
         return this.setExposure(time);
@@ -118,6 +147,6 @@ public class Ccd extends Device {
     public String getExposureTime(){
         cliente = connect_indi.connect(dispositivo);
         return (cliente.enviar_mensaje(dispositivo, "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE"));
-    }
-    
+    }   
+   
 }

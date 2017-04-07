@@ -33,7 +33,7 @@ public class connect_indi {
                 cliente.conectar(focuser);
                 Thread.sleep(500);
             } catch (InterruptedException | IOException | INDIValueException ex) {
-                Logger.getLogger(connect_indi.class.getName()).log(Level.SEVERE, null, ex);
+//                Logger.getLogger(connect_indi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return cliente;
@@ -47,7 +47,7 @@ public class connect_indi {
                 cliente.conectar(dispositivo);
                 Thread.sleep(500);
             } catch (InterruptedException | IOException | INDIValueException ex) {
-                Logger.getLogger(connect_indi.class.getName()).log(Level.SEVERE, null, ex);
+//                Logger.getLogger(connect_indi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return cliente;

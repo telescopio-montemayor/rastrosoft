@@ -19,27 +19,27 @@ public class Telescope extends Device {
         super("Telescope Simulator");
     }
     
-    public boolean park(){
+    public boolean setPark(){
         return this.modificarBoolean("TELESCOPE_PARK", "PARK", "ON");
     }
     
-    public boolean unPark(){
+    public boolean setUnPark(){
         return this.modificarBoolean("TELESCOPE_PARK", "UNPARK", "ON");
     }
     
-    public boolean track( ){
+    public boolean setTrack( ){
         return this.modificarBoolean("ON_COORD_SET", "TRACK", "ON");
     }
     
-    public boolean slew( ){
+    public boolean setSlew( ){
         return this.modificarBoolean("ON_COORD_SET", "SLEW", "ON");
     }
     
-    public boolean sync( ){
+    public boolean setSync( ){
         return this.modificarBoolean("ON_COORD_SET", "SYNC", "ON");
     }
     
-    public boolean abortMotion(){
+    public boolean setAbortMotion(){
         return this.modificarBoolean("TELESCOPE_ABORT_MOTION", "ABORT", "ON");
     }
     
@@ -54,9 +54,7 @@ public class Telescope extends Device {
         List<String> result = new ArrayList<>();
         cliente = connect_indi.connect(dispositivo);
         String ra = cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "RA");
-//        String ra = this.decimalToTime(cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "RA"));
         String dec = cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "DEC");
-//        String dec =  String.valueOf(Math.toDegrees(Double.parseDouble(cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "DEC"))));
         result.add(ra);
         result.add(dec);
         return result;
@@ -81,4 +79,5 @@ public class Telescope extends Device {
         cliente = connect_indi.connect(dispositivo);
         return (cliente.enviar_mensaje(dispositivo, "ON_COORD_SET", "SYNC"));
     }
+    
 }

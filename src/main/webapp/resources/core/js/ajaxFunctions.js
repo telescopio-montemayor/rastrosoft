@@ -89,7 +89,9 @@ function displayTipo(data, tipo) {
                 }
             });
             changeDisableDate( shifts );
-            break;    
+            break;
+        case 'initialize':
+            break;
         case 'test':
             break;
         default:
@@ -169,11 +171,17 @@ function getShifts() {
     sendAjax(search,'getShifts','getShifts');  
 }
 
+function initialize() {
+    var search = {};
+    sendAjax(search,'initialize','initialize');  
+}
+
 function updateValues(data){
     $.each(data, function(key, value) {
         var ra, dec, park, unpark, track, slew, sync, uploadDir, uploadPrefix, 
             hBinning, vBinning, ccdTemperature, frameLight, frameBias, frameDark, 
-            frameFlat, x, y, width, height, exposureTime;
+            frameFlat, x, y, width, height, exposureTime, focusIn, focusOut, 
+            focusAbsolute, focusRelative;
         ra              = value[0];
         dec             = value[1];
         park            = value[2];
@@ -195,6 +203,10 @@ function updateValues(data){
         width           = value[18];
         height          = value[19];
         exposureTime    = value[20];
+        focusIn         = value[21];
+        focusOut        = value[22];
+        focusAbsolute   = value[23];
+        focusRelative   = value[24];
         
         if (($('#setRa').is(":focus")===false)&($('#setDec').is(":focus")===false)){
             $('#setRa').val(decimalToHours(ra));
@@ -264,5 +276,20 @@ function updateValues(data){
         $('#exposureTimeHidden').val(Math.floor(exposureTime)).trigger('change');
         
         
+        if (focusIn==="ON"){
+            $("#focusIn").addClass('selected');
+            $("#focusOut").removeClass('selected');
+        }else if (focusOut==="ON"){
+            $("#focusOut").addClass('selected');
+            $("#focusIn").removeClass('selected');
+        }
+        
+        if (($('#focusAbsolute').is(":focus")===false))
+            $("#focusAbsolute").val(focusAbsolute);    
+        
+        if (($('#focusRelative').is(":focus")===false))
+            $("#focusRelative").val(focusRelative);    
+        
+      
     });
 }
