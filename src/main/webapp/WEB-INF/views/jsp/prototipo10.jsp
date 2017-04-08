@@ -101,14 +101,15 @@
                 },
                 success : function(result) {
                         console.log("SUCCESS: ", result);
-                        displayTipo(result, tipo);
+                        successAjax(result, tipo);
                 },
                 error : function(e) {
                         console.log("ERROR: ", e);
+                        errorAjax(result, tipo);
                 },
-                done : function(e) {
+                done : function(result) {
                         console.log("DONE");
-                        enableSearchButton(true);
+                        doneAjax(result, tipo);
                 }
             });
         }
@@ -328,7 +329,7 @@
     <div class="col-md-8">         
         <div class="previewImage preview-image">            
             <div class="preview">
-                <img src="<c:url value="/resources/images/preview.jpg"/>" width="90%" height="90%" class="previewImageSrc img-rounded preview-image-image">
+                <img src="" width="90%" height="90%" class="previewImageSrc img-rounded preview-image-image" onerror="imgError(this);">
                 <div style="clear:both; margin-top: -2px"><button id="cine-button" class="icons" onclick="cine();"><i class="fa fa-television"></i></button></div>
             </div>
             <div class="loading">                
@@ -531,7 +532,7 @@
             </div>
         </aside>  
     </div>
-
+    <input type="hidden" id="filePath">
 </body>
   
 

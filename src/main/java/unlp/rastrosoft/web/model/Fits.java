@@ -12,16 +12,16 @@ import javax.imageio.ImageIO;
 
 public class Fits  {
 
-        public void fitsToJpg(String source, String destination, String image){
+          public void fitsToJpg(String source, String destination, String image){
             try {
             ImagePlus imageP = openImage(source+image);
-            final File out = new File(destination+"preview.jpg");
+            final File out = new File(destination+image+".jpg");
             BufferedImage imagen = imageP.getBufferedImage();
             ImageIO.write(imagen, "jpg", out);
             } catch (IOException ex) {
                 Logger.getLogger(Fits.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        }  
 }
 
 

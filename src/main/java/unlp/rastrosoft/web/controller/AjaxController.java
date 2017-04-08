@@ -543,7 +543,9 @@ public class AjaxController {
             result.addElemento(focuser.getFocusOut());
             result.addElemento(focuser.getAbsolutePosition());
             result.addElemento(focuser.getRelativePosition());
-           
+            
+            result.addElemento(ccd.getFilePath());
+            
             return result;
 
         }
@@ -557,9 +559,19 @@ public class AjaxController {
 
             Ccd ccd = new Ccd();
             
-            ccd.setExposure("1");
+            
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String currentUserName = "default";
+            if (!(authentication instanceof AnonymousAuthenticationToken)) {
+                currentUserName = authentication.getName();        
+            }
+            String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp/captures";
+            String source= path+"/"+currentUserName+"/";
+            ccd.setLocalMode();
+            ccd.setUploadDirectory(source);
+            
             ccd.setTemperature("-15");
-       
+            ccd.setExposure("1");
             return result;
 
         }

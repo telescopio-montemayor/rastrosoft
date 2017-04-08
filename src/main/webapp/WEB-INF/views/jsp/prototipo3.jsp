@@ -138,15 +138,15 @@
             },
             success : function(list) {
                     console.log("SUCCESS: ", list);
-                    displayTipo(list, tipo);
+                    successAjax(list, tipo);
             },
             error : function(e) {
                     console.log("ERROR: ", e);
-                    display(e);
+                    errorAjax(e, tipo);
             },
             done : function(e) {
                     console.log("DONE");
-                    enableSearchButton(true);
+                    doneAjax(e, tipo);
             }
         });
     }

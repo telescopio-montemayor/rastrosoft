@@ -5,8 +5,15 @@
  */
 package unlp.rastrosoft.web.model;
 
+import java.io.File;
+import static java.lang.Integer.parseInt;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -29,9 +36,15 @@ public class Ccd extends Device {
             return false;
         return false != (this.modificarDouble("CCD_FRAME", "Y", y));
     }    
+    String olderFilePath = this.getFilePath();
     public boolean setExposure( String time ){
-        return this.modificarDouble( "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", time);        
-    }
+        this.modificarDouble( "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", time);        
+        try {
+            Thread.sleep(parseInt(time) * 1000);
+            } catch (InterruptedException ex) {            
+            }
+        return (this.convertFits());        
+    }    
     public boolean setFrameLight(){        
         return this.modificarBoolean("CCD_FRAME_TYPE", "FRAME_LIGHT", "ON");
     }
@@ -68,7 +81,8 @@ public class Ccd extends Device {
         return this.modificarBoolean("CCD_ABORT_EXPOSURE", "ABORT", "ON");
     }
     public boolean takeCapture( String time ){
-        return this.setExposure(time);
+        this.setExposure(time);
+        return true;
     }
     public boolean takePreview( ){
         try {
@@ -148,5 +162,70 @@ public class Ccd extends Device {
         cliente = connect_indi.connect(dispositivo);
         return (cliente.enviar_mensaje(dispositivo, "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE"));
     }   
-   
+    public String getFilePath(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "CCD_FILE_PATH", "FILE_PATH"));
+    }  
+    
+    
+    
+    
+    public boolean convertFits(){
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = "default";
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            currentUserName = authentication.getName();            
+        }
+        String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp/captures";
+        String source= path+"/"+currentUserName;
+        String dest = path+"/"+currentUserName;
+        this.setUploadDirectory(source);
+        this.setLocalMode();        
+        File fits = null;
+        int count=0;
+        String newFilePath = this.getFilePath();
+        while (olderFilePath.equals(newFilePath)){
+            newFilePath = this.getFilePath();
+            count++;
+            if (count>10000){  //block infinite loop
+                return false;
+            }
+        }
+        olderFilePath = newFilePath;
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        fits = findFile(newFilePath);
+        new Fits().fitsToJpg(source+"/", dest+"/", fits.getName());
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+//        count=0;
+//        String newJpg = newFilePath+".jpg";
+//        while (findFile(newJpg)==null){
+//            count++;
+//            if (count>10000){  //block infinite loop
+//                return false;
+//            }
+//        }            
+        return true;
+    }
+    public static File findFile(String absolutePath){
+        Path p = Paths.get(absolutePath);
+        if (p!=null){
+            return (new File(p.toString()));
+        }else{
+            return null;
+        }
+    }   
+    
 }

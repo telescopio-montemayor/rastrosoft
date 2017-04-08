@@ -167,4 +167,6 @@ public class AjaxCcd {
         ccd.abortExposure();
         return result;
     }
+    
+  
 }

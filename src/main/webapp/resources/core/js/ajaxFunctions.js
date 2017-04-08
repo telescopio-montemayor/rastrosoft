@@ -1,4 +1,22 @@
-function displayTipo(data, tipo) {
+function errorAjax(data, tipo) {
+    switch(tipo) {
+        case 'setExposure':
+            $("#setExposure").prop("disabled", "");
+            break;
+        default:
+            break;
+    }
+}
+function doneAjax(data, tipo) {
+    switch(tipo) {
+        case 'setExposure':
+            $("#setExposure").prop("disabled", "");
+            break;
+        default:
+            break;
+    }
+}
+function successAjax(data, tipo) {
     switch(tipo) {
         case 'dispositivos':
             $.each(data, function(key, value) {
@@ -89,6 +107,9 @@ function displayTipo(data, tipo) {
                 }
             });
             changeDisableDate( shifts );
+            break;
+        case 'setExposure':
+            $("#setExposure").prop("disabled", "");
             break;
         default:
             break;
@@ -261,7 +282,7 @@ function updateValues(data){
         var ra, dec, park, unpark, track, slew, sync, uploadDir, uploadPrefix, 
             hBinning, vBinning, ccdTemperature, frameLight, frameBias, frameDark, 
             frameFlat, x, y, width, height, exposureTime, focusIn, focusOut, 
-            focusAbsolute, focusRelative;
+            focusAbsolute, focusRelative, filePath;
         ra              = value[0];
         dec             = value[1];
         park            = value[2];
@@ -287,6 +308,7 @@ function updateValues(data){
         focusOut        = value[22];
         focusAbsolute   = value[23];
         focusRelative   = value[24];
+        filePath        = value[25];
         
         if (($('#setRa').is(":focus")===false)&($('#setDec').is(":focus")===false)){
             $('#setRa').val(decimalToHours(ra));
@@ -372,6 +394,8 @@ function updateValues(data){
         if (($('#focusRelative').is(":focus")===false))
             $("#focusRelative").val(Math.round( focusRelative * 1 ) / 1);
         
-      
+        $("#filePath").val(filePath);
+        showCapture();
+        
     });
 }

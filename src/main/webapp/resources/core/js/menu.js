@@ -223,6 +223,30 @@ function update_preview_image(){
     var imageSource = imagePreviewSource + '?' +  new Date().getTime();
     $(".previewImageSrc").attr("src", imageSource);
 }
+function showCapture(){    
+    var absoluteFilePath = $("#filePath").val();
+    var res = absoluteFilePath.split("webapp");
+    var filePath = ("/rastrosoft"+res[1]);
+    var imageSource = filePath + '.jpg';
+//    if (( ( $(".previewImageSrc").attr("src") ) != (imageSource) )&(( $(".previewImageSrc").attr("src") ) != ("/rastrosoft/resources/images/loading.gif"))){
+//        $(".previewImageSrc").attr("src", "");
+//    }
+    $.ajax({
+        url:imageSource,
+        type:'HEAD',
+        error: function()
+        {
+            if ( ( $(".previewImageSrc").attr("src") ) != ("/rastrosoft/resources/images/loading.gif") ){
+                $(".previewImageSrc").attr("src", "/rastrosoft/resources/images/loading.gif");
+            }
+                
+        },
+        success: function()
+        {            
+            $(".previewImageSrc").attr("src", imageSource);
+        }
+    });
+}
 
 function fade() {
      $( ".fadebox" ).toggle();
@@ -243,7 +267,7 @@ $(document).ready(function() {
             executeExposureProgressBar = false;
             resetExposureProgressBar();
         }            
-    });
+    });    
 });
 $(document).ready(function() {    
     $("#park").click(function(){
@@ -288,6 +312,7 @@ $(document).ready(function() {
         setSize();         
     });
     $("#setExposure").click(function(){
+        $("#setExposure").prop("disabled", "disabled");
         setExposure();  
         if ($("#exposureTime").val()<"0.01"){
             notify('Exposure time must be greater than 0.01 seconds', 'danger');
@@ -319,7 +344,8 @@ function resetExposureProgressBar() {
         var properID =  $('#exposureTimeHidden').val();
         if (properID == 0) {
           clearInterval(refreshId);
-          update_preview_image();
+          //update_preview_image();
+          showCapture();
           loading_effect_preview(false);
           //VER!!
           executeExposureProgressBar=true;
@@ -367,4 +393,10 @@ function updateProgressExposure(min, max){
     $('#progressExposure').empty();
     $('#progressExposure').append(progress+'% - '+exposureValue+' sec');
     $('#progressExposure').css('width', progress+'%').attr('aria-valuenow', progress).attr('aria-valuemin', min).attr('aria-valuemax', max);  
+}
+
+function imgError(image) {
+    image.onerror = "";
+    image.src = "/rastrosoft/resources/images/loading.gif";
+    return true;
 }
