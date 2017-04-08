@@ -35,7 +35,7 @@
           $('#sidebarRight').css("width","260px");
           $('#size-btn-toggle-right').removeClass('fa-angle-right').addClass('fa-angle-left');
           
-          $('#sidebar-right-container').removeClass('container');
+          //$('#sidebar-right-container').removeClass('container');
           $('#sidebar-right-container').css("padding-top","");
           $('.sidebar-box').css("float","");
           $('.sidebar-box').css("margin-left","");
@@ -50,11 +50,11 @@
           $('#sidebarRight').css("width","100%");
           
           
-          $('#sidebar-right-container').addClass('container');
+          //$('#sidebar-right-container').addClass('container');
           $('#sidebar-right-container').css("padding-top","50px");
           $('.sidebar-box').css("float","left");
           $('.sidebar-box').css("margin-left","50px");
-          $('.form-group').css("width","500px");
+          $('.form-group').css("width","800px");
           $('.sidebar-fullscreen').css("display","block");
           $("#setRaDec").appendTo("#setRaDecFullscreen");
           $("#normalScreen").appendTo("#fullscreenContainer");
@@ -243,6 +243,70 @@ $(document).ready(function() {
             executeExposureProgressBar = false;
             resetExposureProgressBar();
         }            
+    });
+});
+$(document).ready(function() {    
+    $("#park").click(function(){
+        setPark(); 
+        notify('Parking...', 'success');
+    });
+    $("#unpark").click(function(){
+        setUnPark(); 
+        notify('Unparking...', 'success');
+    });
+    $("#track").click(function(){
+        setTrack(); 
+        notify('Setting to Track successful! Now, please set the coordinates...', 'success');
+    });
+    $("#slew").click(function(){
+        setSlew(); 
+        notify('Setting to Slew successful! Now, please set the coordinates...', 'success');
+    });
+    $("#sync").click(function(){
+        setSync(); 
+        notify('Setting to Sync successful! Now, please set the coordinates...', 'success');
+    });
+    $("#setUploadDirectory").click(function(){
+        setUploadDirectory();         
+    });
+    $("#setPrefix").click(function(){
+        setPrefix();         
+    });
+    $("#setBinning").click(function(){
+        setBinning();         
+    });
+    $("#frameType").change(function(){
+        setFrameType();         
+    });
+    $("#setCcdTemperature").click(function(){
+        setCcdTemperature();         
+    });
+    $("#setFrame").click(function(){
+        setFrame();         
+    });
+    $("#setSize").click(function(){
+        setSize();         
+    });
+    $("#setExposure").click(function(){
+        setExposure();  
+        if ($("#exposureTime").val()<"0.01"){
+            notify('Exposure time must be greater than 0.01 seconds', 'danger');
+        }
+    });
+    $("#setAbortExposure").click(function(){
+        setAbortExposure();
+    });
+    $("#setFocusAbsolute").click(function(){
+        setFocusAbsolute();
+    });
+    $("#focusIn").click(function(){
+        focusIn();
+    });
+    $("#focusOut").click(function(){
+        focusOut();
+    });
+    $("#abortMotion").click(function(){
+        setAbortMotion();
     });
   
 });

@@ -27,7 +27,7 @@ public class AjaxTelescope {
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/setRaDec", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
-    public AjaxResponse getValorViaAjax2(@RequestBody ExecuteCriteriaTwoValues execute) {
+    public AjaxResponse setRaDec(@RequestBody ExecuteCriteriaTwoValues execute) {
 
         AjaxResponse result = new AjaxResponse();
         
@@ -42,5 +42,64 @@ public class AjaxTelescope {
         
         return result;
 
+    }
+    
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/setPark", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
+    public AjaxResponse setPark(@RequestBody ExecuteCriteriaTwoValues execute) {
+
+        AjaxResponse result = new AjaxResponse();
+        
+        Telescope telescope = new Telescope();
+        telescope.setPark();
+        
+        return result;
+
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/setUnPark", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
+    public AjaxResponse setUnPark(@RequestBody ExecuteCriteriaTwoValues execute) {
+        AjaxResponse result = new AjaxResponse();
+        Telescope telescope = new Telescope();
+        telescope.setUnPark();
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/setTrack", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
+    public AjaxResponse setTrack(@RequestBody ExecuteCriteriaTwoValues execute) {
+        AjaxResponse result = new AjaxResponse();
+        Telescope telescope = new Telescope();
+        telescope.setTrack();
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/setSlew", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
+    public AjaxResponse setSlew(@RequestBody ExecuteCriteriaTwoValues execute) {
+        AjaxResponse result = new AjaxResponse();
+        Telescope telescope = new Telescope();
+        telescope.setSlew();
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/setSync", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
+    public AjaxResponse setSync(@RequestBody ExecuteCriteriaTwoValues execute) {
+        AjaxResponse result = new AjaxResponse();
+        Telescope telescope = new Telescope();
+        telescope.setSync();
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/setAbortMotion", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
+    public AjaxResponse setAbortMotion(@RequestBody ExecuteCriteriaTwoValues execute) {
+        AjaxResponse result = new AjaxResponse();
+        Telescope telescope = new Telescope();
+        telescope.setAbortMotion();
+        return result;
     }
 }

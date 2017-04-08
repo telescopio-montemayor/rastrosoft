@@ -370,14 +370,36 @@
                         <div class="input-group">
                             <button id="track" class="form-control logout-icon" type="button">Track</button>
                             <span class="input-group-addon"></span>
-                            <button id="slew" class="form-control logout-icon" type="button">Slew</button>
+                            <button id="slew" class="form-control logout-icon"  type="button">Slew</button>
                             <span class="input-group-addon"></span>
-                            <button id="sync" class="form-control logout-icon" type="button">Sync</button>
+                            <button id="sync" class="form-control logout-icon"  type="button">Sync</button>                            
                         </div>
                     </div>
                     <div id="setRaDecFullscreen"></div>
                     <label>CCD</label>
-
+                    <div class="form-group">
+                        <p class="input-help">Exposure time</p>
+                        <div class="input-group">
+                            
+                            <span class="input-group-addon" title="Time to exposure"><i class="fa fa-clock-o fa-fw"></i></span>
+                            <input id="exposureTime" type="number" class="form-control" placeholder="Exposure">                            
+                            <p class="help-label">Set time to exposure (seconds)</p>
+                            <input id="exposureTimeHidden" type="hidden" class="form-control" value="0">                            
+                            <span class="input-group-btn">
+                                <button id="setExposure" class="btn btn-default" type="button">Capture <i class="fa fa-play fa-fw"></i></button>
+                            </span> 
+                        </div>  
+                        <div class="progress">
+                            <div id="progressExposure" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%">                        
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
+                            <button id="setAbortExposure" class="form-control logout-icon" type="button">Abort exposure</button>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <p class="input-help">Directory to upload files</p>
                         <div class="input-group">
@@ -385,7 +407,7 @@
                             <input type="text" class="form-control" id="uploadDir" placeholder="Set upload directory">
                             <p class="help-label">Set upload directory</p>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="" >Set</button>
+                                <button id="setUploadDirectory" class="btn btn-default" type="button">Set</button>
                             </span>   
                         </div>
                     </div>
@@ -396,20 +418,20 @@
                             <input type="text" class="form-control" id="uploadPrefix" placeholder="Set prefix">
                             <p class="help-label">Set prefix for saven files</p>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="" >Set</button>
+                                <button id="setPrefix" class="btn btn-default" type="button">Set</button>
                             </span>     
                         </div>
                     </div>
                     <div class="form-group">
                         <p class="input-help">Ccd binning (horizontal & vertical)</p>
                         <div class="input-group">                    
-                            <input id="hBinning" type="number" class="form-control " placeholder="H"/>
+                            <input id="hBinning" type="text" class="form-control " placeholder="H"/>
                             <p class="help-label">Set horizontal binning</p>
                             <span class="input-group-addon">x</span>
-                            <input id="vBinning" type="number" class="form-control " placeholder="V"/>
+                            <input id="vBinning" type="text" class="form-control " placeholder="V"/>
                             <p class="help-label">Set vertical binning</p>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Binning</button>
+                                <button id="setBinning" class="btn btn-default" type="button">Binning</button>
                             </span>                            
                         </div>  
                         
@@ -428,10 +450,10 @@
                         <p class="input-help">CCD temperature</p>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-thermometer-half fa-fw"></i></span>
-                            <input type="number" class="form-control " id="ccdTemperature" placeholder="Temperature" value="-15">                    
+                            <input type="text" class="form-control " id="ccdTemperature" placeholder="Temperature" value="-15">                    
                             <p class="help-label">Set temperature for the CCD</p>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">°C</button>
+                                <button id="setCcdTemperature" class="btn btn-default" type="button">°C</button>
                             </span>  
                         </div>
                         
@@ -439,13 +461,13 @@
                     <div class="form-group">
                         <p class="input-help">Frame (X & Y)</p>
                         <div class="input-group">                    
-                            <input id="frameX" type="number" class="form-control " placeholder="X" />
+                            <input id="frameX" type="text" class="form-control " placeholder="X" />
                             <p class="help-label">Set image X origin</p>
                             <span class="input-group-addon">x</span>
-                            <input id="frameY" type="number" class="form-control " placeholder="Y" />
+                            <input id="frameY" type="text" class="form-control " placeholder="Y" />
                             <p class="help-label">Set image Y origin</p>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Set</button>
+                                <button id="setFrame" class="btn btn-default" type="button">Set</button>
                                 
                             </span>                            
                         </div>  
@@ -453,57 +475,29 @@
                     <div class="form-group">
                         <p class="input-help">Image size (width & height)</p>
                         <div class="input-group">                    
-                            <input id="frameWidth" type="number" class="form-control " placeholder="Width" />
+                            <input id="frameWidth" type="text" class="form-control " placeholder="Width" />
                             <p class="help-label">Set image width</p>
                             <span class="input-group-addon">x</span>
-                            <input id="frameHeight" type="number" class="form-control " placeholder="Height" />
+                            <input id="frameHeight" type="text" class="form-control " placeholder="Height" />
                             <p class="help-label">Set image height</p>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Pixels</button>
+                                <button id="setSize" class="btn btn-default" type="button">Pixels</button>
                                 
                             </span>                            
                         </div>  
                     </div>
                     
-                    <div class="form-group">
-                        <p class="input-help">Exposure time</p>
-                        <div class="input-group">
-                            
-                            <span class="input-group-addon" title="Time to exposure"><i class="fa fa-clock-o fa-fw"></i></span>
-                            <input id="exposureTime" type="number" class="form-control" title="Set time to exposure" placeholder="Exposure">                            
-                            <p class="help-label">Set time to exposure</p>
-                            <input id="exposureTimeHidden" type="hidden" class="form-control" title="Set time to exposure" placeholder="Exposure" value="0">                            
-                            <span class="input-group-btn">
-                                <button id="exposureButton" class="btn btn-default" type="button">Seconds</button>
-                            </span> 
-                        </div>  
-                        <div class="progress">
-                            <div id="progressExposure" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" style="width: 0%">                        
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
-                            <button id="abortExposure" class="form-control logout-icon" type="button">Abort exposure</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-play fa-fw"></i></span>
-                            <button class="form-control logout-icon" type="button">Capture</button>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="sidebar-box">
                     <label>Focuser</label>
                     <div class="form-group">
                         <p class="input-help">Current absolute focus position</p>
                         <div class="input-group">                    
-                            <input id="focusAbsolute" type="number" class="form-control" placeholder="Ticks"/>
+                            <input id="focusAbsolute" type="text" class="form-control" placeholder="Ticks"/>
                             <p class="help-label">Set ticks for absolute focus position</p>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Set</button>
+                                <button id="setFocusAbsolute" class="btn btn-default" type="button">Set</button>
                             </span>                            
                         </div>  
                     </div>
@@ -512,7 +506,7 @@
                         <p class="input-help">Step</p>
                         
                         <div class="input-group">
-                            <input id="focusRelative" type="number" class="form-control" placeholder="Ticks"/>
+                            <input id="focusRelative" type="text" class="form-control" placeholder="Ticks"/>
                             <p class="help-label">Set ticks for step</p>  
                             <span class="input-group-btn">
                                 <button id="focusIn"  class="btn btn-default" type="button">Focus in</button> 

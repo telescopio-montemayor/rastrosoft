@@ -90,10 +90,6 @@ function displayTipo(data, tipo) {
             });
             changeDisableDate( shifts );
             break;
-        case 'initialize':
-            break;
-        case 'test':
-            break;
         default:
             break;
     } 
@@ -140,22 +136,106 @@ function pushValor() {
     sendAjax(search,'pushValor','pushValor');  		
 
 }
-//function previewImage() {
-//    var search = {};
-//    sendAjax(search,'previewImage','preview');  
-//}
 function test() {
     var search = {};
     sendAjax(search,'test','test');  
 }
+//Telescope functions
 function setRaDec() {
     var search = {};
     search["value"] = hoursToDecimal($("#setRa").val());
     search["value2"] = degreesToDecimal($("#setDec").val());
-//    var point = new GeoPoint($("#setDec").val(), null);
-//    search["value2"] = point.getLonDec();
     sendAjax(search,'setRaDec','setRaDec');  
 }
+function setPark() {
+    var search = {};
+    sendAjax(search,'setPark','setPark');  
+}
+function setUnPark() {
+    var search = {};
+    sendAjax(search,'setUnPark','setUnPark');  
+}
+function setTrack() {
+    var search = {};
+    sendAjax(search,'setTrack','setTrack');  
+}
+function setSlew() {
+    var search = {};
+    sendAjax(search,'setSlew','setSlew');  
+}
+function setSync() {
+    var search = {};
+    sendAjax(search,'setSync','setSync');  
+}
+function setAbortMotion() {
+    var search = {};
+    sendAjax(search,'setAbortMotion','setAbortMotion');  
+}
+//CCD functions
+function setUploadDirectory() {
+    var search = {};
+    search["value"] = $("#uploadDir").val();
+    sendAjax(search,'setUploadDirectory','setUploadDirectory');  
+}
+function setPrefix() {
+    var search = {};
+    search["value"] = $("#uploadPrefix").val();
+    sendAjax(search,'setPrefix','setPrefix');  
+}
+function setBinning() {
+    var search = {};
+    search["value"] = $("#hBinning").val();
+    search["value2"] = $("#vBinning").val();
+    sendAjax(search,'setBinning','setBinning');  
+}
+function setFrameType() {
+    var search = {};
+    search["value"] = $("#frameType").val();
+    sendAjax(search,'setFrameType','setFrameType');  
+}
+function setCcdTemperature() {
+    var search = {};
+    search["value"] = $("#ccdTemperature").val();
+    sendAjax(search,'setCcdTemperature','setCcdTemperature');  
+}
+function setFrame() {
+    var search = {};
+    search["value"] = $("#frameX").val();
+    search["value2"] = $("#frameY").val();
+    sendAjax(search,'setFrame','setFrame');  
+}
+function setSize() {
+    var search = {};
+    search["value"] = $("#frameWidth").val();
+    search["value2"] = $("#frameHeight").val();
+    sendAjax(search,'setSize','setSize');  
+}
+function setExposure() {
+    var search = {};
+    search["value"] = $("#exposureTime").val();
+    sendAjax(search,'setExposure','setExposure');  
+}
+function setAbortExposure() {
+    var search = {};
+    sendAjax(search,'setAbortExposure','setAbortExposure');  
+}
+//Focuser
+function setFocusAbsolute() {
+    var search = {};
+    search["value"] = $("#focusAbsolute").val();
+    sendAjax(search,'setFocusAbsolute','setFocusAbsolute');  
+}
+function focusIn() {
+    var search = {};
+    search["value"] = $("#focusRelative").val();
+    sendAjax(search,'focusIn','focusIn');  
+}
+function focusOut() {
+    var search = {};
+    search["value"] = $("#focusRelative").val();
+    sendAjax(search,'focusOut','focusOut');  
+}
+//
 function refreshValues() {
     var search = {};
     sendAjax(search,'refreshValues','refreshValues');  
@@ -241,10 +321,12 @@ function updateValues(data){
             $("#uploadDir").val(uploadDir);
         if (($('#uploadPrefix').is(":focus")===false))
             $("#uploadPrefix").val(uploadPrefix);
-        if (($('#hBinning').is(":focus")===false))    
+        
+        if (($('#hBinning').is(":focus")===false)&($('#vBinning').is(":focus")===false)){
             $("#hBinning").val(hBinning);
-        if (($('#vBinning').is(":focus")===false))
             $("#vBinning").val(vBinning);
+        }    
+            
           
         if (($('#frameType').is(":focus")===false)){
             if (frameLight==="ON"){
@@ -260,16 +342,16 @@ function updateValues(data){
         }
                 
         if (($('#ccdTemperature').is(":focus")===false))
-            $("#ccdTemperature").val(ccdTemperature);    
+            $("#ccdTemperature").val(Math.round( ccdTemperature * 100 ) / 100);    
         
         if (($('#frameX').is(":focus")===false)&($('#frameY').is(":focus")===false)){
-            $('#frameX').val(x);
-            $('#frameY').val(y);
+            $('#frameX').val(Math.round( x * 1 ) / 1);
+            $('#frameY').val(Math.round( y * 1 ) / 1);
         }; 
         
         if (($('#frameWidth').is(":focus")===false)&($('#frameHeight').is(":focus")===false)){
-            $('#frameWidth').val(width);
-            $('#frameHeight').val(height);
+            $('#frameWidth').val(Math.round( width * 1 ) / 1);
+            $('#frameHeight').val(Math.round( height * 1 ) / 1);
         }; 
         
         
@@ -285,10 +367,10 @@ function updateValues(data){
         }
         
         if (($('#focusAbsolute').is(":focus")===false))
-            $("#focusAbsolute").val(focusAbsolute);    
+            $("#focusAbsolute").val(Math.round( focusAbsolute * 1 ) / 1);    
         
         if (($('#focusRelative').is(":focus")===false))
-            $("#focusRelative").val(focusRelative);    
+            $("#focusRelative").val(Math.round( focusRelative * 1 ) / 1);
         
       
     });
