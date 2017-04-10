@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import unlp.rastrosoft.web.jsonview.Views;
 import unlp.rastrosoft.web.model.AjaxResponse;
 import unlp.rastrosoft.web.model.AjaxResponseBodyIndiExecute;
+import unlp.rastrosoft.web.model.Capture;
+import unlp.rastrosoft.web.model.CaptureDB;
 import unlp.rastrosoft.web.model.Ccd;
 import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.ExecuteCriteriaTwoValues;
+import unlp.rastrosoft.web.model.Focuser;
+import unlp.rastrosoft.web.model.Telescope;
 
 /**
  *
@@ -153,6 +157,34 @@ public class AjaxCcd {
         time = execute.getValue();
         Ccd ccd = new Ccd();
         ccd.setExposure(time);
+                       
+        String  datetime, ra, dec, hBinning, vBinning, temperature, frameType, x, y,
+                width, height, focusPosition, exposureTime, filePath;
+        
+        Telescope telescope = new Telescope();        
+        Focuser focuser = new Focuser();
+        
+        datetime        =   "2017-04-09 20:21:27";
+        ra              =   telescope.getRa();
+        dec             =   telescope.getDec();
+        hBinning        =   ccd.getHBinning();
+        vBinning        =   ccd.getVBinning();
+        temperature     =   ccd.getTemperature();
+        frameType       =   "Light"; //ccd.getFrameType();
+        x               =   ccd.getX();
+        y               =   ccd.getY();        
+        width           =   ccd.getWidth();        
+        height          =   ccd.getHeight();
+        focusPosition   =   focuser.getAbsolutePosition();
+        exposureTime    =   ccd.getExposureTime();
+        filePath        =   ccd.getFilePath();
+        
+        CaptureDB captureDB = new CaptureDB();        
+        
+        Capture capture = new Capture("", datetime, ra, dec, hBinning, vBinning, temperature, frameType, x, y, width, height, focusPosition, exposureTime, filePath); 
+        captureDB.connect();
+        captureDB.insertCapture(capture);
+        
         return result;
     }
     

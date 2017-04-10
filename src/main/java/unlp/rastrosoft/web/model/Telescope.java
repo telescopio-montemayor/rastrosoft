@@ -79,5 +79,12 @@ public class Telescope extends Device {
         cliente = connect_indi.connect(dispositivo);
         return (cliente.enviar_mensaje(dispositivo, "ON_COORD_SET", "SYNC"));
     }
-    
+    public String getRa(){
+        cliente = connect_indi.connect(dispositivo);
+        return(cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "RA"));
+    }
+    public String getDec(){
+        cliente = connect_indi.connect(dispositivo);
+        return(cliente.enviar_mensaje(dispositivo, "EQUATORIAL_EOD_COORD", "DEC"));
+    }
 }

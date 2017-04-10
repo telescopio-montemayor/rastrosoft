@@ -167,30 +167,30 @@ init_menu();
 
 
 
-(function(removeClass) {
-
-    jQuery.fn.removeClass = function( value ) {
-		if ( value && typeof value.test === "function" ) {
-			for ( var i = 0, l = this.length; i < l; i++ ) {
-				var elem = this[i];
-				if ( elem.nodeType === 1 && elem.className ) {
-					var classNames = elem.className.split( /\s+/ );
-
-					for ( var n = classNames.length; n--; ) {
-						if ( value.test(classNames[n]) ) {
-							classNames.splice(n, 1);
-						}
-					}
-					elem.className = jQuery.trim( classNames.join(" ") );
-				}
-			}
-		} else {
-			removeClass.call(this, value);
-		}
-		return this;
-	};
-
-})(jQuery.fn.removeClass);
+//(function(removeClass) {
+//
+//    jQuery.fn.removeClass = function( value ) {
+//		if ( value && typeof value.test === "function" ) {
+//			for ( var i = 0, l = this.length; i < l; i++ ) {
+//				var elem = this[i];
+//				if ( elem.nodeType === 1 && elem.className ) {
+//					var classNames = elem.className.split( /\s+/ );
+//
+//					for ( var n = classNames.length; n--; ) {
+//						if ( value.test(classNames[n]) ) {
+//							classNames.splice(n, 1);
+//						}
+//					}
+//					elem.className = jQuery.trim( classNames.join(" ") );
+//				}
+//			}
+//		} else {
+//			removeClass.call(this, value);
+//		}
+//		return this;
+//	};
+//
+//})(jQuery.fn.removeClass);
 
 
 function init_menu(){
@@ -209,15 +209,15 @@ function loading_effect_preview(bool){
         $('.loading').fadeIn( "fast" );
        
     }else{
-        $('.previewImage').removeClass('loading-icon');
-        $('#button-preview').prop( "disabled", false );
+        $('.previewImage').removeClass('loading-icon');        
         $('.loading').css('display','none');
+        $('#button-preview').prop( "disabled", false );
         $('.preview').fadeIn( "fast" );        
     }
 }
 var imagePreviewSource;
 $(document).ready(function() {
-    imagePreviewSource = $('.previewImageSrc').attr('src');
+    imagePreviewSource = $('.previewImageSrc').attr('src');       
 });
 function update_preview_image(){
     var imageSource = imagePreviewSource + '?' +  new Date().getTime();
@@ -228,9 +228,6 @@ function showCapture(){
     var res = absoluteFilePath.split("webapp");
     var filePath = ("/rastrosoft"+res[1]);
     var imageSource = filePath + '.jpg';
-//    if (( ( $(".previewImageSrc").attr("src") ) != (imageSource) )&(( $(".previewImageSrc").attr("src") ) != ("/rastrosoft/resources/images/loading.gif"))){
-//        $(".previewImageSrc").attr("src", "");
-//    }
     $.ajax({
         url:imageSource,
         type:'HEAD',
@@ -243,7 +240,7 @@ function showCapture(){
         },
         success: function()
         {            
-            $(".previewImageSrc").attr("src", imageSource);
+            $(".previewImageSrc").attr("src", imageSource);             
         }
     });
 }
@@ -337,15 +334,14 @@ $(document).ready(function() {
 });
 function resetExposureProgressBar() {
     loading_effect_preview(true);
+    $(".previewImageSrc").attr("src", "/rastrosoft/resources/images/loading.gif");
     var max = $('#exposureTimeHidden').val();
     var min = 0;
     var refreshId = setInterval(function() {
         updateProgressExposure(min, max);
         var properID =  $('#exposureTimeHidden').val();
         if (properID == 0) {
-          clearInterval(refreshId);
-          //update_preview_image();
-          showCapture();
+          clearInterval(refreshId);  
           loading_effect_preview(false);
           //VER!!
           executeExposureProgressBar=true;
