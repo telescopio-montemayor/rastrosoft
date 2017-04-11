@@ -14,12 +14,12 @@ import java.sql.SQLException;
  * @author ip300
  */
 public class CaptureDB extends Database{
-     public void insertCapture(Capture c){
+     public int insertCapture(Capture c){
         
-        String sql = "INSERT INTO capture (datetime, ra, dec, hBinning, vBinning, temperature, frameType, x, y, width, height, focusPosition, exposureTime, filePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO capture (datetime, ra, declination, hBinning, vBinning, temperature, frameType, x, y, width, height, focusPosition, exposureTime, filePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         Connection conn = null;
-
+        int id;
         try {
                 conn = dataSource.getConnection();
                 PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
@@ -38,7 +38,7 @@ public class CaptureDB extends Database{
                 ps.setString(12, c.getFocusPosition());
                 ps.setString(13, c.getExposureTime());
                 ps.setString(14, c.getFilePath());
-                ps.executeUpdate();
+                id = ps.executeUpdate();
                 ps.close();
 
         } catch (SQLException e) {
@@ -51,18 +51,46 @@ public class CaptureDB extends Database{
                         } catch (SQLException e) {}
                 }
         }
+        return id;
     }
-    public void removeCapture(String idUserCapture){
+    public int asociateCaptureToUser(int id_user, int id_capture){
+        String sql = "INSERT INTO user_capture (id_user, id_capture) VALUES (?, ?)";
+        
+        Connection conn = null;
+        int id;
+        
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+                ps.setInt(1, id_user);
+                ps.setInt(2, id_capture);
+                id = ps.executeUpdate();
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+        return id;
+    }
+    public void removeCapture(String id_capture){
         
         String sql = "UPDATE user_capture " +
-                      "SET enabled = 0 WHERE id = ?";
+                      "SET enabled = 0 WHERE id_capture = ?";
         Connection conn = null;
 
         try {
                 conn = dataSource.getConnection();
                 PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
 
-                ps.setString(1, idUserCapture);
+                ps.setString(1, id_capture);
                 ps.executeUpdate();
                 ps.close();
 

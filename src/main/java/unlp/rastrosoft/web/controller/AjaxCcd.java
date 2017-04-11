@@ -6,9 +6,15 @@
 package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +29,8 @@ import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.ExecuteCriteriaTwoValues;
 import unlp.rastrosoft.web.model.Focuser;
 import unlp.rastrosoft.web.model.Telescope;
+import unlp.rastrosoft.web.model.User;
+import unlp.rastrosoft.web.model.UserDB;
 
 /**
  *
@@ -164,26 +172,38 @@ public class AjaxCcd {
         Telescope telescope = new Telescope();        
         Focuser focuser = new Focuser();
         
-        datetime        =   "2017-04-09 20:21:27";
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();    
+        
+        datetime        =   dateFormat.format(date);
         ra              =   telescope.getRa();
         dec             =   telescope.getDec();
         hBinning        =   ccd.getHBinning();
         vBinning        =   ccd.getVBinning();
         temperature     =   ccd.getTemperature();
-        frameType       =   "Light"; //ccd.getFrameType();
+        frameType       =   ccd.getFrameType();
         x               =   ccd.getX();
         y               =   ccd.getY();        
         width           =   ccd.getWidth();        
         height          =   ccd.getHeight();
         focusPosition   =   focuser.getAbsolutePosition();
-        exposureTime    =   ccd.getExposureTime();
+        exposureTime    =   time;
         filePath        =   ccd.getFilePath();
+       
+        String currentUserName = null;        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            currentUserName = authentication.getName();         
+        }
+        UserDB userDB = new UserDB();
+        userDB.connect(); // ARREGLAR!!!
+        User user = userDB.getUser(currentUserName);
         
         CaptureDB captureDB = new CaptureDB();        
         
         Capture capture = new Capture("", datetime, ra, dec, hBinning, vBinning, temperature, frameType, x, y, width, height, focusPosition, exposureTime, filePath); 
         captureDB.connect();
-        captureDB.insertCapture(capture);
+        captureDB.asociateCaptureToUser(user.getUserId(), captureDB.insertCapture(capture));
         
         return result;
     }

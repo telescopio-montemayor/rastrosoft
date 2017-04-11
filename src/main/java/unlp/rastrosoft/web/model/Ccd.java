@@ -142,6 +142,21 @@ public class Ccd extends Device {
         cliente = connect_indi.connect(dispositivo);
         return (cliente.enviar_mensaje(dispositivo, "CCD_FRAME_TYPE", "FRAME_FLAT"));
     }
+    public String getFrameType(){
+        if (this.getFrameLight().equals("ON")){
+            return "light";
+        }
+        if (this.getFrameBias().equals("ON")){
+            return "bias";
+        }
+        if (this.getFrameDark().equals("ON")){
+            return "dark";
+        }
+        if (this.getFrameFlat().equals("ON")){
+            return "flat";
+        }
+        return null;
+    }
     public String getX(){
         cliente = connect_indi.connect(dispositivo);
         return (cliente.enviar_mensaje(dispositivo, "CCD_FRAME", "X"));

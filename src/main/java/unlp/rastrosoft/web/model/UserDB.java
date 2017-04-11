@@ -151,7 +151,7 @@ public class UserDB extends Database{
                     rs.getInt("id"),
                     rs.getString("username"),
                     rs.getString("password"),
-                    rs.getString("role")
+                    rs.getString("enabled")
                 );
             }
 
