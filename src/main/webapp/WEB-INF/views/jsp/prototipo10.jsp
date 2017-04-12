@@ -59,6 +59,10 @@
 <spring:url value="/resources/core/js/jquery.mask.js" var="jquerymaskJs" />
 <script src="${jquerymaskJs}"></script>
 
+<spring:url value="/resources/core/js/convertionFunctions.js"
+	var="convertionFunctions" />
+<script src="${convertionFunctions}"></script>
+
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
@@ -96,7 +100,6 @@
                 dataType : 'json',
                 timeout : 100000,
                  beforeSend: function(xhr) {
-                    // here it is
                     xhr.setRequestHeader(header, token);
                 },
                 success : function(result) {

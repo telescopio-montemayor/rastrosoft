@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import unlp.rastrosoft.web.jsonview.Views;
 import unlp.rastrosoft.web.model.AjaxResponse;
-import unlp.rastrosoft.web.model.Ccd;
 import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.Focuser;
 

@@ -35,6 +35,7 @@
 	var="ajaxFunctions" />
 <script src="${ajaxFunctions}"></script>
 
+
 <spring:url value="/resources/core/css/jquery-ui.css" var="jqueryuiCss" />
 <link href="${jqueryuiCss}" rel="stylesheet" />
 <spring:url value="/resources/core/js/jquery-ui.js" var="jqueryuiJs" />
@@ -51,6 +52,10 @@
 <script src="${datatablesJs}"></script>
 <spring:url value="/resources/core/css/datatables.css" var="datatablesCss" />
 <link href="${datatablesCss}" rel="stylesheet" />
+
+<spring:url value="/resources/core/js/convertionFunctions.js"
+	var="convertionFunctions" />
+<script src="${convertionFunctions}"></script>
 
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -84,7 +89,7 @@
             </div>  
 
         </div>
-        
+        <button id="getCaptures">getCaptures</button>
         <div class="table-shifts">
             <h4 style="color:white" class="label-primary text-center">Turnos otorgados</h4>
             <table id="shifts" class="table">
@@ -208,83 +213,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>                        
-                    <td>2017-03-08</td>
-                    <td>17:00</td>
-                    <td>13:00</td>
-                    <td>20:00</td>
-                    <td>30 segundos</td>
-                    <td><a href="#"><i class="fa fa-download" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                  </tr> 
-                  <tr>
-                    <th scope="row">1</th>                        
-                    <td>2017-03-08</td>
-                    <td>17:15</td>
-                    <td>10:00</td>
-                    <td>21:00</td>
-                    <td>10 segundos</td>
-                    <td><a href="#"><i class="fa fa-download" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                  </tr> 
-                  <tr>
-                    <th scope="row">1</th>                        
-                    <td>2017-03-08</td>
-                    <td>17:20</td>
-                    <td>12:00</td>
-                    <td>21:00</td>
-                    <td>120 segundos</td>
-                    <td><a href="#"><i class="fa fa-download" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                  </tr> 
-                  <tr>
-                    <th scope="row">1</th>                        
-                    <td>2017-03-08</td>
-                    <td>17:34</td>
-                    <td>15:00</td>
-                    <td>22:00</td>
-                    <td>360 segundos</td>
-                    <td><a href="#"><i class="fa fa-download text-primary" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>                        
-                    <td>2017-03-08</td>
-                    <td>17:34</td>
-                    <td>15:00</td>
-                    <td>22:00</td>
-                    <td>360 segundos</td>
-                    <td><a href="#"><i class="fa fa-download text-primary" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>                        
-                    <td>2017-03-08</td>
-                    <td>17:34</td>
-                    <td>15:00</td>
-                    <td>22:00</td>
-                    <td>360 segundos</td>
-                    <td><a href="#"><i class="fa fa-download text-primary" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>                        
-                    <td>2017-03-08</td>
-                    <td>17:34</td>
-                    <td>15:00</td>
-                    <td>22:00</td>
-                    <td>360 segundos</td>
-                    <td><a href="#"><i class="fa fa-download text-primary" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td>
-                    <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                  </tr>
+                  
                 </tbody>
             </table>
         
@@ -306,19 +235,19 @@
                 dataType : 'json',
                 timeout : 100000,
                  beforeSend: function(xhr) {
-                    // here it is
                     xhr.setRequestHeader(header, token);
                 },
                 success : function(result) {
                         console.log("SUCCESS: ", result);
-                        displayTipo(result, tipo);
+                        successAjax(result, tipo);
                 },
                 error : function(e) {
                         console.log("ERROR: ", e);
+                        errorAjax(result, tipo);
                 },
-                done : function(e) {
+                done : function(result) {
                         console.log("DONE");
-                        enableSearchButton(true);
+                        doneAjax(result, tipo);
                 }
             });
         }
@@ -374,6 +303,9 @@
         }
         
         $(document).ready(function() {
+            getCaptures();
+        } );
+        function updateTables(){            
             $('.table').DataTable( {
                 scrollY:        '30vh',
                 ordering: false,
@@ -394,6 +326,10 @@
                 },
                 "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
             } );
-        } );
+        }    
+        $("#getCaptures").click(function(){   
+            getCaptures();
+        });
+  
 </script>
 </html>

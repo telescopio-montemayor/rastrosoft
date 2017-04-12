@@ -214,9 +214,7 @@ public class AjaxCcd {
     @RequestMapping(value = "/setAbortExposure", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse setAbortExposure(@RequestBody ExecuteCriteriaTwoValues execute) {
-        AjaxResponse result = new AjaxResponse();        
-        String time;       
-        time = execute.getValue();
+        AjaxResponse result = new AjaxResponse();                
         Ccd ccd = new Ccd();        
         if(Double.parseDouble(ccd.getExposureTime()) > 0){
            CaptureDB captureDB = new CaptureDB();

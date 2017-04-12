@@ -111,6 +111,22 @@ function successAjax(data, tipo) {
         case 'setExposure':
             $("#setExposure").prop("disabled", "");
             break;
+        case 'getCaptures':
+            $("#captures tBody").empty();
+            $.each(data, function(key, value) {
+                $.each(value, function(key2, c) {
+                    $("#captures tBody").append('<tr><th scope="row">'+c[0]+'</th>'
+                        +'<td>'+c[1].slice(0, 10)+'</td>'
+                        +'<td>'+c[1].slice(11, 19)+'</td>'
+                        +'<td>'+decimalToHours(c[2])+'</td>'
+                        +'<td>'+decimalToDegrees(c[3])+'</td>'
+                        +'<td>'+c[13]+' segundos</td>'
+                        +'<td><a href="#"><i class="fa fa-download" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>'+
+                        +'</tr>');
+               });
+            });
+            updateTables();
+            break;
         default:
             break;
     } 
@@ -277,6 +293,12 @@ function initialize() {
     sendAjax(search,'initialize','initialize');  
 }
 
+function getCaptures() {
+    var search = {};
+    search["id_user"] = 1;
+    sendAjax(search,'getCaptures','getCaptures');  
+}
+
 function updateValues(data){
     $.each(data, function(key, value) {
         var ra, dec, park, unpark, track, slew, sync, uploadDir, uploadPrefix, 
@@ -398,4 +420,6 @@ function updateValues(data){
         showCapture();
         
     });
+    
+    
 }
