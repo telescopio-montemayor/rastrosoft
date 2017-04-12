@@ -164,7 +164,7 @@ public class AjaxCcd {
         String time;       
         time = execute.getValue();
         Ccd ccd = new Ccd();
-        ccd.setExposure(time);
+        
                        
         String  datetime, ra, dec, hBinning, vBinning, temperature, frameType, x, y,
                 width, height, focusPosition, exposureTime, filePath;
@@ -205,6 +205,8 @@ public class AjaxCcd {
         captureDB.connect();
         captureDB.asociateCaptureToUser(user.getUserId(), captureDB.insertCapture(capture));
         
+        ccd.setExposure(time);
+        
         return result;
     }
     
@@ -215,7 +217,12 @@ public class AjaxCcd {
         AjaxResponse result = new AjaxResponse();        
         String time;       
         time = execute.getValue();
-        Ccd ccd = new Ccd();
+        Ccd ccd = new Ccd();        
+        if(Double.parseDouble(ccd.getExposureTime()) > 0){
+           CaptureDB captureDB = new CaptureDB();
+           captureDB.connect();
+           captureDB.removeLastCapture();
+        }
         ccd.abortExposure();
         return result;
     }

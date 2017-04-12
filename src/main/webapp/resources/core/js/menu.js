@@ -316,6 +316,7 @@ $(document).ready(function() {
         }
     });
     $("#setAbortExposure").click(function(){
+        $("#setExposure").prop("disabled", "");
         setAbortExposure();
     });
     $("#setFocusAbsolute").click(function(){

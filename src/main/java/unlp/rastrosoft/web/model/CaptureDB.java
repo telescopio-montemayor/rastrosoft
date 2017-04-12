@@ -8,6 +8,7 @@ package unlp.rastrosoft.web.model;
 import com.mysql.cj.jdbc.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -38,7 +39,8 @@ public class CaptureDB extends Database{
                 ps.setString(12, c.getFocusPosition());
                 ps.setString(13, c.getExposureTime());
                 ps.setString(14, c.getFilePath());
-                id = ps.executeUpdate();
+                ps.executeUpdate();
+                id = (int) ps.getLastInsertID();
                 ps.close();
 
         } catch (SQLException e) {
@@ -105,4 +107,33 @@ public class CaptureDB extends Database{
                 }
         }
     } 
+    public void removeLastCapture(){
+        
+        String sql1 = "DELETE FROM user_capture ORDER BY id DESC LIMIT 1";
+        String sql2 = "DELETE FROM capture ORDER BY id DESC LIMIT 1";
+        
+        Connection conn = null;
+
+        try {
+                conn = dataSource.getConnection();
+
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql1);
+                ps.executeUpdate();
+                ps.close();
+
+                ps = (PreparedStatement) conn.prepareStatement(sql2);
+                ps.executeUpdate();
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+    }
 }
