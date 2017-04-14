@@ -63,7 +63,7 @@
 </head>
 <body>
 
-    <div class="container">
+    <div class="">
         <div class="shifts-picker" >
             
             <div id="label-1">Usted no posee un turno asignado.<a href="#" onclick="showAddShift();">¿Desea agregar uno?</a></div>
@@ -89,7 +89,7 @@
             </div>  
 
         </div>
-        <button id="getCaptures">getCaptures</button>
+        <!--<button id="getCaptures">getCaptures</button>-->
         <div class="table-shifts">
             <h4 style="color:white" class="label-primary text-center">Turnos otorgados</h4>
             <table id="shifts" class="table">
@@ -310,11 +310,12 @@
                 scrollY:        '30vh',
                 ordering: false,
                 scrollCollapse: true,
-                paging:         true,
+                paging:         false,
                 "language": {
                     "lengthMenu": "Mostrando _MENU_ registros por pagina",
                     "zeroRecords": "No se encontro ningun resultado",
-                    "info": "Mostrando pagina _PAGE_ de _PAGES_",
+//                    "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                    "info": "",
                     "infoEmpty": "No hay registros disponibles",
                     "infoFiltered": "(filtrado de un total de _MAX_ registros)",
                     "search": "Buscar",

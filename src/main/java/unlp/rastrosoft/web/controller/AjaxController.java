@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
@@ -36,8 +37,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import unlp.rastrosoft.web.model.AjaxResponse;
+import unlp.rastrosoft.web.model.AjaxResponseListOfLists;
 import unlp.rastrosoft.web.model.CalendarDB;
 import unlp.rastrosoft.web.model.Ccd;
+import unlp.rastrosoft.web.model.ChatDB;
 import unlp.rastrosoft.web.model.Focuser;
 import unlp.rastrosoft.web.model.SendMailTLS;
 import unlp.rastrosoft.web.model.Telescope;
@@ -575,4 +578,20 @@ public class AjaxController {
             return result;
 
         }
+        
+         
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/getChat", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public AjaxResponseListOfLists getChat(@RequestBody ExecuteCriteria execute) {
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();        
+        String id_user;       
+        id_user = execute.getValue();
+        ChatDB chatDB = new ChatDB();
+        chatDB.connect();
+        
+        result.addElementos(chatDB.getChatsAsList());
+        
+        return result;
+    }
 }

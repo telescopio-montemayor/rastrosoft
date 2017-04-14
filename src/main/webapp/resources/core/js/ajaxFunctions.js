@@ -127,6 +127,16 @@ function successAjax(data, tipo) {
             });
             updateTables();
             break;
+        case 'getChat':
+            $("#chatbox").empty();
+            $.each(data, function(key, value) {
+                $.each(value, function(key2, c) {
+                    $("#chatbox").append('<p style="color:green">'+c[1]+'</p>: '
+                        +c[2]
+                        +'<p style="font-size:8px; color:grey"> - '+c[3]+'</p>\n');
+               });
+            });
+            break;    
         default:
             break;
     } 
@@ -298,6 +308,11 @@ function getCaptures() {
     search["id_user"] = 1;
     sendAjax(search,'getCaptures','getCaptures');  
 }
+function getChat() {
+    var search = {};
+    search["id_user"] = 1;
+    sendAjax(search,'getChat','getChat');  
+}
 
 function updateValues(data){
     $.each(data, function(key, value) {
@@ -335,7 +350,7 @@ function updateValues(data){
         if (($('#setRa').is(":focus")===false)&($('#setDec').is(":focus")===false)){
             $('#setRa').val(decimalToHours(ra));
             $('#setDec').val(decimalToDegrees(dec));
-        }; 
+        }
         
         
         if (park==="ON"){

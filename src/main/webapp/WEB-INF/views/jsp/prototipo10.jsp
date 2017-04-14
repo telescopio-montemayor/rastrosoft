@@ -84,6 +84,7 @@
                 getUsername();
                 setInterval(function() {
                         refreshValues();
+                        getChat();
                   }, 1000);
 
 	});
@@ -173,7 +174,7 @@
             var msie = ua.indexOf("MSIE ");
             if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
             {
-                alert("Usted posee un navegador en desuso, por favor instale Firefox, Chrome o Microsoft Edge para poder tilizar este sitio.");
+                alert("Usted posee un navegador en desuso, por favor instale Firefox, Chrome o Microsoft Edge para poder utilizar este sitio.");
                 window.location = 'http://www.mozilla.org/firefox';
             }
         });
@@ -306,16 +307,16 @@
             </div>  
         </div>                    
                 <div class="form-group">
-                    <div><button style="float:left" class="btn btn-default"><span style="color:red"><i class="fa fa-globe fa-fw"></i>Live transmit</span></button></div>
+<!--                    <div><button style="float:left" class="btn btn-default"><span style="color:red"><i class="fa fa-globe fa-fw"></i>Live transmit</span></button></div>
                     <div><button style="float:left" class="btn btn-default" disabled="disabled"><i class="fa fa-comments-o fa-fw"></i>Enable chat</button></div>
-                    
-                    <textarea class="form-control" style="height:200px; resize: none;" placeholder="Message"></textarea>
-                    
+                    -->
+                    <!--<textarea id="chatbox" class="form-control" style="height:200px; resize: none;" placeholder="Message"></textarea>-->
+                    <div  id="chatbox" class="form-control" style="overflow-y: scroll; height:200px;" contenteditable="true"></div>
                     <div class="form-group">
                         <div class="input-group">                            
-                            <input type="text" class="form-control" placeholder="Message...">
+                            <input id="msgbox" type="text" class="form-control" placeholder="Message...">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button"><i class="fa fa-paper-plane fa-fw"></i></button>
+                                <button id="sendMsgChat" class="btn btn-default" type="button"><i class="fa fa-paper-plane fa-fw"></i></button>
                             </span>  
                         </div>
                         
