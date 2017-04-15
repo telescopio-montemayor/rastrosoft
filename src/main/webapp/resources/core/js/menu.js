@@ -349,6 +349,7 @@ $.fn.enterKey = function (fnc) {
             })
         })
     }
+
 function resetExposureProgressBar() {
     loading_effect_preview(true);
     $(".previewImageSrc").attr("src", "/rastrosoft/resources/images/loading.gif");
@@ -387,3 +388,20 @@ function imgError(image) {
     image.src = "/rastrosoft/resources/images/loading.gif";
     return true;
 }
+
+$(function () {
+    "use strict";
+    var resizeDiv = function (object) {
+        object.height($(window).height() - $('#topBarLabelLeft').height() - $('#normalScreenContainer').height() - 130 );
+    };
+
+
+    $(window).ready(function () {
+        resizeDiv($('#chat'));
+    });
+
+    $(window).bind("resize", function () {
+        resizeDiv($('#chat'));
+    });
+
+});

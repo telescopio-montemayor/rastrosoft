@@ -59,7 +59,7 @@ public class ChatDB extends Database{
         
     }
      public List<List<String>> getChatsAsList(){
-        String sql = "SELECT message_chat.id, username, message, datetime, message_chat.enabled  FROM message_chat INNER JOIN users ON (message_chat.from= users.id) WHERE ((datetime) >= SUBTIME(CURDATE(), TIME('24:00:00')))  ORDER BY datetime ASC";
+        String sql = "SELECT message_chat.id, name, message, datetime, message_chat.enabled  FROM message_chat INNER JOIN users ON (message_chat.from= users.id) WHERE ((datetime) >= SUBTIME(CURDATE(), TIME('24:00:00')))  ORDER BY datetime ASC";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -72,7 +72,7 @@ public class ChatDB extends Database{
             while (rs.next()) {
                 List<String> chat = new ArrayList<>();
                 chat.add(String.valueOf(rs.getInt("id")));
-                chat.add(rs.getString("username"));
+                chat.add(rs.getString("name"));
                 chat.add(rs.getString("message"));
                 chat.add(rs.getString("datetime"));
                 chat.add(rs.getString("enabled"));

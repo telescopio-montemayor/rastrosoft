@@ -192,12 +192,12 @@
     </button>
     </div>    
     <div class="col-md-2">
-       <!-- Material sidebar -->
+       
         <aside id="sidebarLeft" class="sidebar sidebar-default sidebar-stacked" role="navigation">
             <!-- Sidebar header -->
            
                 <!-- Top bar -->
-                <div class="top-bar label-primary">
+                <div id="topBarLabelLeft" class="top-bar label-primary">
                     <button class="icon left-btn-toggle-inside" onclick="toggle_left();">
                         <i class="fa fa-bars" aria-hidden="true" ></i>
                     </button>                    
@@ -305,27 +305,29 @@
                     </div>
                 </div>
             </div>  
-        </div>                    
-                <div class="form-group">
-<!--                    <div><button style="float:left" class="btn btn-default"><span style="color:red"><i class="fa fa-globe fa-fw"></i>Live transmit</span></button></div>
-                    <div><button style="float:left" class="btn btn-default" disabled="disabled"><i class="fa fa-comments-o fa-fw"></i>Enable chat</button></div>
-                    -->
-                    <!--<textarea id="chatbox" class="form-control" style="height:200px; resize: none;" placeholder="Message"></textarea>-->
-                    <div  id="chatbox" class="form-control" style="overflow-y: scroll; height:450px;"></div>
-                    <div class="form-group">
-                        <div class="input-group">                            
-                            <input id="msgbox" type="text" class="form-control" placeholder="Message...">
-                            <span class="input-group-btn">
-                                <button id="sendMsgChat" class="btn btn-default" type="button"><i class="fa fa-paper-plane fa-fw"></i></button>
-                            </span>  
-                        </div>
-                        
-                    </div>
+            <div style="float: left;"><button onClick="fade();" class="btn btn-default"><i class="fa fa-graduation-cap fa-fw"></i></button></div>
+            <div style="float: right;"><button onClick="initialize();" class="btn btn-default"><i class="fa fa-free-code-camp fa-fw"></i></button></div> 
+        </div>       
+
+         
+        <div id="chat" class="form-group" style="height: 400px">
+    <!--                    <div><button style="float:left" class="btn btn-default"><span style="color:red"><i class="fa fa-globe fa-fw"></i>Live transmit</span></button></div>
+            <div><button style="float:left" class="btn btn-default" disabled="disabled"><i class="fa fa-comments-o fa-fw"></i>Enable chat</button></div>
+            -->
+            <!--<textarea id="chatbox" class="form-control" style="height:200px; resize: none;" placeholder="Message"></textarea>-->
+            <div  id="chatbox" class="form-control" style="overflow-y: scroll; height: 100%"></div>
+            <div class="form-group">
+                <div class="input-group">                            
+                    <input id="msgbox" type="text" class="form-control" placeholder="Message...">
+                    <span class="input-group-btn">
+                        <button id="sendMsgChat" class="btn btn-default" type="button"><i class="fa fa-paper-plane fa-fw"></i></button>
+                    </span>  
                 </div>
+
+            </div>
+        </div>
             
         
-                <div style="float: left;"><button onClick="fade();" class="btn btn-default"><i class="fa fa-graduation-cap fa-fw"></i></button></div>
-                <div style="float: right;"><button onClick="initialize();" class="btn btn-default"><i class="fa fa-free-code-camp fa-fw"></i></button></div>
                 
                 
         </aside>
