@@ -311,7 +311,7 @@
                     <div><button style="float:left" class="btn btn-default" disabled="disabled"><i class="fa fa-comments-o fa-fw"></i>Enable chat</button></div>
                     -->
                     <!--<textarea id="chatbox" class="form-control" style="height:200px; resize: none;" placeholder="Message"></textarea>-->
-                    <div  id="chatbox" class="form-control" style="overflow-y: scroll; height:200px;" contenteditable="true"></div>
+                    <div  id="chatbox" class="form-control" style="overflow-y: scroll; height:450px;"></div>
                     <div class="form-group">
                         <div class="input-group">                            
                             <input id="msgbox" type="text" class="form-control" placeholder="Message...">

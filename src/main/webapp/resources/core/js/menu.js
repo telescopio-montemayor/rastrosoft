@@ -331,8 +331,24 @@ $(document).ready(function() {
     $("#abortMotion").click(function(){
         setAbortMotion();
     });
+    $("#sendMsgChat").click(function(){
+        addMessageChat();
+    });
+    $("#msgbox").enterKey(function(){
+        addMessageChat();
+    });
     
 });
+$.fn.enterKey = function (fnc) {
+        return this.each(function () {
+            $(this).keypress(function (ev) {
+                var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+                if (keycode == '13') {
+                    fnc.call(this, ev);
+                }
+            })
+        })
+    }
 function resetExposureProgressBar() {
     loading_effect_preview(true);
     $(".previewImageSrc").attr("src", "/rastrosoft/resources/images/loading.gif");

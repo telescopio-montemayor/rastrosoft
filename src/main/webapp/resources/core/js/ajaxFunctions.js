@@ -131,12 +131,13 @@ function successAjax(data, tipo) {
             $("#chatbox").empty();
             $.each(data, function(key, value) {
                 $.each(value, function(key2, c) {
-                    $("#chatbox").append('<p style="color:green">'+c[1]+'</p>: '
-                        +c[2]
-                        +'<p style="font-size:8px; color:grey"> - '+c[3]+'</p>\n');
+                    $("#chatbox").append('<p style="margin: 0!important; color:green; float:left">'+c[1]+'</p>'
+                        +'<p style="font-size:10px; color:grey; float: right; padding-top:5px; margin: 0!important;">'+c[3]+'</p>'
+                        +'<p style="margin: 0!important; clear: both">'+c[2]+'</p>'
+                        +'<hr style="margin:5px 0 0 0!important">\n');
                });
             });
-            break;    
+            break;        
         default:
             break;
     } 
@@ -303,15 +304,26 @@ function initialize() {
     sendAjax(search,'initialize','initialize');  
 }
 
-function getCaptures() {
+function getCaptures() {    
     var search = {};
-    search["id_user"] = 1;
+    search["value"] = 1;
     sendAjax(search,'getCaptures','getCaptures');  
 }
 function getChat() {
+//    $("#chatbox").scrollTop = $("#chatbox").scrollHeight;
+    var wtf    = $('#chatbox');
+    var height = wtf[0].scrollHeight;
+    wtf.scrollTop(height);
     var search = {};
-    search["id_user"] = 1;
+    search["value"] = 1;
     sendAjax(search,'getChat','getChat');  
+}
+function addMessageChat() {    
+    var search = {};
+    search["value"] = $("#msgbox").val();
+    $("#msgbox").val('');
+    sendAjax(search,'addMessageChat','addMessageChat'); 
+    
 }
 
 function updateValues(data){

@@ -44,6 +44,8 @@ import unlp.rastrosoft.web.model.ChatDB;
 import unlp.rastrosoft.web.model.Focuser;
 import unlp.rastrosoft.web.model.SendMailTLS;
 import unlp.rastrosoft.web.model.Telescope;
+import unlp.rastrosoft.web.model.User;
+import unlp.rastrosoft.web.model.UserDB;
 
 @RestController
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -593,5 +595,29 @@ public class AjaxController {
         result.addElementos(chatDB.getChatsAsList());
         
         return result;
-    }
+    }    
+    
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/addMessageChat", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public AjaxResponseListOfLists addMessageChat(@RequestBody ExecuteCriteria execute) {
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();        
+        String username;
+        int id_user = -1;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            username= authentication.getName();
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            User user = userDB.getUser(username);
+            id_user = user.getUserId();
+        }
+        
+        String message;       
+        message = execute.getValue();
+        ChatDB chatDB = new ChatDB();
+        chatDB.connect();
+        chatDB.insertMessage(id_user, message);
+        return result;
+    }    
 }

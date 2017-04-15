@@ -9,6 +9,7 @@ import com.mysql.cj.jdbc.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * @author ip300
  */
 public class ChatDB extends Database{
-     
+    
     public List<Chat> getChat(){
         String sql = "SELECT * FROM message_chat";
         Connection conn = null;
@@ -58,13 +59,13 @@ public class ChatDB extends Database{
         
     }
      public List<List<String>> getChatsAsList(){
-        String sql = "SELECT message_chat.id, username, message, datetime, message_chat.enabled  FROM message_chat INNER JOIN users ON (message_chat.from= users.id)";
+        String sql = "SELECT message_chat.id, username, message, datetime, message_chat.enabled  FROM message_chat INNER JOIN users ON (message_chat.from= users.id) WHERE ((datetime) >= SUBTIME(CURDATE(), TIME('24:00:00')))  ORDER BY datetime ASC";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
 
-            ResultSet rs =ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
            
             List<List<String>> chats = new ArrayList<>();
             
@@ -96,4 +97,29 @@ public class ChatDB extends Database{
         }
         
     }
+     public void insertMessage(int from, String message){
+        
+        String sql = "INSERT INTO message_chat (`from`, `message`) VALUES (?, ?)";
+        Connection conn = null;
+
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+                ps.setInt(1, from);
+                ps.setString(2, message);
+                ps.executeUpdate();
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+    } 
 }
