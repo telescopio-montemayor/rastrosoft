@@ -337,7 +337,16 @@ $(document).ready(function() {
     $("#msgbox").enterKey(function(){
         addMessageChat();
     });
-    
+    $("#chatbox").bind("DOMSubtreeModified",function(){
+        var wtf    = $('#chatbox');
+        var height = wtf[0].scrollHeight;
+        wtf.scrollTop(height);
+    });
+//    $("#chatbox").bind('scroll', function() {
+//        if($("#chatbox").is(":hover") ) {
+//            alert('end reached');
+//        }
+//    });
 });
 $.fn.enterKey = function (fnc) {
         return this.each(function () {
@@ -390,7 +399,6 @@ function imgError(image) {
 }
 
 $(function () {
-    "use strict";
     var resizeDiv = function (object) {
         object.height($(window).height() - $('#topBarLabelLeft').height() - $('#normalScreenContainer').height() - 130 );
     };

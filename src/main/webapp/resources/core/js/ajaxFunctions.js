@@ -128,17 +128,20 @@ function successAjax(data, tipo) {
             updateTables();
             break;
         case 'getChat':
-
-            $("#chatbox").empty();
-            $.each(data, function(key, value) {
-                $.each(value, function(key2, c) {
-                    $("#chatbox").append('<p style="margin: 0!important; color:'+stringToColour(c[1])+'; float:left">'+c[1]+'</p>'
-                        +'<p style="font-size:10px; color:grey; float: right; padding-top:5px; margin: 0!important;">'+c[3]+'</p>'
-                        +'<p style="margin: 0!important; clear: both">'+c[2]+'</p>'
-                        +'<hr style="margin:5px 0 0 0!important">\n');
-               });
-            });
-            
+            if($("#chatbox").is(":hover") == false ) {
+                $("#chatbox").empty();
+                $.each(data, function(key, value) {
+                    $.each(value, function(key2, c) {                        
+                        $("#chatbox").append('<p style="margin: 0!important; color:'+stringToColour(c[1])+'; float:left">'+c[1]+'</p>'
+                            +'<p style="font-size:10px; color:grey; float: right; padding-top:5px; margin: 0!important;">'+c[3]+'</p>'
+                            +'<p style="margin: 0!important; clear: both">'+c[2]+'</p>'
+                            +'<hr style="margin:5px 0 0 0!important">\n');
+                   });
+                });      
+                if ($("#chatbox").is(':empty')){
+                    $("#chatbox").append('<p style="color: grey">0 mensajes nuevos...</p>');
+                }
+            }     
             break;        
         default:
             break;
@@ -311,11 +314,7 @@ function getCaptures() {
     search["value"] = 1;
     sendAjax(search,'getCaptures','getCaptures');  
 }
-function getChat() {
-//    $("#chatbox").scrollTop = $("#chatbox").scrollHeight;
-    var wtf    = $('#chatbox');
-    var height = wtf[0].scrollHeight;
-    wtf.scrollTop(height);
+function getChat() {    
     var search = {};
     search["value"] = 1;
     sendAjax(search,'getChat','getChat');  

@@ -85,8 +85,7 @@
                 setInterval(function() {
                         refreshValues();
                         getChat();
-                  }, 1000);
-
+                  }, 100);
 	});
         
         var token = $("meta[name='_csrf']").attr("content");
