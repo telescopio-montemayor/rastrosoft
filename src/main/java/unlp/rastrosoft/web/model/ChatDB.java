@@ -110,6 +110,10 @@ public class ChatDB extends Database{
                 ps.setString(2, message);
                 ps.executeUpdate();
                 ps.close();
+                sql = "UPDATE chat SET newmessage = 1 WHERE id = 1";
+                ps = (PreparedStatement) conn.prepareStatement(sql);
+                ps.executeUpdate();
+                ps.close();
 
         } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -122,4 +126,40 @@ public class ChatDB extends Database{
                 }
         }
     } 
+    public boolean hasNewMessage(){
+        String sql = "SELECT newmessage FROM chat WHERE id = 1";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+            Boolean  newmessage = false;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt("newmessage") == 1){
+                    newmessage = true;
+                    sql = "UPDATE chat SET newmessage = 0 WHERE id = 1";
+                    ps = (PreparedStatement) conn.prepareStatement(sql);
+                    ps.executeUpdate();
+                    
+                }else{
+                    newmessage = false;
+                }
+            }
+            
+            rs.close();
+            ps.close();
+            return newmessage;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+    }
 }

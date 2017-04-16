@@ -19,6 +19,7 @@ import unlp.rastrosoft.web.model.SearchCriteria;
 import unlp.rastrosoft.web.model.connect_indi;
 import unlp.rastrosoft.web.model.indi_client;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,7 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -597,6 +600,8 @@ public class AjaxController {
         return result;
     }    
     
+    
+    
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/addMessageChat", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
@@ -619,5 +624,85 @@ public class AjaxController {
         chatDB.connect();
         chatDB.insertMessage(id_user, message);
         return result;
-    }    
+    }  
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/hola", method=RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+                    throws ServletException, IOException {
+                    
+            //content type must be set to text/event-stream
+            response.setContentType("text/event-stream");	
+
+            //encoding must be set to UTF-8
+            response.setCharacterEncoding("UTF-8");
+
+            PrintWriter writer = response.getWriter();
+//            writer.close();
+            
+            ChatDB chatDB = new ChatDB();
+            chatDB.connect();
+//            while (true){
+               if(chatDB.hasNewMessage()){
+                    List<List<String>> elementos = chatDB.getChatsAsList();
+
+                    String resultado = "data: [";    
+                    for (List<String> i: elementos) {
+                        String result = "";
+                        for (String x: i) {
+                            result = result + x + ", ";
+                        }
+                        resultado = resultado + " [" + i + "] " + ", ";
+                    }
+                    resultado = resultado + "] \n\n"; 
+                    writer.write(resultado);
+                }
+//               try {
+//                        Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                }
+//           }
+            //writer.close();
+            
+    }
+//    @JsonView(Views.Public.class)
+//    @RequestMapping(value = "/hola", method=RequestMethod.GET)
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+//    public void doGet(HttpServletRequest request, HttpServletResponse response)
+//                    throws ServletException, IOException {
+//
+//            //content type must be set to text/event-stream
+//            response.setContentType("text/event-stream");	
+//
+//            //encoding must be set to UTF-8
+//            response.setCharacterEncoding("UTF-8");
+//
+//            PrintWriter writer = response.getWriter();
+//            ChatDB chatDB = new ChatDB();
+//            chatDB.connect();
+//            List<List<String>> elementos = chatDB.getChatsAsList();
+//            
+//            String resultado = "data: [";    
+//            for (List<String> i: elementos) {
+//                String result = "";
+//                for (String x: i) {
+//                    result = result + x + ", ";
+//                }
+//                resultado = resultado + " [" + i + "] " + ", ";
+//            }
+//            resultado = resultado + "] \n\n";
+//            for(int i=0; i<10; i++) {
+//
+//                    writer.write(resultado);
+//
+//                    try {
+//                            Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                    }
+//            }
+//            writer.close();
+//    }
+    
 }
