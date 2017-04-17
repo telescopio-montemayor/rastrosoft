@@ -19,16 +19,24 @@ import unlp.rastrosoft.web.model.SearchCriteria;
 import unlp.rastrosoft.web.model.connect_indi;
 import unlp.rastrosoft.web.model.indi_client;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.AsyncContext;
+import javax.servlet.AsyncEvent;
+import javax.servlet.AsyncListener;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -52,7 +60,7 @@ import unlp.rastrosoft.web.model.UserDB;
 
 @RestController
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class AjaxController {
+public class AjaxController  extends HttpServlet{
 
 	
 	// @ResponseBody, not necessary, since class is annotated with @RestController
@@ -554,6 +562,17 @@ public class AjaxController {
             
             result.addElemento(ccd.getFilePath());
             
+//            ChatDB chatDB = new ChatDB();
+//            chatDB.connect();
+//            String newmessage;
+//            if(chatDB.hasNewMessage()){
+//                newmessage="1";
+//            }else{
+//                newmessage="0";
+//            }
+//            
+//            result.addElemento(newmessage);
+            
             return result;
 
         }
@@ -583,8 +602,9 @@ public class AjaxController {
             return result;
 
         }
-        
-         
+    private Map<String, AsyncContext> asyncContexts = new ConcurrentHashMap<String, AsyncContext>();      
+    private BlockingQueue<String> messageQueue = new LinkedBlockingQueue<String>();
+    
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/getChat", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
@@ -600,7 +620,7 @@ public class AjaxController {
         return result;
     }    
     
-    
+    //Object syncObject;
     
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/addMessageChat", method=RequestMethod.POST)
@@ -623,48 +643,150 @@ public class AjaxController {
         ChatDB chatDB = new ChatDB();
         chatDB.connect();
         chatDB.insertMessage(id_user, message);
+            try {
+                messageQueue.put("1");
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+//        synchronized(syncObject) {
+//            syncObject.notify();
+//        }
         return result;
     }  
+    
+    private Thread notifier = new Thread(new Runnable() {
+
+        @Override
+        public void run() {
+            while (true){
+//               if(chatDB.hasNewMessage()){
+                System.out.println("--------------------------------------------HOLAAAAAAA RUN-------------------------------------------------");//               try {
+                //                        Thread.sleep(1000);
+                //                } catch (InterruptedException e) {
+                //                        e.printStackTrace();
+                //                }
+                System.out.println("--------------------------------------------"+messageQueue.toString()+"-------------------------------------------------");
+                System.out.println("--------------------------------------------HOLAAAAAAA TOMO MENSAJE-------------------------------------------------");
+                String newmessage = null;
+                try {
+                    newmessage = messageQueue.take();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println("--------------------------------------------HOLAAAAAAA TOMO MENSAJE"+newmessage+"-------------------------------------------------");
+                //
+                //                    writer.write(resultado);
+                for (AsyncContext asyncContext : asyncContexts.values()) {
+                    try {
+                        ChatDB chatDB = new ChatDB();
+                        chatDB.connect();
+                        List<List<String>> elementos = chatDB.getChatsAsList();
+
+                        String resultado = "data: [";
+                        for (List<String> i: elementos) {
+                            String result = "";
+                            for (String x: i) {
+                                result = result + x + ", ";
+                            }
+                            resultado = resultado + "" + i + "" + ", ";
+                        }
+                        resultado = resultado + "] \n\n";
+                        asyncContext.getResponse().getWriter().write(resultado);
+                    } catch (Exception e) {
+                        // In case of exception remove context from map
+                        asyncContexts.values().remove(asyncContext);
+                    }
+                }
+                //messageQueue.clear();
+           }
+        }
+    });
+    
+    
+    boolean initia = true;
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/hola", method=RequestMethod.GET)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public void doGet(HttpServletRequest request, HttpServletResponse response)
                     throws ServletException, IOException {
-                    
-            //content type must be set to text/event-stream
-            response.setContentType("text/event-stream");	
-
-            //encoding must be set to UTF-8
+          System.out.println("--------------------------------------------HOLAAAAAAA DOGET-------------------------------------------------");  
+        if ("text/event-stream".equals(request.getHeader("Accept"))) {
+            if (initia){
+                notifier.start();
+                initia=false;
+            }
+            System.out.println("--------------------------------------------HOLAAAAAAA TEXT EVENT-------------------------------------------------");
+            response.setContentType("text/event-stream");
+            response.setHeader("Cache-Control", "no-cache");
+            response.setHeader("Connection", "keep-alive");
             response.setCharacterEncoding("UTF-8");
+            
+            // Generate some unique identifier used to store context in map
+            final String id = UUID.randomUUID().toString();
 
-            PrintWriter writer = response.getWriter();
+            // Start asynchronous context and add listeners to remove it in case of errors
+            final AsyncContext ac = request.startAsync();
+            ac.addListener(new AsyncListener() {
+
+                @Override
+                public void onComplete(AsyncEvent event) throws IOException {
+                        asyncContexts.remove(id);
+                }
+
+                @Override
+                public void onError(AsyncEvent event) throws IOException {
+                        asyncContexts.remove(id);
+                }
+
+                @Override
+                public void onStartAsync(AsyncEvent event) throws IOException {
+                        // Do nothing
+                }
+
+                @Override
+                public void onTimeout(AsyncEvent event) throws IOException {
+                        asyncContexts.remove(id);
+                }
+
+               
+            });
+            
+            // Put context in a map
+            asyncContexts.put(id, ac);
+            System.out.println("--------------------------------------------HOLAAAAAAA PUT-------------------------------------------------");
+        }    
+//            PrintWriter writer = response.getWriter();
 //            writer.close();
             
-            ChatDB chatDB = new ChatDB();
-            chatDB.connect();
-//            while (true){
-               if(chatDB.hasNewMessage()){
-                    List<List<String>> elementos = chatDB.getChatsAsList();
-
-                    String resultado = "data: [";    
-                    for (List<String> i: elementos) {
-                        String result = "";
-                        for (String x: i) {
-                            result = result + x + ", ";
-                        }
-                        resultado = resultado + " [" + i + "] " + ", ";
-                    }
-                    resultado = resultado + "] \n\n"; 
-                    writer.write(resultado);
-                }
-//               try {
-//                        Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                }
-//           }
-            //writer.close();
+//            ChatDB chatDB = new ChatDB();
+//            chatDB.connect();
             
+            //writer.close();
+//            --------------------------------------------------------------
+////            while (true){
+//               synchronized(syncObject) {
+//                    try {
+//                        // Calling wait() will block this thread until another thread
+//                        // calls notify() on the object.
+//                        syncObject.wait();
+//                        
+//                        List<List<String>> elementos = chatDB.getChatsAsList();
+//                        String resultado = "data: [";    
+//                        for (List<String> i: elementos) {
+//                            String result = "";
+//                            for (String x: i) {
+//                                result = result + x + ", ";
+//                            }
+//                            resultado = resultado + " [" + i + "] " + ", ";
+//                        }
+//                        resultado = resultado + "] \n\n"; 
+//                        writer.write(resultado);
+//                    } catch (InterruptedException e) {
+//                        // Happens if someone interrupts your thread.
+//                    }
+//                }
+                
+//            }
     }
 //    @JsonView(Views.Public.class)
 //    @RequestMapping(value = "/hola", method=RequestMethod.GET)

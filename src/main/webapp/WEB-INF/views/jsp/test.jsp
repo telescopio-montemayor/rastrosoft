@@ -18,15 +18,16 @@
             <button onclick="start()">Start</button>
 
             <script type="text/javascript">
-            function start() {
-
-                    var eventSource = new EventSource("hola");
+             var eventSource = new EventSource("hola");
 
                     eventSource.onmessage = function(event) {
 
-                            document.getElementById('foo').innerHTML = event.data;
+                            alert(event.data);
 
-                    };
+                    };   
+            function start() {
+
+                    
 
             }
             </script>

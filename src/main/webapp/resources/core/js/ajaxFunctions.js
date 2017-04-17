@@ -142,7 +142,24 @@ function successAjax(data, tipo) {
                     $("#chatbox").append('<p style="color: grey">0 mensajes nuevos...</p>');
                 }
             }     
-            break;        
+            break; 
+//        case 'getChat': 
+//            var dataObject = jQuery.parseJSON(data);
+//            alert(dataObject);
+//                $("#chatbox").empty();
+//                $.each(dataObject, function(key, value) {
+//                    $.each(value, function(key2, c) {  
+//                            $("#chatbox").append('<p style="margin: 0!important; color:'+stringToColour(c[1])+'; float:left">'+c[1]+'</p>'
+//                                +'<p style="font-size:10px; color:grey; float: right; padding-top:5px; margin: 0!important;">'+c[3]+'</p>'
+//                                +'<p style="margin: 0!important; clear: both">'+c[2]+'</p>'
+//                                +'<hr style="margin:5px 0 0 0!important">\n');                           
+//                    });
+//                });      
+//                if ($("#chatbox").is(':empty')){
+//                    $("#chatbox").append('<p style="color: grey">0 mensajes nuevos...</p>');
+//                }
+//            
+//            break;        
         default:
             break;
     } 
@@ -446,6 +463,7 @@ function updateValues(data){
         
         $("#filePath").val(filePath);
         showCapture();
+        
         
     });
     

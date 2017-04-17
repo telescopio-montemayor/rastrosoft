@@ -1,7 +1,7 @@
 <%@page session="false"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,8 +67,14 @@
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 <script>
-    
+        
 	jQuery(document).ready(function($) {
+//                var eventSource = new EventSource("hola");
+//
+//                eventSource.onmessage = function(event) {
+//                     successAjax(event.data, 'getChat');
+//
+//                };  
                 listaDispositivos();
 		$("#search-form").submit(function(event) {
 
@@ -83,9 +89,11 @@
 		});       
                 getUsername();
                 setInterval(function() {
-                        refreshValues();
+                        refreshValues(); 
                         getChat();
                   }, 500);
+                
+                
 	});
         
         var token = $("meta[name='_csrf']").attr("content");
@@ -223,35 +231,35 @@
                     <select class="form-control">
                      <option disabled selected value> -- select an option -- </option>   
                      <option>Luna</option>
-                     <option>J鷓iter</option>
+                     <option>J煤piter</option>
                      <option>Marte</option>
                      <option>Saturno</option>
-                     <option>Plut髇</option>
+                     <option>Plut贸n</option>
                      <option>Luna</option>
-                     <option>J鷓iter</option>
+                     <option>J煤piter</option>
                      <option>Marte</option>
                      <option>Saturno</option>
-                     <option>Plut髇</option>
+                     <option>Plut贸n</option>
                      <option>Luna</option>
-                     <option>J鷓iter</option>
+                     <option>J煤piter</option>
                      <option>Marte</option>
                      <option>Saturno</option>
-                     <option>Plut髇</option>
+                     <option>Plut贸n</option>
                      <option>Luna</option>
-                     <option>J鷓iter</option>
+                     <option>J煤piter</option>
                      <option>Marte</option>
                      <option>Saturno</option>
-                     <option>Plut髇</option>
+                     <option>Plut贸n</option>
                      <option>Luna</option>
-                     <option>J鷓iter</option>
+                     <option>J煤piter</option>
                      <option>Marte</option>
                      <option>Saturno</option>
-                     <option>Plut髇</option>
+                     <option>Plut贸n</option>
                      <option>Luna</option>
-                     <option>J鷓iter</option>
+                     <option>J煤piter</option>
                      <option>Marte</option>
                      <option>Saturno</option>
-                     <option>Plut髇</option>
+                     <option>Plut贸n</option>
                    </select>
                  </div>
                          
@@ -459,7 +467,7 @@
                             <input type="text" class="form-control " id="ccdTemperature" placeholder="Temperature" value="-15">                    
                             <p class="help-label">Set temperature for the CCD</p>
                             <span class="input-group-btn">
-                                <button id="setCcdTemperature" class="btn btn-default" type="button">癈</button>
+                                <button id="setCcdTemperature" class="btn btn-default" type="button">掳C</button>
                             </span>  
                         </div>
                         

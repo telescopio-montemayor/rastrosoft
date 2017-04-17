@@ -110,9 +110,9 @@ public class ChatDB extends Database{
                 ps.setString(2, message);
                 ps.executeUpdate();
                 ps.close();
-                sql = "UPDATE chat SET newmessage = 1 WHERE id = 1";
-                ps = (PreparedStatement) conn.prepareStatement(sql);
-                ps.executeUpdate();
+//                sql = "UPDATE chat SET newmessage = 1 WHERE id = 1";
+//                ps = (PreparedStatement) conn.prepareStatement(sql);
+//                ps.executeUpdate();
                 ps.close();
 
         } catch (SQLException e) {
