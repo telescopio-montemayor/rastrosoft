@@ -46,16 +46,14 @@
 <script>
 	
         function test() {
-                var source = new EventSource('SSEController1?par=true');
+//                var source = new EventSource('SSEController1?par=true');
+                var source = new EventSource('SSEChat');
                 source.onopen = function(event) {
                     console.log("eventsource opened!");
                 };
 
                 source.onmessage = function(event) {
-                    var data = event.data;
-                    console.log(data);
-                    document.getElementById('sse').innerHTML += 
-                        event.data + "<br />";
+                    alert("newmessage");
                 };
             }
             window.addEventListener("load", test);

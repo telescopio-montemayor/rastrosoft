@@ -8,9 +8,13 @@ package unlp.rastrosoft.web.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
@@ -28,15 +32,14 @@ import javax.servlet.http.HttpServletResponse;
  * @author ip300
  */
 
-@WebServlet(urlPatterns = {"/SSEController1"}, asyncSupported = true)
-public final class SSEController1 extends HttpServlet {
+@WebServlet(urlPatterns = {"/SSEChat"}, asyncSupported = true)
+public final class SSEChat extends HttpServlet {
     private final Queue<AsyncContext> longReqs = new ConcurrentLinkedQueue<>();
     private ScheduledExecutorService service;
-    private Runnable notifier;
+    private Map<String, AsyncContext> asyncContexts = new ConcurrentHashMap<String, AsyncContext>();      
+    private BlockingQueue<String> messageQueue = new LinkedBlockingQueue<String>();
     
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-       notifier = new Runnable() {
+    private Thread notifier = new Thread(new Runnable() {
         @Override
         public void run() {
           final Iterator<AsyncContext> iterator = longReqs.iterator();
@@ -47,9 +50,7 @@ public final class SSEController1 extends HttpServlet {
             PrintWriter out;
             try {
               out = res.getWriter();
-              String next = "data: " + 
-                String.valueOf(random.nextInt(100) + 1) +
-                "holllaa = " + longReqs.size() + "\n\n";
+              String next = "data: 1\n\n";
               out.write(next);
               if (out.checkError()) { 
                 iterator.remove();
@@ -59,15 +60,9 @@ public final class SSEController1 extends HttpServlet {
             }
           }
         }
-      };
-      
-
-    }
-//     @Override
-//     public void doGet(HttpServletRequest request, HttpServletResponse response)
-//            throws IOException {
-//        response.getWriter().println("Hello");
-//    }
+    });
+    
+    private Boolean inicial = true;
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) {
       res.setContentType("text/event-stream");
@@ -83,11 +78,11 @@ public final class SSEController1 extends HttpServlet {
               @Override public void onStartAsync(AsyncEvent event) throws IOException {}
           });
       longReqs.add(ac);
-        String[] par = req.getParameterValues("par");
-      if (par[0].equals("true")){
-//        service = Executors.newScheduledThreadPool(10);
-//        service.scheduleAtFixedRate(notifier, 1, 1, TimeUnit.SECONDS);
-        notifier.run();
-      }      
+      
+        if (inicial){
+            notifier.run();
+            inicial = false;
+        }
+            
     }
 }

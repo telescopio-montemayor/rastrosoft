@@ -68,13 +68,7 @@
 
 <script>
         
-	jQuery(document).ready(function($) {
-//                var eventSource = new EventSource("hola");
-//
-//                eventSource.onmessage = function(event) {
-//                     successAjax(event.data, 'getChat');
-//
-//                };  
+	jQuery(document).ready(function($) {                
                 listaDispositivos();
 		$("#search-form").submit(function(event) {
 
@@ -92,8 +86,6 @@
                         refreshValues(); 
                         getChat();
                   }, 500);
-                
-                
 	});
         
         var token = $("meta[name='_csrf']").attr("content");
@@ -185,8 +177,13 @@
                 window.location = 'http://www.mozilla.org/firefox';
             }
         });
-        
-
+//        jQuery(document).ready(function($) {
+//                var eventSource = new EventSource("rastrosoft/newchat");
+//                eventSource.onmessage = function(event) {
+//                    getChat();
+//                };
+//        });  
+       
 </script>
 
  
@@ -213,7 +210,7 @@
         <div id="normalScreenContainer">
             <div id="normalScreen">
                 <p></p>
-                <span>Connected as: <i id="username" style="color:green;">...</i></span>
+                <span><i onClick="fade();">Connected as:</i> <i id="username" style="color:green;" onClick="initialize();">...</i></span>
                 <div class="form-group">
                     <div class="form-group">
                         <div class="input-group">
@@ -312,25 +309,25 @@
                     </div>
                 </div>
             </div>  
-            <div style="float: left;"><button onClick="fade();" class="btn btn-default"><i class="fa fa-graduation-cap fa-fw"></i></button></div>
-            <div style="float: right;"><button onClick="initialize();" class="btn btn-default"><i class="fa fa-free-code-camp fa-fw"></i></button></div> 
+<!--            <div style="float: left;"><button onClick="fade();" class="btn btn-default"><i class="fa fa-graduation-cap fa-fw"></i></button></div>
+            <div style="float: right;"><button onClick="initialize();" class="btn btn-default"><i class="fa fa-free-code-camp fa-fw"></i></button></div> -->
         </div>       
-
-         
-        <div id="chat" class="form-group" style="height: 400px">
-    <!--                    <div><button style="float:left" class="btn btn-default"><span style="color:red"><i class="fa fa-globe fa-fw"></i>Live transmit</span></button></div>
-            <div><button style="float:left" class="btn btn-default" disabled="disabled"><i class="fa fa-comments-o fa-fw"></i>Enable chat</button></div>
-            -->
-            <!--<textarea id="chatbox" class="form-control" style="height:200px; resize: none;" placeholder="Message"></textarea>-->
+                            
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button id="liveTransmit" class="btn btn-default selected" type="button" style="width:50%; border-top-left-radius: 5px; outline: none;" ><span id="liveTransmitSpan"><i class="fa fa-globe fa-fw"></i>Live transmit</span></button> 
+                <button id="enableChat" class="btn btn-default" type="button" style="width:51%; border-top-right-radius: 5px; outline: none;"><i class="fa fa-comments-o fa-fw"></i>Enable chat</button>
+            </span> 
+        </div> 
+        <div id="chat" class="form-group">
             <div  id="chatbox" class="form-control" style="overflow-y: scroll; height: 100%"></div>
             <div class="form-group">
-                <div class="input-group">                            
-                    <input id="msgbox" type="text" class="form-control" placeholder="Message...">
+                <div class="input-group" >                            
+                    <input id="msgbox" type="text" class="form-control" placeholder="Message..." >
                     <span class="input-group-btn">
                         <button id="sendMsgChat" class="btn btn-default" type="button"><i class="fa fa-paper-plane fa-fw"></i></button>
                     </span>  
                 </div>
-
             </div>
         </div>
             

@@ -342,11 +342,12 @@ $(document).ready(function() {
         var height = wtf[0].scrollHeight;
         wtf.scrollTop(height);
     });
-//    $("#chatbox").bind('scroll', function() {
-//        if($("#chatbox").is(":hover") ) {
-//            alert('end reached');
-//        }
-//    });
+    $("#enableChat").click(function(){
+        toggleChat();
+    });
+    $("#liveTransmit").click(function(){
+        toggleTransmit();
+    });
 });
 $.fn.enterKey = function (fnc) {
         return this.each(function () {
@@ -358,7 +359,22 @@ $.fn.enterKey = function (fnc) {
             })
         })
     }
-
+function toggleTransmit(){
+    if ($("#liveTransmitSpan").css("color")=="rgb(255, 0, 0)"){
+//        $("#liveTransmitSpan").css("color","rgb(0, 0, 0)");
+        stopLiveTransmit();
+    }else{
+//        $("#liveTransmitSpan").css("color","rgb(255, 0, 0)");
+        startLiveTransmit();
+    }
+}
+function toggleChat(){
+    if ($("#sendMsgChat").is(':disabled')){
+        enableChat();
+    }else{
+        disableChat();
+    }    
+}
 function resetExposureProgressBar() {
     loading_effect_preview(true);
     $(".previewImageSrc").attr("src", "/rastrosoft/resources/images/loading.gif");

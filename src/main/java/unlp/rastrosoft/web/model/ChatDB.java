@@ -9,7 +9,6 @@ import com.mysql.cj.jdbc.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,6 +149,85 @@ public class ChatDB extends Database{
             rs.close();
             ps.close();
             return newmessage;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+    }
+    public boolean enableChat(){
+        String sql = "UPDATE chat SET enabled = 1 WHERE id = 1";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+            
+            ps.executeUpdate();
+            
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+        return true;
+    }
+     public boolean disableChat(){
+        String sql = "UPDATE chat SET enabled = 0 WHERE id = 1";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+            
+            ps.executeUpdate();
+            
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+        return true;
+    }
+    public boolean isEnabled(){
+        String sql = "SELECT enabled FROM chat WHERE id = 1";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+            Boolean  enabled = false;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt("enabled") == 1){
+                    enabled = true;
+                }else{
+                    enabled = false;
+                }
+            }
+            rs.close();
+            ps.close();
+            return enabled;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

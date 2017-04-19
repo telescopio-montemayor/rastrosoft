@@ -127,7 +127,7 @@ function successAjax(data, tipo) {
             });
             updateTables();
             break;
-        case 'getChat':
+        case 'getChat':            
             if($("#chatbox").is(":hover") == false ) {
                 $("#chatbox").empty();
                 $.each(data, function(key, value) {
@@ -143,23 +143,9 @@ function successAjax(data, tipo) {
                 }
             }     
             break; 
-//        case 'getChat': 
-//            var dataObject = jQuery.parseJSON(data);
-//            alert(dataObject);
-//                $("#chatbox").empty();
-//                $.each(dataObject, function(key, value) {
-//                    $.each(value, function(key2, c) {  
-//                            $("#chatbox").append('<p style="margin: 0!important; color:'+stringToColour(c[1])+'; float:left">'+c[1]+'</p>'
-//                                +'<p style="font-size:10px; color:grey; float: right; padding-top:5px; margin: 0!important;">'+c[3]+'</p>'
-//                                +'<p style="margin: 0!important; clear: both">'+c[2]+'</p>'
-//                                +'<hr style="margin:5px 0 0 0!important">\n');                           
-//                    });
-//                });      
-//                if ($("#chatbox").is(':empty')){
-//                    $("#chatbox").append('<p style="color: grey">0 mensajes nuevos...</p>');
-//                }
-//            
-//            break;        
+        case 'getChatSse':
+            alert("Nuevo mensaje");
+            break;
         default:
             break;
     } 
@@ -340,8 +326,28 @@ function addMessageChat() {
     var search = {};
     search["value"] = $("#msgbox").val();
     $("#msgbox").val('');
-    sendAjax(search,'addMessageChat','addMessageChat'); 
-    
+    sendAjax(search,'addMessageChat','addMessageChat');     
+}
+
+function startLiveTransmit() {    
+    var search = {};
+    search["value"] = "true";    
+    sendAjax(search,'liveTransmit','liveTransmit');     
+}
+function stopLiveTransmit() {    
+    var search = {};
+    search["value"] = "false";    
+    sendAjax(search,'liveTransmit','liveTransmit');     
+}
+function enableChat() {    
+    var search = {};
+    search["value"] = "true";    
+    sendAjax(search,'enableChat','enableChat');     
+}
+function disableChat() {    
+    var search = {};
+    search["value"] = "false";    
+    sendAjax(search,'enableChat','enableChat');     
 }
 
 function updateValues(data){
@@ -349,7 +355,7 @@ function updateValues(data){
         var ra, dec, park, unpark, track, slew, sync, uploadDir, uploadPrefix, 
             hBinning, vBinning, ccdTemperature, frameLight, frameBias, frameDark, 
             frameFlat, x, y, width, height, exposureTime, focusIn, focusOut, 
-            focusAbsolute, focusRelative, filePath;
+            focusAbsolute, focusRelative, filePath, isOnLive, chatEnabled;
         ra              = value[0];
         dec             = value[1];
         park            = value[2];
@@ -376,6 +382,8 @@ function updateValues(data){
         focusAbsolute   = value[23];
         focusRelative   = value[24];
         filePath        = value[25];
+        isOnLive        = value[26];
+        chatEnabled     = value[27];
         
         if (($('#setRa').is(":focus")===false)&($('#setDec').is(":focus")===false)){
             $('#setRa').val(decimalToHours(ra));
@@ -464,6 +472,19 @@ function updateValues(data){
         $("#filePath").val(filePath);
         showCapture();
         
+        if(isOnLive == "1"){
+            $("#liveTransmitSpan").css("color","rgb(255, 0, 0)");
+        }else{
+            $("#liveTransmitSpan").css("color","rgb(0, 0, 0)");
+        }
+        
+        if(chatEnabled == "1"){
+            $("#sendMsgChat").prop('disabled', false);
+            $("#msgbox").prop('disabled', false);
+        }else{
+            $("#sendMsgChat").prop('disabled', true);
+            $("#msgbox").prop('disabled', true);
+        }
         
     });
     
