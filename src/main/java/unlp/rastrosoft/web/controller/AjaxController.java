@@ -26,13 +26,10 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -581,6 +578,21 @@ public class AjaxController  extends HttpServlet{
             }
             
             result.addElemento(chatEnabled);
+            
+            CalendarDB calendarDB = new CalendarDB();
+            calendarDB.connect();
+            ArrayList<String> shift =  calendarDB.getCurrentShift();
+            
+            if (shift.get(0).equals("-1")){
+                result.addElemento("-1");
+                result.addElemento("00:00:00");                
+            }else{
+                UserDB userDB = new UserDB();
+                userDB.connect();
+                User user = userDB.getUser( Integer.parseInt(shift.get(0)));
+                result.addElemento(user.getUsername());
+                result.addElemento(shift.get(1));                
+            }
             
             return result;
 

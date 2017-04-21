@@ -210,12 +210,12 @@
         <div id="normalScreenContainer">
             <div id="normalScreen">
                 <p></p>
-                <span><i onClick="fade();">Connected as:</i> <i id="username" style="color:green;" onClick="initialize();">...</i></span>
+                <span><i onClick="fade();">Connected as:</i> <i id="username" style="color:green;" onClick="initialize();">...</i> - Timeleft: <i id="timeleft" class="label label-danger">...</i></span>
                 <div class="form-group">
                     <div class="form-group">
                         <div class="input-group">
                             <c:url var="logoutUrl" value="/logout"/>
-                            <form action="${logoutUrl}" method="post">
+                            <form id="end_session" action="${logoutUrl}" method="post">
                                 <input class="form-control logout-icon" type="submit" value="Cerrar sesion" title="Cerrar sesion de USER"/>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>

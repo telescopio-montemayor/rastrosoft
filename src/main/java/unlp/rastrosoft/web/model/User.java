@@ -13,20 +13,20 @@ public class User {
     private int userId;
     private String username;
     private String password;
-    private String role;
+    private String enabled;
+    private String name;
 
-  
-    User(int userId, String username, String password, String role){
+    public User(){
+        
+    }
+    public User(int userId, String username, String password, String enabled, String name) {
         this.userId = userId;
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.enabled = enabled;
+        this.name = name;
     }
 
-    public User() {
-        
-    }
-    
     public int getUserId() {
         return userId;
     }
@@ -51,13 +51,22 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public String getEnabled() {
+        return enabled;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setEnabled(String enabled) {
+        this.enabled = enabled;
     }
-    
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+  
+   
     
 }

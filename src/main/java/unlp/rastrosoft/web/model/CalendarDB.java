@@ -82,5 +82,41 @@ public class CalendarDB extends Database{
         }
         
     }
+    public ArrayList<String> getCurrentShift(){
+        
+        //String sql = "SELECT id_user FROM shifts WHERE (enabled=1 AND (  now() BETWEEN datetime AND ADDTIME(datetime, '01:00:00')))";
+        String sql = "SELECT id_user, (SUBTIME( (TIME(ADDTIME(datetime, '01:00:00'))), (CURTIME())))as timeleft FROM shifts WHERE (enabled=1 AND (  now() BETWEEN datetime AND ADDTIME(datetime, '01:00:00')))";
+        Connection conn = null;
+        int id_user=-1;
+        String timeleft=null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                id_user     = rs.getInt("id_user");  
+                timeleft    = rs.getString("timeleft");
+            }
+            rs.close();
+            ps.close();
+            ArrayList<String> result = new ArrayList<>();
+            result.add(String.valueOf(id_user));
+            result.add(timeleft);
+            return result;
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+        
+    }
     
 }

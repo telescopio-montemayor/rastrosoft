@@ -42,10 +42,10 @@ public class UserDB extends Database{
                 }
         }
     }
-    public void modifyUser(int id, String username, String password, String role){
+    public void modifyUser(int id, String username, String password, String enabled, String name){
         
         String sql = "UPDATE users " +
-                      "SET username = ? , password = ?, role = ? WHERE id = ?";
+                      "SET username = ? , password = ?, enabled = ?, name = ? WHERE id = ?";
         Connection conn = null;
 
         try {
@@ -54,8 +54,9 @@ public class UserDB extends Database{
 
                 ps.setString(1, username);
                 ps.setString(2, password);
-                ps.setString(3, role);
-                ps.setInt(4, id);
+                ps.setString(3, enabled);
+                ps.setString(4, name);
+                ps.setInt(5, id);
                 ps.executeUpdate();
                 ps.close();
 
@@ -99,25 +100,19 @@ public class UserDB extends Database{
     public User getUser(int id){
         String sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
         Connection conn = null;
+        User user = new User();
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
-
             ps.setInt(1, id);
-
-            ResultSet rs =ps.executeQuery();
-            User user = null;
-
-            if (rs.next()) {
-                user = new User(
-                    rs.getInt("id"),
-                    rs.getString("username"),
-                    rs.getString("password"),
-                    rs.getString("role")
-                );
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                user.setUserId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setEnabled(rs.getString("enabled"));
+                user.setName(rs.getString("name"));                
             }
-
-
             rs.close();
             ps.close();
             return user;
@@ -151,7 +146,8 @@ public class UserDB extends Database{
                     rs.getInt("id"),
                     rs.getString("username"),
                     rs.getString("password"),
-                    rs.getString("enabled")
+                    rs.getString("enabled"),
+                    rs.getString("name")
                 );
             }
 

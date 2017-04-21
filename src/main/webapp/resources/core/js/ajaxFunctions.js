@@ -355,7 +355,7 @@ function updateValues(data){
         var ra, dec, park, unpark, track, slew, sync, uploadDir, uploadPrefix, 
             hBinning, vBinning, ccdTemperature, frameLight, frameBias, frameDark, 
             frameFlat, x, y, width, height, exposureTime, focusIn, focusOut, 
-            focusAbsolute, focusRelative, filePath, isOnLive, chatEnabled;
+            focusAbsolute, focusRelative, filePath, isOnLive, chatEnabled, currentShiftUser, timeleft;
         ra              = value[0];
         dec             = value[1];
         park            = value[2];
@@ -384,6 +384,8 @@ function updateValues(data){
         filePath        = value[25];
         isOnLive        = value[26];
         chatEnabled     = value[27];
+        currentShiftUser= value[28];
+        timeleft        = value[29];
         
         if (($('#setRa').is(":focus")===false)&($('#setDec').is(":focus")===false)){
             $('#setRa').val(decimalToHours(ra));
@@ -484,6 +486,18 @@ function updateValues(data){
         }else{
             $("#sendMsgChat").prop('disabled', true);
             $("#msgbox").prop('disabled', true);
+        }
+        
+        $( "#timeleft" ).empty();
+        $( "#timeleft" ).append(timeleft);
+        
+        if( parseInt(($("#timeleft").text()).substring(3, 5)) < 10 ){
+            $("#timeleft").removeClass("label-success").addClass("label-danger");
+            if( $("#timeleft").text() == "00:00:00" ){
+                $("#end_session").submit();
+            }
+        }else{
+            $("#timeleft").removeClass("label-danger").addClass("label-success");
         }
         
     });
