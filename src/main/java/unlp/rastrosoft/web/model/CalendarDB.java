@@ -85,7 +85,7 @@ public class CalendarDB extends Database{
     public ArrayList<String> getCurrentShift(){
         
         //String sql = "SELECT id_user FROM shifts WHERE (enabled=1 AND (  now() BETWEEN datetime AND ADDTIME(datetime, '01:00:00')))";
-        String sql = "SELECT id_user, (SUBTIME( (TIME(ADDTIME(datetime, '01:00:00'))), (CURTIME())))as timeleft FROM shifts WHERE (enabled=1 AND (  now() BETWEEN datetime AND ADDTIME(datetime, '01:00:00')))";
+        String sql = "SELECT id_user, (TIME(SUBTIME( (ADDTIME(datetime, '01:00:00')), (CURTIME()))))as timeleft FROM shifts WHERE (enabled=1 AND (  now() BETWEEN datetime AND ADDTIME(datetime, '01:00:00')))";
         Connection conn = null;
         int id_user=-1;
         String timeleft=null;
