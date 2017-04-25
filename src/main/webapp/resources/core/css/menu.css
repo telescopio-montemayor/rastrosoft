@@ -1078,3 +1078,12 @@ input[type="number"].currentNumber {
     padding-right: 0px;
     text-align: center;
 }
+.download-button{
+    text-decoration: none;
+    text-align: center;
+}
+.download-button:hover{
+    text-decoration: none;
+    text-align: center;
+    color: #555;
+}

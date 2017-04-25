@@ -59,6 +59,7 @@ public class ChatDB extends Database{
     }
      public List<List<String>> getChatsAsList(){
         String sql = "SELECT message_chat.id, name, message, datetime, message_chat.enabled  FROM message_chat INNER JOIN users ON (message_chat.from= users.id) WHERE ((datetime) >= SUBTIME(CURDATE(), TIME('12:00:00')))  ORDER BY datetime ASC";
+        //String sql = "SELECT enabled INTO @chat_enabled FROM chat WHERE id =1; SELECT message_chat.id, name, message, datetime, message_chat.enabled, @chat_enabled  FROM message_chat INNER JOIN users ON (message_chat.from= users.id) WHERE ((@chat_enabled=1)AND (datetime) >= SUBTIME(CURDATE(), TIME('12:00:00')))  ORDER BY datetime ASC;";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -96,11 +97,11 @@ public class ChatDB extends Database{
         }
         
     }
-     public void insertMessage(int from, String message){
+     public List<String> insertMessage(int from, String message){
         
         String sql = "INSERT INTO message_chat (`from`, `message`) VALUES (?, ?)";
         Connection conn = null;
-
+        List<String> chat = new ArrayList<>();
         try {
                 conn = dataSource.getConnection();
                 PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
@@ -108,12 +109,25 @@ public class ChatDB extends Database{
                 ps.setInt(1, from);
                 ps.setString(2, message);
                 ps.executeUpdate();
+                int message_id = (int) ps.getLastInsertID();
                 ps.close();
 //                sql = "UPDATE chat SET newmessage = 1 WHERE id = 1";
 //                ps = (PreparedStatement) conn.prepareStatement(sql);
 //                ps.executeUpdate();
+                sql = "SELECT message, name, datetime, message_chat.enabled FROM message_chat INNER JOIN users ON `from` = users.id  WHERE `from` = ? AND message_chat.id = ?";
+                ps = (PreparedStatement) conn.prepareStatement(sql);
+                ps.setInt(1, from);
+                ps.setInt(2, message_id);
+                ResultSet rs = ps.executeQuery();
+                
+                while (rs.next()) {                    
+                    chat.add(rs.getString("name"));
+                    chat.add(rs.getString("message"));
+                    chat.add(rs.getString("datetime"));
+                    chat.add(rs.getString("enabled"));
+                }
                 ps.close();
-
+                return chat;
         } catch (SQLException e) {
                 throw new RuntimeException(e);
 

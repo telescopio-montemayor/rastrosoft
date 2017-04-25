@@ -1,4 +1,4 @@
-   
+
     function toggle_left(){
         windowsize = $('#sidebarLeft').width();
         if (windowsize < 1) {
@@ -228,21 +228,7 @@ function showCapture(){
     var res = absoluteFilePath.split("webapp");
     var filePath = ("/rastrosoft"+res[1]);
     var imageSource = filePath + '.jpg';
-    $.ajax({
-        url:imageSource,
-        type:'HEAD',
-        error: function()
-        {
-            if ( ( $(".previewImageSrc").attr("src") ) != ("/rastrosoft/resources/images/loading.gif") ){
-                $(".previewImageSrc").attr("src", "/rastrosoft/resources/images/loading.gif");
-            }
-                
-        },
-        success: function()
-        {            
-            $(".previewImageSrc").attr("src", imageSource);             
-        }
-    });
+    $(".previewImageSrc").attr("src", imageSource);
 }
 
 function fade() {
@@ -308,8 +294,7 @@ $(document).ready(function() {
     $("#setSize").click(function(){
         setSize();         
     });
-    $("#setExposure").click(function(){
-        $("#setExposure").prop("disabled", "disabled");
+    $("#setExposure").click(function(){        
         setExposure();  
         if ($("#exposureTime").val()<"0.01"){
             notify('Exposure time must be greater than 0.01 seconds', 'danger');
@@ -378,6 +363,7 @@ function toggleChat(){
 function resetExposureProgressBar() {
     loading_effect_preview(true);
     $(".previewImageSrc").attr("src", "/rastrosoft/resources/images/loading.gif");
+    
     var max = $('#exposureTimeHidden').val();
     var min = 0;
     var refreshId = setInterval(function() {

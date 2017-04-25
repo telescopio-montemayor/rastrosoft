@@ -19,21 +19,16 @@ import unlp.rastrosoft.web.model.SearchCriteria;
 import unlp.rastrosoft.web.model.connect_indi;
 import unlp.rastrosoft.web.model.indi_client;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -53,12 +48,12 @@ import unlp.rastrosoft.web.model.SendMailTLS;
 import unlp.rastrosoft.web.model.Telescope;
 import unlp.rastrosoft.web.model.User;
 import unlp.rastrosoft.web.model.UserDB;
+import unlp.rastrosoft.websocket.DeviceSessionHandler;
 
 @RestController
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AjaxController  extends HttpServlet{
-
-	
+        
 	// @ResponseBody, not necessary, since class is annotated with @RestController
 	// @RequestBody - Convert the json data into object (SearchCriteria) mapped by field name.
 	// @JsonView(Views.Public.class) - Optional, limited the json data display to client.
@@ -623,8 +618,6 @@ public class AjaxController  extends HttpServlet{
             return result;
 
         }
-//    private Map<String, AsyncContext> asyncContexts = new ConcurrentHashMap<String, AsyncContext>();      
-    private BlockingQueue<String> messageQueue;
     
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/getChat", method=RequestMethod.POST)
@@ -641,9 +634,7 @@ public class AjaxController  extends HttpServlet{
         return result;
     }    
     
-    //Object syncObject;
-    Object mon;
-    private Runnable notifierAll;
+
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/addMessageChat", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
@@ -664,218 +655,18 @@ public class AjaxController  extends HttpServlet{
         message = execute.getValue();
         ChatDB chatDB = new ChatDB();
         chatDB.connect();
-        chatDB.insertMessage(id_user, message);
-        notifierAll = () -> {
-            synchronized (mon) {
-                mon.notifyAll();
-            }
-        };
-        notifierAll.run();
-//            try {
-//                messageQueue.put("1");
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        synchronized(syncObject) {
-//            syncObject.notify();
-//        }
+        List<String> inserted_message = chatDB.insertMessage(id_user, message);
+        
+        String user = inserted_message.get(0);
+        message = inserted_message.get(1);
+        String datetime = inserted_message.get(2);
+        DeviceSessionHandler sessionHandler;
+        sessionHandler = new DeviceSessionHandler();
+        sessionHandler.updateElement("newChat", "["+user+", "+message+", "+datetime+"]");
+
         return result;
     }  
-    
-//    private Thread notifier = new Thread(new Runnable() {
-//
-//        @Override
-//        public void run() {
-//            while (true){
-////               if(chatDB.hasNewMessage()){
-//                System.out.println("--------------------------------------------HOLAAAAAAA RUN-------------------------------------------------");//               try {
-//                //                        Thread.sleep(1000);
-//                //                } catch (InterruptedException e) {
-//                //                        e.printStackTrace();
-//                //                }
-//                System.out.println("--------------------------------------------"+messageQueue.toString()+"-------------------------------------------------");
-//                System.out.println("--------------------------------------------HOLAAAAAAA TOMO MENSAJE-------------------------------------------------");
-//                String newmessage = null;
-//                try {
-//                    newmessage = messageQueue.take();
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                System.out.println("--------------------------------------------HOLAAAAAAA TOMO MENSAJE"+newmessage+"-------------------------------------------------");
-//                //
-//                //                    writer.write(resultado);
-//                for (AsyncContext asyncContext : asyncContexts.values()) {
-//                    try {
-//                        ChatDB chatDB = new ChatDB();
-//                        chatDB.connect();
-//                        List<List<String>> elementos = chatDB.getChatsAsList();
-//
-//                        String resultado = "data: [";
-//                        for (List<String> i: elementos) {
-//                            String result = "";
-//                            for (String x: i) {
-//                                result = result + x + ", ";
-//                            }
-//                            resultado = resultado + "" + i + "" + ", ";
-//                        }
-//                        resultado = resultado + "] \n\n";
-//                        asyncContext.getResponse().getWriter().write(resultado);
-//                    } catch (Exception e) {
-//                        // In case of exception remove context from map
-//                        asyncContexts.values().remove(asyncContext);
-//                    }
-//                }
-//                //messageQueue.clear();
-//           }
-//        }
-//    });
-    
-    
-//    boolean initia = true;
-
-    
-//    @JsonView(Views.Public.class)
-//    @RequestMapping(value = "/hola", method=RequestMethod.GET)
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")    
-//    public void doGet(HttpServletRequest request, HttpServletResponse response)
-//                    throws ServletException, IOException {
-//          System.out.println("--------------------------------------------HOLAAAAAAA DOGET-------------------------------------------------");  
-//        if ("text/event-stream".equals(request.getHeader("Accept"))) {
-//            if (initia){
-//                notifier.start();
-//                initia=false;
-//            }
-//            System.out.println("--------------------------------------------HOLAAAAAAA TEXT EVENT-------------------------------------------------");
-//            response.setContentType("text/event-stream");
-//            response.setHeader("Cache-Control", "no-cache");
-//            response.setHeader("Connection", "keep-alive");
-//            response.setCharacterEncoding("UTF-8");
-//            
-//            // Generate some unique identifier used to store context in map
-//            final String id = UUID.randomUUID().toString();
-//
-//            // Start asynchronous context and add listeners to remove it in case of errors
-//            final AsyncContext ac = request.startAsync();
-//            ac.addListener(new AsyncListener() {
-//
-//                @Override
-//                public void onComplete(AsyncEvent event) throws IOException {
-//                        asyncContexts.remove(id);
-//                }
-//
-//                @Override
-//                public void onError(AsyncEvent event) throws IOException {
-//                        asyncContexts.remove(id);
-//                }
-//
-//                @Override
-//                public void onStartAsync(AsyncEvent event) throws IOException {
-//                        // Do nothing
-//                }
-//
-//                @Override
-//                public void onTimeout(AsyncEvent event) throws IOException {
-//                        asyncContexts.remove(id);
-//                }
-//
-//               
-//            });
-//            
-//            // Put context in a map
-//            asyncContexts.put(id, ac);
-//            System.out.println("--------------------------------------------HOLAAAAAAA PUT-------------------------------------------------");
-//        }    
-//            PrintWriter writer = response.getWriter();
-//            writer.close();
-            
-//            ChatDB chatDB = new ChatDB();
-//            chatDB.connect();
-            
-            //writer.close();
-//            --------------------------------------------------------------
-////            while (true){
-//               synchronized(syncObject) {
-//                    try {
-//                        // Calling wait() will block this thread until another thread
-//                        // calls notify() on the object.
-//                        syncObject.wait();
-//                        
-//                        List<List<String>> elementos = chatDB.getChatsAsList();
-//                        String resultado = "data: [";    
-//                        for (List<String> i: elementos) {
-//                            String result = "";
-//                            for (String x: i) {
-//                                result = result + x + ", ";
-//                            }
-//                            resultado = resultado + " [" + i + "] " + ", ";
-//                        }
-//                        resultado = resultado + "] \n\n"; 
-//                        writer.write(resultado);
-//                    } catch (InterruptedException e) {
-//                        // Happens if someone interrupts your thread.
-//                    }
-//                }
-                
-//            }
-//    }
-    
-    PrintWriter writer;
-    boolean initia = true;
-    String newmessage = null;
-    String resultado = "data: 1\n\n";
-    private Thread notifier = new Thread(new Runnable() {
-
-        @Override
-        public void run() {
-            while (true){
-                synchronized (mon) {
-                    try {
-                        mon.wait();
-                        writer.write(resultado);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-//                try {
-//                    newmessage = messageQueue.take();
-//                    if (newmessage!= null){
-//                        writer.write(resultado);
-//                        newmessage = null;
-//                        messageQueue.clear();
-//                    }
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(AjaxController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-            }
-            
-        }
-    });  
-    
-    @JsonView(Views.Public.class)
-    @RequestMapping(value = "/newchat", method=RequestMethod.GET)
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-                    throws ServletException, IOException {
-
-            //content type must be set to text/event-stream
-            response.setContentType("text/event-stream");	
-
-            //encoding must be set to UTF-8
-            response.setCharacterEncoding("UTF-8");
-
-            
-           
-            if(initia){
-                mon = new Object();
-                writer = response.getWriter();
-                messageQueue = new LinkedBlockingQueue<>();
-                initia=false;
-                notifier.start();                
-            }
-            
-            
-            
-    }
+ 
     
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/liveTransmit", method=RequestMethod.POST)

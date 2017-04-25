@@ -14,12 +14,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+//import javax.inject.Inject;
 import laazotea.indi.Constants;
 import laazotea.indi.Constants.SwitchStatus;
 import laazotea.indi.client.*;
+import unlp.rastrosoft.websocket.DeviceSessionHandler;
 
 
 public class indi_client implements INDIServerConnectionListener, INDIDeviceListener, INDIPropertyListener {
@@ -29,7 +28,11 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	List<INDIProperty> propiedades = new ArrayList<>();
 	List<INDIDevice> dispositivos = new ArrayList<>();	
         
-	public indi_client(String host, int port) {
+        
+        private DeviceSessionHandler sessionHandler;
+	
+        public indi_client(String host, int port) {
+            sessionHandler = new DeviceSessionHandler();
 	    connection = new INDIServerConnection(host, port);
 	
 	    connection.addINDIServerConnectionListener(this);  // We listen to all server events
@@ -85,8 +88,8 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	}
 	
 	public void propertyChanged(INDIProperty property) {
-	    //System.out.println("Property Changed: " + property.getNameStateAndValuesAsString()); 
-            
+	    //System.out.println("Property Changed: ->" + property.getNameStateAndValuesAsString()); 
+            sessionHandler.updateElement(property.getName(), property.getValuesAsString());
 	}	
 	
 	public void newProperty(INDIDevice device, INDIProperty property) {

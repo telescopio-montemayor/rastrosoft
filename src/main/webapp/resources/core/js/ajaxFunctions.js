@@ -1,4 +1,13 @@
-function errorAjax(data, tipo) {
+function beforeAjax (tipo){
+    switch(tipo) {
+        case 'setExposure':
+            $("#setExposure").prop("disabled", "disabled");
+            break;
+        default:
+            break;
+    }
+}
+function errorAjax(tipo) {
     switch(tipo) {
         case 'setExposure':
             $("#setExposure").prop("disabled", "");
@@ -7,7 +16,7 @@ function errorAjax(data, tipo) {
             break;
     }
 }
-function doneAjax(data, tipo) {
+function doneAjax(tipo) {
     switch(tipo) {
         case 'setExposure':
             $("#setExposure").prop("disabled", "");
@@ -472,7 +481,8 @@ function updateValues(data){
             $("#focusRelative").val(Math.round( focusRelative * 1 ) / 1);
         
         $("#filePath").val(filePath);
-        showCapture();
+//        showCapture();
+        updateNewImageCapture(filePath+".jpg");
         
         if(isOnLive == "1"){
             $("#liveTransmitSpan").css("color","rgb(255, 0, 0)");
@@ -501,6 +511,5 @@ function updateValues(data){
         }
         
     });
-    
-    
-}
+}  
+   

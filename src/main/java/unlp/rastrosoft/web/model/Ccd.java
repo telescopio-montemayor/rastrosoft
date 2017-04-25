@@ -5,15 +5,20 @@
  */
 package unlp.rastrosoft.web.model;
 
+
 import java.io.File;
 import static java.lang.Integer.parseInt;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import unlp.rastrosoft.websocket.DeviceSessionHandler;
 
 /**
  *
@@ -212,18 +217,22 @@ public class Ccd extends Device {
             }
         }
         olderFilePath = newFilePath;
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                Thread.sleep(1500);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+            waitUntilFileIsAvailable(newFilePath);
+            
         fits = findFile(newFilePath);
         new Fits().fitsToJpg(source+"/", dest+"/", fits.getName());
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                Thread.sleep(1500);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            waitUntilFileIsAvailable(source+"/"+fits.getName());
+            alertWhenFileIsAvailable(source+"/"+fits.getName()+".jpg");
 //        count=0;
 //        String newJpg = newFilePath+".jpg";
 //        while (findFile(newJpg)==null){
@@ -243,4 +252,40 @@ public class Ccd extends Device {
         }
     }   
     
+    public static boolean isFileAvailable(String filePathString){
+        File f = new File(filePathString);
+        if(f.exists() && !f.isDirectory()) { 
+            return true;
+        }
+        return false;
+    }
+    public void waitUntilFileIsAvailable(String filePathString){
+        boolean wait = !isFileAvailable(filePathString); 
+        while(wait){
+            try {
+                Thread.sleep(500);
+                wait = !isFileAvailable(filePathString);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void alertWhenFileIsAvailable(String filePathString){
+        TimerTask task;
+        Timer timer = new Timer();
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                if(isFileAvailable(filePathString)){
+                    DeviceSessionHandler sessionHandler;
+                    sessionHandler = new DeviceSessionHandler();
+                    sessionHandler.updateElement("newCapture", filePathString);
+                    this.cancel();
+                    timer.cancel();
+                }
+            }
+        };
+        timer.schedule(task, 0,00500);
+    }
 }

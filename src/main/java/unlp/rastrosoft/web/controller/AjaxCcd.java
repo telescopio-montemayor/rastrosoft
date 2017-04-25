@@ -6,6 +6,7 @@
 package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,6 +32,7 @@ import unlp.rastrosoft.web.model.Focuser;
 import unlp.rastrosoft.web.model.Telescope;
 import unlp.rastrosoft.web.model.User;
 import unlp.rastrosoft.web.model.UserDB;
+import unlp.rastrosoft.websocket.DeviceSessionHandler;
 
 /**
  *

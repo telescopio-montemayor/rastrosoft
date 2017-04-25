@@ -63,12 +63,19 @@
 	var="convertionFunctions" />
 <script src="${convertionFunctions}"></script>
 
+<spring:url value="/resources/core/js/websocket.js"
+	var="websocket" />
+<script src="${websocket}"></script>
+
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 <script>
+
         
-	jQuery(document).ready(function($) {                
+
+	jQuery(document).ready(function($) { 
+
                 listaDispositivos();
 		$("#search-form").submit(function(event) {
 
@@ -82,10 +89,14 @@
 
 		});       
                 getUsername();
-                setInterval(function() {
-                        refreshValues(); 
-                        getChat();
-                  }, 500);
+                getChat();
+                refreshValues();
+//                setInterval(function() {
+                        //refreshValues(); 
+                        //getChat();
+//                         showCapture();
+//                  }, 500);
+
 	});
         
         var token = $("meta[name='_csrf']").attr("content");
@@ -99,8 +110,9 @@
                 data : JSON.stringify(search),
                 dataType : 'json',
                 timeout : 100000,
-                 beforeSend: function(xhr) {
+                beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
+                    beforeAjax (tipo);                   
                 },
                 success : function(result) {
                         console.log("SUCCESS: ", result);
@@ -108,11 +120,11 @@
                 },
                 error : function(e) {
                         console.log("ERROR: ", e);
-                        errorAjax(result, tipo);
+                        errorAjax(tipo);
                 },
                 done : function(result) {
                         console.log("DONE");
-                        doneAjax(result, tipo);
+                        doneAjax(tipo);
                 }
             });
         }
@@ -183,6 +195,7 @@
 //                    getChat();
 //                };
 //        });  
+       
        
 </script>
 
@@ -299,13 +312,14 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-camera fa-fw"></i></span>
-                        <button id="button-preview" class="form-control logout-icon" type="button" onclick="takePreviewImage();">Take preview</button>
+                        <button id="button-preview" class="form-control logout-icon" type="button" onclick="takePreviewImage();" disabled="disabled">Take preview</button>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-download fa-fw"></i></span>
-                        <button class="form-control logout-icon" type="button">Download</button>
+<!--                        <button class="form-control logout-icon" type="button" id="download">Download</button>-->
+                        <a class="form-control logout-icon download-button" id="download" href="" download="Capture.jpg">Download</a>
                     </div>
                 </div>
             </div>  
