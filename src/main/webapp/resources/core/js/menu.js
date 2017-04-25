@@ -244,6 +244,7 @@ $(document).ready(function() {
         $( this ).next( ".help-label" ).hide();
     });
     $('#setRa').mask('00:00:00');
+    $('#setDec').mask('00:00:00');
     
     $("#exposureTimeHidden").change(function(){
         if (($("#exposureTimeHidden").val() > 0)&(executeExposureProgressBar)){

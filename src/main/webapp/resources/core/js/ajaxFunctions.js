@@ -209,7 +209,8 @@ function test() {
 function setRaDec() {
     var search = {};
     search["value"] = hoursToDecimal($("#setRa").val());
-    search["value2"] = degreesToDecimal($("#setDec").val());
+//    search["value2"] = degreesToDecimal($("#setDec").val());
+    search["value2"] = hoursToDecimal($("#setDec").val());
     sendAjax(search,'setRaDec','setRaDec');  
 }
 function setPark() {
@@ -500,6 +501,7 @@ function updateValues(data){
         
         $( "#timeleft" ).empty();
         $( "#timeleft" ).append(timeleft);
+        startTimer(60*45);
         
         if( parseInt(($("#timeleft").text()).substring(3, 5)) < 10 ){
             $("#timeleft").removeClass("label-success").addClass("label-danger");
@@ -513,3 +515,20 @@ function updateValues(data){
     });
 }  
    
+function startTimer(duration) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        $( "#timeleft" ).empty();
+        $( "#timeleft" ).append("00:" + minutes + ":" + seconds);
+        
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}

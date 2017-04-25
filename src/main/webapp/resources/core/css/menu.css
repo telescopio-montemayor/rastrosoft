@@ -1078,11 +1078,7 @@ input[type="number"].currentNumber {
     padding-right: 0px;
     text-align: center;
 }
-.download-button{
-    text-decoration: none;
-    text-align: center;
-}
-.download-button:hover{
+.download-button, .download-button:hover, .download-button:active, .download-button:active, .download-button:link{
     text-decoration: none;
     text-align: center;
     color: #555;
