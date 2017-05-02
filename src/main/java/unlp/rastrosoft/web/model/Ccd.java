@@ -232,7 +232,7 @@ public class Ccd extends Device {
 //            } catch (InterruptedException ex) {
 //                Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
 //            }
-//            waitUntilFileIsAvailable(source+"/"+fits.getName());
+            waitUntilFileIsAvailable(source+"/"+fits.getName());
             alertWhenFileIsAvailable(source+"/"+fits.getName()+".jpg");
 //        count=0;
 //        String newJpg = newFilePath+".jpg";

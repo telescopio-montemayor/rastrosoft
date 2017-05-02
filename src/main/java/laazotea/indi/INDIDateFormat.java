@@ -48,20 +48,20 @@ public class INDIDateFormat {
    */
   public static Date parseTimestamp(String time) {
     Date timestamp = new Date();
-
-    time = time.trim();
-    
-    if (!(time.length() == 0)) {
-      try {
-        timestamp = dateFormat.parse(time);
-      } catch (ParseException e) {
-        try {
-          timestamp = dateFormat2.parse(time);
-        } catch (ParseException ee) {
-          timestamp = new Date();  // Not correct format, returning current timestamp.
-        }
-      }
-    }
+//
+//    time = time.trim();
+//    
+//    if (!(time.length() == 0)) {
+//      try {        
+//        timestamp = dateFormat.parse(time);
+//      } catch (ParseException e) {
+//        try {
+//          timestamp = dateFormat2.parse(time);
+//        } catch (ParseException ee) {
+//          timestamp = new Date();  // Not correct format, returning current timestamp.
+//        }
+//      }
+//    }
 
     return timestamp;
   }
