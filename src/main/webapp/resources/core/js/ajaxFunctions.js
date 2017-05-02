@@ -501,7 +501,7 @@ function updateValues(data){
         
         $( "#timeleft" ).empty();
         $( "#timeleft" ).append(timeleft);
-        startTimer(60*45);
+        startTimer(timeleft);
         
         if( parseInt(($("#timeleft").text()).substring(3, 5)) < 10 ){
             $("#timeleft").removeClass("label-success").addClass("label-danger");
@@ -516,6 +516,9 @@ function updateValues(data){
 }  
    
 function startTimer(duration) {
+    var aux = duration.split(":");
+    duration = ((parseInt(aux[0])*3600) + (parseInt(aux[1])*60) + (parseInt(aux[2])));
+    
     var timer = duration, minutes, seconds;
     setInterval(function () {
         minutes = parseInt(timer / 60, 10);
@@ -526,6 +529,18 @@ function startTimer(duration) {
 
         $( "#timeleft" ).empty();
         $( "#timeleft" ).append("00:" + minutes + ":" + seconds);
+        
+        if( parseInt(($("#timeleft").text()).substring(3, 5)) < 10 ){
+            if ( new String($("#timeleft").text()).valueOf() == new String("00:09:59").valueOf() ){
+                notify('You have 10 minutes until the session ends!', 'danger');
+            }
+            $("#timeleft").removeClass("label-success").addClass("label-danger");
+            if( $("#timeleft").text() == "00:00:00" ){
+                $("#end_session").submit();
+            }
+        }else{
+            $("#timeleft").removeClass("label-danger").addClass("label-success");
+        }
         
         if (--timer < 0) {
             timer = duration;

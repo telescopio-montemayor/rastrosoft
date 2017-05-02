@@ -201,7 +201,8 @@ public class Ccd extends Device {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();            
         }
-        String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp/captures";
+        //String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp/captures";
+        String path = "/home/ip300/webapp/captures";
         String source= path+"/"+currentUserName;
         String dest = path+"/"+currentUserName;
         this.setUploadDirectory(source);
@@ -254,10 +255,7 @@ public class Ccd extends Device {
     
     public static boolean isFileAvailable(String filePathString){
         File f = new File(filePathString);
-        if(f.exists() && !f.isDirectory()) { 
-            return true;
-        }
-        return false;
+        return f.exists() && !f.isDirectory();
     }
     public void waitUntilFileIsAvailable(String filePathString){
         boolean wait = !isFileAvailable(filePathString); 
@@ -277,7 +275,7 @@ public class Ccd extends Device {
         task = new TimerTask() {
             @Override
             public void run() {
-                if(isFileAvailable(filePathString)){
+                if(isFileAvailable(filePathString) && new File(filePathString).canWrite() ){
                     DeviceSessionHandler sessionHandler;
                     sessionHandler = new DeviceSessionHandler();
                     sessionHandler.updateElement("newCapture", filePathString);

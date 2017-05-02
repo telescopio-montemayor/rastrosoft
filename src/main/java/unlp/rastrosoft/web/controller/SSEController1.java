@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author ip300
  */
 
-@WebServlet(urlPatterns = {"/SSEController1"}, asyncSupported = true)
+//@WebServlet(urlPatterns = {"/SSEController1"}, asyncSupported = true)
 public final class SSEController1 extends HttpServlet {
     private final Queue<AsyncContext> longReqs = new ConcurrentLinkedQueue<>();
     private ScheduledExecutorService service;

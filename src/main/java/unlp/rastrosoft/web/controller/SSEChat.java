@@ -19,8 +19,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author ip300
  */
 
-@WebServlet(urlPatterns = {"/SSEChat"}, asyncSupported = true)
+//@WebServlet(urlPatterns = {"/SSEChat"}, asyncSupported = true)
 public final class SSEChat extends HttpServlet {
     private final Queue<AsyncContext> longReqs = new ConcurrentLinkedQueue<>();
     private ScheduledExecutorService service;

@@ -223,7 +223,7 @@
         <div id="normalScreenContainer">
             <div id="normalScreen">
                 <p></p>
-                <span><i onClick="fade();">Connected as:</i> <i id="username" style="color:green;" onClick="initialize();">...</i> - Timeleft: <i id="timeleft" class="label label-danger">...</i></span>
+                <span><i onClick="fade();">Connected as:</i> <i id="username" style="color:green;" onClick="initialize();">...</i> - Timeleft: <i id="timeleft" class="label label-success">...</i></span>
                 <div class="form-group">
                     <div class="form-group">
                         <div class="input-group">

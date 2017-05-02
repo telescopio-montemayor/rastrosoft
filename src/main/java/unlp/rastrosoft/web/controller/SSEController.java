@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author ip300
  */
 
-@WebServlet(urlPatterns = {"/SSEController"}, asyncSupported = true)
+//@WebServlet(urlPatterns = {"/SSEController"}, asyncSupported = true)
 public class SSEController extends HttpServlet {
 
   private final Queue<AsyncContext> longReqs = 

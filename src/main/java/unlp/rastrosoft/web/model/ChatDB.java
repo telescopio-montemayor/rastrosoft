@@ -254,4 +254,27 @@ public class ChatDB extends Database{
             }
         }
     }
+    public boolean deleteChat(){
+        String sql = "DELETE FROM message_chat";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+            
+            ps.executeUpdate();            
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+        return true;
+    }
 }

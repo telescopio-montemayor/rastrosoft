@@ -608,7 +608,8 @@ public class AjaxController  extends HttpServlet{
             if (!(authentication instanceof AnonymousAuthenticationToken)) {
                 currentUserName = authentication.getName();        
             }
-            String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp/captures";
+            //String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp/captures";
+            String path = "/home/ip300/webapp/captures";
             String source= path+"/"+currentUserName+"/";
             ccd.setLocalMode();
             ccd.setUploadDirectory(source);
@@ -655,13 +656,20 @@ public class AjaxController  extends HttpServlet{
         message = execute.getValue();
         ChatDB chatDB = new ChatDB();
         chatDB.connect();
+        DeviceSessionHandler sessionHandler;
+        sessionHandler = new DeviceSessionHandler();
+        
+        if (message.equals("/clear_all_msg")){
+            chatDB.deleteChat();
+            sessionHandler.updateElement("clearChat", "");
+            return result;
+        }
         List<String> inserted_message = chatDB.insertMessage(id_user, message);
         
         String user = inserted_message.get(0);
         message = inserted_message.get(1);
         String datetime = inserted_message.get(2);
-        DeviceSessionHandler sessionHandler;
-        sessionHandler = new DeviceSessionHandler();
+        
         sessionHandler.updateElement("newChat", "["+user+", "+message+", "+datetime+"]");
 
         return result;

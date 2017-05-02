@@ -48,10 +48,15 @@ function onMessage(event) {
                 break;
             case "newCapture":                
                 updateNewImageCapture(device.value);
+                //alert(device.value);
                 break;
             case "newChat":                
                 updateNewChat(device.value, device.value2, device.value3);
                 break;
+            case "clearChat":                
+                $("#chatbox").empty();
+                $("#chatbox").append('<p style="color: grey">0 mensajes nuevos...</p>');
+                break;    
             default:
                 break;
         }
@@ -89,6 +94,9 @@ function updateNewImageCapture(value){
     },500);
 }
 function updateNewChat(user, message, datetime){
+    if($("#chatbox").text() == "0 mensajes nuevos..."){
+        $("#chatbox").empty();
+    }
     $("#chatbox").append('<p style="margin: 0!important; color:'+stringToColour(user)+'; float:left">'+user+'</p>'
                             +'<p style="font-size:10px; color:grey; float: right; padding-top:5px; margin: 0!important;">'+datetime+'</p>'
                             +'<p style="margin: 0!important; clear: both">'+message+'</p>'

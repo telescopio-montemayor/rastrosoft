@@ -107,7 +107,7 @@ public class INDIProtocolReader extends Thread {
             //System.err.println(d);
             d = d.replaceAll("\\<\\?xml version='...'\\?\\>", "");
             d = d.replaceAll("\\<\\?xml version=\"...\"\\?\\>", "");
-            //    System.err.println(d);
+            //System.err.println(d);
 
             Document doc = docBuilder.parse(new InputSource(new StringReader(d)));
 

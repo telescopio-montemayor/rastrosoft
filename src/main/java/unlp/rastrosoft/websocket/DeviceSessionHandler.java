@@ -73,6 +73,7 @@ public class DeviceSessionHandler {
         
         prop.add("newCapture");
         prop.add("newChat");
+        prop.add("clearChat");
         
         if (prop.contains(element)){
             sendElement(element, value);
@@ -81,7 +82,7 @@ public class DeviceSessionHandler {
     }
 
     private void sendElement(String element, String value){
-//        String[] values = value.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
+
         String[] values = value.replaceAll("\\[", "").replaceAll("\\]", "").split(",");
         JsonProvider provider = JsonProvider.provider();
         JsonObject message;
@@ -144,7 +145,6 @@ public class DeviceSessionHandler {
         try {
             session.getBasicRemote().sendText(message.toString());
         } catch (IOException ex) {
-            sessions.remove(session);
             Logger.getLogger(DeviceSessionHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
