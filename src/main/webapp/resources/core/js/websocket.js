@@ -70,10 +70,13 @@ function loadSprite(src, callback) {
 }
 function cargarImagen(imageSource){
    d = new Date();
-   $(".previewImageSrc").attr("src", imageSource+"?"+d.getTime());
+   //$(".previewImageSrcContainer").empty();
+   //$(".previewImageSrcContainer").html('<img src="" width="90%" height="90%" class="previewImageSrc img-rounded preview-image-image" src="'+imageSource+'?'+d.getTime()+'" onerror="imgError(this);">');
+   $('.previewImageSrc').removeAttr('scr');
+   $(".previewImageSrc").attr("src", imageSource+"?"+d.getTime());   
 }
-function loadImage(imageSource){
-    var image = new Image(); 
+function loadImage(imageSource){    
+    var image = new Image();
     image.src = imageSource;
     if (image.width == 0) {              
       return false;
@@ -86,12 +89,13 @@ function updateNewImageCapture(value){
     var res = absoluteFilePath.split("webapp");
     var imageSource = ("/rastrosoft"+res[1]);
     $("#download").attr("href", imageSource);
-    var myInterval = setInterval(function(){
-        if(loadImage(imageSource)){   
-            cargarImagen(imageSource);
-            clearInterval(myInterval);
-        }   
-    },500);
+    cargarImagen(imageSource);
+//    var myInterval = setInterval(function(){        
+//        if(loadImage(imageSource)){   
+//            cargarImagen(imageSource);
+//            clearInterval(myInterval);
+//        }   
+//    },500);
 }
 function updateNewChat(user, message, datetime){
     if($("#chatbox").text() == "0 mensajes nuevos..."){

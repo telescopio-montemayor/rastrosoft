@@ -353,7 +353,7 @@
     <div class="col-md-8">         
         <div class="previewImage preview-image">            
             <div class="preview">
-                <img src="" width="90%" height="90%" class="previewImageSrc img-rounded preview-image-image" onerror="imgError(this);">
+                <div class="previewImageSrcContainer"><img src="" width="90%" height="90%" class="previewImageSrc img-rounded preview-image-image" onerror="this.src='/rastrosoft/resources/images/loading.gif';" ></div>
                 <div style="clear:both; margin-top: -2px"><button id="cine-button" class="icons" onclick="cine();"><i class="fa fa-television"></i></button></div>
             </div>
             <div class="loading">                
