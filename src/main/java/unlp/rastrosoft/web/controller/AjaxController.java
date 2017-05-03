@@ -611,11 +611,12 @@ public class AjaxController  extends HttpServlet{
             //String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp/captures";
             String path = "/home/ip300/webapp/captures";
             String source= path+"/"+currentUserName+"/";
+            String dest = path+"/"+currentUserName;
             ccd.setLocalMode();
             ccd.setUploadDirectory(source);
             
             ccd.setTemperature("-15");
-            ccd.setExposure("1");
+            ccd.setExposure("1", path, source, dest);
             return result;
 
         }

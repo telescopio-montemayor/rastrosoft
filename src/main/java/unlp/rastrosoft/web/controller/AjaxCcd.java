@@ -195,6 +195,12 @@ public class AjaxCcd {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();         
         }
+        String path = "/home/ip300/webapp/captures";
+        String source= path+"/"+currentUserName;
+        String dest = path+"/"+currentUserName;
+        ccd.setUploadDirectory(source);
+        ccd.setLocalMode();  
+        
         UserDB userDB = new UserDB();
         userDB.connect(); // ARREGLAR!!!
         User user = userDB.getUser(currentUserName);
@@ -205,7 +211,7 @@ public class AjaxCcd {
         captureDB.connect();
         captureDB.asociateCaptureToUser(user.getUserId(), captureDB.insertCapture(capture));
         
-        ccd.setExposure(time);
+        ccd.setExposure(time, path, source, dest);
         
         return result;
     }

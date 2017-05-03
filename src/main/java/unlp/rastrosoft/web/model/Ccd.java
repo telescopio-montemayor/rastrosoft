@@ -42,13 +42,13 @@ public class Ccd extends Device {
         return false != (this.modificarDouble("CCD_FRAME", "Y", y));
     }    
     String olderFilePath = this.getFilePath();
-    public boolean setExposure( String time ){
+    public boolean setExposure( String time , String path, String source, String dest){
         this.modificarDouble( "CCD_EXPOSURE", "CCD_EXPOSURE_VALUE", time);        
         try {
             Thread.sleep(parseInt(time) * 1000);
             } catch (InterruptedException ex) {            
             }
-        return (this.convertFits());        
+        return (this.convertFits(path, source, dest));        
     }    
     public boolean setFrameLight(){        
         return this.modificarBoolean("CCD_FRAME_TYPE", "FRAME_LIGHT", "ON");
@@ -85,10 +85,10 @@ public class Ccd extends Device {
     public boolean abortExposure( ){
         return this.modificarBoolean("CCD_ABORT_EXPOSURE", "ABORT", "ON");
     }
-    public boolean takeCapture( String time ){
-        this.setExposure(time);
-        return true;
-    }
+//    public boolean takeCapture( String time ){
+//        this.setExposure(time);
+//        return true;
+//    }
     public boolean takePreview( ){
         try {
             String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp";
@@ -190,7 +190,7 @@ public class Ccd extends Device {
     
     
     
-    public boolean convertFits(){
+    public boolean convertFits(String path, String source, String dest){
             try {
                 Thread.sleep(1500);
             } catch (InterruptedException ex) {
@@ -202,11 +202,11 @@ public class Ccd extends Device {
             currentUserName = authentication.getName();            
         }
         //String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp/captures";
-        String path = "/home/ip300/webapp/captures";
-        String source= path+"/"+currentUserName;
-        String dest = path+"/"+currentUserName;
-        this.setUploadDirectory(source);
-        this.setLocalMode();        
+//        String path = "/home/ip300/webapp/captures";
+//        String source= path+"/"+currentUserName;
+//        String dest = path+"/"+currentUserName;
+//        this.setUploadDirectory(source);
+//        this.setLocalMode();        
         File fits = null;
         int count=0;
         String newFilePath = this.getFilePath();
