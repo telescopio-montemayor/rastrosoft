@@ -21,7 +21,6 @@ import unlp.rastrosoft.web.model.Database;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-    
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         
@@ -42,10 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-	.antMatchers("/login").permitAll()
-        .antMatchers("/resources/**").permitAll()
-        .anyRequest().authenticated()
-        .and().formLogin().loginPage("/login")
+            .antMatchers("/login").permitAll()
+            .antMatchers("/resources/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+        .formLogin().loginPage("/login")
         .usernameParameter("ssoId").passwordParameter("password")
         .and().csrf();
     }

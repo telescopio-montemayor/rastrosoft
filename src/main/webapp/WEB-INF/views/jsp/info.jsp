@@ -62,7 +62,18 @@
 
 </head>
 <body>
-
+    <div class="form-group">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <c:url var="logoutUrl" value="/logout"/>
+                            <form id="end_session" action="${logoutUrl}" method="post">
+                                <input class="form-control logout-icon" type="submit" value="Cerrar sesion" title="Cerrar sesion de USER"/>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+                            <span class="input-group-addon"><i class="fa fa-sign-out fa-fw"></i></span>
+                        </div>
+                    </div>                                      
+                </div> 
     <div class="">
         <div class="shifts-picker" >
             

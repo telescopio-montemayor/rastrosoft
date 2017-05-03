@@ -29,11 +29,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -291,7 +293,7 @@ public class AjaxController  extends HttpServlet{
         @JsonView(Views.Public.class)
 	@RequestMapping(value = "/test", method=RequestMethod.POST)
 	public AjaxResponseBodyIndiExecute test(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
-
+        
 		AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
                 
 //                UserDB db = new UserDB();
@@ -708,5 +710,20 @@ public class AjaxController  extends HttpServlet{
             chatDB.disableChat();
         }        
         return result;
+    }
+    
+    @RequestMapping(value="/exit", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){    
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/login?logout";
+    }
+    
+    @RequestMapping(value="/salir", method = RequestMethod.GET)
+    public void logoutPage2 (HttpServletRequest request, HttpServletResponse response) {
+        SecurityController sec = new SecurityController();
+        sec.logout();
     }
 }
