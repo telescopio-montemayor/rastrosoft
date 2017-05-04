@@ -85,10 +85,11 @@ public class CalendarDB extends Database{
     public ArrayList<String> getCurrentShift(){
         
         //String sql = "SELECT id_user FROM shifts WHERE (enabled=1 AND (  now() BETWEEN datetime AND ADDTIME(datetime, '01:00:00')))";
-        String sql = "SELECT id_user, (TIME(SUBTIME( (ADDTIME(datetime, '01:00:00')), (CURTIME()))))as timeleft FROM shifts WHERE (enabled=1 AND (  now() BETWEEN datetime AND ADDTIME(datetime, '01:00:00')))";
+        String sql = "SELECT id_user, (TIME(SUBTIME( (ADDTIME(datetime, '01:00:00')), (CURTIME()))))as timeleft, live_key FROM shifts WHERE (enabled=1 AND (  now() BETWEEN datetime AND ADDTIME(datetime, '01:00:00')))";
         Connection conn = null;
         int id_user=-1;
         String timeleft=null;
+        String live_key = "-1";
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
@@ -98,12 +99,14 @@ public class CalendarDB extends Database{
             while (rs.next()) {
                 id_user     = rs.getInt("id_user");  
                 timeleft    = rs.getString("timeleft");
+                live_key    = rs.getString("live_key");
             }
             rs.close();
             ps.close();
             ArrayList<String> result = new ArrayList<>();
             result.add(String.valueOf(id_user));
             result.add(timeleft);
+            result.add(live_key);
             return result;
             
         } catch (SQLException e) {

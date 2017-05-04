@@ -130,6 +130,7 @@ function successAjax(data, tipo) {
                         +'<td>'+decimalToHours(c[2])+'</td>'
                         +'<td>'+decimalToDegrees(c[3])+'</td>'
                         +'<td>'+c[13]+' segundos</td>'
+                        +'<td>'+c[14].split("captures")[1]+'</td>'
                         +'<td><a href="#"><i class="fa fa-download" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>'+
                         +'</tr>');
                });

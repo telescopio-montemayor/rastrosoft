@@ -218,6 +218,7 @@
                     <th>RA</th>
                     <th>DEC</th>
                     <th>Exposicion</th>
+                    <th>Filepath</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -280,7 +281,7 @@
             var msie = ua.indexOf("MSIE ");
             if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
             {
-                alert("Usted posee un navegador en desuso, por favor instale Firefox, Chrome o Microsoft Edge para poder tilizar este sitio.");
+                alert("Usted posee un navegador en desuso, por favor instale Firefox, Chrome o Microsoft Edge para poder utilizar este sitio.");
                 window.location = 'http://www.mozilla.org/firefox';
             }
         });

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import unlp.rastrosoft.web.model.CalendarDB;
 import unlp.rastrosoft.web.model.UserDB;
 
@@ -91,5 +92,15 @@ public class Prototipo1Controller {
         @RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String test(ModelMap model) {                  
 		return "test";
+	}
+        @RequestMapping("/live")
+	public String live(@RequestParam("key") String key) {
+            CalendarDB shift = new CalendarDB();
+            shift.connect();
+            String live_key = shift.getCurrentShift().get(2).toUpperCase();
+            if ( !(live_key.equals("-1")) && (key.toUpperCase().equals(live_key))){
+                return "prototipo10";
+            }
+            return "info";
 	}
 }

@@ -189,7 +189,7 @@ public class CaptureDB extends Database{
         
     }
      public List<List<String>> getCapturesAsList(int id_user){
-        String sql = "SELECT * FROM capture INNER JOIN user_capture ON capture.id = user_capture.id_capture WHERE user_capture.id_user = ? AND user_capture.enabled = 1";
+        String sql = "SELECT * FROM capture INNER JOIN user_capture ON capture.id = user_capture.id_capture WHERE user_capture.id_user = ? AND user_capture.enabled = 1 ORDER BY capture.id DESC";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();

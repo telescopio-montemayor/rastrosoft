@@ -32,7 +32,7 @@
         width: 480px;
         margin-left: 10px;
     }
-    #signup, #forget{
+    #signup, #forget, #live-key{
         display: none;
     }
     a{
@@ -76,4 +76,18 @@
     
     :focus {
         outline:none !important;
+    }
+    .live-on{
+        color: #e14240;
+    }
+    .live-stream{
+        margin-top: 200px;        
+    }
+    .clickable{
+        cursor: pointer; 
+        cursor: hand;
+    }
+    #key{
+        text-transform: uppercase;
+        text-align: center;
     }

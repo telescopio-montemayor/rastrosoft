@@ -84,6 +84,16 @@
                     <div class="message-forget">
                         <p>¿Olvidaste tu contraseña? <a href="#" onclick="showForget();">Restaurar ahora</a></p>
                     </div>
+                    <div class="live-stream clickable" onclick="showLiveKey()">
+                        <div style="font-size: 24px"><i id="live-sign" class="fa fa-circle" aria-hidden="true"></i> EN DIRECTO</div>
+                    </div>
+                    <div id="live-key">
+                         <div class="input-group input-sm">
+                            <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
+                            <input id="key" type="text" class="form-control" name="key" placeholder="Key">
+                            <label id="enter-key" class="input-group-addon clickable"><i class="fa fa-sign-in"></i></label> 
+                        </div>
+                    </div>
                 </form>
             </div>
             <div id="signup">
@@ -136,6 +146,16 @@
 </body>
   
 <script>
+    jQuery(document).ready(function($) { 
+         
+        var myInterval = setInterval(function(){        
+            $("#live-sign").toggleClass("live-on");
+        },1000);
+        var myInterval = setInterval(function(){
+            $(".live-stream").toggle( "fade" );
+            $(".live-stream").toggle( "fade" );
+        },5000);
+    });
     function showSignup(){
         $('#login')
         .hide( "slide", 200, 
@@ -171,6 +191,18 @@
         );
         
     } 
+    function showLiveKey(){        
+        $('#live-key').toggle("slide", { direction: "right" }, 300);
+        $('#key').focus();        
+    }   
+    $('#enter-key').click(function(){
+        window.location.href = "http://localhost:8080/rastrosoft/live?key="+$('#key').val();
+    });
+    $('#key').keydown(function (e){
+    if(e.keyCode == 13){
+         $('#enter-key').click();
+    }
+})
     document.querySelector('video').playbackRate = 1;
 </script>
 </html>
