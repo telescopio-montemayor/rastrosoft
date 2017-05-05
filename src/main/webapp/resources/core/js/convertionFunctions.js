@@ -54,3 +54,9 @@ var stringToColour = function(str) {
   }
   return colour;
 }
+
+function myDateFormatter (dateObject) {
+    var date_Obj = new Date(dateObject);
+    var newDate = date_Obj .getFullYear() + "-" + date_Obj.getMonth() + "-" + date_Obj.getDate() + "T" + date_Obj.getHours() + ":" + date_Obj.getMinutes() + ":" + date_Obj.getSeconds() 
+    alert(newDate);
+}; 

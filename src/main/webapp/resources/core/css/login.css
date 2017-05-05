@@ -32,7 +32,7 @@
         width: 480px;
         margin-left: 10px;
     }
-    #signup, #forget, #live-key{
+    #signup, #forget, #live-key, #live{
         display: none;
     }
     a{
@@ -91,3 +91,11 @@
         text-transform: uppercase;
         text-align: center;
     }
+    .footer-msg{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        padding: 1rem;
+        text-align: center;
+    }
+    

@@ -47,7 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/refreshValues").permitAll()
                 .antMatchers("/actions").permitAll()
                 .antMatchers("/getChat").permitAll()
+                .antMatchers("/checkLive").permitAll()
                 .antMatchers("/captures/**").permitAll()
+                
             .anyRequest().authenticated()
             .and()
         .formLogin().loginPage("/login")

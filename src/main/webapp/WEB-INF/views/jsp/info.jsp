@@ -57,6 +57,10 @@
 	var="convertionFunctions" />
 <script src="${convertionFunctions}"></script>
 
+<spring:url value="/resources/core/js/ajaxFunctions.js"
+	var="ajaxFunctions" />
+<script src="${ajaxFunctions}"></script>
+
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
@@ -94,13 +98,12 @@
                     <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
                     <input type="text" class="form-control" id="datetimepicker" placeholder="Turnos"/>
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" onclick="showLabelRemoveShift();" ><i class="fa fa-plus text-success"></i></button>
+                        <button id="addShift-btn" class="btn btn-default" type="button" onclick="showLabelRemoveShift();" ><i class="fa fa-plus text-success"></i></button>
                     </span>  
                 </div>
             </div>  
 
         </div>
-        <!--<button id="getCaptures">getCaptures</button>-->
         <div class="table-shifts">
             <h4 style="color:white" class="label-primary text-center">Turnos otorgados</h4>
             <table id="shifts" class="table">
@@ -113,97 +116,7 @@
                     <th>Habilitado</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Alex</td>
-                    <td>2017-03-08</td>
-                    <td>17:00</td>
-                    <td>Si</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Gonzalo</td>
-                    <td>2017-03-09</td>
-                    <td>19:00</td>
-                    <td>Si</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Pedro</td>
-                    <td>2017-03-07</td>
-                    <td>05:00</td>
-                    <td>Si</td>
-                  </tr>
-                  <tr class="label-danger">
-                    <th scope="row">1</th>
-                    <td>Alex</td>
-                    <td>2017-03-08</td>
-                    <td>17:00</td>
-                    <td>No</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Gonzalo</td>
-                    <td>2017-03-09</td>
-                    <td>19:00</td>
-                    <td>Si</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Alex</td>
-                    <td>2017-03-08</td>
-                    <td>17:00</td>
-                    <td>Si</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Gonzalo</td>
-                    <td>2017-03-09</td>
-                    <td>19:00</td>
-                    <td>Si</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Pedro</td>
-                    <td>2017-03-07</td>
-                    <td>05:00</td>
-                    <td>Si</td>
-                  </tr><tr>
-                    <th scope="row">1</th>
-                    <td>Alex</td>
-                    <td>2017-03-08</td>
-                    <td>17:00</td>
-                    <td>Si</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Gonzalo</td>
-                    <td>2017-03-09</td>
-                    <td>19:00</td>
-                    <td>Si</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Gonzalo</td>
-                    <td>2017-03-09</td>
-                    <td>19:00</td>
-                    <td>Si</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Gonzalo</td>
-                    <td>2017-03-09</td>
-                    <td>19:00</td>
-                    <td>Si</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Gonzalo</td>
-                    <td>2017-03-09</td>
-                    <td>19:00</td>
-                    <td>Si</td>
-                  </tr>
+                <tbody>                                  
                 </tbody>
             </table>
         </div>
@@ -277,6 +190,8 @@
 
         jQuery(document).ready(function($) {          
             getShifts();  
+            getAllShifts(); 
+            
             var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
             if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
@@ -314,8 +229,11 @@
             );            
         }
         
-        $(document).ready(function() {
+        jQuery(document).ready(function($) {  
             getCaptures();
+            $("#addShift-btn").click(function(){
+                addShift();
+            });
         } );
         function updateTables(){            
             $('.table').DataTable( {
@@ -340,9 +258,31 @@
                 "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
             } );
         }    
-        $("#getCaptures").click(function(){   
-            getCaptures();
-        });
-  
+        
+        function addShift(){
+                        
+            
+            var d = $("#datetimepicker").val();
+            var year ,month , day, time, hour, minute, second;
+            d = d.substr(0, 16).split("-");
+            year = d[2].substr(0, 4);
+            month = d[1];
+            day = d[0];
+            
+            time    = d[2].split(" ")[1].split(":");
+            hour    = time[0];
+            minute  = time[1]; 
+            second  = "00";
+                    
+            d = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+            
+            alert(d);
+            
+            var search = {};
+            search["value"] = "true"; //live
+            search["value2"] = "true"; //public
+            search["value3"] = d; //datetime
+            sendAjax(search,'addShift','addShift'); 
+        }    
 </script>
 </html>

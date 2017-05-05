@@ -416,3 +416,12 @@ $(function () {
     });
 
 });
+$(document).ready(function() {  
+    $('#msgbox').keyup(function(){
+        if(this.value.match(/^[a-z]/)){            
+            this.value = this.value.replace(/^./,function(letter){
+                return letter.toUpperCase();
+            });
+        }
+    });
+});

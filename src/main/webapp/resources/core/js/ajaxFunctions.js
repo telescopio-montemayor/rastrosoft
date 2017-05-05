@@ -117,6 +117,28 @@ function successAjax(data, tipo) {
             });
             changeDisableDate( shifts );
             break;
+        case 'getAllShifts':
+            $("#shifts tBody").empty();
+            $.each(data, function(key, value) {
+                $.each(value, function(key2, c) {
+                    if (c[3] == "0"){
+                        $("#shifts tBody").append('<tr class="label-danger"><th scope="row">'+c[0]+'</th>'
+                        +'<td>'+c[1]+'</td>'
+                        +'<td>'+c[2].slice(0, 10)+'</td>'
+                        +'<td>'+c[2].slice(10, 16)+'</td>'
+                        +'<td>No</td>'                        
+                        +'</tr>');
+                    }else{
+                        $("#shifts tBody").append('<tr><th scope="row">'+c[0]+'</th>'
+                        +'<td>'+c[1]+'</td>'
+                        +'<td>'+c[2].slice(0, 10)+'</td>'
+                        +'<td>'+c[2].slice(10, 16)+'</td>'
+                        +'<td>Si</td>'                        
+                        +'</tr>');
+                    }                    
+                });
+            });            
+            break;
         case 'setExposure':
             $("#setExposure").prop("disabled", "");
             break;
@@ -134,27 +156,44 @@ function successAjax(data, tipo) {
                         +'<td><a href="#"><i class="fa fa-download" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>'+
                         +'</tr>');
                });
-            });
+            });   
             updateTables();
             break;
-        case 'getChat':            
-            if($("#chatbox").is(":hover") == false ) {
-                $("#chatbox").empty();
-                $.each(data, function(key, value) {
-                    $.each(value, function(key2, c) {                        
-                        $("#chatbox").append('<p style="margin: 0!important; color:'+stringToColour(c[1])+'; float:left">'+c[1]+'</p>'
-                            +'<p style="font-size:10px; color:grey; float: right; padding-top:5px; margin: 0!important;">'+c[3]+'</p>'
-                            +'<p style="margin: 0!important; clear: both">'+c[2]+'</p>'
-                            +'<hr style="margin:5px 0 0 0!important">\n');
-                   });
-                });      
-                if ($("#chatbox").is(':empty')){
-                    $("#chatbox").append('<p style="color: grey">0 mensajes nuevos...</p>');
-                }
-            }     
-            break; 
-        case 'getChatSse':
-            alert("Nuevo mensaje");
+        case 'getChat':  
+            $("#chatbox").empty();
+            $.each(data, function(key, value) {
+                $.each(value, function(key2, c) {                        
+                    $("#chatbox").append('<p style="margin: 0!important; color:'+stringToColour(c[1])+'; float:left">'+c[1]+'</p>'
+                        +'<p style="font-size:10px; color:grey; float: right; padding-top:5px; margin: 0!important;">'+c[3]+'</p>'
+                        +'<p style="margin: 0!important; clear: both">'+c[2]+'</p>'
+                        +'<hr style="margin:5px 0 0 0!important">\n');
+               });
+            });      
+            if ($("#chatbox").is(':empty')){
+                $("#chatbox").append('<p style="color: grey">0 mensajes nuevos...</p>');
+            }
+            break;             
+        case 'checkLive':
+            var isOn = false;  
+            var public = "0";
+            $.each(data, function(key, value) {
+                isOn    =   value[0];
+                public  =   value[1];
+            });
+            if (isOn == "true"){
+                liveOn(true, public);
+            }else{
+                liveOn(false, public);
+            }
+            break;
+        case 'addShift':
+            var shift_id = "-1";  
+            var live_key = "-1";
+            $.each(data, function(key, value) {
+                shift_id  =   value[0];
+                live_key  =   value[1];
+            });
+            alert("Turno: "+shift_id+" - Key: "+live_key);
             break;
         default:
             break;
@@ -316,6 +355,10 @@ function getUsername() {
 function getShifts() {
     var search = {};
     sendAjax(search,'getShifts','getShifts');  
+}
+function getAllShifts() {
+    var search = {};
+    sendAjax(search,'getAllShifts','getAllShifts');  
 }
 
 function initialize() {

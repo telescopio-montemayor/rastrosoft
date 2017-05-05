@@ -625,7 +625,7 @@ public class AjaxController  extends HttpServlet{
     
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/getChat", method=RequestMethod.POST)
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponseListOfLists getChat(@RequestBody ExecuteCriteria execute) {
         AjaxResponseListOfLists result = new AjaxResponseListOfLists();        
         String id_user;       
@@ -725,5 +725,31 @@ public class AjaxController  extends HttpServlet{
     public void logoutPage2 (HttpServletRequest request, HttpServletResponse response) {
         SecurityController sec = new SecurityController();
         sec.logout();
+    }
+    
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/checkLive", method=RequestMethod.POST)
+    public AjaxResponse checkLive(@RequestBody SearchCriteria search) {            
+
+        AjaxResponse result = new AjaxResponse();
+
+
+        CalendarDB shifts = new CalendarDB();    
+        shifts.connect();
+        ArrayList<String> shift = shifts.getCurrentShift();
+        if (!shift.get(2).equals("-1")){
+            result.addElemento("true");
+            if(shift.get(3).equals("1")){
+                result.addElemento(shift.get(2));
+            }else{
+                result.addElemento("0");
+            }
+            
+        }else{
+            result.addElemento("false");
+            result.addElemento("0");
+        }            
+        
+        return result;
     }
 }

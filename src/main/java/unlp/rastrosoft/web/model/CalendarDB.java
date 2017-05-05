@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -85,11 +88,12 @@ public class CalendarDB extends Database{
     public ArrayList<String> getCurrentShift(){
         
         //String sql = "SELECT id_user FROM shifts WHERE (enabled=1 AND (  now() BETWEEN datetime AND ADDTIME(datetime, '01:00:00')))";
-        String sql = "SELECT id_user, (TIME(SUBTIME( (ADDTIME(datetime, '01:00:00')), (CURTIME()))))as timeleft, live_key FROM shifts WHERE (enabled=1 AND (  now() BETWEEN datetime AND ADDTIME(datetime, '01:00:00')))";
+        String sql = "SELECT id_user, (TIME(SUBTIME( (ADDTIME(datetime, '01:00:00')), (CURTIME()))))as timeleft, live_key, public FROM shifts WHERE (enabled=1 AND (  now() BETWEEN datetime AND ADDTIME(datetime, '01:00:00')))";
         Connection conn = null;
         int id_user=-1;
         String timeleft=null;
         String live_key = "-1";
+        String public_val = "0";
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
@@ -100,6 +104,7 @@ public class CalendarDB extends Database{
                 id_user     = rs.getInt("id_user");  
                 timeleft    = rs.getString("timeleft");
                 live_key    = rs.getString("live_key");
+                public_val    = rs.getString("public");
             }
             rs.close();
             ps.close();
@@ -107,6 +112,7 @@ public class CalendarDB extends Database{
             result.add(String.valueOf(id_user));
             result.add(timeleft);
             result.add(live_key);
+            result.add(public_val);
             return result;
             
         } catch (SQLException e) {
@@ -122,4 +128,69 @@ public class CalendarDB extends Database{
         
     }
     
+    public int insertShift(int id_user, String datetime, String enabled, String live_key, String public_val){
+        String sql = "INSERT INTO shifts " +
+                      "(id_user, datetime, enabled, live_key, public ) VALUES (?, ?, ?, ?, ?)";
+        Connection conn = null;
+
+        int shift_id = -1;
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+                ps.setInt(1, id_user);
+                ps.setString(2, datetime);
+                ps.setString(3, enabled);
+                ps.setString(4, live_key);
+                ps.setString(5, public_val);
+                ps.executeUpdate();
+                shift_id = (int) ps.getLastInsertID();
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+        return shift_id;
+    }
+    
+    public List<List<String>> getAllShifts(String from){
+        String sql = "SELECT * FROM shifts WHERE datetime > ?";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+            
+            ps.setString(1, from);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            List<List<String>> shifts = new ArrayList<>();
+            
+            while (rs.next()) {                
+                Calendar shift = new Calendar(rs.getInt("id"), rs.getInt("id_user"), rs.getString("datetime").substring(0, 16), rs.getInt("enabled"), rs.getString("live_key"), rs.getInt("public") );
+                shifts.add(shift.getListOfStrings());
+            }
+            rs.close();
+            ps.close();
+            return shifts;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+        
+    }
 }

@@ -36,6 +36,12 @@
 <spring:url value="/resources/core/js/jquery-ui.js" var="jqueryuiJs" />
 <script src="${jqueryuiJs}"></script>
 
+<spring:url value="/resources/core/js/ajaxFunctions.js"
+	var="ajaxFunctions" />
+<script src="${ajaxFunctions}"></script>
+
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 </head>
 
@@ -84,14 +90,16 @@
                     <div class="message-forget">
                         <p>¿Olvidaste tu contraseña? <a href="#" onclick="showForget();">Restaurar ahora</a></p>
                     </div>
-                    <div class="live-stream clickable" onclick="showLiveKey()">
-                        <div style="font-size: 24px"><i id="live-sign" class="fa fa-circle" aria-hidden="true"></i> EN DIRECTO</div>
-                    </div>
-                    <div id="live-key">
-                         <div class="input-group input-sm">
-                            <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
-                            <input id="key" type="text" class="form-control" name="key" placeholder="Key">
-                            <label id="enter-key" class="input-group-addon clickable"><i class="fa fa-sign-in"></i></label> 
+                    <div id="live">
+                        <div class="live-stream clickable" onclick="showLiveKey()">
+                            <div style="font-size: 24px"><i id="live-sign" class="fa fa-circle" aria-hidden="true"></i> EN DIRECTO</div>
+                        </div>
+                        <div id="live-key">
+                             <div class="input-group input-sm">
+                                <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
+                                <input id="key" type="text" class="form-control" name="key" placeholder="Key">
+                                <label id="enter-key" class="input-group-addon clickable"><i class="fa fa-sign-in"></i></label> 
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -142,20 +150,65 @@
         </div>
                 
     </div>
-
+    <div class="footer-msg">Desarrollado por <a href="https://www.linkedin.com/in/alexboette">Alex Boette <i class="fa fa-linkedin-square" aria-hidden="true"></i></a></div>
 </body>
   
 <script>
-    jQuery(document).ready(function($) { 
-         
+    jQuery(document).ready(function($) {         
         var myInterval = setInterval(function(){        
-            $("#live-sign").toggleClass("live-on");
+            checkLive();
         },1000);
-        var myInterval = setInterval(function(){
-            $(".live-stream").toggle( "fade" );
-            $(".live-stream").toggle( "fade" );
-        },5000);
     });
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
+    function sendAjax(search, funcion, tipo){
+        $.ajax({
+            type : "POST",
+            contentType : "application/json",
+            url : "${home}"+funcion+"",
+            data : JSON.stringify(search),
+            dataType : 'json',
+            timeout : 100000,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+                beforeAjax (tipo);                   
+            },
+            success : function(result) {
+                    console.log("SUCCESS: ", result);
+                    successAjax(result, tipo);
+            },
+            error : function(e) {
+                    console.log("ERROR: ", e);
+                    errorAjax(tipo);
+            },
+            done : function(result) {
+                    console.log("DONE");
+                    doneAjax(tipo);
+            }
+        });
+    }
+    var myInterval1 = setInterval(function(){        
+        $("#live-sign").toggleClass("live-on");
+    },1000);
+    var myInterval2 = setInterval(function(){
+        $(".live-stream").toggle( "fade" );
+        $(".live-stream").toggle( "fade" );
+    },5000);
+    function checkLive(){
+        var search = {};
+        sendAjax(search,'checkLive','checkLive'); 
+    }
+    function liveOn(bool, public){
+        if(bool){
+            $("#live").show();
+            if(public != "0"){
+                $("#key").val(public);
+            }    
+        }else{
+            $("#live").hide();            
+        }    
+    }
     function showSignup(){
         $('#login')
         .hide( "slide", 200, 
@@ -196,13 +249,14 @@
         $('#key').focus();        
     }   
     $('#enter-key').click(function(){
-        window.location.href = "http://localhost:8080/rastrosoft/live?key="+$('#key').val();
+        window.location.href = "/rastrosoft/live?key="+$('#key').val();
     });
     $('#key').keydown(function (e){
-    if(e.keyCode == 13){
-         $('#enter-key').click();
-    }
-})
+        if(e.keyCode == 13){
+            $('#enter-key').click();
+        }
+    });
     document.querySelector('video').playbackRate = 1;
+    
 </script>
 </html>
