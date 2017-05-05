@@ -76,8 +76,8 @@ public class AjaxShift {
 
 
         CalendarDB shifts = new CalendarDB();    
-        shifts.connect();
-        result.addElementos(shifts.getAllShifts(LocalDateTime.now().toString()));
+        shifts.connect();       
+        result.addElementos(shifts.getAllShifts(LocalDateTime.now().withMinute(0).withSecond(0).withNano(0).toString()));        
         return result;
     }
     

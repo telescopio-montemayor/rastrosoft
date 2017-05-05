@@ -161,7 +161,7 @@ public class CalendarDB extends Database{
     }
     
     public List<List<String>> getAllShifts(String from){
-        String sql = "SELECT * FROM shifts WHERE datetime > ?";
+        String sql = "SELECT * FROM shifts WHERE datetime >= ?";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -173,8 +173,15 @@ public class CalendarDB extends Database{
             
             List<List<String>> shifts = new ArrayList<>();
             
-            while (rs.next()) {                
-                Calendar shift = new Calendar(rs.getInt("id"), rs.getInt("id_user"), rs.getString("datetime").substring(0, 16), rs.getInt("enabled"), rs.getString("live_key"), rs.getInt("public") );
+            while (rs.next()) {   
+                
+                int public_val = rs.getInt("public");
+                String live_key = rs.getString("live_key");
+                if (public_val == 0){
+                    live_key = "-1";
+                }
+                            
+                Calendar shift = new Calendar(rs.getInt("id"), rs.getInt("id_user"), rs.getString("datetime").substring(0, 16), rs.getInt("enabled"), live_key, public_val );
                 shifts.add(shift.getListOfStrings());
             }
             rs.close();

@@ -127,13 +127,29 @@ function successAjax(data, tipo) {
                         +'<td>'+c[2].slice(0, 10)+'</td>'
                         +'<td>'+c[2].slice(10, 16)+'</td>'
                         +'<td>No</td>'                        
+                        +'<td>-</td>'
+                        +'<td>-</td>'
+                        +'<td>-</td>'
                         +'</tr>');
                     }else{
+                        var transmition = "No", key = "-", link = "-";
+                        if (c[4]!="-1"){
+                            if(c[5]=="1"){
+                                transmition = "Publica";
+                                key = c[4];
+                                link = '<a href="/rastrosoft/live?key='+key+'">link</a>';
+                            }else{
+                                transmition = "Privada";
+                            }
+                        }
                         $("#shifts tBody").append('<tr><th scope="row">'+c[0]+'</th>'
                         +'<td>'+c[1]+'</td>'
                         +'<td>'+c[2].slice(0, 10)+'</td>'
                         +'<td>'+c[2].slice(10, 16)+'</td>'
                         +'<td>Si</td>'                        
+                        +'<td>'+transmition+'</td>'
+                        +'<td>'+key+'</td>'
+                        +'<td>'+link+'</td>'
                         +'</tr>');
                     }                    
                 });

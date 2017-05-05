@@ -114,6 +114,9 @@
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Habilitado</th>
+                    <th>Transimisión</th>
+                    <th>Key</th>
+                    <th>Link</th>
                   </tr>
                 </thead>
                 <tbody>                                  
