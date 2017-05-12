@@ -161,7 +161,7 @@ public class CalendarDB extends Database{
     }
     
     public List<List<String>> getAllShifts(String from){
-        String sql = "SELECT * FROM shifts WHERE datetime >= ?";
+        String sql = "SELECT * FROM shifts WHERE datetime >= ? ORDER BY datetime ASC";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();

@@ -64,94 +64,101 @@
 <spring:url value="/resources/core/css/colors.css" var="colorsCss" />
 <link href="${colorsCss}" rel="stylesheet" />
 
-<spring:url value="/resources/core/js/bootstrap.min.js"
-	var="bootstrapJs" />
-<script src="${bootstrapJs}"></script>
-
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 </head>
-<body style="padding-top: 70px;">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-            <a class="navbar-brand" href="/rastrosoft/prototipo10"><i class="fa fa-tint"></i> Rastrosoft</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li id="shifts-menu"><a href="#" onclick="showShifts();">Shifts</a></li>
-            <li id="captures-menu"><a href="#" onclick="showCaptures();">Captures</a></li>
-            <li id="automatization-menu"><a href="#" onclick="showAutomatization();">Automatization</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Alex Boette <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profile</a></li>
-                <li><a href="#"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i> Upgrade</a></li>
-                <li class="divider"></li>
-                <li><a href="#" onclick="logout();"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</a></li>  
-                <c:url var="logoutUrl" value="/logout"/>
-                <form id="end_session" action="${logoutUrl}" method="post">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </form>
-              </ul>             
-            </li>            
-          </ul>   
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-    <div class="container">
-        <div id="tableShifts" class="table-shifts">
-            <h4 style="color:white" class="label-primary text-center">Turnos otorgados</h4>
-            <table id="shifts" class="table">
-                <thead>  
-                  <tr>                      
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Habilitado</th>
-                    <th>Transimisión</th>
-                    <th>Key</th>
-                    <th>Link</th>
-                  </tr>
-                </thead>
-                <tbody>                                  
-                </tbody>
-            </table>
-        </div>
-        <div class="table-captures">
-            <h4 style="color:white" class="label-primary text-center">Mis capturas</h4>
-            <table id="captures" class="table" >
-                <thead>
-                  <tr>
-                    <th>#</th>                        
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>RA</th>
-                    <th>DEC</th>
-                    <th>Exposicion</th>
-                    <th>Filepath</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
+<body>
+        <div class="col-md-6">
+            <div class="row">
+                <div id="col1" class="col-md-12">                    
+                    
+                    <h4 style="color:white" class="label-primary text-center">Opciones</h4>         
+                    <div class="form-group" id="select-shift">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                            <input type="text" class="form-control" id="datetimepicker" placeholder="Turnos"/>
+                            <span class="input-group-btn">
+                                <button id="addShift-btn" class="btn btn-default" type="button" onclick="showLabelRemoveShift();" ><i class="fa fa-plus text-success"></i></button>
+                            </span>  
+                        </div>
+                    </div>  
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <a class="btn btn-lg btn-blue btn-block btn-huge" href="#"><i class="fa fa-tasks fa-2x "></i><br>Automatization</a>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <a class="btn btn-lg btn-light-blue btn-block btn-huge" href="#"><i class="fa fa-user-circle-o fa-2x"></i><br>Profile</a>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <a class="btn btn-lg btn-light-green btn-block btn-huge" href="#"  onclick="showAddShiftNew();"><i class="fa fa-plus-square fa-2x "></i><br>Add shift</a>
+                        </div>
+                    </div> 
+                    <hr/>            
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <a class="btn btn-lg btn-pink btn-block btn-huge" href="#"><i class="fa fa-tasks fa-2x "></i><br>Automatization</a>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <a class="btn btn-lg btn-deep-purple btn-block btn-huge" href="#"><i class="fa fa-user-circle-o fa-2x"></i><br>Profile</a>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <a class="btn btn-lg btn-indigo btn-block btn-huge" href="#"><i class="fa fa-graduation-cap fa-2x "></i><br>Upgrade</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="tableShifts" class="table-shifts">
+                        <h4 style="color:white" class="label-primary text-center">Turnos otorgados</h4>
+                        <table id="shifts" class="table">
+                            <thead>  
+                              <tr>                      
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Habilitado</th>
+                                <th>Transimisión</th>
+                                <th>Key</th>
+                                <th>Link</th>
+                              </tr>
+                            </thead>
+                            <tbody>                                  
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>            
+        <div class="col-md-6">
+            <div class="table-captures">
+                <h4 style="color:white" class="label-primary text-center">Mis capturas</h4>
+                <table id="captures" class="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>                        
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>RA</th>
+                        <th>DEC</th>
+                        <th>Exposicion</th>
+                        <th>Filepath</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+
+            </div>
         </div>
-    </div>
-    <div class="footer-msg">Planetario Ciudad de La Plata</div>
+   
+    
 </body>
   
 <script>
@@ -197,9 +204,9 @@
 
         jQuery(document).ready(function($) {          
             getShifts();  
-            getAllShifts();           
+            getAllShifts(); 
             
-        var ua = window.navigator.userAgent;
+            var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
             if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
             {
@@ -246,8 +253,8 @@
             });
         } );
         function updateTables(){            
-            $('.table').DataTable( {
-                scrollY:        '75vh',
+            $('#shifts').DataTable( {
+                scrollY:        '55vh',
                 ordering: false,
                 scrollCollapse: true,
                 paging:         false,
@@ -266,7 +273,28 @@
                     
                 },
                 "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
-            } );           
+            } );
+            $('#captures').DataTable( {
+                scrollY:        '80vh',
+                ordering: false,
+                scrollCollapse: true,
+                paging:         false,
+                "language": {
+                    "lengthMenu": "Mostrando _MENU_ registros por pagina",
+                    "zeroRecords": "No se encontro ningun resultado",
+//                    "info": "Mostrando pagina _PAGE_ de _PAGES_",
+                    "info": "",
+                    "infoEmpty": "No hay registros disponibles",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "search": "Buscar",
+                    "paginate": {
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                    
+                },
+                "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
+            } );
         }    
         
         function addShift(){
@@ -294,23 +322,6 @@
             search["value3"] = d; //datetime
             sendAjax(search,'addShift','addShift'); 
         }    
-        
-        function showShifts(){
-            $("#shifts-menu").addClass("active");
-            $("#captures-menu").removeClass("active");
-            $('.table-captures').hide();           
-            $('.table-shifts').show();   
-        }
-        function showCaptures(){            
-            $("#captures-menu").addClass("active");
-            $("#shifts-menu").removeClass("active");
-            $('.table-shifts').hide();      
-            $('.table-captures').show();
-        }
-        function logout(){            
-            $("#end_session").submit();
-        }
-        
         
 //    $(function () {
 //        var resizeDiv = function (object) {

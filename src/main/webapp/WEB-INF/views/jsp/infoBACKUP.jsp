@@ -61,55 +61,50 @@
 	var="ajaxFunctions" />
 <script src="${ajaxFunctions}"></script>
 
-<spring:url value="/resources/core/css/colors.css" var="colorsCss" />
-<link href="${colorsCss}" rel="stylesheet" />
-
-<spring:url value="/resources/core/js/bootstrap.min.js"
-	var="bootstrapJs" />
-<script src="${bootstrapJs}"></script>
-
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 </head>
-<body style="padding-top: 70px;">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-            <a class="navbar-brand" href="/rastrosoft/prototipo10"><i class="fa fa-tint"></i> Rastrosoft</a>
+<body>
+    <div class="form-group">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <c:url var="logoutUrl" value="/logout"/>
+                            <form id="end_session" action="${logoutUrl}" method="post">
+                                <input class="form-control logout-icon" type="submit" value="Cerrar sesion" title="Cerrar sesion de USER"/>
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+                            <span class="input-group-addon"><i class="fa fa-sign-out fa-fw"></i></span>
+                        </div>
+                    </div>                                      
+                </div> 
+    <div class="">
+        <div class="shifts-picker" >
+            
+            <div id="label-1">Usted no posee un turno asignado.<a href="#" onclick="showAddShift();">¿Desea agregar uno?</a></div>
+            
+
+            <div class="form-group" id="selected-shift">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i> Turno otorgado</span>
+                    <input type="text" class="form-control" value="2017-03-09 19:00" disabled="disabled"/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" onclick="showLabelAddShift();" ><i class="fa fa-minus text-danger"></i></button>
+                    </span>  
+                </div>
+            </div>
+            <div class="form-group" id="select-shift">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                    <input type="text" class="form-control" id="datetimepicker" placeholder="Turnos"/>
+                    <span class="input-group-btn">
+                        <button id="addShift-btn" class="btn btn-default" type="button" onclick="showLabelRemoveShift();" ><i class="fa fa-plus text-success"></i></button>
+                    </span>  
+                </div>
+            </div>  
+
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li id="shifts-menu"><a href="#" onclick="showShifts();">Shifts</a></li>
-            <li id="captures-menu"><a href="#" onclick="showCaptures();">Captures</a></li>
-            <li id="automatization-menu"><a href="#" onclick="showAutomatization();">Automatization</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Alex Boette <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profile</a></li>
-                <li><a href="#"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i> Upgrade</a></li>
-                <li class="divider"></li>
-                <li><a href="#" onclick="logout();"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</a></li>  
-                <c:url var="logoutUrl" value="/logout"/>
-                <form id="end_session" action="${logoutUrl}" method="post">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </form>
-              </ul>             
-            </li>            
-          </ul>   
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-    <div class="container">
-        <div id="tableShifts" class="table-shifts">
+        <div class="table-shifts">
             <h4 style="color:white" class="label-primary text-center">Turnos otorgados</h4>
             <table id="shifts" class="table">
                 <thead>  
@@ -130,7 +125,7 @@
         </div>
         <div class="table-captures">
             <h4 style="color:white" class="label-primary text-center">Mis capturas</h4>
-            <table id="captures" class="table" >
+            <table id="captures" class="table">
                 <thead>
                   <tr>
                     <th>#</th>                        
@@ -146,12 +141,13 @@
                   </tr>
                 </thead>
                 <tbody>
-
+                  
                 </tbody>
             </table>
+        
         </div>
     </div>
-    <div class="footer-msg">Planetario Ciudad de La Plata</div>
+    
 </body>
   
 <script>
@@ -197,9 +193,9 @@
 
         jQuery(document).ready(function($) {          
             getShifts();  
-            getAllShifts();           
+            getAllShifts(); 
             
-        var ua = window.navigator.userAgent;
+            var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
             if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
             {
@@ -215,9 +211,6 @@
                     $('#select-shift').show("slide", { direction: "right" }, 300);
                 }
             );
-        } 
-        function showAddShiftNew(){
-            $('#select-shift').show("slide", { direction: "right" }, 300);    
         }    
         function showLabelAddShift(){
             if (confirm ("Esta seguro que desea eliminar su turno?")){                
@@ -247,7 +240,7 @@
         } );
         function updateTables(){            
             $('.table').DataTable( {
-                scrollY:        '75vh',
+                scrollY:        '30vh',
                 ordering: false,
                 scrollCollapse: true,
                 paging:         false,
@@ -266,7 +259,7 @@
                     
                 },
                 "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
-            } );           
+            } );
         }    
         
         function addShift(){
@@ -294,38 +287,5 @@
             search["value3"] = d; //datetime
             sendAjax(search,'addShift','addShift'); 
         }    
-        
-        function showShifts(){
-            $("#shifts-menu").addClass("active");
-            $("#captures-menu").removeClass("active");
-            $('.table-captures').hide();           
-            $('.table-shifts').show();   
-        }
-        function showCaptures(){            
-            $("#captures-menu").addClass("active");
-            $("#shifts-menu").removeClass("active");
-            $('.table-shifts').hide();      
-            $('.table-captures').show();
-        }
-        function logout(){            
-            $("#end_session").submit();
-        }
-        
-        
-//    $(function () {
-//        var resizeDiv = function (object) {
-//            object.height($(window).height() - $('#col1').height() - 20);
-//        };
-//
-//
-//        $(window).ready(function () {
-//            resizeDiv($('#tableShifts'));
-//        });
-//
-//        $(window).bind("resize", function () {
-//            resizeDiv($('#tableShifts'));
-//        });
-//
-//    });
 </script>
 </html>
