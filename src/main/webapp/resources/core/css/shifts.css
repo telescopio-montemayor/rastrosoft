@@ -23,10 +23,13 @@ caption{
     font-size: 30px; 
 }
 .label-danger {
-    background-color: #d9534f1a;
+    background-color: rgba(152, 0, 0, 0.4);
 }
 .label-primary{
     background-color: #337ab74d;
+}
+.label-success{
+    background-color: rgba(0, 153, 0, 0.4);
 }
 #label-1{
     font-size: 30px;     

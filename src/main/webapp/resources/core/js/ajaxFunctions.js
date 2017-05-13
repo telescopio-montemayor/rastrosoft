@@ -121,33 +121,40 @@ function successAjax(data, tipo) {
             $("#shifts tBody").empty();
             $.each(data, function(key, value) {
                 $.each(value, function(key2, c) {
+                    var name="", class_label="";
+                    if(c[1]=="0"){
+                        name = '<td><span tkey="you">You</span></td>';
+                        class_label='class="label-success"';
+                    }else{
+                        name = '<td>'+c[1]+'</td>';
+                    }
                     if (c[3] == "0"){
                         $("#shifts tBody").append('<tr class="label-danger"><th scope="row">'+c[0]+'</th>'
-                        +'<td>'+c[1]+'</td>'
+                        +name
                         +'<td>'+c[2].slice(0, 10)+'</td>'
                         +'<td>'+c[2].slice(10, 16)+'</td>'
-                        +'<td>No</td>'                        
+                        +'<td><span tkey="canceled">Canceled</span></td>'                        
                         +'<td>-</td>'
                         +'<td>-</td>'
                         +'<td>-</td>'
                         +'</tr>');
                     }else{
-                        var transmition = "No", key = "-", link = "-";
+                        var transmition = '<td><span tkey="private">Private</span></td>', key = "-", link = "-";
                         if (c[4]!="-1"){
                             if(c[5]=="1"){
-                                transmition = "Publica";
+                                transmition = '<td><span tkey="public">Public</span></td>';
                                 key = c[4];
-                                link = '<a href="/rastrosoft/live?key='+key+'">link</a>';
+                                link = '<a href="/rastrosoft/live?key='+key+'" tkey="link">link</a>';
                             }else{
-                                transmition = "Privada";
+                                transmition = '<td><span tkey="private">Private</span></td>';
                             }
                         }
-                        $("#shifts tBody").append('<tr><th scope="row">'+c[0]+'</th>'
-                        +'<td>'+c[1]+'</td>'
+                        $("#shifts tBody").append('<tr '+class_label+'><th scope="row">'+c[0]+'</th>'
+                        +name
                         +'<td>'+c[2].slice(0, 10)+'</td>'
                         +'<td>'+c[2].slice(10, 16)+'</td>'
-                        +'<td>Si</td>'                        
-                        +'<td>'+transmition+'</td>'
+                        +'<td><span tkey="yes">Yes</td>'                        
+                        +transmition
                         +'<td>'+key+'</td>'
                         +'<td>'+link+'</td>'
                         +'</tr>');
@@ -173,7 +180,7 @@ function successAjax(data, tipo) {
                         +'</tr>');
                });
             });   
-            updateTables();
+            updateTables();            
             break;
         case 'getChat':  
             $("#chatbox").empty();
@@ -209,7 +216,8 @@ function successAjax(data, tipo) {
                 shift_id  =   value[0];
                 live_key  =   value[1];
             });
-            alert("Turno: "+shift_id+" - Key: "+live_key);
+            //alert("Turno: "+shift_id+" - Key: "+live_key);
+            notify('Shift added successfully with id: '+shift_id+' and key: '+live_key, 'success');
             break;
         default:
             break;

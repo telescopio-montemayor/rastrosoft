@@ -68,6 +68,15 @@
 	var="bootstrapJs" />
 <script src="${bootstrapJs}"></script>
 
+<spring:url value="/resources/core/js/notifyFunctions.js"
+	var="notifyFunctions" />
+<script src="${notifyFunctions}"></script>
+
+<spring:url value="/resources/core/js/lang.js"
+	var="langJs" />
+<script src="${langJs}"></script>
+
+
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
@@ -86,18 +95,25 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li id="shifts-menu"><a href="#" onclick="showShifts();">Shifts</a></li>
-            <li id="captures-menu"><a href="#" onclick="showCaptures();">Captures</a></li>
-            <li id="automatization-menu"><a href="#" onclick="showAutomatization();">Automatization</a></li>
+            
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tkey="shifts">Shifts <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                  <li id="shifts-menu"><a href="#" onclick="showShifts();" tkey="view-shifts">View shifts</a></li>
+                  <li id="shifts-menu"><a href="#" onclick="showAddShiftNew();" tkey="add-shift">Add shift</a></li>
+              </ul>             
+            </li>       
+            <li id="captures-menu"><a href="#" onclick="showCaptures();" tkey="captures">Captures</a></li>
+            <li id="automatization-menu"><a href="#" onclick="showAutomatization();" tkey="automatization">Automatization</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Alex Boette <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username" >Guest</span> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i> Profile</a></li>
-                <li><a href="#"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i> Upgrade</a></li>
+                  <li><a href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span tkey="profile">Profile</span></a></li>
+                  <li><a href="#"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i> <span tkey="upgrade">Upgrade</span></a></li>
                 <li class="divider"></li>
-                <li><a href="#" onclick="logout();"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</a></li>  
+                <li><a href="#" onclick="logout();"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span tkey="logout">Logout</span></a></li>  
                 <c:url var="logoutUrl" value="/logout"/>
                 <form id="end_session" action="${logoutUrl}" method="post">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -108,20 +124,29 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    <div class="container">
+    <div class="container">        
+        <div class="form-group" id="select-shift">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                <input type="text" class="form-control" id="datetimepicker" placeholder="Turnos"/>
+                <span class="input-group-btn">
+                    <button id="addShift-btn" class="btn btn-default" type="button" onclick="showLabelRemoveShift();" ><i class="fa fa-plus text-success"></i></button>
+                </span>  
+            </div>
+        </div>  
         <div id="tableShifts" class="table-shifts">
-            <h4 style="color:white" class="label-primary text-center">Turnos otorgados</h4>
+            <h4 style="color:white" class="label-primary text-center" tkey="shifts-otorged">Turnos otorgados</h4>
             <table id="shifts" class="table">
                 <thead>  
                   <tr>                      
                     <th>#</th>
-                    <th>Nombre</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Habilitado</th>
-                    <th>Transimisión</th>
-                    <th>Key</th>
-                    <th>Link</th>
+                    <th><span tkey="name">Nombre</span></th>
+                    <th><span tkey="date">Fecha</span></th>
+                    <th><span tkey="time">Hora</span></th>
+                    <th><span tkey="available">Habilitado</span></th>
+                    <th><span tkey="transmition">Transimisión</span></th>
+                    <th><span tkey="key">Key</span></th>
+                    <th><span tkey="link">Link</span></th>
                   </tr>
                 </thead>
                 <tbody>                                  
@@ -129,17 +154,17 @@
             </table>
         </div>
         <div class="table-captures">
-            <h4 style="color:white" class="label-primary text-center">Mis capturas</h4>
+            <h4 style="color:white" class="label-primary text-center" tkey="my-captures">Mis capturas</h4>
             <table id="captures" class="table" >
                 <thead>
                   <tr>
                     <th>#</th>                        
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>RA</th>
-                    <th>DEC</th>
-                    <th>Exposicion</th>
-                    <th>Filepath</th>
+                    <th><span tkey="date">Fecha</span></th>
+                    <th><span tkey="time">Hora</span></th>
+                    <th><span tkey="ra">RA</span></th>
+                    <th><span tkey="dec">DEC</span></th>
+                    <th><span tkey="exposure">Exposicion</span></th>
+                    <th><span tkey="filepath">Filepath</span></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -197,7 +222,8 @@
 
         jQuery(document).ready(function($) {          
             getShifts();  
-            getAllShifts();           
+            getAllShifts(); 
+            getUsername();
             
         var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
@@ -230,13 +256,8 @@
             }
         } 
         
-        function showLabelRemoveShift(){            
-            $('#select-shift')
-            .hide( "slide", 200, 
-                function() {
-                    $('#selected-shift').show("slide", { direction: "right" }, 300);
-                }
-            );            
+        function showLabelRemoveShift(){
+            $('#select-shift').hide();
         }
         
         jQuery(document).ready(function($) {  
@@ -266,12 +287,11 @@
                     
                 },
                 "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
-            } );           
+            } );  
+            do_translation();
         }    
         
         function addShift(){
-                        
-            
             var d = $("#datetimepicker").val();
             var year ,month , day, time, hour, minute, second;
             d = d.substr(0, 16).split("-");
@@ -286,7 +306,7 @@
                     
             d = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
             
-            alert(d);
+            //alert(d);
             
             var search = {};
             search["value"] = "true"; //live

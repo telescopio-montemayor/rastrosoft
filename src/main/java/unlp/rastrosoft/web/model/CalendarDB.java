@@ -163,6 +163,16 @@ public class CalendarDB extends Database{
     public List<List<String>> getAllShifts(String from){
         String sql = "SELECT * FROM shifts WHERE datetime >= ? ORDER BY datetime ASC";
         Connection conn = null;
+        
+        UserDB userDB = new UserDB();
+        userDB.connect();
+        int current_user_id = -1;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {            
+            User user = userDB.getUser(authentication.getName());
+            current_user_id = user.getUserId();
+        }
+        
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
@@ -180,9 +190,75 @@ public class CalendarDB extends Database{
                 if (public_val == 0){
                     live_key = "-1";
                 }
-                            
-                Calendar shift = new Calendar(rs.getInt("id"), rs.getInt("id_user"), rs.getString("datetime").substring(0, 16), rs.getInt("enabled"), live_key, public_val );
+                int user_id = rs.getInt("id_user");
+                if ( rs.getInt("id_user") == current_user_id){
+                    user_id = 0;
+                }
+                Calendar shift = new Calendar(rs.getInt("id"), user_id , rs.getString("datetime").substring(0, 16), rs.getInt("enabled"), live_key, public_val );
                 shifts.add(shift.getListOfStrings());
+            }
+            rs.close();
+            ps.close();
+            return shifts;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+        
+    }
+    public List<List<String>> getAllShiftsWithName(String from){
+        String sql = "SELECT * FROM shifts WHERE datetime >= ? ORDER BY datetime ASC";
+        Connection conn = null;
+        
+        UserDB userDB = new UserDB();
+        userDB.connect();
+        int current_user_id = -1;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {            
+            User user = userDB.getUser(authentication.getName());
+            current_user_id = user.getUserId();
+        }
+        
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+            
+            ps.setString(1, from);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            List<List<String>> shifts = new ArrayList<>();
+            
+            while (rs.next()) {   
+                
+                int public_val = rs.getInt("public");
+                String live_key = rs.getString("live_key");
+                if (public_val == 0){
+                    live_key = "-1";
+                }
+                int user_id = rs.getInt("id_user");
+                String name = "";
+                if ( user_id == current_user_id){
+                    name = "0";
+                }else{
+                    name = userDB.getUser(user_id).getName();                    
+                }
+                
+                ArrayList<String> shift_a = new ArrayList<>();
+                shift_a.add(String.valueOf(rs.getInt("id")));
+                shift_a.add(String.valueOf(name));
+                shift_a.add(rs.getString("datetime").substring(0, 16));
+                shift_a.add(String.valueOf(rs.getInt("enabled")));
+                shift_a.add(live_key);
+                shift_a.add(String.valueOf(public_val));                
+                shifts.add(shift_a);
             }
             rs.close();
             ps.close();

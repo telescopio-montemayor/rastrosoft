@@ -75,6 +75,8 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 
 	public void newMessage(INDIServerConnection connection, Date timestamp, String message) {
 	    //System.out.println("New Server Message: " + timestamp + " - " + message);
+            //sessionHandler.updateElement("newMessage", message);
+            
 	}
 	
 	public void removeProperty(INDIDevice device, INDIProperty property) {
@@ -85,6 +87,7 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	
 	public void messageChanged(INDIDevice device) {
 	    //System.out.println("New Device Message: " + device.getName() + " - " + device.getTimestamp() + " - " + device.getLastMessage());
+            //sessionHandler.updateElement(device.getName(), device.getLastMessage());
 	}
 	
 	public void propertyChanged(INDIProperty property) {

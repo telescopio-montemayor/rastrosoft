@@ -4,6 +4,8 @@ socket.onmessage = onMessage;
   
 function onMessage(event) {
     var device = JSON.parse(event.data);
+//    if(device.element !== "EQUATORIAL_EOD_COORD")
+//        alert("Element: "+device.element+"\nValue1: "+device.value+"\nValue2: "+device.value2+"\nValue3: "+device.value3+"\nValue4: "+device.value4 );
     if (device.action === "update") {
        
         switch(device.element) {

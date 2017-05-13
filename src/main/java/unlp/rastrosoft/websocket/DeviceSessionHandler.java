@@ -75,9 +75,11 @@ public class DeviceSessionHandler {
         prop.add("newChat");
         prop.add("clearChat");
         
-        if (prop.contains(element)){
-            sendElement(element, value);
-        }
+        
+        sendElement(element, value);
+//        if (prop.contains(element)){
+//            sendElement(element, value);
+//        }
             
     }
 
