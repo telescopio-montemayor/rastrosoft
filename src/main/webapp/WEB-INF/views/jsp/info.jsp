@@ -76,6 +76,11 @@
 	var="langJs" />
 <script src="${langJs}"></script>
 
+<spring:url value="/resources/core/css/menu.css" var="menuCss" />
+<link href="${menuCss}" rel="stylesheet" />
+
+<spring:url value="/resources/core/js/jquery.mask.js" var="jquerymaskJs" />
+<script src="${jquerymaskJs}"></script>
 
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -133,7 +138,10 @@
                     <button id="addShift-btn" class="btn btn-default" type="button" onclick="showLabelRemoveShift();" ><i class="fa fa-plus text-success"></i></button>
                 </span>  
             </div>
-        </div>  
+        </div>
+        <div class="intro">
+            <i class="fa fa-tint" style="font-size:240px"></i>  
+        </div>
         <div id="tableShifts" class="table-shifts">
             <h4 style="color:white" class="label-primary text-center" tkey="shifts-otorged">Turnos otorgados</h4>
             <table id="shifts" class="table">
@@ -175,6 +183,252 @@
                 </tbody>
             </table>
         </div>
+        <div class="automatization">            
+            <div class="automatization-values col-md-3 col-sm-5">
+                <div id="setRaDec" class="form-group" >
+                    <p class="input-help">Right Ascension & Declination</p>
+                    <div class="input-group">                                                                
+                        <input id="setRa" type="text" class="form-control radec-input"  value="00:00:00">
+                        <p class="help-label">Set right ascension</p>
+                        <span class="input-group-addon">-</span>
+                        <input id="setDec" type="text" class="form-control radec-input" value="00:00:00">
+                        <p class="help-label">Set declination</p>                                                     
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="input-help">Exposure time</p>
+                    <div class="input-group">
+                        <span class="input-group-addon" title="Time to exposure"><i class="fa fa-clock-o fa-fw"></i></span>
+                        <input id="exposureTime" type="number" class="form-control" placeholder="Exposure">                            
+                        <p class="help-label">Set time to exposure (seconds)</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="input-help">Ccd binning (horizontal & vertical)</p>
+                    <div class="input-group">                  
+                        <input id="hBinning" type="text" class="form-control " placeholder="H"/>
+                        <p class="help-label">Set horizontal binning</p>
+                        <span class="input-group-addon">x</span>
+                        <input id="vBinning" type="text" class="form-control " placeholder="V"/>
+                        <p class="help-label">Set vertical binning</p>                          
+                    </div>
+                </div>
+                <div class="form-group">
+                    <p class="input-help">Frame type</p>
+                    <select class="form-control" id="frameType">
+                     <option disabled selected value> -- select ccd frame type -- </option>   
+                     <option value="frameLight">Light</option>
+                     <option value="frameBias">Bias</option>  
+                     <option value="frameDark">Dark</option>
+                     <option value="frameFlat" disabled="disabled">Flat</option>
+                   </select>
+                </div>
+                <div class="form-group">
+                    <p class="input-help">Frame (X & Y)</p>
+                    <div class="input-group">                    
+                        <input id="frameX" type="text" class="form-control " placeholder="X" />
+                        <p class="help-label">Set image X origin</p>
+                        <span class="input-group-addon">x</span>
+                        <input id="frameY" type="text" class="form-control " placeholder="Y" />
+                        <p class="help-label">Set image Y origin</p>                          
+                    </div>  
+                </div>
+                <div class="form-group">
+                    <p class="input-help">Image size (width & height)</p>
+                    <div class="input-group">                    
+                        <input id="frameWidth" type="text" class="form-control " placeholder="Width" />
+                        <p class="help-label">Set image width</p>
+                        <span class="input-group-addon">x</span>
+                        <input id="frameHeight" type="text" class="form-control " placeholder="Height" />
+                        <p class="help-label">Set image height</p>                       
+                    </div>  
+                </div>
+                <div class="form-group">
+                    <p class="input-help">Absolute focus position</p>
+                    <div class="input-group" style="width:100%">                    
+                        <input id="focusAbsolute" type="text" class="form-control" placeholder="Ticks"/>
+                        <p class="help-label">Set ticks for absolute focus position</p>                           
+                    </div>  
+                </div>  
+                <button onclick="tableAutomatization.draw();">Update table</button>
+            </div>
+            <div class="automatization-list col-md-9 col-sm-12">
+                 <div class="table-automatization">
+                    <h4 style="color:white" class="label-primary text-center" tkey="secuences-queue">Sequences queue</h4> 
+                    <table id="automatization" class="table">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th><span tkey="ra">RA</span></th>
+                            <th><span tkey="dec">DEC</span></th>
+                            <th><span tkey="exposure">Exposicion</span></th>
+                            <th><span tkey="horizontal-binnig">Horizontal binning</span></th>
+                            <th><span tkey="vertical-binnig">Vertical binning</span></th>
+                            <th><span tkey="frame-type">Frame type</span></th>
+                            <th><span tkey="frame-x">Frame X</span></th>
+                            <th><span tkey="frame-y">Frame Y</span></th>
+                            <th><span tkey="image-width">Image width</span></th>
+                            <th><span tkey="image-height">Image height</span></th>
+                            <th><span tkey="focus-position">Focus position</span></th>                            
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>1</th>
+                                <td>10:00:00</td>
+                                <td>90:00:00</td>
+                                <td>15</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Light</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1024</td>
+                                <td>1280</td>
+                                <td>50000</td>                                
+                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td>10:00:00</td>
+                                <td>90:00:00</td>
+                                <td>15</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Light</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1024</td>
+                                <td>1280</td>
+                                <td>50000</td>                                
+                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <td>10:00:00</td>
+                                <td>90:00:00</td>
+                                <td>15</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Light</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1024</td>
+                                <td>1280</td>
+                                <td>50000</td>                                
+                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <td>10:00:00</td>
+                                <td>90:00:00</td>
+                                <td>15</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Light</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1024</td>
+                                <td>1280</td>
+                                <td>50000</td>                                
+                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
+                            </tr>
+                            <tr>
+                                <th>5</th>
+                                <td>10:00:00</td>
+                                <td>90:00:00</td>
+                                <td>15</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Light</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1024</td>
+                                <td>1280</td>
+                                <td>50000</td>                                
+                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
+                            </tr> 
+                            <tr>
+                                <th>6</th>
+                                <td>10:00:00</td>
+                                <td>90:00:00</td>
+                                <td>15</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Light</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1024</td>
+                                <td>1280</td>
+                                <td>50000</td>                                
+                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
+                            </tr>
+                            <tr>
+                                <th>7</th>
+                                <td>10:00:00</td>
+                                <td>90:00:00</td>
+                                <td>15</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Light</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1024</td>
+                                <td>1280</td>
+                                <td>50000</td>                                
+                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
+                            </tr>
+                            <tr>
+                                <th>8</th>
+                                <td>10:00:00</td>
+                                <td>90:00:00</td>
+                                <td>15</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Light</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1024</td>
+                                <td>1280</td>
+                                <td>50000</td>                                
+                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
+                            </tr>
+                            <tr>
+                                <th>9</th>
+                                <td>10:00:00</td>
+                                <td>90:00:00</td>
+                                <td>15</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Light</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1024</td>
+                                <td>1280</td>
+                                <td>50000</td>                                
+                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
+                            </tr>
+                            <tr>
+                                <th>10</th>
+                                <td>10:00:00</td>
+                                <td>90:00:00</td>
+                                <td>15</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Light</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>1024</td>
+                                <td>1280</td>
+                                <td>50000</td>                                
+                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
+                            </tr>  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>    
     </div>
     <div class="footer-msg">Planetario Ciudad de La Plata</div>
 </body>
@@ -224,8 +478,15 @@
             getShifts();  
             getAllShifts(); 
             getUsername();
-            
-        var ua = window.navigator.userAgent;
+            $( "input" ).focusin(function() {
+                $( this ).next( ".help-label" ).show();
+            });
+            $( "input" ).focusout(function() {
+                $( this ).next( ".help-label" ).hide();
+            });
+            $('#setRa').mask('00:00:00');
+            $('#setDec').mask('00:00:00');
+            var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
             if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
             {
@@ -266,31 +527,85 @@
                 addShift();
             });
         } );
-        function updateTables(){            
-            $('.table').DataTable( {
-                scrollY:        '75vh',
-                ordering: false,
-                scrollCollapse: true,
-                paging:         false,
-                "language": {
-                    "lengthMenu": "Mostrando _MENU_ registros por pagina",
-                    "zeroRecords": "No se encontro ningun resultado",
-//                    "info": "Mostrando pagina _PAGE_ de _PAGES_",
-                    "info": "",
-                    "infoEmpty": "No hay registros disponibles",
-                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "search": "Buscar",
-                    "paginate": {
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                    
-                },
-                "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
-            } );  
-            do_translation();
-        }    
         
+        var tableShifts, tableCaptures, tableAutomatization;
+        function updateTableShifts(){
+            if ( !$.fn.dataTable.isDataTable( '#shifts' ) ) {
+                tableShifts = 
+                $('#shifts').DataTable( {
+                    scrollY:        '75vh',
+                    ordering: false,
+                    scrollCollapse: true,
+                    paging:         false,
+                    "language": {
+                        "lengthMenu": "Mostrando _MENU_ registros por pagina",
+                        "zeroRecords": "No se encontro ningun resultado",
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "search": "Buscar",
+                        "paginate": {
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
+
+                    },
+                    "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
+                } ); 
+            } 
+            do_translation();
+        }
+        function updateTableCaptures(){
+            if ( !$.fn.dataTable.isDataTable( '#captures' ) ) {
+                tableCaptures =
+                $('#captures').DataTable( {
+                    scrollY:        '75vh',
+                    ordering: false,
+                    scrollCollapse: true,
+                    paging:         false,
+                    "language": {
+                        "lengthMenu": "Mostrando _MENU_ registros por pagina",
+                        "zeroRecords": "No se encontro ningun resultado",
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "search": "Buscar",
+                        "paginate": {
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
+
+                    },
+                    "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
+                } ); 
+            } 
+            do_translation();
+        }
+        function updateTableAutomatization(){
+            if ( !$.fn.dataTable.isDataTable( '#automatization' ) ) {
+                tableAutomatization =
+                $('#automatization').DataTable( {
+                    scrollY:        '75vh',
+                    ordering: false,
+                    scrollCollapse: true,
+                    paging:         false,
+                    searching:         false,
+                    "language": {
+                        "lengthMenu": "Mostrando _MENU_ registros por pagina",
+                        "zeroRecords": "No se encontro ningun resultado",
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "search": "Buscar",
+                        "paginate": {
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
+                    },
+                    "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
+                } ); 
+            }
+        }
         function addShift(){
             var d = $("#datetimepicker").val();
             var year ,month , day, time, hour, minute, second;
@@ -320,12 +635,27 @@
             $("#captures-menu").removeClass("active");
             $('.table-captures').hide();           
             $('.table-shifts').show();   
+            $('.automatization').hide();
+            $('.intro').hide();
+            updateTableShifts();
         }
         function showCaptures(){            
             $("#captures-menu").addClass("active");
             $("#shifts-menu").removeClass("active");
             $('.table-shifts').hide();      
             $('.table-captures').show();
+            $('.automatization').hide();
+            $('.intro').hide();
+            updateTableCaptures();
+        }
+        function showAutomatization(){            
+            $("#captures-menu").removeClass("active");
+            $("#shifts-menu").removeClass("active");
+            $('.table-shifts').hide();      
+            $('.table-captures').hide();
+            $('.automatization').show();
+            $('.intro').hide();
+            updateTableAutomatization();
         }
         function logout(){            
             $("#end_session").submit();

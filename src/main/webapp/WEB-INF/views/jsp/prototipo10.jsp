@@ -458,8 +458,7 @@
                             <span class="input-group-btn">
                                 <button id="setBinning" class="btn btn-default" type="button">Binning</button>
                             </span>                            
-                        </div>  
-                        
+                        </div>
                     </div>
                     <div class="form-group">
                         <p class="input-help">Frame type</p>

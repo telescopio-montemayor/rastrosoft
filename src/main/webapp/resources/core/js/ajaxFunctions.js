@@ -180,7 +180,7 @@ function successAjax(data, tipo) {
                         +'</tr>');
                });
             });   
-            updateTables();            
+//            updateTables();            
             break;
         case 'getChat':  
             $("#chatbox").empty();

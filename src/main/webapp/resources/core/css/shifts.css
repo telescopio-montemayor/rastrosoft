@@ -26,7 +26,7 @@ caption{
     background-color: rgba(152, 0, 0, 0.4);
 }
 .label-primary{
-    background-color: #337ab74d;
+    background-color:  rgba(0, 87, 161, 0.6);
 }
 .label-success{
     background-color: rgba(0, 153, 0, 0.4);
@@ -34,18 +34,31 @@ caption{
 #label-1{
     font-size: 30px;     
 }
-#select-shift{
+#select-shift, .table-shifts, .table-captures{
     display: none;
 }
 #selected-shift{
     display: none;
 }
 .footer-msg{
-        position: fixed;
-        width: 100%;
-        bottom: 0;
-        padding: 1rem;
-        text-align: right;
-        background-color: rgba(0,0,0,0.7);
-        color: white;
-    }
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding: 1rem;
+    text-align: right;
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+}
+.automatization{
+    display: none;
+}
+.intro{
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    height: 200px;
+}
