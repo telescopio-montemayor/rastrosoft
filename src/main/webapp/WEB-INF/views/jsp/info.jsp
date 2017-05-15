@@ -255,7 +255,7 @@
             <div class="automatization-list col-md-9 col-sm-12">
                  <div class="table-automatization">
                     <h4 style="color:white" class="label-primary text-center" tkey="secuences-queue">Sequences queue</h4> 
-                    <table id="automatization" class="table">
+                    <table id="automatization" class="table select-feel">
                         <thead>
                           <tr>
                             <th>#</th>
@@ -269,163 +269,27 @@
                             <th><span tkey="frame-y">Frame Y</span></th>
                             <th><span tkey="image-width">Image width</span></th>
                             <th><span tkey="image-height">Image height</span></th>
-                            <th><span tkey="focus-position">Focus position</span></th>                            
-                            <th></th>
+                            <th><span tkey="focus-position">Focus position</span></th>
                           </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>10:00:00</td>
-                                <td>90:00:00</td>
-                                <td>15</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>Light</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1024</td>
-                                <td>1280</td>
-                                <td>50000</td>                                
-                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                            </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>10:00:00</td>
-                                <td>90:00:00</td>
-                                <td>15</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>Light</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1024</td>
-                                <td>1280</td>
-                                <td>50000</td>                                
-                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>10:00:00</td>
-                                <td>90:00:00</td>
-                                <td>15</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>Light</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1024</td>
-                                <td>1280</td>
-                                <td>50000</td>                                
-                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                            </tr>
-                            <tr>
-                                <th>4</th>
-                                <td>10:00:00</td>
-                                <td>90:00:00</td>
-                                <td>15</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>Light</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1024</td>
-                                <td>1280</td>
-                                <td>50000</td>                                
-                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                            </tr>
-                            <tr>
-                                <th>5</th>
-                                <td>10:00:00</td>
-                                <td>90:00:00</td>
-                                <td>15</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>Light</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1024</td>
-                                <td>1280</td>
-                                <td>50000</td>                                
-                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                            </tr> 
-                            <tr>
-                                <th>6</th>
-                                <td>10:00:00</td>
-                                <td>90:00:00</td>
-                                <td>15</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>Light</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1024</td>
-                                <td>1280</td>
-                                <td>50000</td>                                
-                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                            </tr>
-                            <tr>
-                                <th>7</th>
-                                <td>10:00:00</td>
-                                <td>90:00:00</td>
-                                <td>15</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>Light</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1024</td>
-                                <td>1280</td>
-                                <td>50000</td>                                
-                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                            </tr>
-                            <tr>
-                                <th>8</th>
-                                <td>10:00:00</td>
-                                <td>90:00:00</td>
-                                <td>15</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>Light</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1024</td>
-                                <td>1280</td>
-                                <td>50000</td>                                
-                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                            </tr>
-                            <tr>
-                                <th>9</th>
-                                <td>10:00:00</td>
-                                <td>90:00:00</td>
-                                <td>15</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>Light</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1024</td>
-                                <td>1280</td>
-                                <td>50000</td>                                
-                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                            </tr>
-                            <tr>
-                                <th>10</th>
-                                <td>10:00:00</td>
-                                <td>90:00:00</td>
-                                <td>15</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>Light</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>1024</td>
-                                <td>1280</td>
-                                <td>50000</td>                                
-                                <td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>
-                            </tr>  
+                        <tbody id="tbody-automatization">
+                            
                         </tbody>
                     </table>
+<!--                    <select size="13" multiple style="width:100%; height:400px">
+                        <option value="volvo">#         RA          DEC    EXPOSURE     HOR   VER   FRAME   X   Y   WIDTH       HEIGHT      FOCUS</option>
+                        <option value="volvo">10    10:00:00    90:00:00    15          1       1   Light   0   0   1024        1280        50000</option>
+                        <option value="volvo">10    10:00:00    90:00:00    15          1       1   Light   0   0   1024        1280        50000</option>
+                        <option value="volvo">10    10:00:00    90:00:00    15          1       1   Light   0   0   1024        1280        50000</option>
+                        <option value="volvo">10    10:00:00    90:00:00    15          1       1   Light   0   0   1024        1280        50000</option>
+                        <option value="volvo">10    10:00:00    90:00:00    15          1       1   Light   0   0   1024        1280        50000</option>
+                    </select>    -->
+                    <div class="controls" style="float:right">
+                        <button><i class="fa fa-plus" aria-hidden="true" style="color:green"></i></button>
+                        <button><i class="fa fa-minus" aria-hidden="true" style="color:red"></i></button>
+                        <button><i class="fa fa-caret-up" aria-hidden="true"></i></button>
+                        <button><i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                    </div>
                 </div>
             </div>
         </div>    
@@ -478,6 +342,7 @@
             getShifts();  
             getAllShifts(); 
             getUsername();
+            generate_data_automatization();
             $( "input" ).focusin(function() {
                 $( this ).next( ".help-label" ).show();
             });
@@ -585,7 +450,7 @@
             if ( !$.fn.dataTable.isDataTable( '#automatization' ) ) {
                 tableAutomatization =
                 $('#automatization').DataTable( {
-                    scrollY:        '75vh',
+                    scrollY:        '40vh',
                     ordering: false,
                     scrollCollapse: true,
                     paging:         false,
@@ -661,6 +526,15 @@
             $("#end_session").submit();
         }
         
+        function select_row(id){
+            $("#tbody-automatization > tr").removeClass('row-selected');
+            $("#"+id+"").addClass('row-selected');
+        }
+        function generate_data_automatization(){
+            for (i = 0; i < 15; i++) {
+                $("#tbody-automatization").append("<tr id=\""+i+"\" onclick=\"select_row("+i+");\"><th>"+i+"</th><td>10:00:00</td><td>90:00:00</td><td>15</td><td>1</td><td>1</td><td>Light</td><td>0</td><td>0</td><td>1024</td><td>1280</td><td>50000</td></tr>");    
+            } 
+        }
         
 //    $(function () {
 //        var resizeDiv = function (object) {

@@ -62,3 +62,17 @@ caption{
     width: 200px;
     height: 200px;
 }
+.select-feel{
+    background-color: white;
+    border: 1px solid;
+    border-color: lightgrey;
+}
+.select-feel tbody tr{
+    cursor: pointer;
+}
+.select-feel tbody tr:hover{
+    background-color: #fcf8e3;
+}
+.row-selected{
+    background-color: orange;
+}
