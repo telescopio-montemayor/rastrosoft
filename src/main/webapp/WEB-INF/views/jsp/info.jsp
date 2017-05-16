@@ -185,6 +185,7 @@
         </div>
         <div class="automatization">            
             <div class="automatization-values col-md-3 col-sm-5">
+                <h4 style="color:white" class="label-primary text-center" tkey="settings">Settings</h4> 
                 <div id="setRaDec" class="form-group" >
                     <p class="input-help">Right Ascension & Declination</p>
                     <div class="input-group">                                                                
@@ -249,12 +250,26 @@
                         <input id="focusAbsolute" type="text" class="form-control" placeholder="Ticks"/>
                         <p class="help-label">Set ticks for absolute focus position</p>                           
                     </div>  
-                </div>  
-                <button onclick="tableAutomatization.draw();">Update table</button>
+                </div> 
+                <div class="form-group">
+                    <p class="input-help">Quantity</p>
+                    <div class="input-group" style="width:100%">                    
+                        <input id="quantity" type="number" min="1" max="100" class="form-control" placeholder="Quantity"/>
+                        <p class="help-label">Set the number of repetitions you need</p>                           
+                    </div>  
+                </div> 
+                <!--<button onclick="tableAutomatization.draw();">Update table</button>-->
             </div>
             <div class="automatization-list col-md-9 col-sm-12">
+                <h4 style="color:white" class="label-primary text-center" tkey="secuences-queue">Sequences queue</h4> 
+                <div class="controls" style="float:left">
+                    <button><i class="fa fa-plus" aria-hidden="true" style="color:green"></i></button>
+                    <button><i class="fa fa-minus" aria-hidden="true" style="color:red"></i></button>
+                    <button><i class="fa fa-caret-up" aria-hidden="true"></i></button>
+                    <button><i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                </div>
                  <div class="table-automatization">
-                    <h4 style="color:white" class="label-primary text-center" tkey="secuences-queue">Sequences queue</h4> 
+                    
                     <table id="automatization" class="table select-feel">
                         <thead>
                           <tr>
@@ -270,26 +285,13 @@
                             <th><span tkey="image-width">Image width</span></th>
                             <th><span tkey="image-height">Image height</span></th>
                             <th><span tkey="focus-position">Focus position</span></th>
+                            <th><span tkey="quantity">Quantity</span></th>
                           </tr>
                         </thead>
                         <tbody id="tbody-automatization">
                             
                         </tbody>
                     </table>
-<!--                    <select size="13" multiple style="width:100%; height:400px">
-                        <option value="volvo">#         RA          DEC    EXPOSURE     HOR   VER   FRAME   X   Y   WIDTH       HEIGHT      FOCUS</option>
-                        <option value="volvo">10    10:00:00    90:00:00    15          1       1   Light   0   0   1024        1280        50000</option>
-                        <option value="volvo">10    10:00:00    90:00:00    15          1       1   Light   0   0   1024        1280        50000</option>
-                        <option value="volvo">10    10:00:00    90:00:00    15          1       1   Light   0   0   1024        1280        50000</option>
-                        <option value="volvo">10    10:00:00    90:00:00    15          1       1   Light   0   0   1024        1280        50000</option>
-                        <option value="volvo">10    10:00:00    90:00:00    15          1       1   Light   0   0   1024        1280        50000</option>
-                    </select>    -->
-                    <div class="controls" style="float:right">
-                        <button><i class="fa fa-plus" aria-hidden="true" style="color:green"></i></button>
-                        <button><i class="fa fa-minus" aria-hidden="true" style="color:red"></i></button>
-                        <button><i class="fa fa-caret-up" aria-hidden="true"></i></button>
-                        <button><i class="fa fa-caret-down" aria-hidden="true"></i></button>
-                    </div>
                 </div>
             </div>
         </div>    
@@ -342,7 +344,7 @@
             getShifts();  
             getAllShifts(); 
             getUsername();
-            generate_data_automatization();
+            generate_data_automatization(10);
             $( "input" ).focusin(function() {
                 $( this ).next( ".help-label" ).show();
             });
@@ -450,7 +452,7 @@
             if ( !$.fn.dataTable.isDataTable( '#automatization' ) ) {
                 tableAutomatization =
                 $('#automatization').DataTable( {
-                    scrollY:        '40vh',
+                    scrollY:        '70vh',
                     ordering: false,
                     scrollCollapse: true,
                     paging:         false,
@@ -530,9 +532,9 @@
             $("#tbody-automatization > tr").removeClass('row-selected');
             $("#"+id+"").addClass('row-selected');
         }
-        function generate_data_automatization(){
-            for (i = 0; i < 15; i++) {
-                $("#tbody-automatization").append("<tr id=\""+i+"\" onclick=\"select_row("+i+");\"><th>"+i+"</th><td>10:00:00</td><td>90:00:00</td><td>15</td><td>1</td><td>1</td><td>Light</td><td>0</td><td>0</td><td>1024</td><td>1280</td><td>50000</td></tr>");    
+        function generate_data_automatization(cant){
+            for (i = 0; i < cant; i++) {
+                $("#tbody-automatization").append("<tr id=\""+i+"\" onclick=\"select_row("+i+");\"><th>"+i+"</th><td>10:00:00</td><td>90:00:00</td><td>15</td><td>1</td><td>1</td><td>Light</td><td>0</td><td>0</td><td>1024</td><td>1280</td><td>50000</td><td>1</td></tr>");    
             } 
         }
         

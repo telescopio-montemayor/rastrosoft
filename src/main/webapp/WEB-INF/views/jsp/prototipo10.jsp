@@ -203,6 +203,10 @@
 </head>
 
 <body>
+    <c:url var="logoutUrl" value="/logout"/>
+    <form id="end_session" action="${logoutUrl}" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form> 
     <div class="sidebar-toggle-left">
     <button class="btn btn-primary left-btn-toggle">
         <i class="fa fa-bars" aria-hidden="true"></i>
@@ -222,20 +226,15 @@
                 </div>  
         <div id="normalScreenContainer">
             <div id="normalScreen">
+                
                 <p></p>
                 <span><i onClick="fade();">Connected as:</i> <i id="username" style="color:green;" onClick="initialize();">Guest</i> - Timeleft: <i id="timeleft" class="label label-success">...</i></span>
-                <div class="form-group">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <c:url var="logoutUrl" value="/logout"/>
-                            <form id="end_session" action="${logoutUrl}" method="post">
-                                <input class="form-control logout-icon" type="submit" value="Cerrar sesion" title="Cerrar sesion de USER"/>
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                            </form>
-                            <span class="input-group-addon"><i class="fa fa-sign-out fa-fw"></i></span>
-                        </div>
-                    </div>                                      
-                </div>                                 
+                 <div class="input-group">
+                    <span class="input-group-btn">
+                        <button id="end_session_button" class="btn btn-default" type="button" style="width:50%; border-bottom-left-radius: 5px; border-top-left-radius: 5px; outline: none;" ><i class="fa fa-sign-out fa-fw"></i>Cerrar sesión</button> 
+                        <button id="panel_button" class="btn btn-default" type="button" style="width:51%; border-bottom-right-radius: 5px; border-top-right-radius: 5px; outline: none;"><i class="fa fa-columns fa-fw"></i>Panel</button>
+                    </span> 
+                </div> 
                 <div class="form-group">
                     <p class="input-help">Quick access targets</p>
                     <select class="form-control">

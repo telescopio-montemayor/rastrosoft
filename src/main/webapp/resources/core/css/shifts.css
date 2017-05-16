@@ -50,7 +50,7 @@ caption{
     color: white;
 }
 .automatization{
-    display: none;
+    display: none;    
 }
 .intro{
     position: absolute;
@@ -70,9 +70,13 @@ caption{
 .select-feel tbody tr{
     cursor: pointer;
 }
-.select-feel tbody tr:hover{
+/*.select-feel tbody tr:hover{
     background-color: #fcf8e3;
-}
+}*/
 .row-selected{
+    background-color: orange;
+}
+
+.row-selected:hover{
     background-color: orange;
 }

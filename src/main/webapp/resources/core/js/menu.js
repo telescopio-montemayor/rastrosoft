@@ -334,6 +334,13 @@ $(document).ready(function() {
     $("#liveTransmit").click(function(){
         toggleTransmit();
     });
+    $("#end_session_button").click(function(){
+        $("#end_session").submit();
+    });
+    $("#panel_button").click(function(){
+       window.location.href = '/rastrosoft/info'; 
+    });
+    
 });
 $.fn.enterKey = function (fnc) {
         return this.each(function () {
