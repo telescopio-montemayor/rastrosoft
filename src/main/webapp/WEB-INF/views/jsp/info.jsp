@@ -262,14 +262,26 @@
             </div>
             <div class="automatization-list col-md-9 col-sm-12">
                 <h4 style="color:white" class="label-primary text-center" tkey="secuences-queue">Sequences queue</h4> 
+                <div class="form-group">
+                    <p class="input-help">Sequence</p>
+                    <div class="input-group">                        
+                        <select class="form-control" id="sequence">                         
+                        </select>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="add-sequence-btn" onclick="addSequenceBtn();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                            <button class="btn btn-default" type="button" id="modify-sequence-btn" onclick="modifySequenceBtn();"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                            <button class="btn btn-default" type="button" id="remove-sequence-btn" onclick="removeSequenceBtn();"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
+                    
+                </div>                
                 <div class="controls" style="float:left">
                     <button><i class="fa fa-plus" aria-hidden="true" style="color:green"></i></button>
                     <button><i class="fa fa-minus" aria-hidden="true" style="color:red"></i></button>
                     <button><i class="fa fa-caret-up" aria-hidden="true"></i></button>
                     <button><i class="fa fa-caret-down" aria-hidden="true"></i></button>
                 </div>
-                 <div class="table-automatization">
-                    
+                <div class="table-automatization">
                     <table id="automatization" class="table select-feel">
                         <thead>
                           <tr>
@@ -345,6 +357,8 @@
             getAllShifts(); 
             getUsername();
             generate_data_automatization(10);
+            getSequences();
+            
             $( "input" ).focusin(function() {
                 $( this ).next( ".help-label" ).show();
             });
@@ -534,10 +548,33 @@
         }
         function generate_data_automatization(cant){
             for (i = 0; i < cant; i++) {
-                $("#tbody-automatization").append("<tr id=\""+i+"\" onclick=\"select_row("+i+");\"><th>"+i+"</th><td>10:00:00</td><td>90:00:00</td><td>15</td><td>1</td><td>1</td><td>Light</td><td>0</td><td>0</td><td>1024</td><td>1280</td><td>50000</td><td>1</td></tr>");    
+                $("#tbody-automatization").append("<tr id=\""+i+"\" stepid=\""+i+"\" onclick=\"select_row("+i+");\"><th>"+i+"</th><td>10:00:00</td><td>90:00:00</td><td>15</td><td>1</td><td>1</td><td>Light</td><td>0</td><td>0</td><td>1024</td><td>1280</td><td>50000</td><td>1</td></tr>");    
             } 
         }
         
+        function addSequenceBtn(){
+            var name = prompt('Please enter the new squence name');
+            if (name!=='null' && name!==''){
+                addSequence(name);
+            }                
+        }
+        function modifySequenceBtn(){
+            var old_name = $("#sequence").find('option:selected').text();
+            var name = prompt('Please enter the new squence name', old_name);
+            var sequence_id = $("#sequence").val();
+            if (name!=='null' && name!==''){
+                modifySequence(sequence_id, name);
+            }  
+        }
+        function removeSequenceBtn(){
+            var id, name;
+            id = $("#sequence").val();
+            name = $("#sequence").find('option:selected').text();
+            if (confirm("Are you sure you want to remove the sequence '"+name+"'?") === true) {
+                removeSequence(id);
+            }           
+        }
+       
 //    $(function () {
 //        var resizeDiv = function (object) {
 //            object.height($(window).height() - $('#col1').height() - 20);

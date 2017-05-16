@@ -340,7 +340,6 @@ $(document).ready(function() {
     $("#panel_button").click(function(){
        window.location.href = '/rastrosoft/info'; 
     });
-    
 });
 $.fn.enterKey = function (fnc) {
         return this.each(function () {

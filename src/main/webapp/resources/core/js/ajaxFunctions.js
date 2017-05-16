@@ -219,6 +219,36 @@ function successAjax(data, tipo) {
             //alert("Turno: "+shift_id+" - Key: "+live_key);
             notify('Shift added successfully with id: '+shift_id+' and key: '+live_key, 'success');
             break;
+        case 'addSequence':
+            var sequence_id = "-1";  
+            var name = "-1";
+            $.each(data, function(key, value) {
+                sequence_id  =   value[0];
+                name  =   value[1];
+            });
+            $("#sequence").append('<option value='+sequence_id+'>'+name+'</option>');
+            $("#sequence").val(sequence_id);            
+            break;   
+        case 'removeSequence':
+            getSequences();
+            break; 
+        case 'modifySequence':  
+            var sequence_id = "-1";  
+            var name = "-1";
+            $.each(data, function(key, value) {
+                sequence_id  =   value[0];
+                name  =   value[1];
+            });
+            getSequences();                      
+            break; 
+        case 'getSequences':
+            $("#sequence").empty();
+            $.each(data, function(key, value) {
+                $.each(value, function(key2, c) {
+                    $("#sequence").append('<option value='+c[0]+'>'+c[1]+'</option>');
+               });
+            });              
+            break;
         default:
             break;
     } 
@@ -427,7 +457,29 @@ function disableChat() {
     search["value"] = "false";    
     sendAjax(search,'enableChat','enableChat');     
 }
-
+// Sequences
+function addSequence(name) {    
+    var search = {};
+    search["value"] = name;    
+    sendAjax(search,'addSequence','addSequence');     
+}
+function removeSequence(id) {    
+    var search = {};
+    search["value"] = id;    
+    sendAjax(search,'removeSequence','removeSequence');     
+}
+function modifySequence(id, name) {    
+    var search = {};
+    search["value"] = id;    
+    search["value2"] = name;
+    sendAjax(search,'modifySequence','modifySequence');     
+}
+function getSequences() {    
+    var search = {};
+    search["value"] = 1;
+    sendAjax(search,'getSequences','getSequences');
+}
+//
 function updateValues(data){
     $.each(data, function(key, value) {
         var ra, dec, park, unpark, track, slew, sync, uploadDir, uploadPrefix, 
