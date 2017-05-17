@@ -265,7 +265,7 @@
                 <div class="form-group">
                     <p class="input-help">Sequence</p>
                     <div class="input-group">                        
-                        <select class="form-control" id="sequence">                         
+                        <select class="form-control" id="sequence" onchange="reloadSteps();">                         
                         </select>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" id="add-sequence-btn" onclick="addSequenceBtn();"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -288,7 +288,7 @@
                             <th>#</th>
                             <th><span tkey="ra">RA</span></th>
                             <th><span tkey="dec">DEC</span></th>
-                            <th><span tkey="exposure">Exposicion</span></th>
+                            <th><span tkey="exposure" min="1">Exposicion</span></th>
                             <th><span tkey="horizontal-binnig">Horizontal binning</span></th>
                             <th><span tkey="vertical-binnig">Vertical binning</span></th>
                             <th><span tkey="frame-type">Frame type</span></th>
@@ -356,9 +356,8 @@
             getShifts();  
             getAllShifts(); 
             getUsername();
-            generate_data_automatization(10);
+            //generate_data_automatization(10);
             getSequences();
-            
             $( "input" ).focusin(function() {
                 $( this ).next( ".help-label" ).show();
             });
@@ -486,6 +485,15 @@
                     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
                 } ); 
             }
+            do_translation();
+        }
+        function reloadSteps(){
+            var sequence_id = $("#sequence").val();
+            getSteps(sequence_id);
+        }    
+        
+        function drawTableAutomatization(){
+            tableAutomatization.draw();
         }
         function addShift(){
             var d = $("#datetimepicker").val();

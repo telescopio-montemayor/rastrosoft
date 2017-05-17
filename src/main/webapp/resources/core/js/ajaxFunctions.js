@@ -247,8 +247,30 @@ function successAjax(data, tipo) {
                 $.each(value, function(key2, c) {
                     $("#sequence").append('<option value='+c[0]+'>'+c[1]+'</option>');
                });
-            });              
-            break;
+            });  
+            reloadSteps();
+            break;        
+        case 'getSteps':            
+            $("#tbody-automatization").empty();
+            $.each(data, function(key, value) {
+                $.each(value, function(key2, c) {
+                    $("#tbody-automatization").append('<tr id="step_'+c[0]+'" stepid="'+c[0]+'" sequenceid="'+c[1]+'" state="'+c[15]+'" onclick="select_row(\'step_'+c[0]+'\');"><th scope="row">'+c[2]+'</th>'
+                        +'<td>'+c[3]+'</td>'
+                        +'<td>'+c[4]+'</td>'
+                        +'<td>'+c[5]+'</td>'
+                        +'<td>'+c[6]+'</td>'
+                        +'<td>'+c[7]+'</td>'
+                        +'<td>'+c[8]+'</td>'
+                        +'<td>'+c[9]+'</td>'
+                        +'<td>'+c[10]+'</td>'
+                        +'<td>'+c[11]+'</td>'       
+                        +'<td>'+c[12]+'</td>'
+                        +'<td>'+c[13]+'</td>'
+                        +'<td>'+c[14]+'</td>'
+                        +'</tr>');
+               });
+            });
+            //drawTableAutomatization();
         default:
             break;
     } 
@@ -478,6 +500,16 @@ function getSequences() {
     var search = {};
     search["value"] = 1;
     sendAjax(search,'getSequences','getSequences');
+}
+function removeStep(id) {    
+    var search = {};
+    search["value"] = id;    
+    sendAjax(search,'removeStep','removeStep');     
+}
+function getSteps(sequence_id) {    
+    var search = {};
+    search["value"] = sequence_id;
+    sendAjax(search,'getSteps','getSteps');
 }
 //
 function updateValues(data){

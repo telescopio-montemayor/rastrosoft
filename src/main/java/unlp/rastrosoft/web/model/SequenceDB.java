@@ -238,4 +238,37 @@ public class SequenceDB extends Database{
             }
         }
     }
+    public int getUserId(int id_sequence){
+        String sql = "SELECT id_user FROM sequence WHERE id = ? LIMIT 1";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+            ps.setInt(1, id_sequence);
+
+            ResultSet rs = ps.executeQuery();
+           
+            int id_user = -1;
+            
+            while (rs.next()) {
+                id_user = rs.getInt("id_user");
+            }
+
+
+            rs.close();
+            ps.close();
+            return id_user;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+    }
 }
