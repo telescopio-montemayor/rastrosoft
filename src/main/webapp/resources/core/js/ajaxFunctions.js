@@ -268,9 +268,13 @@ function successAjax(data, tipo) {
                         +'<td>'+c[13]+'</td>'
                         +'<td>'+c[14]+'</td>'
                         +'</tr>');
+                    $("#step-number").val(c[2]);
                });
             });
-            //drawTableAutomatization();
+            break;
+        case 'addStep':
+            getSteps($("#sequence").val());
+            break;
         default:
             break;
     } 
@@ -510,6 +514,24 @@ function getSteps(sequence_id) {
     var search = {};
     search["value"] = sequence_id;
     sendAjax(search,'getSteps','getSteps');
+}
+function addStep(id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity) {    
+    var search = {};
+    search["id_sequence"] = id_sequence;
+    search["number"] = number;
+    search["ra"] = ra;
+    search["declination"] = declination;
+    search["exposureTime"] = exposureTime;
+    search["hBinning"] = hBinning;
+    search["vBinning"] = vBinning;
+    search["frameType"] = frameType;
+    search["x"] = x;
+    search["y"] = y;
+    search["width"] = width;
+    search["height"] = height;
+    search["focusPosition"] = focusPosition;
+    search["quantity"] = quantity;
+    sendAjax(search,'addStep','addStep');
 }
 //
 function updateValues(data){

@@ -19,10 +19,21 @@ import java.util.List;
 public class StepDB extends Database{
      public int insertStep(int id_sequence, int number, String ra, String declination, String exposureTime, String hBinning, String vBinning, String frameType, String x, String y, String width, String height, String focusPosition, int quantity){
         
-        String sql = "INSERT INTO step (id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity ) VALUES (?, ?, ?. ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO step (id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         Connection conn = null;
         int id;
+        
+        if (exposureTime == null || exposureTime.equals("") )   exposureTime        =   "-";
+        if (hBinning == null     || hBinning.equals("") )       hBinning            =   "-";
+        if (vBinning == null     || vBinning.equals("") )       vBinning            =   "-";
+        if (frameType == null    || frameType.equals("") )      frameType           =   "-";
+        if (x == null            || x.equals("") )              x                   =   "-";
+        if (y == null            || y.equals("") )              y                   =   "-";
+        if (width == null        || width.equals("") )          width               =   "-";
+        if (height == null       || height.equals("") )         height              =   "-";
+        if (focusPosition == null|| focusPosition.equals("") )  focusPosition       =   "-";
+        
         try {
                 conn = dataSource.getConnection();
                 PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
@@ -87,7 +98,7 @@ public class StepDB extends Database{
     
 
     public List<List<String>> getStepsAsList(int id_sequence){
-        String sql = "SELECT id, id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, state FROM step WHERE id_sequence = ? AND state <> -1 ORDER BY id ASC";
+        String sql = "SELECT id, id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, state FROM step WHERE id_sequence = ? AND state <> -1 ORDER BY number ASC";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();

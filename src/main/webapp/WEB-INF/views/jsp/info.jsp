@@ -218,10 +218,10 @@
                     <p class="input-help">Frame type</p>
                     <select class="form-control" id="frameType">
                      <option disabled selected value> -- select ccd frame type -- </option>   
-                     <option value="frameLight">Light</option>
-                     <option value="frameBias">Bias</option>  
-                     <option value="frameDark">Dark</option>
-                     <option value="frameFlat" disabled="disabled">Flat</option>
+                     <option value="light">Light</option>
+                     <option value="bias">Bias</option>  
+                     <option value="dark">Dark</option>
+                     <option value="flat" disabled="disabled">Flat</option>
                    </select>
                 </div>
                 <div class="form-group">
@@ -258,6 +258,7 @@
                         <p class="help-label">Set the number of repetitions you need</p>                           
                     </div>  
                 </div> 
+                <input type="hidden" id="step-number" value="0">
                 <!--<button onclick="tableAutomatization.draw();">Update table</button>-->
             </div>
             <div class="automatization-list col-md-9 col-sm-12">
@@ -276,7 +277,7 @@
                     
                 </div>                
                 <div class="controls" style="float:left">
-                    <button><i class="fa fa-plus" aria-hidden="true" style="color:green"></i></button>
+                    <button onclick="addStepBtn();"><i class="fa fa-plus" aria-hidden="true" style="color:green"></i></button>
                     <button><i class="fa fa-minus" aria-hidden="true" style="color:red"></i></button>
                     <button><i class="fa fa-caret-up" aria-hidden="true"></i></button>
                     <button><i class="fa fa-caret-down" aria-hidden="true"></i></button>
@@ -465,7 +466,7 @@
             if ( !$.fn.dataTable.isDataTable( '#automatization' ) ) {
                 tableAutomatization =
                 $('#automatization').DataTable( {
-                    scrollY:        '70vh',
+                    scrollY:        '65vh',
                     ordering: false,
                     scrollCollapse: true,
                     paging:         false,
@@ -491,10 +492,7 @@
             var sequence_id = $("#sequence").val();
             getSteps(sequence_id);
         }    
-        
-        function drawTableAutomatization(){
-            tableAutomatization.draw();
-        }
+     
         function addShift(){
             var d = $("#datetimepicker").val();
             var year ,month , day, time, hour, minute, second;
@@ -581,6 +579,24 @@
             if (confirm("Are you sure you want to remove the sequence '"+name+"'?") === true) {
                 removeSequence(id);
             }           
+        }
+        function addStepBtn(){
+            var id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity;
+            id_sequence = $("#sequence").val();            
+            number      = Number($("#step-number").val())+1+'';
+            ra          = $("#setRa").val();
+            declination = $("#setDec").val();
+            exposureTime= $("#exposureTime").val();
+            hBinning    = $("#hBinning").val();
+            vBinning    = $("#vBinning").val();
+            frameType   = $("#frameType").val();
+            x           = $("#frameX").val();
+            y           = $("#frameY").val();
+            width       = $("#frameWidth").val();
+            height      = $("#frameHeight").val();
+            focusPosition=$("#focusAbsolute").val();
+            quantity    = $("#quantity").val();
+            addStep(id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity);
         }
        
 //    $(function () {
