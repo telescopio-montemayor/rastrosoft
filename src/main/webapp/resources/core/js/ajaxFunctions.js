@@ -252,6 +252,7 @@ function successAjax(data, tipo) {
             break;        
         case 'getSteps':            
             $("#tbody-automatization").empty();
+            $("#step-number").val(0);
             $.each(data, function(key, value) {
                 $.each(value, function(key2, c) {
                     $("#tbody-automatization").append('<tr id="step_'+c[0]+'" stepid="'+c[0]+'" sequenceid="'+c[1]+'" state="'+c[15]+'" onclick="select_row(\'step_'+c[0]+'\');"><th scope="row">'+c[2]+'</th>'

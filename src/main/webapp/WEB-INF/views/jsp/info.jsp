@@ -140,7 +140,18 @@
             </div>
         </div>
         <div class="intro">
-            <i class="fa fa-tint" style="font-size:240px"></i>  
+<!--            <i class="fa fa-tint" style="font-size:240px"></i>-->
+            <div class="intro-container">
+                <p>Rastrosoft es </p>
+                <b>
+                  <span1>
+                    rápido<br /> 
+                    elegante<br />
+                    eficiente<br />
+                    simple.
+                    </span1>
+                </b>
+            </div>
         </div>
         <div id="tableShifts" class="table-shifts">
             <h4 style="color:white" class="label-primary text-center" tkey="shifts-otorged">Turnos otorgados</h4>
