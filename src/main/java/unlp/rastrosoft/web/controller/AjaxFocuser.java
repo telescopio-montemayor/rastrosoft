@@ -55,4 +55,41 @@ public class AjaxFocuser {
         focuser.setFocusOut(ticks);
         return result;
     }
+//    PARA EL FOCUSER: MICROFOCUSER LX 200
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/setFocusSpeedMicro", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public AjaxResponse setFocusSpeedMicro(@RequestBody ExecuteCriteria execute) {
+        AjaxResponse result = new AjaxResponse();        
+        String speed;       
+        speed = execute.getValue();
+        Focuser focuser = new Focuser();
+        focuser.setFocusSpeedMicro(speed);
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/focusInMicro", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public AjaxResponse focusInMicro(@RequestBody ExecuteCriteria execute) {
+        AjaxResponse result = new AjaxResponse();        
+        String timer;       
+        timer = execute.getValue();
+        Focuser focuser = new Focuser();
+        focuser.setFocusTimerMicro(timer);
+        focuser.setFocusInMicro();
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/focusOutMicro", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public AjaxResponse focusOutMicro(@RequestBody ExecuteCriteria execute) {
+        AjaxResponse result = new AjaxResponse();        
+        String timer;       
+        timer = execute.getValue();
+        Focuser focuser = new Focuser();
+        focuser.setFocusTimerMicro(timer);
+        focuser.setFocusOutMicro();
+        return result;
+    }
+//    ...
 }

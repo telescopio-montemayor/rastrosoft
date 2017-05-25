@@ -12,7 +12,7 @@ package unlp.rastrosoft.web.model;
 public class Focuser extends Device {
     
     public Focuser (){
-        super("Focuser Simulator");
+        super("Focuser Simulator"); //CAMBIAR: Focuser Simulator / LX200 GPS
     }
     public boolean setFocusIn(){
         return this.modificarBoolean("FOCUS_MOTION", "FOCUS_INWARD", "ON");
@@ -53,4 +53,36 @@ public class Focuser extends Device {
         cliente = connect_indi.connect(dispositivo);
         return (cliente.enviar_mensaje(dispositivo, "REL_FOCUS_POSITION", "FOCUS_RELATIVE_POSITION"));
     }
+    
+//    PARA EL FOCUSER: MICROFOCUSER DEL LX 200
+    public boolean setFocusSpeedMicro( String val ){
+        return this.modificarDouble("FOCUS_SPEED", "SPEED", val);
+    }
+    public boolean setFocusInMicro(){
+        return this.modificarBoolean("FOCUS_MOTION", "IN", "ON");
+    }
+    public boolean setFocusOutMicro(){
+        return this.modificarBoolean("FOCUS_MOTION", "OUT", "ON");
+    }
+    public boolean setFocusTimerMicro( String val ){
+        return this.modificarDouble("FOCUS_TIMER", "TIMER", val);
+    }
+    
+    public String getFocusSpeedMicro(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "FOCUS_SPEED", "SPEED"));
+    }
+    public String getFocusInMicro(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "FOCUS_MOTION", "IN"));
+    }
+    public String getFocusOutMicro(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "FOCUS_MOTION", "OUT"));
+    }
+    public String getFocusTimerMicro(){
+        cliente = connect_indi.connect(dispositivo);
+        return (cliente.enviar_mensaje(dispositivo, "FOCUS_TIMER", "TIMER"));
+    }
+//    ...
 }

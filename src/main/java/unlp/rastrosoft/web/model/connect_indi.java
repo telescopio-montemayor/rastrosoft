@@ -6,8 +6,6 @@
 package unlp.rastrosoft.web.model;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import laazotea.indi.client.INDIValueException;
 
 /**
@@ -33,22 +31,26 @@ public class connect_indi {
                 cliente.conectar(focuser);
                 Thread.sleep(500);
             } catch (InterruptedException | IOException | INDIValueException ex) {
-//                Logger.getLogger(connect_indi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return cliente;
     }
     
+//    public static indi_client connect(String dispositivo){
+//        if (cliente == null){
+//            try {
+//                cliente = new indi_client("localhost", 7624);
+//                Thread.sleep(500);
+//                cliente.conectar(dispositivo);
+//                Thread.sleep(500);
+//            } catch (InterruptedException | IOException | INDIValueException ex) {
+//            }
+//        }
+//        return cliente;
+//    }
     public static indi_client connect(String dispositivo){
-        if (cliente == null){
-            try {
-                cliente = new indi_client("localhost", 7624);
-                Thread.sleep(500);
-                cliente.conectar(dispositivo);
-                Thread.sleep(500);
-            } catch (InterruptedException | IOException | INDIValueException ex) {
-//                Logger.getLogger(connect_indi.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if (cliente == null || cliente.connected == false){
+            cliente = new indi_client("localhost", 7624);            
         }
         return cliente;
     }

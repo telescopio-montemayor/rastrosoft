@@ -14,7 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-//import javax.inject.Inject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import laazotea.indi.Constants;
 import laazotea.indi.Constants.SwitchStatus;
 import laazotea.indi.client.*;
@@ -27,8 +28,8 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 
 	List<INDIProperty> propiedades = new ArrayList<>();
 	List<INDIDevice> dispositivos = new ArrayList<>();	
-        
-        
+   
+        public boolean connected = false;
         private DeviceSessionHandler sessionHandler;
 	
         public indi_client(String host, int port) {
@@ -39,21 +40,27 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	
 	    try {
 	      connection.connect();
+              connected = true;                
 	      connection.askForDevices();  // Ask for all the devices.
 	    } catch (IOException e) {
-	      System.out.println("Problem with the connection: " + host + ":" + port);
-	      e.printStackTrace();
+                connected = false;
+	      System.err.println("Problem with the connection: " + host + ":" + port);
 	    }
 	 }
 
     public indi_client() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-	public void newDevice(INDIServerConnection connection, INDIDevice device) {
+        @Override
+	public void newDevice(INDIServerConnection connection, INDIDevice device ) {
 	    // We just simply listen to this Device
 		System.out.println("New device: " + device.getName());
                 dispositivos.add(device);
-	    //dispositivos_hashmap.put(device.getName(), device);
+                try {
+                    this.conectar(device.getName());
+                } catch (IOException | INDIValueException ex) {
+                    Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
+                }
 		try {
 	      device.BLOBsEnable(Constants.BLOBEnables.ALSO); // Enable receiving BLOBs from this Device
 	    } catch (IOException e) {
@@ -68,9 +75,13 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	}
 
 	public void connectionLost(INDIServerConnection connection) {
-	    System.out.println("Connection lost. Bye");
-
-	    System.exit(-1);
+	    System.err.println("Connection lost. Bye");
+            try {
+                connected = false;
+                //System.exit(-1);
+            } catch (Throwable ex) {
+                Logger.getLogger(indi_client.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
 	public void newMessage(INDIServerConnection connection, Date timestamp, String message) {
@@ -99,8 +110,6 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	    // We just simply listen to this Property
 	    //System.out.println("New Property (" + property.getName() + ") added to device " + device.getName());
 	    property.addINDIPropertyListener(this);
-
-	    
 	    propiedades.add(property);
 	    
 	}
@@ -122,8 +131,8 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	public void conectar(String device_name) throws IOException, INDIValueException{
 		for(int i=0 ; i < propiedades.size(); i++) {
 			if ( (propiedades.get(i).getName().equals("CONNECTION")) & (propiedades.get(i).getDevice().getName().equals(device_name)) ){
-			
-					propiedades.get(i).getElement("DISCONNECT").setDesiredValue(SwitchStatus.OFF);
+//			
+//					propiedades.get(i).getElement("DISCONNECT").setDesiredValue(SwitchStatus.OFF);
 					propiedades.get(i).getElement("CONNECT").setDesiredValue(SwitchStatus.ON);
 					propiedades.get(i).sendChangesToDriver();
 			

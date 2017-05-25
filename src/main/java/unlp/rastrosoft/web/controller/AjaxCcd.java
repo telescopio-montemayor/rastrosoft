@@ -175,20 +175,20 @@ public class AjaxCcd {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();    
         
-        datetime        =   dateFormat.format(date);
-        ra              =   telescope.getRa();
-        dec             =   telescope.getDec();
-        hBinning        =   ccd.getHBinning();
-        vBinning        =   ccd.getVBinning();
-        temperature     =   ccd.getTemperature();
-        frameType       =   ccd.getFrameType();
-        x               =   ccd.getX();
-        y               =   ccd.getY();        
-        width           =   ccd.getWidth();        
-        height          =   ccd.getHeight();
-        focusPosition   =   focuser.getAbsolutePosition();
-        exposureTime    =   time;
-        filePath        =   ccd.getFilePath();
+//        datetime        =   dateFormat.format(date);
+//        ra              =   telescope.getRa();
+//        dec             =   telescope.getDec();
+//        hBinning        =   ccd.getHBinning();
+//        vBinning        =   ccd.getVBinning();
+//        temperature     =   ccd.getTemperature();
+//        frameType       =   ccd.getFrameType();
+//        x               =   ccd.getX();
+//        y               =   ccd.getY();        
+//        width           =   ccd.getWidth();        
+//        height          =   ccd.getHeight();
+//        focusPosition   =   focuser.getAbsolutePosition();
+//        exposureTime    =   time;
+//        filePath        =   ccd.getFilePath();
        
         String currentUserName = null;        
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -207,9 +207,9 @@ public class AjaxCcd {
         
         CaptureDB captureDB = new CaptureDB();        
         
-        Capture capture = new Capture("", datetime, ra, dec, hBinning, vBinning, temperature, frameType, x, y, width, height, focusPosition, exposureTime, filePath); 
-        captureDB.connect();
-        captureDB.asociateCaptureToUser(user.getUserId(), captureDB.insertCapture(capture));
+//        Capture capture = new Capture("", datetime, ra, dec, hBinning, vBinning, temperature, frameType, x, y, width, height, focusPosition, exposureTime, filePath); 
+//        captureDB.connect();
+//        captureDB.asociateCaptureToUser(user.getUserId(), captureDB.insertCapture(capture));
         
         ccd.setExposure(time, path, source, dest);
         

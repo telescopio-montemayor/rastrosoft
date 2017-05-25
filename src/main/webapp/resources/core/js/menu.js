@@ -340,6 +340,17 @@ $(document).ready(function() {
     $("#panel_button").click(function(){
        window.location.href = '/rastrosoft/info'; 
     });
+//    PARA EL FOCUSER: MICROFOCUSER LX 200
+    $("#focusSpeedMicro").change(function(){
+        setFocusSpeedMicro();         
+    });
+    $("#focusInMicro").click(function(){
+        focusInMicro();
+    });
+    $("#focusOutMicro").click(function(){
+        focusOutMicro();
+    });
+//            ...
 });
 $.fn.enterKey = function (fnc) {
         return this.each(function () {

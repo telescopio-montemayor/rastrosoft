@@ -595,15 +595,99 @@ public class AjaxController  extends HttpServlet{
 
         }
         
+//        PARA EL FOCUSER: MICROFOCUSER LX 200
+        @JsonView(Views.Public.class)
+        @RequestMapping(value = "/refreshValuesMicro", method=RequestMethod.POST)
+        public AjaxResponse refreshValuesMicro(@RequestBody SearchCriteria search) {
+            
+            
+            AjaxResponse result = new AjaxResponse();
+
+            Telescope telescope = new Telescope();
+                
+            result.setElementos(telescope.getRaDec());
+            result.addElemento(telescope.getPark());
+            result.addElemento(telescope.getUnPark());
+            result.addElemento(telescope.getTrak());
+            result.addElemento(telescope.getSlew());
+            result.addElemento(telescope.getSync());
+            
+            
+            Ccd ccd = new Ccd();
+            
+            result.addElemento(ccd.getUploadDirectory());
+            result.addElemento(ccd.getUploadPrefix());
+            result.addElemento(ccd.getHBinning());
+            result.addElemento(ccd.getVBinning());
+            result.addElemento(ccd.getTemperature());
+            result.addElemento(ccd.getFrameLight());
+            result.addElemento(ccd.getFrameBias());
+            result.addElemento(ccd.getFrameDark());
+            result.addElemento(ccd.getFrameFlat());
+            result.addElemento(ccd.getX());
+            result.addElemento(ccd.getY());
+            result.addElemento(ccd.getWidth());
+            result.addElemento(ccd.getHeight());
+            result.addElemento(ccd.getExposureTime());
+            
+            
+            Focuser focuser = new Focuser();
+            result.addElemento("0");
+            result.addElemento("0");
+            result.addElemento("0");
+            result.addElemento("0");
+            
+            result.addElemento(ccd.getFilePath());
+            
+            LiveTransmitDB liveTransmitDB = new LiveTransmitDB();
+            liveTransmitDB.connect();
+            String live;
+            if(liveTransmitDB.isOnLive()){
+                live="1";
+            }else{
+                live="0";
+            }
+            result.addElemento(live);
+            
+            ChatDB chatDB = new ChatDB();
+            chatDB.connect();
+            String chatEnabled;
+            if(chatDB.isEnabled()){
+                chatEnabled="1";
+            }else{
+                chatEnabled="0";
+            }
+            
+            result.addElemento(chatEnabled);
+            
+            CalendarDB calendarDB = new CalendarDB();
+            calendarDB.connect();
+            ArrayList<String> shift =  calendarDB.getCurrentShift();
+            
+            if (shift.get(0).equals("-1")){
+                result.addElemento("-1");
+                result.addElemento("00:00:00");                
+            }else{
+                UserDB userDB = new UserDB();
+                userDB.connect();
+                User user = userDB.getUser( Integer.parseInt(shift.get(0)));
+                result.addElemento(user.getUsername());
+                result.addElemento(shift.get(1));                
+            }
+            
+            return result;
+
+        }
+//        ...
+        
         @JsonView(Views.Public.class)
         @RequestMapping(value = "/initialize", method=RequestMethod.POST)
         public AjaxResponse initialize(@RequestBody SearchCriteria search) {
             
             
             AjaxResponse result = new AjaxResponse();
-
-            Ccd ccd = new Ccd();
             
+            Ccd ccd = new Ccd();
             
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String currentUserName = "default";
@@ -617,7 +701,7 @@ public class AjaxController  extends HttpServlet{
             ccd.setLocalMode();
             ccd.setUploadDirectory(source);
             
-            ccd.setTemperature("-15");
+            //ccd.setTemperature("-15"); -----------DESCOMENTAR!
             ccd.setExposure("1", path, source, dest);
             return result;
 

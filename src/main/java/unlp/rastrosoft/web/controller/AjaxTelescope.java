@@ -34,7 +34,6 @@ public class AjaxTelescope {
         String ra, dec;       
         ra = execute.getValue();
         dec = execute.getValue2();
-        
         Telescope telescope = new Telescope();
         if (telescope.setRaDec(ra, dec)){
             result.setElementos(telescope.getRaDec());

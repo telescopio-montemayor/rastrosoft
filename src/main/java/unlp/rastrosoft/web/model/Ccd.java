@@ -27,7 +27,7 @@ import unlp.rastrosoft.websocket.DeviceSessionHandler;
 public class Ccd extends Device {
     
     public Ccd (){
-        super("CCD Simulator");
+        super("CCD Simulator"); // CAMBIAR: CCD Simulator / Meade Deep Sky Imager
     }
     public boolean setBinning(String hor, String ver){
         cliente = connect_indi.connect(dispositivo);

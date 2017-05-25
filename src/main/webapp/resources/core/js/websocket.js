@@ -58,7 +58,13 @@ function onMessage(event) {
             case "clearChat":                
                 $("#chatbox").empty();
                 $("#chatbox").append('<p style="color: grey">0 mensajes nuevos...</p>');
-                break;    
+                break;   
+            case "FOCUS_SPEED":
+                updateFocusSpeedMicro(device.value);
+                break;
+            case "FOCUS_TIMER":
+                updateFocusTimerMicro(device.value);
+                break;
             default:
                 break;
         }
@@ -231,3 +237,24 @@ function updateRelFocusPosition(focusRelative){
         $("#focusRelative").val(Math.round( focusRelative * 1 ) / 1);   
 }     
      
+function updateFocusSpeedMicro(value){
+    switch(value){
+        case "1":
+            $('#focusSpeedMicro option[value="1"]').prop('selected', true);
+            break;
+        case "2":
+            $('#focusSpeedMicro option[value="2"]').prop('selected', true);
+            break;
+        case "3":
+            $('#focusSpeedMicro option[value="3"]').prop('selected', true);
+            break;
+        case "4":
+            $('#focusSpeedMicro option[value="4"]').prop('selected', true);
+            break;
+        default:
+            break;
+    }
+}
+function updateFocusTimerMicro(value){
+    $("#focusTimerMicro").val(value);   
+} 

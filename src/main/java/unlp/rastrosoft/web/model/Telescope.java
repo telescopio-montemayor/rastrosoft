@@ -16,7 +16,7 @@ import java.util.List;
 public class Telescope extends Device {
     
     public Telescope (){
-        super("Telescope Simulator");
+        super("Telescope Simulator"); //CAMBIAR SEGUN TELESCOPIO: Telescope Simulator / LX200 GPS
     }
     
     public boolean setPark(){

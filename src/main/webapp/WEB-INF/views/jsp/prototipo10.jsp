@@ -90,12 +90,9 @@
 		});       
                 getUsername();
                 getChat();
-                refreshValues();
-//                setInterval(function() {
-                        //refreshValues(); 
-                        //getChat();
-//                         showCapture();
-//                  }, 500);
+                //refreshValues();
+                refreshValuesMicro();
+
 
 	});
         
@@ -512,20 +509,44 @@
                     
                     
                 </div>
-                <div class="sidebar-box">
-                    <label>Focuser</label>
-                    <div class="form-group">
-                        <p class="input-help">Current absolute focus position</p>
-                        <div class="input-group">                    
-                            <input id="focusAbsolute" type="text" class="form-control" placeholder="Ticks"/>
-                            <p class="help-label">Set ticks for absolute focus position</p>
-                            <span class="input-group-btn">
-                                <button id="setFocusAbsolute" class="btn btn-default" type="button">Set</button>
-                            </span>                            
-                        </div>  
+                
+<!--                    PARA EL FOCUSER: MICROFOCUSER DEL LX 200-->
+                     <div class="form-group">
+                        <p class="input-help">Focus speed</p>
+                        <select class="form-control" id="focusSpeedMicro">
+                         <option disabled selected value> -- select focus speed -- </option>   
+                         <option value="1">Halt</option>
+                         <option value="2">Slow</option>  
+                         <option value="3">Medium</option>
+                         <option value="4">Fast</option>
+                       </select>
                     </div>
-                    
                     <div class="form-group">
+                        <p class="input-help">Focus motion</p>                        
+                        <div class="input-group">
+                            <input id="focusTimerMicro" type="text" class="form-control" placeholder="Milliseconds"/>
+                            <p class="help-label">Set the timer countdown (milliseconds)</p>  
+                            <span class="input-group-btn">
+                                <button id="focusInMicro"  class="btn btn-default" type="button">Focus in</button> 
+                                <button id="focusOutMicro" class="btn btn-default" type="button">Focus out</button>
+                            </span> 
+                        </div> 
+                    </div>     
+<!--                    ...-->
+<!--                    
+                       <div class="sidebar-box">
+                        <label>Focuser</label>
+                        <div class="form-group">
+                            <p class="input-help">Current absolute focus position</p>
+                            <div class="input-group">                    
+                                <input id="focusAbsolute" type="text" class="form-control" placeholder="Ticks"/>
+                                <p class="help-label">Set ticks for absolute focus position</p>
+                                <span class="input-group-btn">
+                                    <button id="setFocusAbsolute" class="btn btn-default" type="button">Set</button>
+                                </span>                            
+                            </div>  
+                        </div>     
+                       <div class="form-group">
                         <p class="input-help">Step</p>
                         
                         <div class="input-group">
@@ -537,7 +558,7 @@
                             </span> 
                         </div> 
                         
-                    </div>                    
+                    </div>          -->
                     <div class="form-group previewImage sidebar-fullscreen previewImageFullscreen">            
                         <div class="preview">
                             <img src="<c:url value="/resources/images/preview.jpg"/>" width="100%" height="100%" class="previewImageSrc">                            

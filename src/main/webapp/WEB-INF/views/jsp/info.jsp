@@ -211,7 +211,7 @@
                     <p class="input-help">Exposure time</p>
                     <div class="input-group">
                         <span class="input-group-addon" title="Time to exposure"><i class="fa fa-clock-o fa-fw"></i></span>
-                        <input id="exposureTime" type="number" class="form-control" placeholder="Exposure">                            
+                        <input id="exposureTime" type="number" class="form-control" placeholder="Exposure" min="1">                            
                         <p class="help-label">Set time to exposure (seconds)</p>
                     </div>
                 </div>
@@ -261,7 +261,15 @@
                         <input id="focusAbsolute" type="text" class="form-control" placeholder="Ticks"/>
                         <p class="help-label">Set ticks for absolute focus position</p>                           
                     </div>  
-                </div> 
+                </div>
+                <div class="form-group">
+                    <p class="input-help">Delay time</p>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
+                        <input id="delayTime" type="number" class="form-control" placeholder="Delay" min="0">                            
+                        <p class="help-label">Set time to delay between exposures (seconds)</p>
+                    </div>
+                </div>
                 <div class="form-group">
                     <p class="input-help">Quantity</p>
                     <div class="input-group" style="width:100%">                    

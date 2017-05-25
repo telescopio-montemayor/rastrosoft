@@ -329,8 +329,7 @@ function test() {
 //Telescope functions
 function setRaDec() {
     var search = {};
-    search["value"] = hoursToDecimal($("#setRa").val());
-//    search["value2"] = degreesToDecimal($("#setDec").val());
+    search["value"] = hoursToDecimal($("#setRa").val());  
     search["value2"] = hoursToDecimal($("#setDec").val());
     sendAjax(search,'setRaDec','setRaDec');  
 }
@@ -422,6 +421,27 @@ function focusOut() {
     search["value"] = $("#focusRelative").val();
     sendAjax(search,'focusOut','focusOut');  
 }
+//    PARA EL FOCUSER: MICROFOCUSER LX 200
+function setFocusSpeedMicro() {
+    var search = {};
+    search["value"] = $("#focusSpeedMicro").val();
+    sendAjax(search,'setFocusSpeedMicro','setFocusSpeedMicro');  
+}
+function focusInMicro() {
+    var search = {};
+    search["value"] = $("#focusTimerMicro").val();
+    sendAjax(search,'focusInMicro','focusInMicro');  
+}
+function focusOutMicro() {
+    var search = {};
+    search["value"] = $("#focusTimerMicro").val();
+    sendAjax(search,'focusOutMicro','focusOutMicro');  
+}
+function refreshValuesMicro() {
+    var search = {};
+    sendAjax(search,'refreshValuesMicro','refreshValues');  
+}
+//        ...
 //
 function refreshValues() {
     var search = {};
