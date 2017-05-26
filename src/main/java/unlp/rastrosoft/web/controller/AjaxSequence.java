@@ -6,6 +6,7 @@
 package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -159,11 +160,22 @@ public class AjaxSequence {
         }
         
         if (id_user != -1){
-            StepDB stepDB = new StepDB();
-            stepDB.connect();
+            SequenceDB sequenceDB = new SequenceDB();
+            sequenceDB.connect();
+            if (sequenceDB.getUserId(sequence_id) == id_user){
+                StepDB stepDB = new StepDB();
+                stepDB.connect();
+                List<Integer> steps = stepDB.getSteps(sequence_id);
+                int current_step_id;
+                for (int i = 0; i < steps.size(); i++){
+                    current_step_id = steps.get(i);
+                    Step step = stepDB.getStep(current_step_id);
+                    step.execute();
+                }
+                
+            }
             
-            Step step = stepDB.getStep(19);
-            step.execute();
+            
         }
         
         return result;

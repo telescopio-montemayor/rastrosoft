@@ -76,10 +76,15 @@ public class Step {
         return timeLeft >= this.durationTime();
     }
     public static final Object lock_key = new Object();
-   
+    public static final Object lock_key_exposure = new Object();
     public void awake_lock(){
         synchronized(lock_key) {
             lock_key.notifyAll();
+        }
+    }
+    public void awake_lock_exposure(){
+        synchronized(lock_key_exposure) {
+            lock_key_exposure.notifyAll();
         }
     }
     public Step(){
@@ -95,18 +100,24 @@ public class Step {
                     lock_key.wait();
                 } catch (InterruptedException ex) {                    
                 }
-            System.err.println("EJECUTANDO CAPTURA");
-            String currentUserName = null;        
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (!(authentication instanceof AnonymousAuthenticationToken)) {
-                currentUserName = authentication.getName();         
-            }
-            String path = "/home/ip300/webapp/captures";
-            String source= path+"/"+currentUserName;
-            String dest = path+"/"+currentUserName;
-            String time = this.getExposureTime();
-            Ccd ccd = new Ccd();
-            ccd.setExposure(time, path, source, dest);
+        }
+        System.err.println("EJECUTANDO CAPTURA");
+        String currentUserName = null;        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            currentUserName = authentication.getName();         
+        }
+        String path = "/home/ip300/webapp/captures";
+        String source= path+"/"+currentUserName;
+        String dest = path+"/"+currentUserName;
+        String time = this.getExposureTime();
+        Ccd ccd = new Ccd();
+        ccd.setExposure(time, path, source, dest);
+        synchronized(lock_key_exposure) {
+            try {
+                    lock_key_exposure.wait();
+                } catch (InterruptedException ex) {                    
+                }
         }
     
     }

@@ -215,4 +215,39 @@ public class StepDB extends Database{
             }
         }
     }
+    
+    public List<Integer> getSteps(int id_sequence){
+        String sql = "SELECT id FROM step WHERE id_sequence = ? AND state <> -1 ORDER BY number ASC";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+            ps.setInt(1, id_sequence);
+
+            ResultSet rs =ps.executeQuery();
+           
+            List<Integer> steps = new ArrayList<>();
+            
+            while (rs.next()) {
+                
+                steps.add(rs.getInt("id"));
+               
+            }
+            
+            rs.close();
+            ps.close();
+            return steps;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+    }
 }

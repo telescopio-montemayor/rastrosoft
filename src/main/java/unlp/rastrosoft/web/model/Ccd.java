@@ -279,6 +279,10 @@ public class Ccd extends Device {
                     DeviceSessionHandler sessionHandler;
                     sessionHandler = new DeviceSessionHandler();
                     sessionHandler.updateElement("newCapture", filePathString);
+                        //AWAIK THE LOCK_CCD IN STEP
+                        Step current_step = new Step();
+                        current_step.awake_lock_exposure();
+                        //
                     this.cancel();
                     timer.cancel();
                 }
