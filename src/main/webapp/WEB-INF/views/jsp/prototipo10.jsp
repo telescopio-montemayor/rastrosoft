@@ -531,7 +531,14 @@
                                 <button id="focusOutMicro" class="btn btn-default" type="button">Focus out</button>
                             </span> 
                         </div> 
-                    </div>     
+                    </div>
+                    <div class="form-group">                       
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button id="executeSequence"  class="btn btn-default" type="button">Execute sequence</button>
+                            </span> 
+                        </div> 
+                    </div>   
 <!--                    ...-->
 <!--                    
                        <div class="sidebar-box">

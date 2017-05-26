@@ -21,6 +21,8 @@ import unlp.rastrosoft.web.model.AjaxResponseListOfLists;
 import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.ExecuteCriteriaTwoValues;
 import unlp.rastrosoft.web.model.SequenceDB;
+import unlp.rastrosoft.web.model.Step;
+import unlp.rastrosoft.web.model.StepDB;
 import unlp.rastrosoft.web.model.User;
 import unlp.rastrosoft.web.model.UserDB;
 
@@ -133,6 +135,35 @@ public class AjaxSequence {
             SequenceDB sequence = new SequenceDB();
             sequence.connect();
             result.addElementos(sequence.getSequencesAsList(id_user));
+        }
+        
+        return result;
+    }  
+    
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/executeSequence", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public AjaxResponse executeSequence(@RequestBody ExecuteCriteria execute) {
+        AjaxResponse result = new AjaxResponse();    
+        int sequence_id = Integer.parseInt(execute.getValue());
+        
+        int id_user = -1;
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            User user = userDB.getUser(username);
+            id_user = user.getUserId();
+        }
+        
+        if (id_user != -1){
+            StepDB stepDB = new StepDB();
+            stepDB.connect();
+            
+            Step step = stepDB.getStep(19);
+            step.execute();
         }
         
         return result;

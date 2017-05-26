@@ -98,7 +98,7 @@ public class StepDB extends Database{
     
 
     public List<List<String>> getStepsAsList(int id_sequence){
-        String sql = "SELECT id, id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, state FROM step WHERE id_sequence = ? AND state <> -1 ORDER BY number ASC";
+        String sql = "SELECT id, id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay, state FROM step WHERE id_sequence = ? AND state <> -1 ORDER BY number ASC";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -126,14 +126,51 @@ public class StepDB extends Database{
                 step.add(rs.getString("width"));
                 step.add(rs.getString("height"));
                 step.add(rs.getString("focusPosition"));
-                step.add(rs.getString("quantity"));
-                step.add(rs.getString("state"));
+                step.add(String.valueOf(rs.getInt("quantity")));
+                step.add(String.valueOf(rs.getInt("delay")));
+                step.add(String.valueOf(rs.getInt("state")));
                 steps.add(step);
             }
             
             rs.close();
             ps.close();
             return steps;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+    }
+     public Step getStep(int id){
+        String sql = "SELECT id, id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay, state FROM step WHERE id = ? AND state <> -1 ORDER BY number ASC LIMIT 1";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+            ps.setInt(1, id);
+
+            ResultSet rs =ps.executeQuery();
+            Step current_step = null;
+            while (rs.next()) {
+                
+                current_step = new Step (
+                        rs.getInt("id"), rs.getInt("id_sequence"),rs.getInt("number"), rs.getString("ra"), 
+                        rs.getString("declination"), rs.getString("exposureTime"), rs.getString("hBinning"), 
+                        rs.getString("vBinning"), rs.getString("frameType"), rs.getString("x"), rs.getString("y"),
+                        rs.getString("width"), rs.getString("height"), rs.getString("focusPosition"), rs.getInt("quantity"),
+                        rs.getInt("delay"), rs.getInt("state"));
+            }
+            
+            rs.close();
+            ps.close();
+            return current_step;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

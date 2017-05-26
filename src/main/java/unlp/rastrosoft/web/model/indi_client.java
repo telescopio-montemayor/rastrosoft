@@ -85,7 +85,7 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	}
 
 	public void newMessage(INDIServerConnection connection, Date timestamp, String message) {
-	    //System.out.println("New Server Message: " + timestamp + " - " + message);
+	    System.out.println("New Server Message: " + timestamp + " - " + message);
             //sessionHandler.updateElement("newMessage", message);
             
 	}
@@ -103,6 +103,11 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	
 	public void propertyChanged(INDIProperty property) {
 	    //System.out.println("Property Changed: ->" + property.getNameStateAndValuesAsString()); 
+            if (property.getName().equals("EQUATORIAL_PE")){
+                //DESPERTAR
+                Step current_step = new Step();
+                current_step.awake_lock();
+            }
             sessionHandler.updateElement(property.getName(), property.getValuesAsString());
 	}	
 	

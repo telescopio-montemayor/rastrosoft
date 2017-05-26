@@ -276,6 +276,9 @@ function successAjax(data, tipo) {
         case 'addStep':
             getSteps($("#sequence").val());
             break;
+        case 'executeSequence':
+            alert("Sequence complete");
+            break;
         default:
             break;
     } 
@@ -741,4 +744,10 @@ function startTimer(duration) {
             timer = duration;
         }
     }, 1000);
+}
+
+function executeSequence() {
+    var search = {};
+    search["value"] = '1';
+    sendAjax(search,'executeSequence','executeSequence');  
 }

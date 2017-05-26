@@ -351,6 +351,10 @@ $(document).ready(function() {
         focusOutMicro();
     });
 //            ...
+        
+    $("#executeSequence").click(function(){
+        executeSequence();
+    });  
 });
 $.fn.enterKey = function (fnc) {
         return this.each(function () {

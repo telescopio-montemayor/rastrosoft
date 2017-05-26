@@ -47,6 +47,7 @@ import unlp.rastrosoft.web.model.ChatDB;
 import unlp.rastrosoft.web.model.Focuser;
 import unlp.rastrosoft.web.model.LiveTransmitDB;
 import unlp.rastrosoft.web.model.SendMailTLS;
+import unlp.rastrosoft.web.model.Step;
 import unlp.rastrosoft.web.model.Telescope;
 import unlp.rastrosoft.web.model.User;
 import unlp.rastrosoft.web.model.UserDB;
