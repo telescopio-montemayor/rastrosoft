@@ -99,6 +99,13 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	public void messageChanged(INDIDevice device) {
 	    //System.out.println("New Device Message: " + device.getName() + " - " + device.getTimestamp() + " - " + device.getLastMessage());
             //sessionHandler.updateElement(device.getName(), device.getLastMessage());
+            
+            //PARA EL TELESCOPIO DE PRUEBAS LX200
+            if (device.getLastMessage().equals("Slew is complete. Tracking...")){
+                //DESPERTAR
+                Step current_step = new Step();
+                current_step.awake_lock();
+            }
 	}
 	
 	public void propertyChanged(INDIProperty property) {
