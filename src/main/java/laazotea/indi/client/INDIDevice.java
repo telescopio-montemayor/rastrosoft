@@ -305,7 +305,7 @@ public class INDIDevice {
   protected void messageReceived(Element xml) {
     if (xml.hasAttribute("message")) {
       String time = xml.getAttribute("timestamp").trim();
-      System.err.println("-<<<<<<<<<<<<<<<<<<<<<<<<>  ----------"+time+"-----------      <<>>>>>>>>>>>>>>>>>>>>>>");
+      //System.err.println("-<<<<<<<<<<<<<<<<<<<<<<<<>  ----------"+time+"-----------      <<>>>>>>>>>>>>>>>>>>>>>>");
       timestamp = INDIDateFormat.parseTimestamp(time);
 
       message = xml.getAttribute("message").trim();

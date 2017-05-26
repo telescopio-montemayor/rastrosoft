@@ -84,6 +84,7 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
             }
 	}
 
+        
 	public void newMessage(INDIServerConnection connection, Date timestamp, String message) {
 	    System.out.println("New Server Message: " + timestamp + " - " + message);
             //sessionHandler.updateElement("newMessage", message);
@@ -99,18 +100,19 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 	public void messageChanged(INDIDevice device) {
 	    //System.out.println("New Device Message: " + device.getName() + " - " + device.getTimestamp() + " - " + device.getLastMessage());
             //sessionHandler.updateElement(device.getName(), device.getLastMessage());
-            
+           
             //PARA EL TELESCOPIO DE PRUEBAS LX200
-            if (device.getLastMessage().equals("Slew is complete. Tracking...")){
-                //DESPERTAR
-                Step current_step = new Step();
-                current_step.awake_lock();
-            }
+//            if (device.getLastMessage().equals("Slew is complete. Tracking...")){
+//                //DESPERTAR
+//                Step current_step = new Step();
+//                current_step.awake_lock();
+//            }
+//            System.err.println("ESTADO DE EEC: "+device.getProperty("EQUATORIAL_EOD_COORD").getState().toString());
 	}
 	
 	public void propertyChanged(INDIProperty property) {
-	    //System.out.println("Property Changed: ->" + property.getNameStateAndValuesAsString()); 
-            if (property.getName().equals("EQUATORIAL_PE")){
+//	    System.err.println("Property Changed: ->" + property.getNameStateAndValuesAsString()); 
+            if (property.getName().equals("TELESCOPE_SLEW_RATE") && property.getState().equals(property.getState().IDLE)){
                 //DESPERTAR
                 Step current_step = new Step();
                 current_step.awake_lock();
