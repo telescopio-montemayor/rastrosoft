@@ -8,7 +8,7 @@
 
 <c:url var="home" value="/" scope="request" />
 
-
+<!--Prueba comit ale-->
 <spring:url value="/resources/core/css/bootstrap.min.css" var="bootstrapCss" />
 <link href="${bootstrapCss}" rel="stylesheet" />
 
