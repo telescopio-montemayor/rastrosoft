@@ -97,6 +97,7 @@ function updateNewImageCapture(value){
     var res = absoluteFilePath.split("webapp");
     var imageSource = ("/rastrosoft"+res[1]);
     $("#download").attr("href", imageSource);
+    $("#download").attr("download", "capture.jpg");
     cargarImagen(imageSource);
 //    var myInterval = setInterval(function(){        
 //        if(loadImage(imageSource)){   

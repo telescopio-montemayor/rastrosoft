@@ -77,7 +77,7 @@ public class DeviceSessionHandler {
         
         
         sendElement(element, value);
-//        if (prop.contains(element)){
+//        if (prop.contains(element)){          DESCOMENTAR EN PRODUCCIÓN
 //            sendElement(element, value);
 //        }
             

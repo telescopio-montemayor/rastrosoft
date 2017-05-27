@@ -176,11 +176,11 @@ function successAjax(data, tipo) {
                         +'<td>'+decimalToDegrees(c[3])+'</td>'
                         +'<td>'+c[13]+' segundos</td>'
                         +'<td>'+c[14].split("captures")[1]+'</td>'
-                        +'<td><a href="#"><i class="fa fa-download" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>'+
+                        +'<td><a href="/rastrosoft/captures'+c[14].split("captures")[1]+'" download"><i class="fa fa-download" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>'+
                         +'</tr>');
                });
             });   
-//            updateTables();            
+//            updateTables();            var imageSource = ("/rastrosoft"+c[14].split("captures")[1]);
             break;
         case 'getChat':  
             $("#chatbox").empty();
@@ -333,7 +333,7 @@ function test() {
 function setRaDec() {
     var search = {};
     search["value"] = hoursToDecimal($("#setRa").val());  
-    search["value2"] = hoursToDecimal($("#setDec").val());
+    search["value2"] = hoursToDecimal($("#setDec").val());    
     sendAjax(search,'setRaDec','setRaDec');  
 }
 function setPark() {
@@ -597,7 +597,8 @@ function updateValues(data){
         
         if (($('#setRa').is(":focus")===false)&($('#setDec').is(":focus")===false)){
             $('#setRa').val(decimalToHours(ra));
-            $('#setDec').val(decimalToDegrees(dec));
+//            $('#setDec').val(decimalToDegrees(dec));
+            $('#setDec').val(decimalToHours(dec));
         }
         
         

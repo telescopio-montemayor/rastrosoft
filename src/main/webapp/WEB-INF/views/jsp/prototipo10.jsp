@@ -315,7 +315,7 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-download fa-fw"></i></span>
 <!--                        <button class="form-control logout-icon" type="button" id="download">Download</button>-->
-                        <a class="form-control logout-icon download-button" id="download" href="" download="Capture.jpg">Download</a>
+                        <a class="form-control logout-icon download-button" id="download" href="">Download</a>
                     </div>
                 </div>
             </div>  

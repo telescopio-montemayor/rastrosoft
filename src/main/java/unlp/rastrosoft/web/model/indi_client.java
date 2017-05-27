@@ -107,12 +107,15 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
 //                Step current_step = new Step();
 //                current_step.awake_lock();
 //            }
-//            System.err.println("ESTADO DE EEC: "+device.getProperty("EQUATORIAL_EOD_COORD").getState().toString());
 	}
 	
 	public void propertyChanged(INDIProperty property) {
 //	    System.err.println("Property Changed: ->" + property.getNameStateAndValuesAsString()); 
-            if (property.getName().equals("TELESCOPE_SLEW_RATE") && property.getState().equals(property.getState().IDLE)){
+            if ( 
+                    (property.getName().equals("TELESCOPE_SLEW_RATE") && property.getState().equals(property.getState().IDLE))  //LX200
+                    ||
+                    (property.getName().equals("EQUATORIAL_PE") && property.getState().equals(property.getState().IDLE))        //Telescope Simulator
+                ){
                 //DESPERTAR
                 Step current_step = new Step();
                 current_step.awake_lock();

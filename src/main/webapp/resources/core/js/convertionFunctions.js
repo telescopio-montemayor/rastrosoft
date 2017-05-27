@@ -23,7 +23,19 @@ function degreesToDecimal(d) {
 }
 function hoursToDecimal(H){
     var a = H.split(':'); 
-    return ((parseFloat(a[0]) + (parseFloat(a[1])/60.0) + (parseFloat(a[2])/3600.0)));
+    switch(a.length) {
+        case 1:
+            return (parseFloat(a[0]));
+            break;
+        case 2:
+            return (parseFloat(a[0]) + (parseFloat(a[1])/60.0));
+            break;
+        case 3:
+            return (parseFloat(a[0]) + (parseFloat(a[1])/60.0) + (parseFloat(a[2])/3600.0));
+            break;    
+        default:
+            break;
+    } 
 }
 
 function hashCode(str) { // java String#hashCode
