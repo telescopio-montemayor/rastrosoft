@@ -278,6 +278,7 @@
                     </div>  
                 </div> 
                 <input type="hidden" id="step-number" value="0">
+                <input type="hidden" id="selected-step-id" value="0">
                 <!--<button onclick="tableAutomatization.draw();">Update table</button>-->
             </div>
             <div class="automatization-list col-md-9 col-sm-12">
@@ -297,9 +298,9 @@
                 </div>                
                 <div class="controls" style="float:left">
                     <button onclick="addStepBtn();"><i class="fa fa-plus" aria-hidden="true" style="color:green"></i></button>
-                    <button><i class="fa fa-minus" aria-hidden="true" style="color:red"></i></button>
-                    <button><i class="fa fa-caret-up" aria-hidden="true"></i></button>
-                    <button><i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                    <button onclick="removeStepBtn();"><i class="fa fa-minus" aria-hidden="true" style="color:red"></i></button>
+                    <button onclick="goUpStepBtn();"><i class="fa fa-caret-up" aria-hidden="true"></i></button>
+                    <button onclick="goDownStepBtn();"><i class="fa fa-caret-down" aria-hidden="true"></i></button>
                 </div>
                 <div class="table-automatization">
                     <table id="automatization" class="table select-feel">
@@ -598,6 +599,29 @@
             if (confirm("Are you sure you want to remove the sequence '"+name+"'?") === true) {
                 removeSequence(id);
             }           
+        }
+        function goDownStepBtn(){
+            var id_step;
+            id_step = $("#automatization>tbody").find(".row-selected").attr("stepid");
+            if (id_step!=null){
+                goDownStep(id_step);
+            }    
+        }
+        function goUpStepBtn(){
+            var id_step;
+            id_step = $("#automatization>tbody").find(".row-selected").attr("stepid");
+            if (id_step!=null){
+                goUpStep(id_step);
+            }    
+        }
+        function removeStepBtn(){
+            var id_step;
+            id_step = $("#automatization>tbody").find(".row-selected").attr("stepid");
+            if (id_step!=null){
+                if (confirm("Are you sure you want to remove this step?")){
+                    removeStep(id_step);
+                }
+            }    
         }
         function addStepBtn(){
             var id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity;

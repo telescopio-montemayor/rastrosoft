@@ -70,18 +70,58 @@ public class StepDB extends Database{
         return id;
     }
     
-    public void removeStep(int id_step){
+    public void removeStep(int id_step, int id_sequence){
         
-        String sql = "UPDATE step " +
-                      "SET state = -1 WHERE id = ?";
+//        String sql = "UPDATE step " +
+//                      "SET state = -1 WHERE id = ?";
+        String sqlGet = "SELECT number " +
+                      "FROM step WHERE id = ? LIMIT 1";
+        int number = 0;
+        String sqlGetMax = "SELECT MAX(number) as number " +
+                      "FROM step WHERE id_sequence = ? LIMIT 1";
+        int max_number = 0;
+        String sqlChangePrevious = "UPDATE step " +
+                      "SET number = number-1 WHERE number = ? AND id_sequence = ?";
+        int next = 0;
+        String sql = "DELETE FROM step " +
+                      "WHERE id = ?";
         Connection conn = null;
 
         try {
                 conn = dataSource.getConnection();
-                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sqlGet);
 
                 ps.setInt(1, id_step);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                   number = rs.getInt("number"); 
+                }
+                ps = (PreparedStatement) conn.prepareStatement(sqlGetMax);
+                ps.setInt(1, id_sequence); 
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                   max_number = rs.getInt("number"); 
+                }
+                next = number;
+                ps = (PreparedStatement) conn.prepareStatement(sql);
+                ps.setInt(1, id_step);
                 ps.executeUpdate();
+                while(next <= max_number){
+                    ps = (PreparedStatement) conn.prepareStatement(sqlChangePrevious);                    
+                    ps.setInt(1, next);
+                    ps.setInt(2, id_sequence);
+                    ps.executeUpdate();
+                    next = next + 1;
+                    ps = (PreparedStatement) conn.prepareStatement(sqlGetMax);
+                    ps.setInt(1, id_sequence); 
+                    rs = ps.executeQuery();
+                    while (rs.next()) {
+                       max_number = rs.getInt("number"); 
+                    }
+                }
+                
+                
+                
                 ps.close();
 
         } catch (SQLException e) {
@@ -96,6 +136,111 @@ public class StepDB extends Database{
         }
     } 
     
+    public void goUpStep(int id_step, int id_sequence){
+        
+        String sqlGet = "SELECT number " +
+                      "FROM step WHERE id = ? LIMIT 1";
+        int number = 0;
+        String sql = "UPDATE step " +
+                      "SET number = ? WHERE id = ?";
+        
+        String sqlChangePrevious = "UPDATE step " +
+                      "SET number = ? WHERE number = ? AND id_sequence = ?";
+        Connection conn = null;
+
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sqlGet);
+
+                ps.setInt(1, id_step);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                   number = rs.getInt("number"); 
+                }
+                if (number>1){
+                    ps = (PreparedStatement) conn.prepareStatement(sqlChangePrevious);
+                    ps.setInt(1, number);
+                    ps.setInt(2, number-1);
+                    ps.setInt(3, id_sequence);
+                    ps.executeUpdate();
+                    
+                    ps = (PreparedStatement) conn.prepareStatement(sql);
+                    ps.setInt(1, number-1);
+                    ps.setInt(2, id_step);
+                    ps.executeUpdate();
+                    
+                }
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+    }
+    public void goDownStep(int id_step, int id_sequence){
+        
+        String sqlGet = "SELECT number " +
+                      "FROM step WHERE id = ? LIMIT 1";
+        int number = 0;
+        String sql = "UPDATE step " +
+                      "SET number = ? WHERE id = ?";
+        
+        String sqlChangePrevious = "UPDATE step " +
+                      "SET number = ? WHERE number = ? AND id_sequence = ?";
+        
+        String sqlGetMax = "SELECT MAX(number) as number " +
+                      "FROM step WHERE id_sequence = ? LIMIT 1";
+        int max_number = 0;
+        
+        Connection conn = null;
+
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sqlGet);
+
+                ps.setInt(1, id_step);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                   number = rs.getInt("number"); 
+                }
+                ps = (PreparedStatement) conn.prepareStatement(sqlGetMax);
+                ps.setInt(1, id_sequence);
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                   max_number = rs.getInt("number"); 
+                }
+                if (number < max_number){
+                    ps = (PreparedStatement) conn.prepareStatement(sqlChangePrevious);
+                    ps.setInt(1, number);
+                    ps.setInt(2, number+1);
+                    ps.setInt(3, id_sequence);
+                    ps.executeUpdate();
+                    
+                    ps = (PreparedStatement) conn.prepareStatement(sql);
+                    ps.setInt(1, number+1);
+                    ps.setInt(2, id_step);
+                    ps.executeUpdate();
+                    
+                }
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+    }
 
     public List<List<String>> getStepsAsList(int id_sequence){
         String sql = "SELECT id, id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay, state FROM step WHERE id_sequence = ? AND state <> -1 ORDER BY number ASC";

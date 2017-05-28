@@ -105,7 +105,75 @@ public class AjaxStep {
             SequenceDB sequence = new SequenceDB();
             sequence.connect();
             if(sequence.getUserId(sequence_id) == id_user ){ // Check if is the owner
-                step.removeStep(step_id);
+                step.removeStep(step_id, sequence_id);
+            }
+        }
+        
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/goUpStep", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public AjaxResponse goUpStep(@RequestBody ExecuteCriteria execute) {
+        AjaxResponse result = new AjaxResponse();    
+        int step_id = Integer.parseInt(execute.getValue());
+        
+        int id_user = -1;
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            User user = userDB.getUser(username);
+            id_user = user.getUserId();
+        }
+        
+        int sequence_id = -1;
+        
+        if (id_user != -1){
+            StepDB step = new StepDB();
+            step.connect();
+            sequence_id = step.getSequenceId(step_id);
+            
+            SequenceDB sequence = new SequenceDB();
+            sequence.connect();
+            if(sequence.getUserId(sequence_id) == id_user ){ // Check if is the owner
+                step.goUpStep(step_id, sequence_id);
+            }
+        }
+        
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/goDownStep", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public AjaxResponse goDownStep(@RequestBody ExecuteCriteria execute) {
+        AjaxResponse result = new AjaxResponse();    
+        int step_id = Integer.parseInt(execute.getValue());
+        
+        int id_user = -1;
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            User user = userDB.getUser(username);
+            id_user = user.getUserId();
+        }
+        
+        int sequence_id = -1;
+        
+        if (id_user != -1){
+            StepDB step = new StepDB();
+            step.connect();
+            sequence_id = step.getSequenceId(step_id);
+            
+            SequenceDB sequence = new SequenceDB();
+            sequence.connect();
+            if(sequence.getUserId(sequence_id) == id_user ){ // Check if is the owner
+                step.goDownStep(step_id, sequence_id);
             }
         }
         

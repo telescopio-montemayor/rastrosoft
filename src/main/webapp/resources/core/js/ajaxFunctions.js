@@ -272,6 +272,16 @@ function successAjax(data, tipo) {
                     $("#step-number").val(c[2]);
                });
             });
+            $("#"+$("#selected-step-id").val()).addClass("row-selected"); 
+            break;
+        case 'goDownStep':
+        case 'goUpStep':
+            var id_step = $("#automatization>tbody").find(".row-selected").attr("stepid");
+            getSteps($("#sequence").val());
+            $("#selected-step-id").val("step_"+id_step);                       
+            break;
+        case 'removeStep':
+            getSteps($("#sequence").val());
             break;
         case 'addStep':
             getSteps($("#sequence").val());
@@ -528,6 +538,16 @@ function getSequences() {
     var search = {};
     search["value"] = 1;
     sendAjax(search,'getSequences','getSequences');
+}
+function goUpStep(id) {    
+    var search = {};
+    search["value"] = id;    
+    sendAjax(search,'goUpStep','goUpStep');     
+}
+function goDownStep(id) {    
+    var search = {};
+    search["value"] = id;    
+    sendAjax(search,'goDownStep','goDownStep');     
 }
 function removeStep(id) {    
     var search = {};
