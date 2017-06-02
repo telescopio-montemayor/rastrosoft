@@ -1,7 +1,15 @@
 package unlp.rastrosoft.web.model;
 public class ExecuteCriteriaStep {
 
-        String id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity;
+        String id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay;
+
+    public String getDelay() {
+        return delay;
+    }
+
+    public void setDelay(String delay) {
+        this.delay = delay;
+    }
 
     public String getId_sequence() {
         return id_sequence;
@@ -119,7 +127,7 @@ public class ExecuteCriteriaStep {
         
     @Override
     public String toString() {
-            return "SearchCriteria [id_sequence=" + id_sequence + ", number=" + number + ", ra=" + ra + ", declination=" + declination  + ", exposureTime=" + exposureTime + ", hBinning=" + hBinning + ", vBinning=" + vBinning + ", frameType=" + frameType + ", x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", focusPosition=" + focusPosition + ", quantity=" + quantity + "]";
+            return "SearchCriteria [id_sequence=" + id_sequence + ", number=" + number + ", ra=" + ra + ", declination=" + declination  + ", exposureTime=" + exposureTime + ", hBinning=" + hBinning + ", vBinning=" + vBinning + ", frameType=" + frameType + ", x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ", focusPosition=" + focusPosition + ", quantity=" + quantity + ", delay=" + delay + "]";
     }
 
 }

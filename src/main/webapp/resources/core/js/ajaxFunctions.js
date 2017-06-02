@@ -168,7 +168,9 @@ function successAjax(data, tipo) {
         case 'getCaptures':
             $("#captures tBody").empty();
             $.each(data, function(key, value) {
-                $.each(value, function(key2, c) {
+                $.each(value, function(key2, c) {                    
+                    var fits = '/rastrosoft/captures'+c[14].split("captures")[1];
+                    var jpg = '/rastrosoft/captures'+c[14].split("captures")[1]+'.jpg';
                     $("#captures tBody").append('<tr><th scope="row">'+c[0]+'</th>'
                         +'<td>'+c[1].slice(0, 10)+'</td>'
                         +'<td>'+c[1].slice(11, 19)+'</td>'
@@ -176,7 +178,10 @@ function successAjax(data, tipo) {
                         +'<td>'+decimalToDegrees(c[3])+'</td>'
                         +'<td>'+c[13]+' segundos</td>'
                         +'<td>'+c[14].split("captures")[1]+'</td>'
-                        +'<td><a href="/rastrosoft/captures'+c[14].split("captures")[1]+'" download"><i class="fa fa-download" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-file-text-o text-success" aria-hidden="true"></i></a></td><td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>'+
+//                      +'<td><div class="btn-group" style="height: 10px; margin-top: -25px;"><a class="btn dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span class="fa fa-download"></span></a><ul class="dropdown-menu"><li><a href="'+fits+'" download><i class="fa fa-file fa-fw"></i> .fits</a></li><li><a href="'+jpg+'" download><i class="fa fa-file-image-o fa-fw"></i> .jpg</a></li></ul></div></td>'          
+                        +'<td><a href="'+fits+'" download><i class="fa fa-file fa-fw" aria-hidden="true"></i></a></td>'
+                        +'<td><a href="'+jpg+'" download><i class="fa fa-file-image-o fa-fw text-success" aria-hidden="true"></i></a></td>'
+                        +'<td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>'
                         +'</tr>');
                });
             });   
@@ -254,7 +259,7 @@ function successAjax(data, tipo) {
             $("#tbody-automatization").empty();
             $("#step-number").val(0);
             $.each(data, function(key, value) {
-                $.each(value, function(key2, c) {
+                $.each(value, function(key2, c) {                    
                     $("#tbody-automatization").append('<tr id="step_'+c[0]+'" stepid="'+c[0]+'" sequenceid="'+c[1]+'" state="'+c[15]+'" onclick="select_row(\'step_'+c[0]+'\');"><th scope="row">'+c[2]+'</th>'
                         +'<td>'+c[3]+'</td>'
                         +'<td>'+c[4]+'</td>'
@@ -268,6 +273,8 @@ function successAjax(data, tipo) {
                         +'<td>'+c[12]+'</td>'
                         +'<td>'+c[13]+'</td>'
                         +'<td>'+c[14]+'</td>'
+                        +'<td>'+c[15]+'</td>'
+                        +'<td>'+getState(c[16])+'</td>'
                         +'</tr>');
                     $("#step-number").val(c[2]);
                });
@@ -294,6 +301,27 @@ function successAjax(data, tipo) {
     } 
 
 
+}
+
+function getState(num){
+    var state;
+    switch(num) {
+        case '0':
+            state = 'Inactive';
+            break;
+        case '1':
+            state = 'In progress';
+            break;
+        case '2':
+            state = 'Completed';
+            break;
+        case '3':
+            state = 'Interrumpted';
+            break;
+        default:
+            break;
+    }
+    return state;
 }
 
 function listaDispositivos(){
@@ -559,7 +587,7 @@ function getSteps(sequence_id) {
     search["value"] = sequence_id;
     sendAjax(search,'getSteps','getSteps');
 }
-function addStep(id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity) {    
+function addStep(id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay) {    
     var search = {};
     search["id_sequence"] = id_sequence;
     search["number"] = number;
@@ -575,6 +603,7 @@ function addStep(id_sequence, number, ra, declination, exposureTime, hBinning, v
     search["height"] = height;
     search["focusPosition"] = focusPosition;
     search["quantity"] = quantity;
+    search["delay"] = delay;
     sendAjax(search,'addStep','addStep');
 }
 //

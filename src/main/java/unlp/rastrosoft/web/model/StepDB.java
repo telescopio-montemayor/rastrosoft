@@ -17,9 +17,9 @@ import java.util.List;
  * @author ip300
  */
 public class StepDB extends Database{
-     public int insertStep(int id_sequence, int number, String ra, String declination, String exposureTime, String hBinning, String vBinning, String frameType, String x, String y, String width, String height, String focusPosition, int quantity){
+     public int insertStep(int id_sequence, int number, String ra, String declination, String exposureTime, String hBinning, String vBinning, String frameType, String x, String y, String width, String height, String focusPosition, int quantity, int delay){
         
-        String sql = "INSERT INTO step (id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO step (id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         Connection conn = null;
         int id;
@@ -52,6 +52,7 @@ public class StepDB extends Database{
                 ps.setString(12, height);
                 ps.setString(13, focusPosition);
                 ps.setInt(14, quantity);
+                ps.setInt(15, delay);
                 
                 ps.executeUpdate();
                 id = (int) ps.getLastInsertID();

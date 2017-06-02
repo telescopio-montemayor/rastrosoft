@@ -7,6 +7,8 @@ package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -170,7 +172,14 @@ public class AjaxSequence {
                 for (int i = 0; i < steps.size(); i++){
                     current_step_id = steps.get(i);
                     Step step = stepDB.getStep(current_step_id);
-                    step.execute();
+                    for (int x = 0; x < step.getQuantity(); x++){
+                        step.execute();
+                        try {
+                            Thread.sleep(step.getDelay()*1000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(AjaxSequence.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                 }
                 
             }

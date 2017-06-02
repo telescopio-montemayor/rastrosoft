@@ -38,7 +38,7 @@ public class AjaxStep {
     public AjaxResponse addStep(@RequestBody ExecuteCriteriaStep execute) {
         AjaxResponse result = new AjaxResponse();    
         
-        String id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity;
+        String id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay;
         
         id_sequence = execute.getId_sequence();
         number = execute.getNumber();
@@ -55,6 +55,8 @@ public class AjaxStep {
         focusPosition = execute.getFocusPosition();
         quantity = execute.getQuantity();
                 if (quantity == null || quantity.equals("") )   quantity        =   "1";
+        delay = execute.getDelay();
+                if (delay == null || delay.equals("") )         delay           =   "0";
         int id_user = -1;
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -72,7 +74,7 @@ public class AjaxStep {
             if(sequence.getUserId(Integer.parseInt(id_sequence)) == id_user ){ // Check if is the owner
                 StepDB step = new StepDB();
                 step.connect();
-                step.insertStep(Integer.parseInt(id_sequence), Integer.parseInt(number), ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, Integer.parseInt(quantity));
+                step.insertStep(Integer.parseInt(id_sequence), Integer.parseInt(number), ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, Integer.parseInt(quantity), Integer.parseInt(delay));
             }
         }
         return result;

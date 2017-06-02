@@ -65,11 +65,11 @@ caption{
     background-color: #fcf8e3;
 }*/
 .row-selected{
-    background-color: orange;
+    background-color: #FEEA3A;
 }
 
 .row-selected:hover{
-    background-color: orange;
+    background-color: #FEEA3A;
 }
 
 

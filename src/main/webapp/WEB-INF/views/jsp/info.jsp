@@ -310,15 +310,17 @@
                             <th><span tkey="ra">RA</span></th>
                             <th><span tkey="dec">DEC</span></th>
                             <th><span tkey="exposure" min="1">Exposicion</span></th>
-                            <th><span tkey="horizontal-binnig">Horizontal binning</span></th>
-                            <th><span tkey="vertical-binnig">Vertical binning</span></th>
-                            <th><span tkey="frame-type">Frame type</span></th>
-                            <th><span tkey="frame-x">Frame X</span></th>
-                            <th><span tkey="frame-y">Frame Y</span></th>
-                            <th><span tkey="image-width">Image width</span></th>
-                            <th><span tkey="image-height">Image height</span></th>
-                            <th><span tkey="focus-position">Focus position</span></th>
+                            <th><span tkey="horizontal-binnig">H</span></th>
+                            <th><span tkey="vertical-binnig">V</span></th>
+                            <th><span tkey="frame-type">Frame</span></th>
+                            <th><span tkey="frame-x">X</span></th>
+                            <th><span tkey="frame-y">Y</span></th>
+                            <th><span tkey="image-width">width</span></th>
+                            <th><span tkey="image-height">height</span></th>
+                            <th><span tkey="focus-position">Focus</span></th>
                             <th><span tkey="quantity">Quantity</span></th>
+                            <th><span tkey="delay">Delay</span></th>
+                            <th><span tkey="state">State</span></th>
                           </tr>
                         </thead>
                         <tbody id="tbody-automatization">
@@ -385,8 +387,8 @@
             $( "input" ).focusout(function() {
                 $( this ).next( ".help-label" ).hide();
             });
-            $('#setRa').mask('00:00:00');
-            $('#setDec').mask('00:00:00');
+//            $('#setRa').mask('00:00:00');
+//            $('#setDec').mask('00:00:00');
             var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
             if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
@@ -624,11 +626,11 @@
             }    
         }
         function addStepBtn(){
-            var id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity;
+            var id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay;
             id_sequence = $("#sequence").val();            
             number      = Number($("#step-number").val())+1+'';
-            ra          = $("#setRa").val();
-            declination = $("#setDec").val();
+            ra          = hoursToDecimal($("#setRa").val());  
+            declination = hoursToDecimal($("#setDec").val());
             exposureTime= $("#exposureTime").val();
             hBinning    = $("#hBinning").val();
             vBinning    = $("#vBinning").val();
@@ -639,7 +641,8 @@
             height      = $("#frameHeight").val();
             focusPosition=$("#focusAbsolute").val();
             quantity    = $("#quantity").val();
-            addStep(id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity);
+            delay       = $("#delayTime").val();
+            addStep(id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay);
         }
        
 //    $(function () {
