@@ -24,7 +24,9 @@ public class StepDB extends Database{
         Connection conn = null;
         int id;
         
-        if (exposureTime == null || exposureTime.equals("") )   exposureTime        =   "-";
+        if (ra == null           || ra.equals("") )             ra                  =   "-";
+        if (declination == null  || declination.equals("") )    declination         =   "-";
+        if (exposureTime == null || exposureTime.equals("") )   exposureTime        =   "1";
         if (hBinning == null     || hBinning.equals("") )       hBinning            =   "-";
         if (vBinning == null     || vBinning.equals("") )       vBinning            =   "-";
         if (frameType == null    || frameType.equals("") )      frameType           =   "-";

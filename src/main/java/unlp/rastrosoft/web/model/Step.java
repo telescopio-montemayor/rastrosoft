@@ -91,16 +91,55 @@ public class Step {
         
     }
     public void execute(){
-        synchronized(lock_key) {
-            //EJECUTAR
-            System.err.println("EJECUTANDO MOVIMIENTO");
-            Telescope telescope = new Telescope();
-            telescope.setRaDec(this.getRa(), this.getDeclination());
-            try {
-                    lock_key.wait();
-                } catch (InterruptedException ex) {                    
-                }
+        Ccd ccd = new Ccd();
+        Focuser focuser = new Focuser();
+        Telescope telescope = new Telescope();
+        
+        if (!this.gethBinning().equals("-") && !this.getvBinning().equals("-")) {
+            ccd.setBinning(this.gethBinning(), this.getvBinning());
         }
+        if (!this.getX().equals("-") && !this.getY().equals("-")) {
+            ccd.setFrame(this.getX(), this.getY());
+        }        
+        if (!this.getFrameType().equals("-")) {
+            switch(this.getFrameType()){
+                case "light":
+                    ccd.setFrameLight();
+                    break;
+                case "bias":
+                    ccd.setFrameBias();
+                    break;
+                case "dark":
+                    ccd.setFrameDark();
+                    break;
+                case "flat":
+                    ccd.setFrameFlat();
+                    break;
+                default:
+                    break;                
+            }
+        } 
+        if (!this.getWidth().equals("-") && !this.getHeight().equals("-")) {
+            ccd.setSize(this.getWidth(), this.getHeight());
+        } 
+        
+        if (!this.getFocusPosition().equals("-")) {
+            focuser.setAbsolutePosition(this.getFocusPosition());
+        } 
+        
+        if (!this.getRa().equals("-") && !this.getDeclination().equals("-")) {
+            synchronized(lock_key) {
+                //EJECUTAR
+                System.err.println("EJECUTANDO MOVIMIENTO");            
+                telescope.setRaDec(this.getRa(), this.getDeclination());
+                try {
+                        lock_key.wait();
+                    } catch (InterruptedException ex) {                    
+                    }
+            }
+        } 
+        
+        
         System.err.println("EJECUTANDO CAPTURA");
         String currentUserName = null;        
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -111,7 +150,7 @@ public class Step {
         String source= path+"/"+currentUserName;
         String dest = path+"/"+currentUserName;
         String time = this.getExposureTime();
-        Ccd ccd = new Ccd();
+        
         ccd.setExposure(time, path, source, dest);
         synchronized(lock_key_exposure) {
             try {

@@ -90,6 +90,8 @@
 		});       
                 getUsername();
                 getChat();
+                getSequences();
+                getQuickAccessTargets();
                 //refreshValues();
                 refreshValuesMicro();
 
@@ -234,39 +236,8 @@
                 </div> 
                 <div class="form-group">
                     <p class="input-help">Quick access targets</p>
-                    <select class="form-control">
-                     <option disabled selected value> -- select an option -- </option>   
-                     <option>Luna</option>
-                     <option>Júpiter</option>
-                     <option>Marte</option>
-                     <option>Saturno</option>
-                     <option>Plutón</option>
-                     <option>Luna</option>
-                     <option>Júpiter</option>
-                     <option>Marte</option>
-                     <option>Saturno</option>
-                     <option>Plutón</option>
-                     <option>Luna</option>
-                     <option>Júpiter</option>
-                     <option>Marte</option>
-                     <option>Saturno</option>
-                     <option>Plutón</option>
-                     <option>Luna</option>
-                     <option>Júpiter</option>
-                     <option>Marte</option>
-                     <option>Saturno</option>
-                     <option>Plutón</option>
-                     <option>Luna</option>
-                     <option>Júpiter</option>
-                     <option>Marte</option>
-                     <option>Saturno</option>
-                     <option>Plutón</option>
-                     <option>Luna</option>
-                     <option>Júpiter</option>
-                     <option>Marte</option>
-                     <option>Saturno</option>
-                     <option>Plutón</option>
-                   </select>
+                    <select class="form-control" id="quickAccessTargets" onchange="setQuickAccessTarget();">                                         
+                    </select>
                  </div>
                          
                 <div id="setRaDecNormal">
@@ -539,6 +510,18 @@
                             </span> 
                         </div> 
                     </div>   
+                    
+                    <div class="form-group">
+                        <p class="input-help">Sequence</p>
+                        <div class="input-group">                        
+                            <select class="form-control" id="sequence">                         
+                            </select>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" id="executeSequenceBtn"><i class="fa fa-play" aria-hidden="true"></i></button>
+                            </span>
+                        </div>
+                    </div>          
+                    
 <!--                    ...-->
 <!--                    
                        <div class="sidebar-box">

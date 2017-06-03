@@ -261,8 +261,8 @@ function successAjax(data, tipo) {
             $.each(data, function(key, value) {
                 $.each(value, function(key2, c) {                    
                     $("#tbody-automatization").append('<tr id="step_'+c[0]+'" stepid="'+c[0]+'" sequenceid="'+c[1]+'" state="'+c[15]+'" onclick="select_row(\'step_'+c[0]+'\');"><th scope="row">'+c[2]+'</th>'
-                        +'<td>'+c[3]+'</td>'
-                        +'<td>'+c[4]+'</td>'
+                        +'<td>'+decimalToHours(c[3])+'</td>'
+                        +'<td>'+decimalToHours(c[4])+'</td>'
                         +'<td>'+c[5]+'</td>'
                         +'<td>'+c[6]+'</td>'
                         +'<td>'+c[7]+'</td>'
@@ -295,6 +295,14 @@ function successAjax(data, tipo) {
             break;
         case 'executeSequence':
             alert("Sequence complete");
+            break;
+        case 'getQuickAccessTargets':
+            $("#quickAccessTargets").empty();
+            $.each(data, function(key, value) {
+                $.each(value, function(key2, c) {
+                    $("#quickAccessTargets").append('<option value='+c[0]+' data-ra='+c[1]+' data-dec='+c[2]+' title= "RA: '+c[1]+' DEC: '+c[2]+'">NGC '+c[3]+'</option>');
+               });
+            });
             break;
         default:
             break;
@@ -587,6 +595,11 @@ function getSteps(sequence_id) {
     search["value"] = sequence_id;
     sendAjax(search,'getSteps','getSteps');
 }
+function getQuickAccessTargets() {    
+    var search = {};
+    search["value"] = 1;
+    sendAjax(search,'getQuickAccessTargets','getQuickAccessTargets');
+}
 function addStep(id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay) {    
     var search = {};
     search["id_sequence"] = id_sequence;
@@ -798,6 +811,23 @@ function startTimer(duration) {
 
 function executeSequence() {
     var search = {};
-    search["value"] = '1';
-    sendAjax(search,'executeSequence','executeSequence');  
+    var sequence_id = $("#sequence").val();
+    if (sequence_id != ""){
+        search["value"] = sequence_id;
+        sendAjax(search,'executeSequence','executeSequence');  
+    }
+    
+}
+function setQuickAccessTarget(){
+    var ra = $("#quickAccessTargets option:selected").data("ra");
+    var dec = $("#quickAccessTargets option:selected").data("dec");
+    $("#setRa").val(ra);
+    $("#setDec").val(dec);
+    setRaDec();
+}
+function setQuickAccessTargetAutomatization(){
+    var ra = $("#quickAccessTargets option:selected").data("ra");
+    var dec = $("#quickAccessTargets option:selected").data("dec");
+    $("#setRa").val(ra);
+    $("#setDec").val(dec);
 }

@@ -197,13 +197,18 @@
         <div class="automatization">            
             <div class="automatization-values col-md-3 col-sm-5">
                 <h4 style="color:white" class="label-primary text-center" tkey="settings">Settings</h4> 
+                <div class="form-group">
+                    <p class="input-help">Quick access targets</p>
+                    <select class="form-control" id="quickAccessTargets" onchange="setQuickAccessTargetAutomatization();">                                         
+                    </select>
+                </div>
                 <div id="setRaDec" class="form-group" >
                     <p class="input-help">Right Ascension & Declination</p>
                     <div class="input-group">                                                                
-                        <input id="setRa" type="text" class="form-control radec-input"  value="00:00:00">
+                        <input id="setRa" type="text" class="form-control radec-input"  placeholder="00:00:00">
                         <p class="help-label">Set right ascension</p>
                         <span class="input-group-addon">-</span>
-                        <input id="setDec" type="text" class="form-control radec-input" value="00:00:00">
+                        <input id="setDec" type="text" class="form-control radec-input" placeholder="00:00:00">
                         <p class="help-label">Set declination</p>                                                     
                     </div>
                 </div>
@@ -381,6 +386,7 @@
             getUsername();
             //generate_data_automatization(10);
             getSequences();
+            getQuickAccessTargets();
             $( "input" ).focusin(function() {
                 $( this ).next( ".help-label" ).show();
             });

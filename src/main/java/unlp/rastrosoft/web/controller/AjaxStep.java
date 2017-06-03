@@ -45,6 +45,7 @@ public class AjaxStep {
         ra = execute.getRa();
         declination = execute.getDeclination();
         exposureTime = execute.getExposureTime();
+            if (exposureTime == null || exposureTime.equals("") )   exposureTime        =   "1";
         hBinning = execute.gethBinning();
         vBinning = execute.getvBinning();
         frameType = execute.getFrameType();

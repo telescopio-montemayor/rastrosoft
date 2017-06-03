@@ -352,7 +352,7 @@ $(document).ready(function() {
     });
 //            ...
         
-    $("#executeSequence").click(function(){
+    $("#executeSequenceBtn").click(function(){
         executeSequence();
     });  
 });
