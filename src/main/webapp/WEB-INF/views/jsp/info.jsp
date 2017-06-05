@@ -306,6 +306,7 @@
                     <button onclick="removeStepBtn();"><i class="fa fa-minus" aria-hidden="true" style="color:red"></i></button>
                     <button onclick="goUpStepBtn();"><i class="fa fa-caret-up" aria-hidden="true"></i></button>
                     <button onclick="goDownStepBtn();"><i class="fa fa-caret-down" aria-hidden="true"></i></button>
+                    <button onclick="resetSequenceBtn();"><i class="fa fa-history" aria-hidden="true" style="color:green"></i></button>
                 </div>
                 <div class="table-automatization">
                     <table id="automatization" class="table select-feel">
@@ -650,6 +651,12 @@
             delay       = $("#delayTime").val();
             addStep(id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay);
         }
+        function resetSequenceBtn(){
+            if (confirm("¿Seguro que desea reiniciar el estado de todos los trabajos?")){
+                var id_sequence = $("#sequence").val(); 
+                resetSequence(id_sequence);
+            }
+        }    
        
 //    $(function () {
 //        var resizeDiv = function (object) {

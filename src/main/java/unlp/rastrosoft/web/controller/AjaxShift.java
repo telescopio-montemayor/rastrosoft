@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -78,6 +79,24 @@ public class AjaxShift {
         CalendarDB shifts = new CalendarDB();    
         shifts.connect();       
         result.addElementos(shifts.getAllShiftsWithName(LocalDateTime.now().withMinute(0).withSecond(0).withNano(0).toString()));        
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/getTimeleftCurrentShift", method=RequestMethod.POST)
+    public AjaxResponse getTimeleftCurrentShift(@RequestBody SearchCriteria search) {            
+
+        AjaxResponse result = new AjaxResponse();
+        CalendarDB calendarDB = new CalendarDB();
+            calendarDB.connect();
+            ArrayList<String> shift =  calendarDB.getCurrentShift();
+            
+            if (shift.get(0).equals("-1")){
+                result.addElemento("-1");
+                result.addElemento("00:00:00");                
+            }else{
+                result.addElemento(shift.get(0));
+                result.addElemento(shift.get(1));
+            }
         return result;
     }
     

@@ -117,6 +117,13 @@ function successAjax(data, tipo) {
             });
             changeDisableDate( shifts );
             break;
+        case 'getTimeleftCurrentShift':
+            $( "#timeleft" ).empty();
+            $.each(data, function(key, value) {
+                $('#timeleft').append(value[1]);                
+                startTimer(value[1]);
+            });            
+            break;
         case 'getAllShifts':
             $("#shifts tBody").empty();
             $.each(data, function(key, value) {
@@ -290,6 +297,9 @@ function successAjax(data, tipo) {
         case 'removeStep':
             getSteps($("#sequence").val());
             break;
+        case 'resetSequence':
+            getSteps($("#sequence").val());
+            break;    
         case 'addStep':
             getSteps($("#sequence").val());
             break;
@@ -298,6 +308,7 @@ function successAjax(data, tipo) {
             break;
         case 'getQuickAccessTargets':
             $("#quickAccessTargets").empty();
+            $("#quickAccessTargets").append('<option disabled selected value>- Select a target -</option>');
             $.each(data, function(key, value) {
                 $.each(value, function(key2, c) {
                     $("#quickAccessTargets").append('<option value='+c[0]+' data-ra='+c[1]+' data-dec='+c[2]+' title= "RA: '+c[1]+' DEC: '+c[2]+'">NGC '+c[3]+'</option>');
@@ -510,7 +521,10 @@ function getAllShifts() {
     var search = {};
     sendAjax(search,'getAllShifts','getAllShifts');  
 }
-
+function getTimeleftCurrentShift() {
+    var search = {};
+    sendAjax(search,'getTimeleftCurrentShift','getTimeleftCurrentShift');  
+}
 function initialize() {
     var search = {};
     sendAjax(search,'initialize','initialize');  
@@ -569,6 +583,11 @@ function modifySequence(id, name) {
     search["value"] = id;    
     search["value2"] = name;
     sendAjax(search,'modifySequence','modifySequence');     
+}
+function resetSequence(id_sequence) {
+    var search = {};
+    search["value"] = id_sequence;
+    sendAjax(search,'resetSequence','resetSequence');     
 }
 function getSequences() {    
     var search = {};
@@ -777,6 +796,9 @@ function updateValues(data){
 }  
    
 function startTimer(duration) {
+    if( $("#timeleft").text() == "00:00:00" ){
+        $("#end_session").submit();
+    }
     var aux = duration.split(":");
     duration = ((parseInt(aux[0])*3600) + (parseInt(aux[1])*60) + (parseInt(aux[2])));
     
@@ -797,8 +819,9 @@ function startTimer(duration) {
             }
             $("#timeleft").removeClass("label-success").addClass("label-danger");
             if( $("#timeleft").text() == "00:00:00" ){
-                $("#end_session").submit();
+                getTimeleftCurrentShift();                
             }
+            
         }else{
             $("#timeleft").removeClass("label-danger").addClass("label-success");
         }

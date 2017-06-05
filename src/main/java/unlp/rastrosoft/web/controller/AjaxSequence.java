@@ -172,6 +172,7 @@ public class AjaxSequence {
                 for (int i = 0; i < steps.size(); i++){
                     current_step_id = steps.get(i);
                     Step step = stepDB.getStep(current_step_id);
+                    stepDB.changeState(current_step_id, sequence_id, 1);
                     for (int x = 0; x < step.getQuantity(); x++){
                         step.execute();
                         try {
@@ -180,6 +181,7 @@ public class AjaxSequence {
                             Logger.getLogger(AjaxSequence.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
+                    stepDB.changeState(current_step_id, sequence_id, 2);
                 }
                 
             }
@@ -187,6 +189,31 @@ public class AjaxSequence {
             
         }
         
+        return result;
+    }  
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/resetSequence", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public AjaxResponse resetSequence(@RequestBody ExecuteCriteriaTwoValues execute) {
+        AjaxResponse result = new AjaxResponse();    
+        int sequence_id = Integer.parseInt(execute.getValue());
+        
+        int id_user = -1;
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            User user = userDB.getUser(username);
+            id_user = user.getUserId();
+        }
+        
+        if (id_user != -1){
+            SequenceDB sequence = new SequenceDB();
+            sequence.connect();
+            sequence.resetSequence(sequence_id, id_user);
+        }
         return result;
     }  
 }

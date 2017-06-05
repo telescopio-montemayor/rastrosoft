@@ -398,4 +398,41 @@ public class StepDB extends Database{
             }
         }
     }
+   
+    /**
+    * Changes the state of the Step.
+    *
+    * @param id_step the id of the Step.
+    * @param id_sequence the id of the Sequence that contains the Step.
+    * @param state the state can be 0 = Inactive, 1 = In progress, 2 = Completed, 3 = Interrupted.
+    */
+    public void changeState(int id_step, int id_sequence, int state){
+        
+        String sql = "UPDATE step " +
+                      "SET state = ? WHERE id = ? AND id_sequence = ? LIMIT 1";
+        
+        Connection conn = null;
+
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+                
+                ps.setInt(1, state);
+                ps.setInt(2, id_step);
+                ps.setInt(3, id_sequence);
+                ps.executeUpdate();                
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+    } 
+    
 }

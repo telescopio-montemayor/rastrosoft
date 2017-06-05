@@ -271,4 +271,31 @@ public class SequenceDB extends Database{
             }
         }
     }
+    public void resetSequence(int id_sequence, int id_user){
+        String sql = "UPDATE step " +
+                      "SET state = 0 WHERE id_sequence = ?";
+        Connection conn = null;
+        
+        if (id_user == this.getUserId(id_sequence)){
+            try {
+                    conn = dataSource.getConnection();
+                    PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+
+                    ps.setInt(1, id_sequence);
+                    ps.executeUpdate();
+                    ps.close();
+
+            } catch (SQLException e) {
+                    throw new RuntimeException(e);
+
+            } finally {
+                    if (conn != null) {
+                            try {
+                                    conn.close();
+                            } catch (SQLException e) {}
+                    }
+            }
+        }
+    } 
 }
