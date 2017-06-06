@@ -65,6 +65,9 @@ function onMessage(event) {
             case "FOCUS_TIMER":
                 updateFocusTimerMicro(device.value);
                 break;
+            case "stepStateChanged":
+                reloadSteps();
+                break;
             default:
                 break;
         }

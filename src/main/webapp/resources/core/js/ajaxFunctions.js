@@ -3,6 +3,9 @@ function beforeAjax (tipo){
         case 'setExposure':
             $("#setExposure").prop("disabled", "disabled");
             break;
+        case 'executeSequence':
+            alert("Sequence started successfully!");
+            break;
         default:
             break;
     }
@@ -304,7 +307,7 @@ function successAjax(data, tipo) {
             getSteps($("#sequence").val());
             break;
         case 'executeSequence':
-            alert("Sequence complete");
+            alert("Sequence completed successfully!");
             break;
         case 'getQuickAccessTargets':
             $("#quickAccessTargets").empty();
@@ -583,6 +586,11 @@ function modifySequence(id, name) {
     search["value"] = id;    
     search["value2"] = name;
     sendAjax(search,'modifySequence','modifySequence');     
+}
+function stopSequence(id_sequence) {
+    var search = {};
+    search["value"] = id_sequence;
+    sendAjax(search,'stopSequence','stopSequence');     
 }
 function resetSequence(id_sequence) {
     var search = {};

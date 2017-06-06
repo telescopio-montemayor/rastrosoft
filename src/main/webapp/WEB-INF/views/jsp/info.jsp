@@ -82,6 +82,11 @@
 <spring:url value="/resources/core/js/jquery.mask.js" var="jquerymaskJs" />
 <script src="${jquerymaskJs}"></script>
 
+<spring:url value="/resources/core/js/websocket.js"
+	var="websocket" />
+<script src="${websocket}"></script>
+
+
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 

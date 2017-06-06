@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import unlp.rastrosoft.websocket.DeviceSessionHandler;
 
 /**
  *
@@ -422,7 +423,8 @@ public class StepDB extends Database{
                 ps.setInt(3, id_sequence);
                 ps.executeUpdate();                
                 ps.close();
-
+                DeviceSessionHandler sessionHandler = new DeviceSessionHandler();
+                sessionHandler.updateElement("stepStateChanged", String.valueOf(id_sequence));
         } catch (SQLException e) {
                 throw new RuntimeException(e);
 

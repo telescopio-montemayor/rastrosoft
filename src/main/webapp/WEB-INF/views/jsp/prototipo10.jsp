@@ -510,6 +510,7 @@
                             </select>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" id="executeSequenceBtn"><i class="fa fa-play" aria-hidden="true"></i></button>
+                                <!--<button class="btn btn-default" type="button" id="stopSequenceBtn"><i class="fa fa-stop" aria-hidden="true"></i></button>-->
                             </span>
                         </div>
                     </div>          
