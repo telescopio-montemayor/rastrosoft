@@ -35,6 +35,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,10 +45,10 @@ import unlp.rastrosoft.web.model.AjaxResponseListOfLists;
 import unlp.rastrosoft.web.model.CalendarDB;
 import unlp.rastrosoft.web.model.Ccd;
 import unlp.rastrosoft.web.model.ChatDB;
+import unlp.rastrosoft.web.model.ExecuteCriteriaFourValues;
 import unlp.rastrosoft.web.model.Focuser;
 import unlp.rastrosoft.web.model.LiveTransmitDB;
 import unlp.rastrosoft.web.model.SendMailTLS;
-import unlp.rastrosoft.web.model.Step;
 import unlp.rastrosoft.web.model.Telescope;
 import unlp.rastrosoft.web.model.User;
 import unlp.rastrosoft.web.model.UserDB;
@@ -837,4 +838,6 @@ public class AjaxController  extends HttpServlet{
         
         return result;
     }
+    
+    
 }

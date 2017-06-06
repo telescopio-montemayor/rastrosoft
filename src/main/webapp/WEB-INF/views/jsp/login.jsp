@@ -40,6 +40,10 @@
 	var="ajaxFunctions" />
 <script src="${ajaxFunctions}"></script>
 
+<spring:url value="/resources/core/js/menu.js"
+	var="menuJs" />
+<script src="${menuJs}"></script>
+
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
@@ -90,6 +94,7 @@
                     <div class="message-forget">
                         <p>¿Olvidaste tu contraseña? <a href="#" onclick="showForget();">Restaurar ahora</a></p>
                     </div>
+                
                     <div id="live">
                         <div class="live-stream clickable" onclick="showLiveKey()">
                             <div style="font-size: 24px"><i id="live-sign" class="fa fa-circle" aria-hidden="true"></i> EN DIRECTO</div>
@@ -107,9 +112,9 @@
             <div id="signup">
                 <div class="input-group input-sm">
                     <label class="input-group-addon"><i class="fa fa-id-card-o"></i></label>
-                    <input type="text" class="form-control" id="username" name="name" placeholder="Nombre" required>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
                     <label class="input-group-addon"><i class="fa fa-address-card-o"></i></label>
-                    <input type="text" class="form-control" id="username" name="lastname" placeholder="Apellido" required>
+                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Apellido" required>
                 </div>
                 <div class="input-group input-sm">
                     <label class="input-group-addon"><i class="fa fa-envelope-o"></i></label>
@@ -124,7 +129,7 @@
                     <input type="password" class="form-control" id="password_re" name="password_re" placeholder="Confirmar contraseña" required>
                 </div>                
                 <div class="form-actions">
-                    <input type="button" onclick="alert();" class="btn btn-success btn-default btn-block button-rounded" value="Crear cuenta">                    
+                    <input id="createAccountBtn" type="button" class="btn btn-success btn-default btn-block button-rounded" value="Crear cuenta">                    
                 </div>
                 <div class="message-login">
                     <p>¿Ya tienes una cuenta? <a href="#" onclick="showLogin();">Iniciar sesión</a></p>
@@ -159,6 +164,7 @@
             checkLive();
         },1000);
     });
+    
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -199,6 +205,7 @@
         var search = {};
         sendAjax(search,'checkLive','checkLive'); 
     }
+      
     function liveOn(bool, public){
         if(bool){
             $("#live").show();

@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         dataSource = db.getDataSource();
         auth.jdbcAuthentication().dataSource((DataSource)dataSource)
 		.usersByUsernameQuery(
-			"select username,password, enabled from users where username=?").passwordEncoder(new BCryptPasswordEncoder())
+			"select username,password,enabled from users where username=? LIMIT 1").passwordEncoder(new BCryptPasswordEncoder())
 		.authoritiesByUsernameQuery(
 			"select username, role_name from user_roles INNER JOIN roles ON ( user_roles.role = roles.role ) where username=?");
         
@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/actions").permitAll()
                 .antMatchers("/getChat").permitAll()
                 .antMatchers("/checkLive").permitAll()
+                .antMatchers("/createAccount").permitAll()
                 .antMatchers("/captures/**").permitAll()
                 
             .anyRequest().authenticated()

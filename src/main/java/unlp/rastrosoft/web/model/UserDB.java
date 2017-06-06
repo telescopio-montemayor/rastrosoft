@@ -15,10 +15,10 @@ import java.sql.SQLException;
  * @author ip300
  */
 public class UserDB extends Database{
-    public void insertUser(String username, String password, String role){
+    public void insertUser(String username, String password, String name, String lastname, String mail){
         
         String sql = "INSERT INTO users " +
-                      "(username, password, role) VALUES (?, ?, ?)";
+                      "(username, password, name, lastname, mail) VALUES (?, ?, ?, ?, ?)";
         Connection conn = null;
 
         try {
@@ -27,7 +27,9 @@ public class UserDB extends Database{
 
                 ps.setString(1, username);
                 ps.setString(2, password);
-                ps.setString(3, role);
+                ps.setString(3, name);
+                ps.setString(4, lastname);
+                ps.setString(5, mail);
                 ps.executeUpdate();
                 ps.close();
 
@@ -42,10 +44,10 @@ public class UserDB extends Database{
                 }
         }
     }
-    public void modifyUser(int id, String username, String password, String enabled, String name){
+    public void modifyUser(int id, String username, String password, String enabled, String name, String lastname, String mail){
         
         String sql = "UPDATE users " +
-                      "SET username = ? , password = ?, enabled = ?, name = ? WHERE id = ?";
+                      "SET username = ? , password = ?, enabled = ?, name = ?, lastname = ?, mail = ? WHERE id = ?";
         Connection conn = null;
 
         try {
@@ -56,7 +58,9 @@ public class UserDB extends Database{
                 ps.setString(2, password);
                 ps.setString(3, enabled);
                 ps.setString(4, name);
-                ps.setInt(5, id);
+                ps.setString(5, lastname);
+                ps.setString(6, mail);
+                ps.setInt(7, id);
                 ps.executeUpdate();
                 ps.close();
 
@@ -112,6 +116,7 @@ public class UserDB extends Database{
                 user.setPassword(rs.getString("password"));
                 user.setEnabled(rs.getString("enabled"));
                 user.setName(rs.getString("name"));                
+                user.setMail(rs.getString("mail"));   
             }
             rs.close();
             ps.close();
@@ -147,7 +152,9 @@ public class UserDB extends Database{
                     rs.getString("username"),
                     rs.getString("password"),
                     rs.getString("enabled"),
-                    rs.getString("name")
+                    rs.getString("name"),
+                    rs.getString("lastname"),
+                    rs.getString("mail")
                 );
             }
 

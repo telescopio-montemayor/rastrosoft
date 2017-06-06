@@ -330,6 +330,14 @@ $(document).ready(function() {
     $("#stopSequenceBtn").click(function(){
         stopSequence();
     }); 
+    $("#createAccountBtn").click(function(){
+        var name, lastname, mail, password;
+        name = $("#name").val();
+        lastname = $("#lastname").val();
+        mail = $("#mail").val();
+        password = $("#password").val();
+        createAccount(name, lastname, mail, password);
+    });
 });
 $.fn.enterKey = function (fnc) {
         return this.each(function () {

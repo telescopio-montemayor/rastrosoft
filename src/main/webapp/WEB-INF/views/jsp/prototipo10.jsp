@@ -503,6 +503,9 @@
                             </span> 
                         </div> 
                     </div
+                    <div class="form-actions">
+                        <input id="createAccountBtn" type="button" class="btn btn-success btn-default btn-block button-rounded" value="Crear cuenta">                    
+                    </div>
                     <div class="form-group">
                         <p class="input-help">Sequence</p>
                         <div class="input-group">                        
