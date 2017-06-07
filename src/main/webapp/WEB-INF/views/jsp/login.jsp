@@ -44,6 +44,10 @@
 	var="menuJs" />
 <script src="${menuJs}"></script>
 
+<spring:url value="/resources/core/js/jquery.validate.js"
+	var="validateJs" />
+<script src="${validateJs}"></script>
+
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
@@ -66,6 +70,16 @@
             <div id="login">                
                 <c:url var="loginUrl" value="/login" />
                 <form action="${loginUrl}" method="post" class="form-horizontal">
+                    <c:if test="${param.validation == 'success'}">
+                        <div class="alert alert-success">
+                            <p>Ha validado la cuenta correctamente.</p>
+                        </div>
+                    </c:if>
+                    <c:if test="${param.validation == 'error'}">
+                        <div class="alert alert-danger">
+                            <p>No se ha podido validar la cuenta.</p>
+                        </div>
+                    </c:if>
                     <c:if test="${param.error != null}">
                         <div class="alert alert-danger">
                             <p>Usuario y contraseña incorrectos.</p>
@@ -110,31 +124,33 @@
                 </form>
             </div>
             <div id="signup">
-                <div class="input-group input-sm">
-                    <label class="input-group-addon"><i class="fa fa-user-o"></i></label>
-                    <input type="text" class="form-control" id="usernameCreate" name="username" placeholder="Nombre de usuario" required>                    
-                </div>
-                <div class="input-group input-sm">
-                    <label class="input-group-addon"><i class="fa fa-id-card-o"></i></label>
-                    <input type="text" class="form-control" id="nameCreate" name="name" placeholder="Nombre" required>
-                    <label class="input-group-addon"><i class="fa fa-address-card-o"></i></label>
-                    <input type="text" class="form-control" id="lastnameCreate" name="lastname" placeholder="Apellido" required>
-                </div>
-                <div class="input-group input-sm">
-                    <label class="input-group-addon"><i class="fa fa-envelope-o"></i></label>
-                    <input type="text" class="form-control" id="mailCreate" name="mail" placeholder="Correo electrónico" required>
-                </div>
-                <div class="input-group input-sm">
-                    <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
-                    <input type="password" class="form-control" id="passwordCreate" name="password" placeholder="Contraseña" required>
-                </div>
-                <div class="input-group input-sm">
-                    <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
-                    <input type="password" class="form-control" id="passwordCreate_re" name="password_re" placeholder="Confirmar contraseña" required>
-                </div>                
-                <div class="form-actions">
-                    <input id="createAccountBtn" type="button" class="btn btn-success btn-default btn-block button-rounded" value="Crear cuenta">                    
-                </div>
+                <form id="signupForm">
+                    <div id="usernameCreateDiv" class="input-group input-sm">
+                        <label class="input-group-addon"><i class="fa fa-user-o"></i></label>
+                        <input type="text" class="form-control" id="usernameCreate" name="usernameCreate" placeholder="Nombre de usuario" required>                    
+                    </div>
+                    <div id="nameCreateDiv" class="input-group input-sm">
+                        <label class="input-group-addon"><i class="fa fa-id-card-o"></i></label>
+                        <input type="text" class="form-control" id="nameCreate" name="nameCreate" placeholder="Nombre" required>
+                        <label class="input-group-addon"><i class="fa fa-address-card-o"></i></label>
+                        <input type="text" class="form-control" id="lastnameCreate" name="lastnameCreate" placeholder="Apellido" required>
+                    </div>
+                    <div id="mailCreateDiv" class="input-group input-sm">
+                        <label class="input-group-addon"><i class="fa fa-envelope-o"></i></label>
+                        <input type="text" class="form-control" id="mailCreate" name="mailCreate" placeholder="Correo electrónico" required>
+                    </div>
+                    <div id="passwordCreateDiv" class="input-group input-sm">
+                        <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
+                        <input type="password" class="form-control" id="passwordCreate" name="passwordCreate" placeholder="Contraseña" required>
+                    </div>
+                    <div id="passwordCreate_reDiv" class="input-group input-sm">
+                        <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
+                        <input type="password" class="form-control" id="passwordCreate_re" name="passwordCreate_re" placeholder="Confirmar contraseña" required>
+                    </div>                
+                    <div class="form-actions">
+                        <input id="createAccountBtn" type="button" class="btn btn-success btn-default btn-block button-rounded" value="Crear cuenta">                    
+                    </div>
+                </form>    
                 <div class="message-login">
                     <p>¿Ya tienes una cuenta? <a href="#" onclick="showLogin();">Iniciar sesión</a></p>
                 </div>
@@ -167,6 +183,7 @@
         var myInterval = setInterval(function(){        
             checkLive();
         },1000);
+       
     });
     
     var token = $("meta[name='_csrf']").attr("content");
@@ -268,6 +285,61 @@
         }
     });
     document.querySelector('video').playbackRate = 1;
+    
+     $("#signupForm").validate({
+            rules: {
+                mailCreate: {
+                    required: true,
+                    email: true
+                },
+
+                passwordCreate: { 
+                    required: true,
+                    minlength: 6,
+                    maxlength: 20
+                } , 
+
+                 passwordCreate_re: { 
+                    equalTo: "#passwordCreate",
+                    minlength: 6,
+                    maxlength: 20
+                }
+            },
+//            messages:{
+//                mailCreate:{
+//                    required:"the mail is required",
+//                    email:"insert a correct email"
+//                },    
+//                passwordCreate: { 
+//                    required:"the password is required"
+//                }
+//            },
+            errorPlacement: function(error, element) {
+                switch(element.attr("name")){
+                    case 'usernameCreate':                        
+                        error.insertAfter("#usernameCreateDiv");
+                        break;
+                    case 'nameCreate':
+                        error.insertAfter("#nameCreateDiv");
+                        break;
+                    case 'lastnameCreate':
+                        error.insertAfter("#nameCreateDiv");
+                        break;
+                    case 'mailCreate':
+                        error.insertAfter("#mailCreateDiv");
+                        break;    
+                    case 'passwordCreate':
+                        error.insertAfter("#passwordCreateDiv");
+                        break;
+                    case 'passwordCreate_re':
+                        error.insertAfter("#passwordCreate_reDiv");
+                        break;
+                    default:
+                        error.insertAfter(element); 
+                        break;
+                }
+            }    
+        });
     
 </script>
 </html>

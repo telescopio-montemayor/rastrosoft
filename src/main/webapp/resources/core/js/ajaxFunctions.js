@@ -325,7 +325,7 @@ function successAjax(data, tipo) {
                         alert("Error! Ya existe ese usuario...");
                         break;
                     case "1":
-                        alert("Se ha creado el usuario con éxito, revise su correo para verificar su cuenta.");
+                        alert("Se ha creado el usuario exitosamente, revise su correo para verificar su cuenta.");
                         break;
                     default:
                         break;

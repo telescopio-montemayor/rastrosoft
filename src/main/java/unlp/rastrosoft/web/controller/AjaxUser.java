@@ -6,18 +6,19 @@
 package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import unlp.rastrosoft.web.jsonview.Views;
 import unlp.rastrosoft.web.model.AjaxResponse;
-import unlp.rastrosoft.web.model.AjaxResponseBodyIndiExecute;
-import unlp.rastrosoft.web.model.AjaxResponseListOfLists;
-import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.ExecuteCriteriaFiveValues;
 import unlp.rastrosoft.web.model.User;
 import unlp.rastrosoft.web.model.UserDB;
@@ -63,15 +64,17 @@ public class AjaxUser  extends HttpServlet{
         return result;
     }   
     @JsonView(Views.Public.class)
-    @RequestMapping(value = "/validateMail", method=RequestMethod.POST)
-    public AjaxResponseBodyIndiExecute validateMail(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
-
-            AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
-            String hash = execute.getValue();
+    @RequestMapping(value = "/validateMail", method=RequestMethod.GET)
+    public ModelAndView validateMail(@RequestParam String hash, @RequestParam String mail, HttpServletRequest request, HttpServletResponse response) throws IOException {
+      
+            UserDB userDB = new UserDB();
+            userDB.connect();     
+            if (userDB.validateMail(hash, mail)){
+                return new ModelAndView("redirect:" + "login?validation=success");
+            }else{
+                return new ModelAndView("redirect:" + "login?validation=error");
+            }
             
-            //VALIDAR
             
-            return result;
-
     }
 }

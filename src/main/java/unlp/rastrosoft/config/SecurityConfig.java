@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/getChat").permitAll()
                 .antMatchers("/checkLive").permitAll()
                 .antMatchers("/createAccount").permitAll()
+                .antMatchers("/validateMail").permitAll()
                 .antMatchers("/captures/**").permitAll()
                 
             .anyRequest().authenticated()
