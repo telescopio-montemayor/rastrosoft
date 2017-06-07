@@ -39,7 +39,7 @@ public class UserDB extends Database{
                 ps = (PreparedStatement) conn.prepareStatement(sqlRole);
                 ps.setString(1, username);
                 ps.setInt(2, 3);
-                
+                ps.executeUpdate();
                 ps.close();
 
         } catch (SQLException e) {
