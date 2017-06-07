@@ -319,13 +319,20 @@ function successAjax(data, tipo) {
             });
             break;
         case 'createAccount':
-            alert("after createAccount");
-            break;  
-        case 'createUserAccount':
-            alert("after createUserAccount");
-            break;
-        default:
-            break;
+            $.each(data, function(key, value) {               
+                switch (value[0]){
+                    case "0":
+                        alert("Error! Ya existe ese usuario...");
+                        break;
+                    case "1":
+                        alert("Se ha creado el usuario con éxito, revise su correo para verificar su cuenta.");
+                        break;
+                    default:
+                        break;
+                }
+            });
+                  
+       
     } 
 
 
@@ -633,12 +640,13 @@ function getQuickAccessTargets() {
     search["value"] = 1;
     sendAjax(search,'getQuickAccessTargets','getQuickAccessTargets');
 }
-function createAccount(name, lastname, mail, password) {
+function createAccount(username, name, lastname, mail, password) {
     var search = {};
-    search["value"] = name;
-    search["value2"] = lastname;
-    search["value3"] = mail;
-    search["value4"] = password;
+    search["value"] = username;
+    search["value2"] = name;
+    search["value3"] = lastname;
+    search["value4"] = mail;
+    search["value5"] = password;
     sendAjax(search,'createAccount','createAccount');     
 }
 function addStep(id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay) {    

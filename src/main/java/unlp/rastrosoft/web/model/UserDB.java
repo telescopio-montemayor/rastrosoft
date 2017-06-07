@@ -15,10 +15,13 @@ import java.sql.SQLException;
  * @author ip300
  */
 public class UserDB extends Database{
-    public void insertUser(String username, String password, String name, String lastname, String mail){
+    public void insertUser(String username, String password, String name, String lastname, String mail, String hash){
+        
+        String sqlRole = "INSERT INTO user_roles " +
+                      "(username, role) VALUES (?, ?)";
         
         String sql = "INSERT INTO users " +
-                      "(username, password, name, lastname, mail) VALUES (?, ?, ?, ?, ?)";
+                      "(username, password, name, lastname, mail, hash) VALUES (?, ?, ?, ?, ?, ?)";
         Connection conn = null;
 
         try {
@@ -30,7 +33,13 @@ public class UserDB extends Database{
                 ps.setString(3, name);
                 ps.setString(4, lastname);
                 ps.setString(5, mail);
+                ps.setString(6, hash);
                 ps.executeUpdate();
+                
+                ps = (PreparedStatement) conn.prepareStatement(sqlRole);
+                ps.setString(1, username);
+                ps.setInt(2, 3);
+                
                 ps.close();
 
         } catch (SQLException e) {

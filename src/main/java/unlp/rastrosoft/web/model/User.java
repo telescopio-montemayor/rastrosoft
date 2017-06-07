@@ -5,6 +5,9 @@
  */
 package unlp.rastrosoft.web.model;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 /**
  *
  * @author ip300
@@ -17,7 +20,16 @@ public class User {
     private String name;
     private String lastname;
     private String mail;
+    private String hash;
 
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+    
     public User(){
         
     }
@@ -87,11 +99,17 @@ public class User {
         this.name = name;
     }
   
-    public void sendConfirmationMail(){
+    public String createHash(){
+        SecureRandom random = new SecureRandom();
+        String hashcode = new BigInteger(130, random).toString(32).substring(0, 8);
+        this.setHash(hashcode);
+        return hashcode;
+    }
+    public void sendConfirmationMail(String hashcode){
         SendMailTLS email = new SendMailTLS();
         String to,subject,content;
-//        to = "alexboette@gmail.com";
         to = this.getMail();
+        String activationLink = "http://localhost:8080/rastrosoft/activate?hash=" + hashcode;
         subject = "Solicitud de registro en rastrosoft";
         //content = "Bienvenido," + "\n\n Por favor haga <a href=\"http://www.google.com\">click aqui</a> para verificar su cuenta y poder acceder.";
         content = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
@@ -241,7 +259,7 @@ public class User {
                   "                          <w:anchorlock/>\n" +
                   "                          <center>\n" +
                   "                        <![endif]-->\n" +
-                  "                            <a href=\"http://www.google.com\"\n" +
+                  "                            <a href=\""+activationLink+"\"\n" +
                   "                      style=\"background-color:#178f8f;border-radius:4px;color:#ffffff;display:inline-block;font-family:Helvetica, Arial, sans-serif;font-size:16px;font-weight:bold;line-height:50px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;\">Activar cuenta!</a>\n" +
                   "                        <!--[if mso]>\n" +
                   "                          </center>\n" +

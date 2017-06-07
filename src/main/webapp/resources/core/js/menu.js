@@ -331,12 +331,13 @@ $(document).ready(function() {
         stopSequence();
     }); 
     $("#createAccountBtn").click(function(){
-        var name, lastname, mail, password;
-        name = $("#name").val();
-        lastname = $("#lastname").val();
-        mail = $("#mail").val();
-        password = $("#password").val();
-        createAccount(name, lastname, mail, password);
+        var username, name, lastname, mail, password;
+        username = $("#usernameCreate").val();
+        name = $("#nameCreate").val();
+        lastname = $("#lastnameCreate").val();
+        mail = $("#mailCreate").val();
+        password = $("#passwordCreate").val();
+        createAccount(username, name, lastname, mail, password);
     });
 });
 $.fn.enterKey = function (fnc) {

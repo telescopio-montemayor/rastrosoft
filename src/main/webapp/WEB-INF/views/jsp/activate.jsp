@@ -111,26 +111,22 @@
             </div>
             <div id="signup">
                 <div class="input-group input-sm">
-                    <label class="input-group-addon"><i class="fa fa-user-o"></i></label>
-                    <input type="text" class="form-control" id="usernameCreate" name="username" placeholder="Nombre de usuario" required>                    
-                </div>
-                <div class="input-group input-sm">
                     <label class="input-group-addon"><i class="fa fa-id-card-o"></i></label>
-                    <input type="text" class="form-control" id="nameCreate" name="name" placeholder="Nombre" required>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" required>
                     <label class="input-group-addon"><i class="fa fa-address-card-o"></i></label>
-                    <input type="text" class="form-control" id="lastnameCreate" name="lastname" placeholder="Apellido" required>
+                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Apellido" required>
                 </div>
                 <div class="input-group input-sm">
                     <label class="input-group-addon"><i class="fa fa-envelope-o"></i></label>
-                    <input type="text" class="form-control" id="mailCreate" name="mail" placeholder="Correo electrónico" required>
+                    <input type="text" class="form-control" id="mail" name="mail" placeholder="Correo electrónico" required>
                 </div>
                 <div class="input-group input-sm">
                     <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
-                    <input type="password" class="form-control" id="passwordCreate" name="password" placeholder="Contraseña" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
                 </div>
                 <div class="input-group input-sm">
                     <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
-                    <input type="password" class="form-control" id="passwordCreate_re" name="password_re" placeholder="Confirmar contraseña" required>
+                    <input type="password" class="form-control" id="password_re" name="password_re" placeholder="Confirmar contraseña" required>
                 </div>                
                 <div class="form-actions">
                     <input id="createAccountBtn" type="button" class="btn btn-success btn-default btn-block button-rounded" value="Crear cuenta">                    
