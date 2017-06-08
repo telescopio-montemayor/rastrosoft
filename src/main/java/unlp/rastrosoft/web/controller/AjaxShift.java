@@ -96,7 +96,20 @@ public class AjaxShift {
         CalendarDB calendarDB = new CalendarDB();
             calendarDB.connect();
             ArrayList<String> shift =  calendarDB.getCurrentShift();
-            
+            int id_user = -1;
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (!(authentication instanceof AnonymousAuthenticationToken)) {
+                String username = authentication.getName();
+                UserDB userDB = new UserDB();
+                userDB.connect();
+                User user = userDB.getUser(username);
+                id_user = user.getUserId();
+            }
+            if(((Integer.valueOf(shift.get(0)) != id_user) && (shift.get(3).equals("0")))){
+                result.addElemento("-1");
+                result.addElemento("00:00:00");
+                return result;
+            }
             if (shift.get(0).equals("-1")){
                 result.addElemento("-1");
                 result.addElemento("00:00:00");                

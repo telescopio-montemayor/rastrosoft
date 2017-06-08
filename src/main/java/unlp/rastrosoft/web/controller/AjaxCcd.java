@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import unlp.rastrosoft.web.jsonview.Views;
 import unlp.rastrosoft.web.model.AjaxResponse;
 import unlp.rastrosoft.web.model.AjaxResponseBodyIndiExecute;
+import unlp.rastrosoft.web.model.CalendarDB;
 import unlp.rastrosoft.web.model.Capture;
 import unlp.rastrosoft.web.model.CaptureDB;
 import unlp.rastrosoft.web.model.Ccd;
@@ -175,43 +176,52 @@ public class AjaxCcd {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();    
         
-//        datetime        =   dateFormat.format(date);
-//        ra              =   telescope.getRa();
-//        dec             =   telescope.getDec();
-//        hBinning        =   ccd.getHBinning();
-//        vBinning        =   ccd.getVBinning();
-//        temperature     =   ccd.getTemperature();
-//        frameType       =   ccd.getFrameType();
-//        x               =   ccd.getX();
-//        y               =   ccd.getY();        
-//        width           =   ccd.getWidth();        
-//        height          =   ccd.getHeight();
-//        focusPosition   =   focuser.getAbsolutePosition();
-//        exposureTime    =   time;
-//        filePath        =   ccd.getFilePath();
+        datetime        =   dateFormat.format(date);
+        ra              =   telescope.getRa();
+        dec             =   telescope.getDec();
+        hBinning        =   "-";//ccd.getHBinning();   //------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
+        vBinning        =   "-";//ccd.getVBinning();   //------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
+        temperature     =   ccd.getTemperature();
+        frameType       =   ccd.getFrameType();
+        x               =   ccd.getX();
+        y               =   ccd.getY();        
+        width           =   ccd.getWidth();        
+        height          =   ccd.getHeight();
+        focusPosition   =   "-";//focuser.getAbsolutePosition();   //------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
+        exposureTime    =   time;
+        filePath        =   ccd.getFilePath();
        
         String currentUserName = null;        
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();         
         }
-        String path = "/home/ip300/webapp/captures";
-        String source= path+"/"+currentUserName;
-        String dest = path+"/"+currentUserName;
-        ccd.setUploadDirectory(source);
-        ccd.setLocalMode();  
         
         UserDB userDB = new UserDB();
-        userDB.connect(); // ARREGLAR!!!
-        User user = userDB.getUser(currentUserName);
+        userDB.connect();
+        CalendarDB calendarDB = new CalendarDB();
+        calendarDB.connect();
+        int idUserCurrentShift = Integer.valueOf(calendarDB.getCurrentShift().get(0));
+        int idCurrentUser      = userDB.getUser(currentUserName).getUserId();
+        if (idUserCurrentShift == idCurrentUser){
+            String folderName = userDB.getUser(idUserCurrentShift).getUsername();
+            String path = "/home/ip300/webapp/captures";
+            String source= path+"/"+folderName;
+            String dest = path+"/"+folderName;
+            ccd.setUploadDirectory(source);
+            ccd.setLocalMode();  
+
+
+
+            CaptureDB captureDB = new CaptureDB();        
+
+            Capture capture = new Capture("", datetime, ra, dec, hBinning, vBinning, temperature, frameType, x, y, width, height, focusPosition, exposureTime, filePath); 
+            captureDB.connect();
+            captureDB.asociateCaptureToUser(idCurrentUser, captureDB.insertCapture(capture));
+
+            ccd.setExposure(time, path, source, dest);
+        }
         
-        CaptureDB captureDB = new CaptureDB();        
-        
-//        Capture capture = new Capture("", datetime, ra, dec, hBinning, vBinning, temperature, frameType, x, y, width, height, focusPosition, exposureTime, filePath); 
-//        captureDB.connect();
-//        captureDB.asociateCaptureToUser(user.getUserId(), captureDB.insertCapture(capture));
-        
-        ccd.setExposure(time, path, source, dest);
         
         return result;
     }
