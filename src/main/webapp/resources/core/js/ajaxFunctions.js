@@ -231,8 +231,11 @@ function successAjax(data, tipo) {
                 shift_id  =   value[0];
                 live_key  =   value[1];
             });
-            //alert("Turno: "+shift_id+" - Key: "+live_key);
-            notify('Shift added successfully with id: '+shift_id+' and key: '+live_key, 'success');
+            if (shift_id == "-1"){
+                notify('Error adding shift, please try again.', 'danger');
+            }else{
+                notify('Shift added successfully with id: '+shift_id+' and key: '+live_key, 'success');
+            }
             break;
         case 'addSequence':
             var sequence_id = "-1";  

@@ -63,9 +63,16 @@ public class AjaxShift {
         
         CalendarDB shift = new CalendarDB();
         shift.connect();
-        shift_id = shift.insertShift(id_user, datetime, enabled, live_key, public_val);
-        result.addElemento(String.valueOf(shift_id));
-        result.addElemento(live_key);
+        
+        String minutes = datetime.substring(datetime.length()-5 , datetime.length()-3);
+        
+        if (minutes.equals("00") && shift.checkAvailableShift(datetime)){
+            shift_id = shift.insertShift(id_user, datetime, enabled, live_key, public_val);
+            result.addElemento(String.valueOf(shift_id));
+            result.addElemento(live_key);
+        }
+        result.addElemento("-1");
+        result.addElemento("-1");
         return result;
     }
     

@@ -52,7 +52,33 @@ public class CalendarDB extends Database{
         }
         
     }
-    
+    public boolean checkAvailableShift( String datetime ){
+        String sql = "SELECT datetime FROM shifts WHERE enabled = 1 AND datetime = ? LIMIT 1";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+            ps.setString(1, datetime);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return false;
+            }
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public List<String> getShifts(String from){
         String sql = "SELECT datetime FROM shifts WHERE enabled = 1 AND datetime > ?";
         Connection conn = null;
