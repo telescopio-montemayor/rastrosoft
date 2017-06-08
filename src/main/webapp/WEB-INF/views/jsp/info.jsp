@@ -79,6 +79,9 @@
 <spring:url value="/resources/core/css/menu.css" var="menuCss" />
 <link href="${menuCss}" rel="stylesheet" />
 
+<spring:url value="/resources/core/css/info.css" var="infoCss" />
+<link href="${infoCss}" rel="stylesheet" />
+
 <spring:url value="/resources/core/js/jquery.mask.js" var="jquerymaskJs" />
 <script src="${jquerymaskJs}"></script>
 
@@ -107,14 +110,22 @@
           <ul class="nav navbar-nav">
             
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tkey="shifts">Shifts <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tkey="shifts">Shifts</a>
               <ul class="dropdown-menu">
                   <li id="shifts-menu"><a href="#" onclick="showShifts();" tkey="view-shifts">View shifts</a></li>
                   <li id="shifts-menu"><a href="#" onclick="showAddShiftNew();" tkey="add-shift">Add shift</a></li>
               </ul>             
             </li>       
             <li id="captures-menu"><a href="#" onclick="showCaptures();" tkey="captures">Captures</a></li>
-            <li id="automatization-menu"><a href="#" onclick="showAutomatization();" tkey="automatization">Automatization</a></li>
+            <li id="automatization-menu"><a href="#" onclick="showAutomatization();" tkey="automatization">Automatization</a></li>            
+            <li id="live">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tkey="on-live"><i id="live-sign" class="fa fa-circle" aria-hidden="true"></i> On live</a>
+              <ul class="dropdown-menu">
+                  <input type="hidden" id="key">
+                  <li id="get-link"><a href="#" onclick="showLink();" tkey="get-link">Get link</a></li>
+                  <li id="view-live"><a href="#" onclick="viewLive();" tkey="view-live">View live stream</a></li>
+              </ul>             
+            </li>  
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -143,7 +154,7 @@
                     <button id="addShift-btn" class="btn btn-default" type="button" onclick="showLabelRemoveShift();" ><i class="fa fa-plus text-success"></i></button>
                 </span>  
             </div>
-        </div>
+        </div>        
         <div class="intro">
 <!--            <i class="fa fa-tint" style="font-size:240px"></i>-->
             <div class="intro-container">
@@ -157,7 +168,7 @@
                     </span1>
                 </b>
             </div>
-        </div>
+        </div>        
         <div id="tableShifts" class="table-shifts">
             <h4 style="color:white" class="label-primary text-center" tkey="shifts-otorged">Turnos otorgados</h4>
             <table id="shifts" class="table">
@@ -348,7 +359,52 @@
 <script>
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
-    
+        
+        jQuery(document).ready(function($) {         
+            var myInterval = setInterval(function(){        
+                checkLive();
+            },1000);
+
+        });
+        var myInterval1 = setInterval(function(){        
+            $("#live-sign").toggleClass("live-on");
+        },1000);
+        var myInterval2 = setInterval(function(){
+            $(".live-stream").toggle( "fade" );
+            $(".live-stream").toggle( "fade" );
+        },5000);
+        function checkLive(){
+            var search = {};
+            sendAjax(search,'checkLive','checkLive'); 
+        }
+        function liveOn(bool, public){
+            if(bool){
+                $("#live").show();
+                $("#key").val(public);
+            }else{
+                $("#live").hide();            
+            }    
+        }
+        function showLink(){
+            var key = $("#key").val();
+            if (key == "0"){
+                alert("The link of this live streaming is private.");
+            }else{
+                var path = window.location.href;
+                path = path.substring(0, path.lastIndexOf('/'));
+                alert("The link of the live streaming is:\n\n "+ path + "/live?key=" + $("#key").val() );
+            }
+            
+        }
+        function viewLive(){
+            var key = $("#key").val();
+            if (key == "0"){
+                key = prompt("This live stream is private. Please enter the key to access: ");
+            }
+            var path = window.location.href;
+            path = path.substring(0, path.lastIndexOf('/'));
+            window.location.replace(path + "/live?key=" + key);            
+        }
         function sendAjax(search, funcion, tipo){
             $.ajax({
                 type : "POST",

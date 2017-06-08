@@ -115,7 +115,7 @@
                         </div>
                         <div id="live-key">
                              <div class="input-group input-sm">
-                                <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
+                                <label class="input-group-addon" for="key"><i class="fa fa-lock"></i></label> 
                                 <input id="key" type="text" class="form-control" name="key" placeholder="Key">
                                 <label id="enter-key" class="input-group-addon clickable"><i class="fa fa-sign-in"></i></label> 
                             </div>

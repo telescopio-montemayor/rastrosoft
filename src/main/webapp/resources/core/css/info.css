@@ -1,0 +1,13 @@
+#live-key, #live{
+    display: none;
+}   
+.live-on{
+    color: #e14240;
+}
+.live-stream{
+    margin-top: 200px;        
+} 
+#key{
+    text-transform: uppercase;
+    text-align: center;
+} 
