@@ -119,7 +119,7 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
                 //DESPERTAR
                 Step current_step = new Step();
                 current_step.awake_lock();
-            }
+            }                
             sessionHandler.updateElement(property.getName(), property.getValuesAsString());
 	}	
 	

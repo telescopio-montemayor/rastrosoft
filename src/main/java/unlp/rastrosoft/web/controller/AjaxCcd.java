@@ -30,7 +30,6 @@ import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.ExecuteCriteriaTwoValues;
 import unlp.rastrosoft.web.model.Focuser;
 import unlp.rastrosoft.web.model.Telescope;
-import unlp.rastrosoft.web.model.User;
 import unlp.rastrosoft.web.model.UserDB;
 
 /**
@@ -157,6 +156,7 @@ public class AjaxCcd {
         return result;
     }
     
+  
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/setExposure", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
@@ -189,7 +189,7 @@ public class AjaxCcd {
         height          =   ccd.getHeight();
         focusPosition   =   "-";//focuser.getAbsolutePosition();   //------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
         exposureTime    =   time;
-        filePath        =   ccd.getFilePath();
+        
        
         String currentUserName = null;        
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -211,15 +211,15 @@ public class AjaxCcd {
             ccd.setUploadDirectory(source);
             ccd.setLocalMode();  
 
-
-
-            CaptureDB captureDB = new CaptureDB();        
-
+            ccd.setExposure(time, path, source, dest);
+            filePath        =   ccd.getFilePath(); //REVISAR TIEMPO DE ESPERA
+            
+            CaptureDB captureDB = new CaptureDB();      
             Capture capture = new Capture("", datetime, ra, dec, hBinning, vBinning, temperature, frameType, x, y, width, height, focusPosition, exposureTime, filePath); 
             captureDB.connect();
-            captureDB.asociateCaptureToUser(idCurrentUser, captureDB.insertCapture(capture));
-
-            ccd.setExposure(time, path, source, dest);
+            int id_capture = captureDB.insertCapture(capture);
+            captureDB.asociateCaptureToUser(idCurrentUser, id_capture);
+            
         }
         
         

@@ -89,7 +89,6 @@
 	var="websocket" />
 <script src="${websocket}"></script>
 
-
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
@@ -189,6 +188,75 @@
             </table>
         </div>
         <div class="table-captures">
+            <div id="dialog-message-capture-info" title="Capture information">
+                
+                <table class="capture_info_table">
+                    <tr>
+                      <th>#</th>
+                      <td>1</td>
+                    </tr>
+                    <tr>
+                      <th>Fecha</th>
+                      <td>2017-0-09</td>
+                    </tr>
+                    <tr>
+                      <th>Hora</th>
+                      <td>20:21:27</td>
+                    </tr>
+                    <tr>
+                      <th>RA</th>
+                      <td>17:53:54</td>
+                    </tr>
+                    <tr>
+                      <th>DEC</th>
+                      <td>-33° 10' 60"</td>
+                    </tr>
+                    <tr>
+                      <th>Exposicion</th>
+                      <td>6 segundos</td>
+                    </tr>
+                    <tr>
+                      <th>Filepath</th>
+                      <td>/alex/IMAGE_002.fits</td>
+                    </tr>
+                    <tr>
+                      <th>hBinning</th>
+                      <td>1.0</td>
+                    </tr>
+                    <tr>
+                      <th>vBinning</th>
+                      <td>1.0</td>
+                    </tr>
+                    <tr>
+                      <th>Temperature</th>
+                      <td>-15</td>
+                    </tr>
+                    <tr>
+                      <th>frameType</th>
+                      <td>light</td>
+                    </tr>
+                    <tr>
+                      <th>X</th>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <th>Y</th>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <th>Width</th>
+                      <td>1280</td>
+                    </tr>
+                    <tr>
+                      <th>Height</th>
+                      <td>1024</td>
+                    </tr>
+                    <tr>
+                      <th>Focus</th>
+                      <td>50000</td>
+                    </tr>
+                </table>
+            </div>
             <h4 style="color:white" class="label-primary text-center" tkey="my-captures">Mis capturas</h4>
             <table id="captures" class="table" >
                 <thead>
@@ -200,7 +268,7 @@
                     <th><span tkey="dec">DEC</span></th>
                     <th><span tkey="exposure">Exposicion</span></th>
                     <th><span tkey="filepath">Filepath</span></th>
-                    <th></th>
+                    <th><i class="fa fa-download" aria-hidden="true"></i></th>
                     <th></th>
                     <th></th>
                   </tr>
@@ -359,6 +427,26 @@
 <script>
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
+        
+        function showCaptureInfo(){
+            $( "#dialog-message-capture-info" ).dialog({
+                modal: true,
+                show: {
+                    effect: "drop",
+                    duration: 100
+                },
+                hide: {
+                    effect: "drop",
+                    duration: 50
+                },
+                buttons: {
+                  Ok: function() {
+                    $( this ).dialog( "close" );
+                  }
+              }
+            });
+        }
+  
         
         jQuery(document).ready(function($) {         
             var myInterval = setInterval(function(){        

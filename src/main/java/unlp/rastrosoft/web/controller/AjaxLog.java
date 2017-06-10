@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import unlp.rastrosoft.web.jsonview.Views;
+import unlp.rastrosoft.web.model.AjaxResponse;
 import unlp.rastrosoft.web.model.AjaxResponseListOfLists;
 import unlp.rastrosoft.web.model.CaptureDB;
 import unlp.rastrosoft.web.model.ExecuteCriteria;
@@ -56,6 +57,30 @@ public class AjaxLog {
         
         return result;
     }
-    
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/getCapture", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public AjaxResponse getCapture(@RequestBody ExecuteCriteria execute) {
+        AjaxResponse result = new AjaxResponse();        
+        String id_capture;       
+        id_capture = execute.getValue();
+        
+        CaptureDB captureDB = new CaptureDB();
+        captureDB.connect();
+        
+        int id_user_val = -1;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            User user = userDB.getUser(username);
+            id_user_val = user.getUserId();
+        }
+        
+        result.addElementos(captureDB.getCaptureAsList(id_user_val, Integer.valueOf(id_capture)));
+        
+        return result;
+    }
   
 }

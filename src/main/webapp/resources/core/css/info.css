@@ -1,4 +1,4 @@
-#live-key, #live{
+#live-key, #live, #dialog-message-capture-info{
     display: none;
 }   
 .live-on{
@@ -11,3 +11,17 @@
     text-transform: uppercase;
     text-align: center;
 } 
+
+.capture_info_table table, .capture_info_table td, .capture_info_table th {    
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.capture_info_table table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.capture_info_table th, .capture_info_table td {
+    padding: 5px;
+}

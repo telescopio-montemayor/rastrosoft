@@ -188,14 +188,39 @@ function successAjax(data, tipo) {
                         +'<td>'+decimalToDegrees(c[3])+'</td>'
                         +'<td>'+c[13]+' segundos</td>'
                         +'<td>'+c[14].split("captures")[1]+'</td>'
-//                      +'<td><div class="btn-group" style="height: 10px; margin-top: -25px;"><a class="btn dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true"><span class="fa fa-download"></span></a><ul class="dropdown-menu"><li><a href="'+fits+'" download><i class="fa fa-file fa-fw"></i> .fits</a></li><li><a href="'+jpg+'" download><i class="fa fa-file-image-o fa-fw"></i> .jpg</a></li></ul></div></td>'          
-                        +'<td><a href="'+fits+'" download><i class="fa fa-file fa-fw" aria-hidden="true"></i></a></td>'
-                        +'<td><a href="'+jpg+'" download><i class="fa fa-file-image-o fa-fw text-success" aria-hidden="true"></i></a></td>'
+                        +'<td><a href="'+fits+'" download><i class="fa fa-file fa-fw" aria-hidden="true"></i></a><a href="'+jpg+'" download><i class="fa fa-file-image-o fa-fw text-success" aria-hidden="true"></i></a></td>'
+                        +'<td><a href="#" onclick="getCapture('+c[0]+');"><i class="fa fa-file-text-o fa-fw text-success" aria-hidden="true"></i></a></td>'
                         +'<td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>'
                         +'</tr>');
                });
             });   
 //            updateTables();            var imageSource = ("/rastrosoft"+c[14].split("captures")[1]);
+            break;
+        case 'getCapture':
+            $("#dialog-message-capture-info").empty();
+            
+                $.each(data, function(key, c) {
+                    $("#dialog-message-capture-info").append(
+                        '<table class="capture_info_table">'
+                            +'<tr><th>#</th><td>'+c[0]+'</td></tr>'
+                            +'<tr><th>Fecha</th><td>'+c[1].slice(0, 10)+'</td></tr>'
+                            +'<tr><th>Hora</th><td>'+c[1].slice(11, 19)+'</td></tr>'
+                            +'<tr><th>RA</th><td>'+decimalToHours(c[2])+'</td></tr>'
+                            +'<tr><th>DEC</th><td>'+decimalToDegrees(c[3])+'</td></tr>'
+                            +'<tr><th>Exposicion</th><td>'+c[13]+' segundos</td></tr>'
+                            +'<tr><th>Filepath</th><td>'+c[14].split("captures")[1]+'</td></tr>'
+                            +'<tr><th>hBinning</th><td>'+c[4]+'</td></tr>'
+                            +'<tr><th>vBinning</th><td>'+c[5]+'</td></tr>'
+                            +'<tr><th>Temperature</th><td>'+c[6]+'</td></tr>'
+                            +'<tr><th>Frame</th><td>'+c[7]+'</td></tr>'
+                            +'<tr><th>X</th><td>'+c[8]+'</td></tr>'
+                            +'<tr><th>Y</th><td>'+c[9]+'</td></tr>'
+                            +'<tr><th>Width</th><td>'+c[10]+'</td></tr>'
+                            +'<tr><th>Height</th><td>'+c[11]+'</td></tr>'
+                            +'<tr><th>Focus</th><td>'+c[12]+'</td></tr>'
+                        +'</table>');
+               });
+               showCaptureInfo();
             break;
         case 'getChat':  
             $("#chatbox").empty();
@@ -553,6 +578,11 @@ function getCaptures() {
     var search = {};
     search["value"] = 1;
     sendAjax(search,'getCaptures','getCaptures');  
+}
+function getCapture(id_capture) {
+    var search = {};
+    search["value"] = id_capture;
+    sendAjax(search,'getCapture','getCapture');  
 }
 function getChat() {    
     var search = {};
