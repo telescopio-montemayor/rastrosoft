@@ -190,10 +190,12 @@ function successAjax(data, tipo) {
                         +'<td>'+c[14].split("captures")[1]+'</td>'
                         +'<td><a href="'+fits+'" download><i class="fa fa-file fa-fw" aria-hidden="true"></i></a><a href="'+jpg+'" download><i class="fa fa-file-image-o fa-fw text-success" aria-hidden="true"></i></a></td>'
                         +'<td><a href="#" onclick="getCapture('+c[0]+');"><i class="fa fa-file-text-o fa-fw text-success" aria-hidden="true"></i></a></td>'
-                        +'<td><a href="#"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>'
+                        +'<td><a href="#" onclick="removeCapture('+c[0]+');"><i class="fa fa-minus text-danger" aria-hidden="true"></i></a></td>'
                         +'</tr>');
                });
             });   
+            $("#capturesQuantity").empty();
+            $("#capturesQuantity").append($("#captures > tbody > tr").length);
 //            updateTables();            var imageSource = ("/rastrosoft"+c[14].split("captures")[1]);
             break;
         case 'getCapture':
@@ -221,6 +223,16 @@ function successAjax(data, tipo) {
                         +'</table>');
                });
                showCaptureInfo();
+            break;
+        case 'removeCapture':
+            $.each(data, function(key, c) {
+                if (c[0]=="true"){
+                    getCaptures();
+                    notify('Capture removed successfully!', 'success');
+                }else{
+                    alert("Unable to remove this capture. Please, try again later.");
+                }
+            });
             break;
         case 'getChat':  
             $("#chatbox").empty();
@@ -583,6 +595,13 @@ function getCapture(id_capture) {
     var search = {};
     search["value"] = id_capture;
     sendAjax(search,'getCapture','getCapture');  
+}
+function removeCapture(id_capture) {
+    if(confirm("Are you sure you want to remove the capture #"+id_capture+" ?")){
+        var search = {};
+        search["value"] = id_capture;
+        sendAjax(search,'removeCapture','removeCapture');  
+    }    
 }
 function getChat() {    
     var search = {};

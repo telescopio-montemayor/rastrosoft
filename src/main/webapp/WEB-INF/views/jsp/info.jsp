@@ -258,6 +258,7 @@
                 </table>
             </div>
             <h4 style="color:white" class="label-primary text-center" tkey="my-captures">Mis capturas</h4>
+            <div><span id="capturesQuantity"></span> capturas encontradas</div>
             <table id="captures" class="table" >
                 <thead>
                   <tr>

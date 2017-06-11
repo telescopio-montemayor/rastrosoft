@@ -84,19 +84,22 @@ public class CaptureDB extends Database{
         }
         return id;
     }
-    public void removeCapture(int id_capture){
+    public boolean removeCapture(int id_user, int id_capture){
+        System.err.println("user"+id_user+" cap"+id_capture );
         
         String sql = "UPDATE user_capture " +
-                      "SET enabled = 0 WHERE id_capture = ?";
+                      "SET enabled = 0 WHERE id_user = ? AND id_capture = ? LIMIT 1";
         Connection conn = null;
 
         try {
                 conn = dataSource.getConnection();
                 PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
 
-                ps.setInt(1, id_capture);
-                ps.executeUpdate();
+                ps.setInt(1, id_user);
+                ps.setInt(2, id_capture);
+                int result = ps.executeUpdate();
                 ps.close();
+                return (result==1);
 
         } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -107,7 +110,7 @@ public class CaptureDB extends Database{
                                 conn.close();
                         } catch (SQLException e) {}
                 }
-        }
+        }        
     } 
     public void removeLastCapture(){
         

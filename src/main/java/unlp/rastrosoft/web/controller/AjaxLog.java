@@ -37,9 +37,7 @@ public class AjaxLog {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponseListOfLists getCaptures(@RequestBody ExecuteCriteria execute) {
         AjaxResponseListOfLists result = new AjaxResponseListOfLists();        
-//        String id_user;       
-//        id_user = execute.getValue();
-//        
+   
         CaptureDB captureDB = new CaptureDB();
         captureDB.connect();
         
@@ -82,5 +80,29 @@ public class AjaxLog {
         
         return result;
     }
-  
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/removeCapture", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
+    public AjaxResponse removeCapture(@RequestBody ExecuteCriteria execute) {
+        AjaxResponse result = new AjaxResponse();        
+        String id_capture;       
+        id_capture = execute.getValue();
+        
+        CaptureDB captureDB = new CaptureDB();
+        captureDB.connect();
+        
+        int id_user_val = -1;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            User user = userDB.getUser(username);
+            id_user_val = user.getUserId();
+        }
+        
+        result.addElemento(String.valueOf(captureDB.removeCapture(id_user_val, Integer.valueOf(id_capture))));
+        
+        return result;
+    }
 }
