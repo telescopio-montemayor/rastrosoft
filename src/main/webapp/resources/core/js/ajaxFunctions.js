@@ -131,10 +131,11 @@ function successAjax(data, tipo) {
             $("#shifts tBody").empty();
             $.each(data, function(key, value) {
                 $.each(value, function(key2, c) {
-                    var name="", class_label="";
+                    var name="", class_label="", remove="";
                     if(c[1]=="0"){
                         name = '<td><span tkey="you">You</span></td>';
                         class_label='class="label-success"';
+                        remove="<td><a href=\"#\" onclick=\"cancelShift("+c[0]+");\">Remove</a><td>";
                     }else{
                         name = '<td>'+c[1]+'</td>';
                     }
@@ -167,6 +168,7 @@ function successAjax(data, tipo) {
                         +transmition
                         +'<td>'+key+'</td>'
                         +'<td>'+link+'</td>'
+                        +remove
                         +'</tr>');
                     }                    
                 });
@@ -600,6 +602,13 @@ function removeCapture(id_capture) {
         var search = {};
         search["value"] = id_capture;
         sendAjax(search,'removeCapture','removeCapture');  
+    }    
+}
+function cancelShift(id) {
+    if(confirm("Are you sure you want to cancel the shift #"+id+" ?")){
+        var search = {};
+        search["value"] = id;
+        sendAjax(search,'cancelShift','cancelShift');  
     }    
 }
 function getChat() {    

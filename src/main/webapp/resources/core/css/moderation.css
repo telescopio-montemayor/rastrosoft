@@ -27,3 +27,6 @@ select {
 .bg-danger-m {
     background-color: #f2dede;
 }
+tr:hover{
+    background-color: #eceeef;
+}

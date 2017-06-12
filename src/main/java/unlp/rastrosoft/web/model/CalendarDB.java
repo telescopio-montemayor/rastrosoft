@@ -52,8 +52,63 @@ public class CalendarDB extends Database{
         }
         
     }
+    public String getDatetimeShift(int id){
+        String sql = "SELECT datetime FROM shifts WHERE id = ? LIMIT 1";
+        Connection conn = null;
+        String result = "-1";
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                result = rs.getString("datetime");
+            }
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+        return result;
+    }
+    public String getPreviousAcceptedShift( String datetime ){
+        String sql = "SELECT id FROM shifts WHERE enabled = 1 AND 'datetime' = ? LIMIT 1";
+        Connection conn = null;
+        String previous_id = "-1";
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+            ps.setString(1, datetime);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                previous_id = String.valueOf(rs.getInt("id"));
+            }
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+        return previous_id;
+    }
     public boolean checkAvailableShift( String datetime ){
-        String sql = "SELECT datetime FROM shifts WHERE enabled = 1 AND datetime = ? LIMIT 1";
+        String sql = "SELECT id FROM shifts WHERE enabled = 1 AND 'datetime' = ? LIMIT 1";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -80,7 +135,7 @@ public class CalendarDB extends Database{
         return true;
     }
     public List<String> getShifts(String from){
-        String sql = "SELECT datetime FROM shifts WHERE enabled = 1 AND datetime > ?";
+        String sql = "SELECT datetime FROM shifts WHERE enabled = 1 AND 'datetime' > ?";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -187,7 +242,7 @@ public class CalendarDB extends Database{
     }
     
     public List<List<String>> getAllShifts(String from){
-        String sql = "SELECT * FROM shifts WHERE datetime >= ? ORDER BY datetime ASC";
+        String sql = "SELECT * FROM shifts WHERE datetime >= ? ORDER BY 'datetime' ASC";
         Connection conn = null;
         
         UserDB userDB = new UserDB();
@@ -240,7 +295,7 @@ public class CalendarDB extends Database{
         
     }
     public List<List<String>> getAllShiftsWithName(String from){
-        String sql = "SELECT * FROM shifts WHERE datetime >= ? ORDER BY datetime ASC";
+        String sql = "SELECT * FROM shifts WHERE datetime >= ? AND (enabled=1 or enabled=0) ORDER BY 'datetime' ASC";
         Connection conn = null;
         
         UserDB userDB = new UserDB();
@@ -303,7 +358,7 @@ public class CalendarDB extends Database{
         
     }
     public List<List<String>> getModerationShifts(String from, int state){
-        String sql = "SELECT * FROM shifts WHERE datetime >= ? AND enabled = ? ORDER BY datetime ASC";
+        String sql = "SELECT * FROM shifts WHERE datetime >= ? AND enabled = ? ORDER BY 'datetime' ASC";
         Connection conn = null;
         
         UserDB userDB = new UserDB();
@@ -383,13 +438,14 @@ public class CalendarDB extends Database{
         }
     }
     public void rejectShift(int shift_id){
+        System.err.println("asdsad");
         String sql = "UPDATE shifts " +
                       "SET enabled = 0 WHERE id = ? LIMIT 1";
         Connection conn = null;
         try {
                 conn = dataSource.getConnection();
                 PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
-
+                
                 ps.setInt(1, shift_id);
                 ps.executeUpdate();
                 ps.close();
@@ -427,5 +483,40 @@ public class CalendarDB extends Database{
                         } catch (SQLException e) {}
                 }
         }
+    }
+    public List<String> getShift(int id){
+        String sql = "SELECT * FROM shifts WHERE enabled = 1 AND id = ? LIMIT 1";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+            
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            List<String> shift = new ArrayList<>();
+            
+            while (rs.next()) {
+                shift.add(String.valueOf(rs.getInt("id_user")));
+                shift.add(rs.getString("datetime"));
+                shift.add(String.valueOf(rs.getInt("enabled")));
+                shift.add(rs.getString("live_key"));
+                shift.add(String.valueOf(rs.getInt("public")));
+            }
+            rs.close();
+            ps.close();
+            return shift;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+        
     }
 }

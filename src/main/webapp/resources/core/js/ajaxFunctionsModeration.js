@@ -56,7 +56,15 @@ function successAjax(data, tipo) {
             getPendingShifts();
             break;
         case 'acceptShift':
-            getAcceptedShifts();
+            $.each(data, function(key, c) {
+                if (c[0] == "1"){
+                    getAcceptedShifts();
+                    notify('Shift accepted successfuly.', 'success');
+                }else if (c[0] == "0"){
+                    alert("Error accepting shift. There is already a  shift in that date and time, you need to cancel the previous shift with id = "+c[1]);
+                }
+            });
+            
             break;
         case 'rejectShift':
             getRejectedShifts();

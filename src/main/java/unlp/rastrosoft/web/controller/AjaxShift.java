@@ -10,6 +10,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -104,6 +105,7 @@ public class AjaxShift {
     }
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/getPendingShifts", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_MODERATOR')")
     public AjaxResponseListOfLists getPendingShifts(@RequestBody SearchCriteria search) {            
 
         AjaxResponseListOfLists result = new AjaxResponseListOfLists();
@@ -114,6 +116,7 @@ public class AjaxShift {
     }
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/getAcceptedShifts", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_MODERATOR')")
     public AjaxResponseListOfLists getAcceptedShifts(@RequestBody SearchCriteria search) {            
 
         AjaxResponseListOfLists result = new AjaxResponseListOfLists();
@@ -124,6 +127,7 @@ public class AjaxShift {
     }
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/getRejectedShifts", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_MODERATOR')")
     public AjaxResponseListOfLists getRejectedShifts(@RequestBody SearchCriteria search) {            
 
         AjaxResponseListOfLists result = new AjaxResponseListOfLists();
@@ -134,17 +138,27 @@ public class AjaxShift {
     }
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/acceptShift", method=RequestMethod.POST)
-    public AjaxResponseListOfLists acceptShift(@RequestBody ExecuteCriteria execute) {            
+    @PreAuthorize("hasAnyRole('ROLE_MODERATOR')")
+    public AjaxResponse acceptShift(@RequestBody ExecuteCriteria execute) {            
         String shift_id = execute.getValue();
         
-        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        AjaxResponse result = new AjaxResponse();
         CalendarDB shifts = new CalendarDB();    
         shifts.connect();
-        shifts.acceptShift(Integer.valueOf(shift_id));
+        String datetime = shifts.getDatetimeShift(Integer.valueOf(shift_id));
+        String previous_id = shifts.getPreviousAcceptedShift(datetime);
+        if(previous_id.equals("-1")){
+            shifts.acceptShift(Integer.valueOf(shift_id));
+            result.addElemento("1"); //ACCEPTED
+        }else{
+            result.addElemento("0"); //CANNOT ACCEPT SHIFT, ALREADY ONE WITH THIS datetime
+            result.addElemento(previous_id);
+        }        
         return result;
     }
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/rejectShift", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_MODERATOR')")
     public AjaxResponseListOfLists rejectShift(@RequestBody ExecuteCriteria execute) {            
         String shift_id = execute.getValue();
         
@@ -156,6 +170,7 @@ public class AjaxShift {
     }
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/setToPendingShift", method=RequestMethod.POST)
+    @PreAuthorize("hasAnyRole('ROLE_MODERATOR')")
     public AjaxResponseListOfLists setToPendingShift(@RequestBody ExecuteCriteria execute) {            
         String shift_id = execute.getValue();
         
@@ -202,4 +217,29 @@ public class AjaxShift {
         return new BigInteger(130, random).toString(32).substring(0, lenght);
     }
     
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/cancelShift", method=RequestMethod.POST)
+    public AjaxResponseListOfLists cancelShift(@RequestBody ExecuteCriteria execute) {    
+    
+        String shift_id = execute.getValue();
+      
+        int id_user = -1;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username = authentication.getName();
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            User user = userDB.getUser(username);
+            id_user = user.getUserId();
+        }
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        CalendarDB shifts = new CalendarDB();    
+        shifts.connect();
+        List<String> shift = shifts.getShift(Integer.valueOf(shift_id));
+        
+        if(shift.get(0).equals(String.valueOf(id_user))){            
+            shifts.rejectShift(Integer.valueOf(shift_id));
+        }        
+        return result;
+    }
 }
