@@ -25,3 +25,10 @@
 .capture_info_table th, .capture_info_table td {
     padding: 5px;
 }
+
+.remove-button-shift{
+    color: red;
+    position:absolute; 
+    margin-top: 3px; 
+    margin-left: 20px;
+}

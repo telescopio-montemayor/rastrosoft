@@ -135,12 +135,13 @@ function successAjax(data, tipo) {
                     if(c[1]=="0"){
                         name = '<td><span tkey="you">You</span></td>';
                         class_label='class="label-success"';
-                        remove="<td><a href=\"#\" onclick=\"cancelShift("+c[0]+");\">Remove</a><td>";
+                        remove="<a href=\"#\" onclick=\"cancelShift("+c[0]+");\"><i class=\"fa fa-minus fa-fw remove-button-shift\"></i></a>";
+//                      remove= "onmouseenter=\"showRemoveButtonShift("+c[0]+");\"";
                     }else{
                         name = '<td>'+c[1]+'</td>';
                     }
                     if (c[3] == "0"){
-                        $("#shifts tBody").append('<tr class="label-danger"><th scope="row">'+c[0]+'</th>'
+                        $("#shifts tBody").append('<tr class="label-danger" '+remove+'><th scope="row">'+c[0]+'</th>'
                         +name
                         +'<td>'+c[2].slice(0, 10)+'</td>'
                         +'<td>'+c[2].slice(10, 16)+'</td>'
@@ -167,8 +168,7 @@ function successAjax(data, tipo) {
                         +'<td><span tkey="yes">Yes</td>'                        
                         +transmition
                         +'<td>'+key+'</td>'
-                        +'<td>'+link+'</td>'
-                        +remove
+                        +'<td>'+link+' '+remove+'</td>'
                         +'</tr>');
                     }                    
                 });

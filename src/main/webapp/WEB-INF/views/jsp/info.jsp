@@ -190,71 +190,7 @@
         <div class="table-captures">
             <div id="dialog-message-capture-info" title="Capture information">
                 
-                <table class="capture_info_table">
-                    <tr>
-                      <th>#</th>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <th>Fecha</th>
-                      <td>2017-0-09</td>
-                    </tr>
-                    <tr>
-                      <th>Hora</th>
-                      <td>20:21:27</td>
-                    </tr>
-                    <tr>
-                      <th>RA</th>
-                      <td>17:53:54</td>
-                    </tr>
-                    <tr>
-                      <th>DEC</th>
-                      <td>-33° 10' 60"</td>
-                    </tr>
-                    <tr>
-                      <th>Exposicion</th>
-                      <td>6 segundos</td>
-                    </tr>
-                    <tr>
-                      <th>Filepath</th>
-                      <td>/alex/IMAGE_002.fits</td>
-                    </tr>
-                    <tr>
-                      <th>hBinning</th>
-                      <td>1.0</td>
-                    </tr>
-                    <tr>
-                      <th>vBinning</th>
-                      <td>1.0</td>
-                    </tr>
-                    <tr>
-                      <th>Temperature</th>
-                      <td>-15</td>
-                    </tr>
-                    <tr>
-                      <th>frameType</th>
-                      <td>light</td>
-                    </tr>
-                    <tr>
-                      <th>X</th>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                      <th>Y</th>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                      <th>Width</th>
-                      <td>1280</td>
-                    </tr>
-                    <tr>
-                      <th>Height</th>
-                      <td>1024</td>
-                    </tr>
-                    <tr>
-                      <th>Focus</th>
-                      <td>50000</td>
-                    </tr>
+                <table class="capture_info_table">                   
                 </table>
             </div>
             <h4 style="color:white" class="label-primary text-center" tkey="my-captures">Mis capturas</h4>
@@ -535,7 +471,6 @@
             getShifts();  
             getAllShifts(); 
             getUsername();
-            //generate_data_automatization(10);
             getSequences();
             getQuickAccessTargets();
             $( "input" ).focusin(function() {
