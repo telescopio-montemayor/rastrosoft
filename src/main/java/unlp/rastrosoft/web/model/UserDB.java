@@ -125,6 +125,7 @@ public class UserDB extends Database{
                 user.setPassword(rs.getString("password"));
                 user.setEnabled(rs.getString("enabled"));
                 user.setName(rs.getString("name"));                
+                user.setLastname(rs.getString("lastname"));
                 user.setMail(rs.getString("mail"));   
             }
             rs.close();

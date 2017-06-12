@@ -23,6 +23,7 @@ import unlp.rastrosoft.web.jsonview.Views;
 import unlp.rastrosoft.web.model.AjaxResponse;
 import unlp.rastrosoft.web.model.AjaxResponseListOfLists;
 import unlp.rastrosoft.web.model.CalendarDB;
+import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.ExecuteCriteriaThreeValues;
 import unlp.rastrosoft.web.model.SearchCriteria;
 import unlp.rastrosoft.web.model.User;
@@ -86,6 +87,82 @@ public class AjaxShift {
         CalendarDB shifts = new CalendarDB();    
         shifts.connect();       
         result.addElementos(shifts.getAllShiftsWithName(LocalDateTime.now().withMinute(0).withSecond(0).withNano(0).toString()));        
+        return result;
+    }
+    
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/getAllModerationShifts", method=RequestMethod.POST)
+    public AjaxResponseListOfLists getAllModerationShifts(@RequestBody SearchCriteria search) {            
+
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        CalendarDB shifts = new CalendarDB();    
+        shifts.connect();       
+        result.addElementos(shifts.getModerationShifts(LocalDateTime.now().withMinute(0).withSecond(0).withNano(0).toString(), 0 ));        
+        result.addElementos(shifts.getModerationShifts(LocalDateTime.now().withMinute(0).withSecond(0).withNano(0).toString(), 1 ));
+        result.addElementos(shifts.getModerationShifts(LocalDateTime.now().withMinute(0).withSecond(0).withNano(0).toString(), 2 ));
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/getPendingShifts", method=RequestMethod.POST)
+    public AjaxResponseListOfLists getPendingShifts(@RequestBody SearchCriteria search) {            
+
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        CalendarDB shifts = new CalendarDB();    
+        shifts.connect();       
+        result.addElementos(shifts.getModerationShifts(LocalDateTime.now().withMinute(0).withSecond(0).withNano(0).toString(), 2 ));        
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/getAcceptedShifts", method=RequestMethod.POST)
+    public AjaxResponseListOfLists getAcceptedShifts(@RequestBody SearchCriteria search) {            
+
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        CalendarDB shifts = new CalendarDB();    
+        shifts.connect();       
+        result.addElementos(shifts.getModerationShifts(LocalDateTime.now().withMinute(0).withSecond(0).withNano(0).toString(), 1 ));        
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/getRejectedShifts", method=RequestMethod.POST)
+    public AjaxResponseListOfLists getRejectedShifts(@RequestBody SearchCriteria search) {            
+
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        CalendarDB shifts = new CalendarDB();    
+        shifts.connect();       
+        result.addElementos(shifts.getModerationShifts(LocalDateTime.now().withMinute(0).withSecond(0).withNano(0).toString(), 0 ));        
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/acceptShift", method=RequestMethod.POST)
+    public AjaxResponseListOfLists acceptShift(@RequestBody ExecuteCriteria execute) {            
+        String shift_id = execute.getValue();
+        
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        CalendarDB shifts = new CalendarDB();    
+        shifts.connect();
+        shifts.acceptShift(Integer.valueOf(shift_id));
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/rejectShift", method=RequestMethod.POST)
+    public AjaxResponseListOfLists rejectShift(@RequestBody ExecuteCriteria execute) {            
+        String shift_id = execute.getValue();
+        
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        CalendarDB shifts = new CalendarDB();    
+        shifts.connect();
+        shifts.rejectShift(Integer.valueOf(shift_id));
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/setToPendingShift", method=RequestMethod.POST)
+    public AjaxResponseListOfLists setToPendingShift(@RequestBody ExecuteCriteria execute) {            
+        String shift_id = execute.getValue();
+        
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        CalendarDB shifts = new CalendarDB();    
+        shifts.connect();
+        shifts.setToPendingShift(Integer.valueOf(shift_id));
         return result;
     }
     @JsonView(Views.Public.class)

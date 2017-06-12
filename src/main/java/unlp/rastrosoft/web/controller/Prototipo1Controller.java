@@ -1,6 +1,7 @@
 package unlp.rastrosoft.web.controller;
 
 import java.util.logging.Level;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -102,5 +103,10 @@ public class Prototipo1Controller {
                 return "prototipo10";
             }
             return "info";
+	}
+        @RequestMapping(value = "/moderation", method = RequestMethod.GET)
+        @PreAuthorize("hasAnyRole('ROLE_MODERATOR')")
+	public String moderation(ModelMap model) {                  
+		return "moderation";
 	}
 }

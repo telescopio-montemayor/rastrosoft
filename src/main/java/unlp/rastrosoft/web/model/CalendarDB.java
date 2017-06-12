@@ -302,4 +302,130 @@ public class CalendarDB extends Database{
         }
         
     }
+    public List<List<String>> getModerationShifts(String from, int state){
+        String sql = "SELECT * FROM shifts WHERE datetime >= ? AND enabled = ? ORDER BY datetime ASC";
+        Connection conn = null;
+        
+        UserDB userDB = new UserDB();
+        userDB.connect();
+        
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+            
+            ps.setString(1, from);
+            ps.setInt(2, state);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            List<List<String>> shifts = new ArrayList<>();
+            
+            while (rs.next()) {   
+                int user_id = rs.getInt("id_user");
+                int public_val = rs.getInt("public");
+                String live_key = rs.getString("live_key");
+                if (public_val == 0){
+                    live_key = "-1";
+                }
+                User user = userDB.getUser(user_id);
+                
+                ArrayList<String> shift_a = new ArrayList<>();
+                shift_a.add(String.valueOf(rs.getInt("id")));                
+                shift_a.add(user.getUsername());
+                shift_a.add(user.getName());
+                shift_a.add(user.getLastname());
+                shift_a.add(user.getMail());
+                shift_a.add(String.valueOf(user_id));
+                shift_a.add(rs.getString("datetime").substring(0, 16));
+                shift_a.add(String.valueOf(rs.getInt("enabled")));
+                shift_a.add(live_key);
+                shift_a.add(String.valueOf(public_val));
+                
+                shifts.add(shift_a);
+            }
+            rs.close();
+            ps.close();
+            return shifts;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+        
+    }
+    public void acceptShift(int shift_id){
+        String sql = "UPDATE shifts " +
+                      "SET enabled = 1 WHERE id = ? LIMIT 1";
+        Connection conn = null;
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+                ps.setInt(1, shift_id);
+                ps.executeUpdate();
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+    }
+    public void rejectShift(int shift_id){
+        String sql = "UPDATE shifts " +
+                      "SET enabled = 0 WHERE id = ? LIMIT 1";
+        Connection conn = null;
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+                ps.setInt(1, shift_id);
+                ps.executeUpdate();
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+    }
+    public void setToPendingShift(int shift_id){
+        String sql = "UPDATE shifts " +
+                      "SET enabled = 2 WHERE id = ? LIMIT 1";
+        Connection conn = null;
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+                ps.setInt(1, shift_id);
+                ps.executeUpdate();
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+    }
 }

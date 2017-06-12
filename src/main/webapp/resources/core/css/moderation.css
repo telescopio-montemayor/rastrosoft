@@ -1,0 +1,29 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11/06/2017, 19:49:56
+    Author     : ip300
+*/
+
+select::-ms-expand {
+    display: none;
+}
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 2px 30px 2px 2px;
+    border: none;
+}
+.bg-success-m{
+    background-color: #dff0d8; 
+}
+.bg-warning-m {
+    background-color: #fcf8e3;
+}
+.bg-danger-m {
+    background-color: #f2dede;
+}

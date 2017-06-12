@@ -196,7 +196,6 @@ function successAjax(data, tipo) {
             });   
             $("#capturesQuantity").empty();
             $("#capturesQuantity").append($("#captures > tbody > tr").length);
-//            updateTables();            var imageSource = ("/rastrosoft"+c[14].split("captures")[1]);
             break;
         case 'getCapture':
             $("#dialog-message-capture-info").empty();
