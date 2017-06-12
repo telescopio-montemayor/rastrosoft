@@ -141,7 +141,7 @@ function successAjax(data, tipo) {
                         name = '<td>'+c[1]+'</td>';
                     }
                     if (c[3] == "0"){
-                        $("#shifts tBody").append('<tr class="label-danger" '+remove+'><th scope="row">'+c[0]+'</th>'
+                        $("#shifts tBody").append('<tr class="label-danger"><th scope="row">'+c[0]+'</th>'
                         +name
                         +'<td>'+c[2].slice(0, 10)+'</td>'
                         +'<td>'+c[2].slice(10, 16)+'</td>'
