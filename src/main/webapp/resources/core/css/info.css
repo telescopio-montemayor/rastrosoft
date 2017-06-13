@@ -1,4 +1,4 @@
-#live-key, #live, #dialog-message-capture-info{
+#live-key, #live, #dialog-message-capture-info, .profile{
     display: none;
 }   
 .live-on{
@@ -31,4 +31,14 @@
     position:absolute; 
     margin-top: 3px; 
     margin-left: 20px;
+}
+.profile form{
+    margin-left: auto;
+    margin-right: auto;    
+    margin-top: 10%; 
+}
+.ui-widget-header {
+/*    background-color: #b0de78;*/
+    background-color: #337ab7;
+    color: #fff;
 }

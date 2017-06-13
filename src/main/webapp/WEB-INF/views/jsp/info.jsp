@@ -130,7 +130,7 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username" >Guest</span> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                  <li><a href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span tkey="profile">Profile</span></a></li>
+                  <li><a href="#" onclick="showProfile();"><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span tkey="profile">Profile</span></a></li>
                   <li><a href="#"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i> <span tkey="upgrade">Upgrade</span></a></li>
                 <li class="divider"></li>
                 <li><a href="#" onclick="logout();"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span tkey="logout">Logout</span></a></li>  
@@ -356,7 +356,38 @@
                     </table>
                 </div>
             </div>
-        </div>    
+        </div>
+        <div class="profile" title="Perfil">
+            <form>
+                    <div id="usernameModifyDiv" class="input-group input-sm">
+                        <label class="input-group-addon"><i class="fa fa-user-o"></i></label>
+                        <input type="text" class="form-control" id="usernameModify" name="usernameModify" placeholder="Nombre de usuario" disabled>
+                    </div>
+                    <div id="nameModifyDiv" class="input-group input-sm">
+                        <label class="input-group-addon"><i class="fa fa-id-card-o"></i></label>
+                        <input type="text" class="form-control" id="nameModify" name="nameModify" placeholder="Nombre" required>
+                        <label class="input-group-addon"><i class="fa fa-address-card-o"></i></label>
+                        <input type="text" class="form-control" id="lastnameModify" name="lastnameModify" placeholder="Apellido" required>
+                    </div>
+                    <div id="mailModifyDiv" class="input-group input-sm">
+                        <label class="input-group-addon"><i class="fa fa-envelope-o"></i></label>
+                        <input type="text" class="form-control" id="mailModify" name="mailModify" placeholder="Correo electrónico" required>
+                    </div>
+                    <div id="passwordModifyOldDiv" class="input-group input-sm">
+                        <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
+                        <input type="password" class="form-control" id="passwordModifyOld" name="passwordModifyOld" placeholder="Contraseña actual" required>
+                    </div>
+                    <hr/>
+                    <div id="passwordModifyNewDiv" class="input-group input-sm">
+                        <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
+                        <input type="password" class="form-control" id="passwordModifyNew" name="passwordModifyNew" placeholder="Contraseña nueva" required>
+                    </div>
+                    <div id="passwordModifyNew_reDiv" class="input-group input-sm">
+                        <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
+                        <input type="password" class="form-control" id="passwordModifyNew_re" name="passwordModifyNew_re" placeholder="Confirmar contraseña nueva" required>
+                    </div>
+            </form>
+        </div>
     </div>
     <div class="footer-msg">Planetario Ciudad de La Plata</div>
 </body>
@@ -365,6 +396,15 @@
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
         
+        function modifyProfile(){
+            var name, lastname, mail, password_old, password_new;            
+            name = $("#nameModify").val();
+            lastname = $("#lastnameModify").val();
+            mail = $("#mailModify").val();
+            password_old = $("#passwordModifyOld").val();
+            password_new = $("#passwordModifyNew").val();
+            modifyAccount(name, lastname, mail, password_old, password_new);
+        }
         function showCaptureInfo(){
             $( "#dialog-message-capture-info" ).dialog({
                 modal: true,
@@ -383,7 +423,26 @@
               }
             });
         }
-  
+        function showProfile(){
+            getProfileData();
+            $( ".profile" ).dialog({
+                modal: true,
+                show: {
+                    effect: "drop",
+                    duration: 100
+                },
+                hide: {
+                    effect: "drop",
+                    duration: 50
+                },
+                buttons: {
+                    "Modificar": modifyProfile,
+                    Cancel: function() {
+                      $( this ).dialog( "close" );
+                    }
+              }
+            });
+        }
         
         jQuery(document).ready(function($) {         
             var myInterval = setInterval(function(){        
@@ -631,6 +690,7 @@
             sendAjax(search,'addShift','addShift'); 
         }    
         
+     
         function showShifts(){
             $("#shifts-menu").addClass("active");
             $("#captures-menu").removeClass("active");

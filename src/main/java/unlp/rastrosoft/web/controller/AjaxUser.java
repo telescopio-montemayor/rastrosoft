@@ -10,6 +10,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,5 +79,66 @@ public class AjaxUser  extends HttpServlet{
             }
             
             
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/getProfileData", method=RequestMethod.POST)    
+    public AjaxResponse getProfileData(@RequestBody ExecuteCriteriaFiveValues execute) {
+        AjaxResponse result = new AjaxResponse();        
+   
+        String username;
+        int id_user = -1;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            username= authentication.getName();
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            User user = userDB.getUser(username);
+            id_user = user.getUserId();
+        }
+        UserDB userDB = new UserDB();
+        userDB.connect();        
+        User user = userDB.getUser(id_user);
+        
+        result.addElemento(user.getUsername());
+        result.addElemento(user.getName());
+        result.addElemento(user.getLastname());
+        result.addElemento(user.getMail());
+        
+        return result;
+    }
+    
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/modifyAccount", method=RequestMethod.POST)    
+    public AjaxResponse modifyAccount(@RequestBody ExecuteCriteriaFiveValues execute) {
+        AjaxResponse result = new AjaxResponse();        
+   
+        String name = execute.getValue();
+        String lastname = execute.getValue2();
+        String mail = execute.getValue3();
+        String password_old = execute.getValue4();
+        String password_new = execute.getValue5();
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username= authentication.getName();
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            User user = userDB.getUser(username);
+            System.err.println(password_old);
+            System.err.println(user.getPassword());
+            if(new BCryptPasswordEncoder().matches(password_old, user.getPassword())){
+                System.err.println("entra");
+                if (password_new.equals("")){
+                    password_new = user.getPassword();
+                }else{
+                    password_new = new BCryptPasswordEncoder().encode(password_new);
+                }
+                userDB.modifyUser(user.getUserId(), user.getUsername(), password_new, "1", name, lastname, mail);
+            }
+        }
+        
+        
+        
+        return result;
     }
 }

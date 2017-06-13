@@ -19,10 +19,18 @@ function alertSuccess(bool, title, msg) {
 
 function notify(msg, type){
     $.notify({
-            // options
-            message: msg 
-    },{
-            // settings
-            type: type
-    });
+                    // options
+                    message: msg 
+            },{
+                    // settings
+                    type: type,
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    }
+            });
 }

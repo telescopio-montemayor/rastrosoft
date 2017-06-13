@@ -56,7 +56,7 @@ public class UserDB extends Database{
     public void modifyUser(int id, String username, String password, String enabled, String name, String lastname, String mail){
         
         String sql = "UPDATE users " +
-                      "SET username = ? , password = ?, enabled = ?, name = ?, lastname = ?, mail = ? WHERE id = ?";
+                      "SET username = ? , password = ?, enabled = ?, name = ?, lastname = ?, mail = ? WHERE id = ? LIMIT 1";
         Connection conn = null;
 
         try {

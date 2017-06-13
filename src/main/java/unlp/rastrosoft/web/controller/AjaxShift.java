@@ -44,7 +44,7 @@ public class AjaxShift {
         AjaxResponse result = new AjaxResponse();    
         String isLive = execute.getValue(), isPublic = execute.getValue2(), datetime = execute.getValue3();
         
-        String enabled = "1", live_key = "-1", public_val = "0";
+        String enabled = "2", live_key = "-1", public_val = "0";
         int id_user = -1, shift_id = -1;
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

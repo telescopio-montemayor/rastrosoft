@@ -81,7 +81,7 @@ public class CalendarDB extends Database{
         return result;
     }
     public String getPreviousAcceptedShift( String datetime ){
-        String sql = "SELECT id FROM shifts WHERE enabled = 1 AND 'datetime' = ? LIMIT 1";
+        String sql = "SELECT id FROM shifts WHERE enabled = 1 AND datetime = ? LIMIT 1";
         Connection conn = null;
         String previous_id = "-1";
         try {
@@ -108,7 +108,7 @@ public class CalendarDB extends Database{
         return previous_id;
     }
     public boolean checkAvailableShift( String datetime ){
-        String sql = "SELECT id FROM shifts WHERE enabled = 1 AND 'datetime' = ? LIMIT 1";
+        String sql = "SELECT id FROM shifts WHERE enabled = 1 AND datetime = ? LIMIT 1";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -135,7 +135,7 @@ public class CalendarDB extends Database{
         return true;
     }
     public List<String> getShifts(String from){
-        String sql = "SELECT datetime FROM shifts WHERE enabled = 1 AND 'datetime' > ?";
+        String sql = "SELECT datetime FROM shifts WHERE enabled = 1 AND datetime > ?";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();

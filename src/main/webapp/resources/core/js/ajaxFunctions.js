@@ -372,7 +372,20 @@ function successAjax(data, tipo) {
                         break;
                 }
             });
-                  
+            break;
+        case 'getProfileData':
+            $.each(data, function(key, c) {
+                $("#usernameModify").val(c[0]);
+                $("#nameModify").val(c[1]);
+                $("#lastnameModify").val(c[2]);
+                $("#mailModify").val(c[3]);
+                $("#passwordModifyOld").val("");
+                $("#passwordModifyNew").val("");
+                $("#passwordModifyNew_re").val("");
+            }); 
+            break;
+        default:
+            break;
        
     } 
 
@@ -708,6 +721,19 @@ function createAccount(username, name, lastname, mail, password) {
     search["value4"] = mail;
     search["value5"] = password;
     sendAjax(search,'createAccount','createAccount');     
+}
+function modifyAccount(name, lastname, mail, password_old, password_new) {
+    var search = {};
+    search["value"]  = name;
+    search["value2"] = lastname;
+    search["value3"] = mail;
+    search["value4"] = password_old;
+    search["value5"] = password_new;
+    sendAjax(search,'modifyAccount','modifyAccount');     
+}
+function getProfileData(){
+    var search = {};
+    sendAjax(search,'getProfileData','getProfileData'); 
 }
 function addStep(id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay) {    
     var search = {};
