@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import unlp.rastrosoft.web.jsonview.Views;
 import unlp.rastrosoft.web.model.AjaxResponse;
+import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.ExecuteCriteriaFiveValues;
 import unlp.rastrosoft.web.model.User;
 import unlp.rastrosoft.web.model.UserDB;
@@ -124,16 +125,36 @@ public class AjaxUser  extends HttpServlet{
             UserDB userDB = new UserDB();
             userDB.connect();
             User user = userDB.getUser(username);
-            System.err.println(password_old);
-            System.err.println(user.getPassword());
             if(new BCryptPasswordEncoder().matches(password_old, user.getPassword())){
-                System.err.println("entra");
                 if (password_new.equals("")){
                     password_new = user.getPassword();
                 }else{
                     password_new = new BCryptPasswordEncoder().encode(password_new);
                 }
                 userDB.modifyUser(user.getUserId(), user.getUsername(), password_new, "1", name, lastname, mail);
+            }
+        }
+        
+        
+        
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/deleteAccount", method=RequestMethod.POST)    
+    public AjaxResponse deleteAccount(@RequestBody ExecuteCriteria execute) {
+        AjaxResponse result = new AjaxResponse();        
+   
+        
+        String password = execute.getValue();
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String username= authentication.getName();
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            User user = userDB.getUser(username);
+            if(new BCryptPasswordEncoder().matches(password, user.getPassword())){
+                userDB.deleteUser(user.getUserId());
             }
         }
         

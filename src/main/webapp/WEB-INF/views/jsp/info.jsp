@@ -359,6 +359,9 @@
         </div>
         <div class="profile" title="Perfil">
             <form>
+                    <div class="input-group input-sm" style="float:right">
+                        <button type="button" class="btn btn-danger" onclick="deleteProfile();"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    </div>
                     <div id="usernameModifyDiv" class="input-group input-sm">
                         <label class="input-group-addon"><i class="fa fa-user-o"></i></label>
                         <input type="text" class="form-control" id="usernameModify" name="usernameModify" placeholder="Nombre de usuario" disabled>
@@ -376,7 +379,7 @@
                     <div id="passwordModifyOldDiv" class="input-group input-sm">
                         <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
                         <input type="password" class="form-control" id="passwordModifyOld" name="passwordModifyOld" placeholder="Contraseña actual" required>
-                    </div>
+                    </div>                    
                     <hr/>
                     <div id="passwordModifyNewDiv" class="input-group input-sm">
                         <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
@@ -385,7 +388,8 @@
                     <div id="passwordModifyNew_reDiv" class="input-group input-sm">
                         <label class="input-group-addon"><i class="fa fa-lock"></i></label> 
                         <input type="password" class="form-control" id="passwordModifyNew_re" name="passwordModifyNew_re" placeholder="Confirmar contraseña nueva" required>
-                    </div>
+                    </div>      
+                    
             </form>
         </div>
     </div>
@@ -403,7 +407,24 @@
             mail = $("#mailModify").val();
             password_old = $("#passwordModifyOld").val();
             password_new = $("#passwordModifyNew").val();
-            modifyAccount(name, lastname, mail, password_old, password_new);
+            if (password_old == ""){
+                alert("Debe ingresar la contraseña actual para poder realizar esta acción.");
+            }else{
+                modifyAccount(name, lastname, mail, password_old, password_new);
+            }
+            
+        }
+        function deleteProfile(){
+            var password = $("#passwordModifyOld").val();
+            if (password == ""){
+                alert("Debe ingresar la contrase\u00F1a actual para poder realizar esta acci\u00F3n.");
+            }else{
+                if (confirm("Seguro que desea eliminar su cuenta?")){
+                    if (confirm("Realmente quiere eliminar su cuenta? (Esta accion no puede revertirse)")){
+                        deleteAccount(password);
+                    }
+                }
+            }
         }
         function showCaptureInfo(){
             $( "#dialog-message-capture-info" ).dialog({

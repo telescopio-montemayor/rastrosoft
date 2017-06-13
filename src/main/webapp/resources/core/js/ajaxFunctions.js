@@ -384,6 +384,14 @@ function successAjax(data, tipo) {
                 $("#passwordModifyNew_re").val("");
             }); 
             break;
+        case 'modifyAccount':
+            $( ".profile" ).dialog("close");
+            alert("Modificaci\u00F3n de datos exitosa. Es posible que algunos cambios se reflejen en su pr\u00F3ximo inicio de sesi\u00F3n.");
+            break;
+        case 'deleteAccount':
+            $( ".profile" ).dialog("close");
+            alert("Gracias por haber formado parte de Rastrosoft, esperamos que vuelvas pronto!");
+            $("#end_session").submit();
         default:
             break;
        
@@ -721,6 +729,11 @@ function createAccount(username, name, lastname, mail, password) {
     search["value4"] = mail;
     search["value5"] = password;
     sendAjax(search,'createAccount','createAccount');     
+}
+function deleteAccount(password){
+    var search = {};
+    search["value"] = password;
+    sendAjax(search,'deleteAccount','deleteAccount'); 
 }
 function modifyAccount(name, lastname, mail, password_old, password_new) {
     var search = {};

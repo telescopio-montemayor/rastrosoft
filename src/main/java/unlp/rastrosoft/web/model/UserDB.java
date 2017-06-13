@@ -84,6 +84,31 @@ public class UserDB extends Database{
                 }
         }
     }
+    public void deleteUser(int id){
+        
+        String sql = "UPDATE users " +
+                      "SET  enabled = 0 WHERE id = ? LIMIT 1";
+        Connection conn = null;
+
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+                ps.setInt(1, id);
+                ps.executeUpdate();
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+    }
     public void removeUser(int id){
         
         String sql = "DELETE FROM users " +
