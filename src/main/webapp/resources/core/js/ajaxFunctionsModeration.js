@@ -78,19 +78,19 @@ function successAjax(data, tipo) {
                         case "2":
                             credits=c[5];
                             advanced = "selected";
-                            actual_class = "bg-danger-m";
+                            actual_class = "bg-advanced-m";
                             break;
                         case "3":                            
                             user = "selected";
-                            actual_class = "bg-success-m";
+                            actual_class = "bg-user-m";
                             break;
                         case "4":
                             spectator = "selected";
-                            actual_class = "bg-warning-m";
+                            actual_class = "bg-spectator-m";
                             break;
                         case "5":
                             moderator = "selected";
-                            actual_class = "bg-warning-m";
+                            actual_class = "bg-moderator-m";
                             break;    
                         default:
                             break;
@@ -103,11 +103,21 @@ function successAjax(data, tipo) {
                         +'<td>'+c[4]+'</td>'
                         +'<td>'+credits+'</td>'
                         +'<td>'+enabled+'</td>'
-                        +'<td><select id="operation-role-'+c[0]+'" onchange="operationRole(\''+c[0]+'\');" class=" '+actual_class+' form-control input-sm"><option value="advanced" '+advanced+' class="bg-warning">Advanced</option><option value="user" '+user+' class="bg-success">Basic user</option><option value="spectator" '+spectator+' class="bg-danger">Spectator</option><option value="moderator" '+moderator+' class="bg-danger">Moderator</option></select></td>'
+                        +'<td><select id="operation-role-'+c[0]+'" onchange="operationRole(\''+c[0]+'\');" class="'+actual_class+' form-control input-sm"><option value="advanced" '+advanced+' class="bg-advanced-m">Advanced</option><option value="user" '+user+' class="bg-user-m">Basic user</option><option value="spectator" '+spectator+' class="bg-spectator-m">Spectator</option><option value="moderator" '+moderator+' class="bg-moderator-m">Moderator</option></select></td>'
                         +'</tr>');
                 });
             });            
-            break;        
+            break; 
+        case 'modifyRoleUser':
+            $.each(data, function(key, c) {
+                if (c[0]=="1"){
+                    alert("Se ha modificado el rol del usuario correctamente.");
+                }else{
+                    alert("Ha ocurrido un error al modificar el rol del usuario.");
+                }
+            });
+            getAllModerationUsers();
+            break;
         default:
             break;
     }
@@ -129,6 +139,16 @@ function operationShift(id){
             break;
         default:
             break;
+    }
+}
+function operationRole(id){
+    if (confirm("Esta seguro que desea cambiar el rol del usuario: #"+id+"?")){
+        var selectId = "operation-role-"+id;
+        var operation = $("#"+selectId).val();
+        var search = {};
+        search["value"] = id;
+        search["value2"]= $("#"+selectId).val();
+        sendAjax(search,'modifyRoleUser','modifyRoleUser'); 
     }
 }
 function getUsername() {

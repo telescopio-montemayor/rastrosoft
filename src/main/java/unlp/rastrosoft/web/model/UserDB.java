@@ -429,4 +429,30 @@ public class UserDB extends Database{
         }
         return (result != 0);
     }
+    public boolean modifyRole(String username, int role){
+        String sql = "UPDATE user_roles " +
+                      "SET role = ? WHERE username = ? LIMIT 1";
+        Connection conn = null;
+        int result = 0;
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+                ps.setInt(1, role);
+                ps.setString(2, username);
+                result = ps.executeUpdate();
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+        return (result != 0);
+    }
 }

@@ -7,11 +7,12 @@ package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,9 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 import unlp.rastrosoft.web.jsonview.Views;
 import unlp.rastrosoft.web.model.AjaxResponse;
 import unlp.rastrosoft.web.model.AjaxResponseListOfLists;
-import unlp.rastrosoft.web.model.CalendarDB;
 import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.ExecuteCriteriaFiveValues;
+import unlp.rastrosoft.web.model.ExecuteCriteriaTwoValues;
 import unlp.rastrosoft.web.model.SearchCriteria;
 import unlp.rastrosoft.web.model.User;
 import unlp.rastrosoft.web.model.UserDB;
@@ -36,7 +37,7 @@ import unlp.rastrosoft.web.model.UserDB;
  * @author ip300
  */
 @RestController
-
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AjaxUser  extends HttpServlet{
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/createAccount", method=RequestMethod.POST)    
@@ -173,6 +174,7 @@ public class AjaxUser  extends HttpServlet{
         return result;
     }
     @JsonView(Views.Public.class)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')")
     @RequestMapping(value = "/getAllModerationUsers", method=RequestMethod.POST)
     public AjaxResponseListOfLists getAllModerationUsers(@RequestBody SearchCriteria search) {            
 
@@ -183,6 +185,7 @@ public class AjaxUser  extends HttpServlet{
         return result;
     }
     @JsonView(Views.Public.class)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')")
     @RequestMapping(value = "/getBannedModerationUsers", method=RequestMethod.POST)
     public AjaxResponseListOfLists getBannedModerationUsers(@RequestBody SearchCriteria search) {            
 
@@ -193,6 +196,7 @@ public class AjaxUser  extends HttpServlet{
         return result;
     }
     @JsonView(Views.Public.class)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')")
     @RequestMapping(value = "/getZeroCreditsModerationUsers", method=RequestMethod.POST)
     public AjaxResponseListOfLists getZeroCreditsModerationUsers(@RequestBody SearchCriteria search) {            
 
@@ -200,6 +204,41 @@ public class AjaxUser  extends HttpServlet{
         UserDB userDB = new UserDB();
         userDB.connect();
         result.addElementos(userDB.getZeroCreditsUsers());
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')")
+    @RequestMapping(value = "/modifyRoleUser", method=RequestMethod.POST)
+    public AjaxResponse modifyRoleUser(@RequestBody ExecuteCriteriaTwoValues execute) {            
+
+        AjaxResponse result = new AjaxResponse();
+        
+        int id_user = Integer.valueOf(execute.getValue());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            if(id_user != userDB.getUser(authentication.getName()).getUserId()){
+                String username = userDB.getUser(id_user).getUsername();
+                switch(execute.getValue2()){
+                    case "advanced":
+                        if(userDB.modifyRole(username, 2))result.addElemento("1");
+                        break;
+                    case "user":
+                        if(userDB.modifyRole(username, 3))result.addElemento("1");
+                        break;
+                    case "spectator":
+                        if(userDB.modifyRole(username, 4))result.addElemento("1");
+                        break;
+                    case "moderator":
+                        if(userDB.modifyRole(username, 5))result.addElemento("1");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        result.addElemento("0");
         return result;
     }
 }
