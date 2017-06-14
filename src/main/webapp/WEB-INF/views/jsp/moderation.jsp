@@ -155,7 +155,14 @@
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
               </ul>             
-            </li>            
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-globe" aria-hidden="true"></i></a>
+              <ul class="dropdown-menu">
+                  <li><a href="?locale=es"><spring:message code="lang.spanish"/></a></li>
+                  <li><a href="?locale=en"><spring:message code="lang.english"/></a></li>
+              </ul>             
+            </li>
           </ul>   
         </div><!--/.nav-collapse -->
       </div>

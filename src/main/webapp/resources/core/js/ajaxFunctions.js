@@ -123,6 +123,9 @@ function successAjax(data, tipo) {
         case 'getTimeleftCurrentShift':
             $( "#timeleft" ).empty();
             $.each(data, function(key, value) {
+                if(value[0] == "-1"){
+                    location.reload();
+                }
                 $('#timeleft').append(value[1]);                
                 startTimer(value[1]);
             });            
@@ -386,12 +389,26 @@ function successAjax(data, tipo) {
             break;
         case 'modifyAccount':
             $( ".profile" ).dialog("close");
-            alert("Modificaci\u00F3n de datos exitosa. Es posible que algunos cambios se reflejen en su pr\u00F3ximo inicio de sesi\u00F3n.");
+            $.each(data, function(key, c) {
+                if(c[0]=="1"){
+                    alert("Modificaci\u00F3n de datos exitosa. Es posible que algunos cambios se reflejen en su pr\u00F3ximo inicio de sesi\u00F3n.");
+                }else{
+                    alert("Password inconrrecto. Intente nuevamente.");
+                }
+            });
+            
             break;
         case 'deleteAccount':
             $( ".profile" ).dialog("close");
-            alert("Gracias por haber formado parte de Rastrosoft, esperamos que vuelvas pronto!");
-            $("#end_session").submit();
+            $.each(data, function(key, c) {
+                if(c[0]=="1"){
+                    alert("Gracias por haber formado parte de Rastrosoft, esperamos que vuelvas pronto!");
+                    $("#end_session").submit();
+                }else{
+                    alert("Password inconrrecto. Intente nuevamente.");
+                }
+            });
+            
         default:
             break;
        

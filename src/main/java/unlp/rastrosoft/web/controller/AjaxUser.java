@@ -132,6 +132,9 @@ public class AjaxUser  extends HttpServlet{
                     password_new = new BCryptPasswordEncoder().encode(password_new);
                 }
                 userDB.modifyUser(user.getUserId(), user.getUsername(), password_new, "1", name, lastname, mail);
+                result.addElemento("1");
+            }else{
+                result.addElemento("0");
             }
         }
         
@@ -148,13 +151,16 @@ public class AjaxUser  extends HttpServlet{
         String password = execute.getValue();
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {            
             String username= authentication.getName();
             UserDB userDB = new UserDB();
             userDB.connect();
             User user = userDB.getUser(username);
             if(new BCryptPasswordEncoder().matches(password, user.getPassword())){
                 userDB.deleteUser(user.getUserId());
+                result.addElemento("1");
+            }else{
+                result.addElemento("0");
             }
         }
         

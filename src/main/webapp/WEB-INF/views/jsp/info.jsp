@@ -72,10 +72,6 @@
 	var="notifyFunctions" />
 <script src="${notifyFunctions}"></script>
 
-<spring:url value="/resources/core/js/lang.js"
-	var="langJs" />
-<script src="${langJs}"></script>
-
 <spring:url value="/resources/core/css/menu.css" var="menuCss" />
 <link href="${menuCss}" rel="stylesheet" />
 
@@ -130,7 +126,7 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username" >Guest</span> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                  <li><a href="#" onclick="showProfile();"><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span tkey="profile">Profile</span></a></li>
+                  <li><a href="#" onclick="showProfile();"><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span tkey="profile">Profile</span></a></li>                  
                   <li><a href="#"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i> <span tkey="upgrade">Upgrade</span></a></li>
                 <li class="divider"></li>
                 <li><a href="#" onclick="logout();"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span tkey="logout">Logout</span></a></li>  
@@ -139,8 +135,16 @@
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
               </ul>             
-            </li>            
-          </ul>   
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-globe" aria-hidden="true"></i></a>
+              <ul class="dropdown-menu">
+                  <li><a href="?locale=es"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.8.0/flags/4x3/ar.svg" width="20px" height="15px"> <spring:message code="lang.spanish"/></a></li>
+                  <li><a href="?locale=en"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.8.0/flags/4x3/us.svg" width="20px" height="15px"> <spring:message code="lang.english"/></a></li>
+              </ul>             
+            </li> 
+          </ul>
+                 
         </div><!--/.nav-collapse -->
       </div>
     </nav>
@@ -628,7 +632,7 @@
                     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
                 } ); 
             } 
-            do_translation();
+//            do_translation();
         }
         function updateTableCaptures(){
             if ( !$.fn.dataTable.isDataTable( '#captures' ) ) {
@@ -654,7 +658,7 @@
                     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
                 } ); 
             } 
-            do_translation();
+//            do_translation();
         }
         function updateTableAutomatization(){
             if ( !$.fn.dataTable.isDataTable( '#automatization' ) ) {
@@ -680,7 +684,7 @@
                     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
                 } ); 
             }
-            do_translation();
+//            do_translation();
         }
         function reloadSteps(){
             var sequence_id = $("#sequence").val();

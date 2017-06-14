@@ -200,11 +200,13 @@ public class AjaxShift {
             if(((Integer.valueOf(shift.get(0)) != id_user) && (shift.get(3).equals("0")))){
                 result.addElemento("-1");
                 result.addElemento("00:00:00");
+                authentication.setAuthenticated(false);
                 return result;
             }
             if (shift.get(0).equals("-1")){
                 result.addElemento("-1");
                 result.addElemento("00:00:00");                
+                authentication.setAuthenticated(false);
             }else{
                 result.addElemento(shift.get(0));
                 result.addElemento(shift.get(1));
