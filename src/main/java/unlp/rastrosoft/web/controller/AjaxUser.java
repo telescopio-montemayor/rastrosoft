@@ -7,6 +7,7 @@ package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import unlp.rastrosoft.web.jsonview.Views;
 import unlp.rastrosoft.web.model.AjaxResponse;
+import unlp.rastrosoft.web.model.AjaxResponseListOfLists;
+import unlp.rastrosoft.web.model.CalendarDB;
 import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.ExecuteCriteriaFiveValues;
+import unlp.rastrosoft.web.model.SearchCriteria;
 import unlp.rastrosoft.web.model.User;
 import unlp.rastrosoft.web.model.UserDB;
 
@@ -166,6 +170,36 @@ public class AjaxUser  extends HttpServlet{
         
         
         
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/getAllModerationUsers", method=RequestMethod.POST)
+    public AjaxResponseListOfLists getAllModerationUsers(@RequestBody SearchCriteria search) {            
+
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        UserDB userDB = new UserDB();
+        userDB.connect();
+        result.addElementos(userDB.getAllUsers());
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/getBannedModerationUsers", method=RequestMethod.POST)
+    public AjaxResponseListOfLists getBannedModerationUsers(@RequestBody SearchCriteria search) {            
+
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        UserDB userDB = new UserDB();
+        userDB.connect();
+        result.addElementos(userDB.getBannedUsers());
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @RequestMapping(value = "/getZeroCreditsModerationUsers", method=RequestMethod.POST)
+    public AjaxResponseListOfLists getZeroCreditsModerationUsers(@RequestBody SearchCriteria search) {            
+
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();
+        UserDB userDB = new UserDB();
+        userDB.connect();
+        result.addElementos(userDB.getZeroCreditsUsers());
         return result;
     }
 }

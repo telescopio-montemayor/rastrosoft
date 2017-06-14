@@ -134,6 +134,36 @@ public class CalendarDB extends Database{
         }
         return true;
     }
+    public boolean checkDuplicatePendingShift(int id_user, String datetime ){
+        String sql = "SELECT COUNT(id) FROM shifts WHERE enabled = 2 AND datetime = ? AND id_user = ?";
+        Connection conn = null;
+        int result = 0;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+            ps.setString(1, datetime);
+            ps.setInt(2, id_user);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                result = rs.getInt(1);
+            }
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    return false;
+                }
+            }
+        }
+        return (result < 2);
+    }
     public List<String> getShifts(String from){
         String sql = "SELECT datetime FROM shifts WHERE enabled = 1 AND datetime > ?";
         Connection conn = null;

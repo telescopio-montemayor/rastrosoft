@@ -69,6 +69,45 @@ function successAjax(data, tipo) {
         case 'rejectShift':
             getRejectedShifts();
             break;
+        case 'getModerationUsers':
+            $("#users tBody").empty();
+            $.each(data, function(key, value) {
+                $.each(value, function(key2, c) {
+                    var role = c[6], advanced="", user="", spectator="", moderator="", actual_class="", credits="-";
+                    switch(role){
+                        case "2":
+                            credits=c[5];
+                            advanced = "selected";
+                            actual_class = "bg-danger-m";
+                            break;
+                        case "3":                            
+                            user = "selected";
+                            actual_class = "bg-success-m";
+                            break;
+                        case "4":
+                            spectator = "selected";
+                            actual_class = "bg-warning-m";
+                            break;
+                        case "5":
+                            moderator = "selected";
+                            actual_class = "bg-warning-m";
+                            break;    
+                        default:
+                            break;
+                    }
+                    var enabled = (c[7]=="1")?"<i class=\"fa fa-toggle-on\" aria-hidden=\"true\" style=\"color:\"></i>":"<i class=\"fa fa-toggle-off\" aria-hidden=\"true\" style=\"color:\"></i>";
+                    $("#users tBody").append('<tr><th scope="row">'+c[0]+'</th>'
+                        +'<td>'+c[1]+'</td>'
+                        +'<td>'+c[2]+'</td>'
+                        +'<td>'+c[3]+'</td>'
+                        +'<td>'+c[4]+'</td>'
+                        +'<td>'+credits+'</td>'
+                        +'<td>'+enabled+'</td>'
+                        +'<td><select id="operation-role-'+c[0]+'" onchange="operationRole(\''+c[0]+'\');" class=" '+actual_class+' form-control input-sm"><option value="advanced" '+advanced+' class="bg-warning">Advanced</option><option value="user" '+user+' class="bg-success">Basic user</option><option value="spectator" '+spectator+' class="bg-danger">Spectator</option><option value="moderator" '+moderator+' class="bg-danger">Moderator</option></select></td>'
+                        +'</tr>');
+                });
+            });            
+            break;        
         default:
             break;
     }
@@ -97,6 +136,18 @@ function getUsername() {
     sendAjax(search,'getUsername','getUsername');  
 }
 
+function getAllModerationUsers() {
+    var search = {};
+    sendAjax(search,'getAllModerationUsers','getModerationUsers');  
+}
+function getBannedModerationUsers() {
+    var search = {};
+    sendAjax(search,'getBannedModerationUsers','getModerationUsers');  
+}
+function getZeroCreditsModerationUsers() {
+    var search = {};
+    sendAjax(search,'getZeroCreditsModerationUsers','getModerationUsers');  
+}
 function getAllModerationShifts() {
     var search = {};
     sendAjax(search,'getAllModerationShifts','getModerationShifts');  
@@ -113,9 +164,31 @@ function getRejectedShifts() {
     var search = {};
     sendAjax(search,'getRejectedShifts','getModerationShifts');  
 }
-
+function showUsers(){
+    $("#users-menu").addClass("active");        
+    $('.table-users').show();
+    $('.table-shifts').hide();
+    $('.intro').hide();
+    
+}
+function showAllUsers(){
+    showUsers();
+    getAllModerationUsers();
+    updateTableUsers();
+}
+function showBannedUsers(){
+    showUsers();
+    getBannedModerationUsers();
+    updateTableUsers();
+}
+function showZeroCreditsUsers(){
+    showUsers();
+    getZeroCreditsModerationUsers();
+    updateTableUsers();
+}
 function showShifts(){
     $("#shifts-menu").addClass("active");        
+    $('.table-users').hide();
     $('.table-shifts').show();
     $('.intro').hide();
 }

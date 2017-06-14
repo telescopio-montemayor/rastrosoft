@@ -11,6 +11,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -40,13 +41,13 @@ public class AjaxShift {
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/addShift", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
-    public AjaxResponse addShift(@RequestBody ExecuteCriteriaThreeValues execute) {
+    public AjaxResponse addShift(@RequestBody ExecuteCriteriaThreeValues execute, HttpServletRequest request) {
         AjaxResponse result = new AjaxResponse();    
         String isLive = execute.getValue(), isPublic = execute.getValue2(), datetime = execute.getValue3();
         
         String enabled = "2", live_key = "-1", public_val = "0";
         int id_user = -1, shift_id = -1;
-        
+        String autoaccepted = "0";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String username = authentication.getName();
@@ -54,6 +55,14 @@ public class AjaxShift {
             userDB.connect();
             User user = userDB.getUser(username);
             id_user = user.getUserId();
+            if (request.isUserInRole("ROLE_ADVANCED")) {
+                int credits = user.getCredits(); 
+                if(credits > 0){
+                    enabled="1";
+                    autoaccepted = "1";
+                    userDB.setCredits(id_user, credits-1);
+                }
+            }    
         }
         
         if (isLive.equals("true")){
@@ -69,12 +78,19 @@ public class AjaxShift {
         String minutes = datetime.substring(datetime.length()-5 , datetime.length()-3);
         
         if (minutes.equals("00") && shift.checkAvailableShift(datetime)){
-            shift_id = shift.insertShift(id_user, datetime, enabled, live_key, public_val);
-            result.addElemento(String.valueOf(shift_id));
-            result.addElemento(live_key);
+            if (shift.checkDuplicatePendingShift(id_user, datetime)){
+                shift_id = shift.insertShift(id_user, datetime, enabled, live_key, public_val);
+                result.addElemento(String.valueOf(shift_id));
+                result.addElemento(live_key);
+            }else{
+                result.addElemento("-1");
+                result.addElemento("-1");
+            }
+        }else{
+            result.addElemento("-1");
+            result.addElemento("-1");
         }
-        result.addElemento("-1");
-        result.addElemento("-1");
+        result.addElemento(autoaccepted);
         return result;
     }
     

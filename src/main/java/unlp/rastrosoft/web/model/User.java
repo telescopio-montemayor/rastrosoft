@@ -21,7 +21,16 @@ public class User {
     private String lastname;
     private String mail;
     private String hash;
+    private int credits;
 
+    public int getCredits() {
+        return credits;
+    }
+
+    public void setCredits(int credits) {
+        this.credits = credits;
+    }
+    
     public String getHash() {
         return hash;
     }
@@ -33,7 +42,7 @@ public class User {
     public User(){
         
     }
-    public User(int userId, String username, String password, String enabled, String name, String lastname, String mail) {
+    public User(int userId, String username, String password, String enabled, String name, String lastname, String mail, int credits) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -41,6 +50,7 @@ public class User {
         this.name = name;
         this.lastname = lastname;
         this.mail = mail;
+        this.credits = credits;
     }
 
     public String getLastname() {

@@ -268,14 +268,20 @@ function successAjax(data, tipo) {
         case 'addShift':
             var shift_id = "-1";  
             var live_key = "-1";
+            var autoaccepted="0";
             $.each(data, function(key, value) {
                 shift_id  =   value[0];
                 live_key  =   value[1];
+                autoaccepted  =   value[2];
             });
             if (shift_id == "-1"){
                 notify('Error adding shift, please try again.', 'danger');
             }else{
-                notify('Shift added successfully with id: '+shift_id+' and key: '+live_key, 'success');
+                if(autoaccepted=="1")
+                    alert("Su turno se ha agregado exitosamente.");
+                else
+                    alert("Su turno sera confirmado a la brevedad por uno de nuestros operadores.");
+//                notify('Shift added successfully with id: '+shift_id+' and key: '+live_key, 'success');
             }
             break;
         case 'addSequence':

@@ -125,9 +125,9 @@
             <li class="dropdown-users">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tkey="users">Users</a>
               <ul class="dropdown-menu">
-                  <li><a href="#" onclick="" tkey="">View users</a></li>
-                  <li><a href="#" onclick="" tkey="">Banned users</a></li>
-                  <li><a href="#" onclick="" tkey="">Zero credits users</a></li>
+                  <li><a href="#" onclick="showAllUsers();" >View users</a></li>
+                  <li><a href="#" onclick="showBannedUsers();" >Banned users</a></li>
+                  <li><a href="#" onclick="showZeroCreditsUsers();" >Zero credits users</a></li>
                   <li role="separator" class="divider"></li>
                   <li class="dropdown-header">Solicitations</li>
                   <li><a href="#" onclick="" tkey="">Upgrade solicitations</a></li>
@@ -159,8 +159,8 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-globe" aria-hidden="true"></i></a>
               <ul class="dropdown-menu">
-                  <li><a href="?locale=es"><spring:message code="lang.spanish"/></a></li>
-                  <li><a href="?locale=en"><spring:message code="lang.english"/></a></li>
+                  <li><a href="?locale=es"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.8.0/flags/4x3/ar.svg" width="20px" height="15px"> <spring:message code="lang.spanish"/></a></li>
+                  <li><a href="?locale=en"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/2.8.0/flags/4x3/us.svg" width="20px" height="15px"> <spring:message code="lang.english"/></a></li>
               </ul>             
             </li>
           </ul>   
@@ -194,6 +194,25 @@
                     <th><span tkey="date">Date</span></th>
                     <th><span tkey="hour">Hour</span></th>
                     <th><span tkey="operation">Operation</span></th>
+                  </tr>
+                </thead>
+                <tbody>                                  
+                </tbody>
+            </table>
+        </div> 
+        <div class="table-users">
+            <h4 style="color:white" class="label-primary text-center" tkey="shifts-administration">Administraci&oacute;n de usuarios</h4>
+            <table id="users" class="table">
+                <thead>  
+                  <tr>                      
+                    <th>#</th>
+                    <th><span tkey="username">User</span></th>
+                    <th><span tkey="name">Name</span></th>
+                    <th><span tkey="lastname">Lastname</span></th>
+                    <th><span tkey="mail">Mail</span></th>
+                    <th><span>Créditos</span></th>
+                    <th><span>Habilitado</span></th>
+                    <th><span>Rol</span></th>
                   </tr>
                 </thead>
                 <tbody>                                  
@@ -327,9 +346,33 @@
                     "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
                 } ); 
             } 
-            do_translation();
         }
+        var tableUsers;
+        function updateTableUsers(){
+            if ( !$.fn.dataTable.isDataTable( '#users' ) ) {
+                tableUsers = 
+                $('#users').DataTable( {
+                    scrollY:        '75vh',
+                    ordering: false,
+                    scrollCollapse: true,
+                    paging:         false,
+                    "language": {
+                        "lengthMenu": "Mostrando _MENU_ registros por pagina",
+                        "zeroRecords": "No se encontro ningun resultado",
+                        "info": "",
+                        "infoEmpty": "",
+                        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "search": "Buscar",
+                        "paginate": {
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
 
+                    },
+                    "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Todos"]]
+                } ); 
+            } 
+        }
 
         function logout(){            
             $("#end_session").submit();
