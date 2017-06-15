@@ -284,7 +284,7 @@ public class UserDB extends Database{
         
     }
     public List<List<String>> getAllUsers(){
-        String sql = "SELECT DISTINCT (id),users.username, enabled, name, lastname, mail, credits, role  FROM users INNER JOIN user_roles ON users.username = user_roles.username";
+        String sql = "SELECT DISTINCT (id),users.username, enabled, name, lastname, mail, credits, role  FROM users INNER JOIN user_roles ON users.username = user_roles.username WHERE users.enabled<>0 ";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -324,7 +324,7 @@ public class UserDB extends Database{
         
     }
     public List<List<String>> getBannedUsers(){
-        String sql = "SELECT DISTINCT (id),users.username, enabled, name, lastname, mail, credits, role FROM users INNER JOIN user_roles ON users.username = user_roles.username WHERE users.enabled = 0";
+        String sql = "SELECT DISTINCT (id),users.username, enabled, name, lastname, mail, credits, role FROM users INNER JOIN user_roles ON users.username = user_roles.username WHERE users.enabled = 2";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -440,6 +440,58 @@ public class UserDB extends Database{
 
                 ps.setInt(1, role);
                 ps.setString(2, username);
+                result = ps.executeUpdate();
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+        return (result != 0);
+    }
+    public boolean modifyCredits(int id, int credits){
+        String sql = "UPDATE users " +
+                      "SET credits = ? WHERE id = ? LIMIT 1";
+        Connection conn = null;
+        int result = 0;
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+                ps.setInt(1, credits);
+                ps.setInt(2, id);
+                result = ps.executeUpdate();
+                ps.close();
+
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+        } finally {
+                if (conn != null) {
+                        try {
+                                conn.close();
+                        } catch (SQLException e) {}
+                }
+        }
+        return (result != 0);
+    }
+    public boolean modifyEnabled(int id, int enabled){
+        String sql = "UPDATE users " +
+                      "SET enabled = ? WHERE id = ? LIMIT 1";
+        Connection conn = null;
+        int result = 0;
+        try {
+                conn = dataSource.getConnection();
+                PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+
+                ps.setInt(1, enabled);
+                ps.setInt(2, id);
                 result = ps.executeUpdate();
                 ps.close();
 

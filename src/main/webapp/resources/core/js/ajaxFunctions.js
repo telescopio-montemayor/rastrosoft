@@ -266,17 +266,18 @@ function successAjax(data, tipo) {
             }
             break;
         case 'addShift':
-            var shift_id = "-1";  
-            var live_key = "-1";
-            var autoaccepted="0";
+            var shift_id = "-1", live_key = "-1", autoaccepted="0", credits="-1";
             $.each(data, function(key, value) {
                 shift_id  =   value[0];
                 live_key  =   value[1];
                 autoaccepted  =   value[2];
+                credits = value[3];
             });
             if (shift_id == "-1"){
                 notify('Error adding shift, please try again.', 'danger');
             }else{
+                if(credits!="-1")
+                    alert("Usted tiene "+credits+" creditos para poder solicitar turnos sin confirmacion.");
                 if(autoaccepted=="1")
                     alert("Su turno se ha agregado exitosamente.");
                 else

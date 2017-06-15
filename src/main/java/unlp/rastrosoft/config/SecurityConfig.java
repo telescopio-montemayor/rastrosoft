@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         dataSource = db.getDataSource();
         auth.jdbcAuthentication().dataSource((DataSource)dataSource)
 		.usersByUsernameQuery(
-			"select username,password,enabled from users where username=? LIMIT 1").passwordEncoder(new BCryptPasswordEncoder())
+			"select username,password,enabled from users where username=? AND enabled=1 LIMIT 1").passwordEncoder(new BCryptPasswordEncoder())
 		.authoritiesByUsernameQuery(
 			"select username, role_name from user_roles INNER JOIN roles ON ( user_roles.role = roles.role ) where username=?");
         

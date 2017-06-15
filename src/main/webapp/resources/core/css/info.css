@@ -42,3 +42,9 @@
     background-color: #337ab7;
     color: #fff;
 }
+tr:hover{
+    background-color: #eceeef;
+}
+.label-danger:hover{
+    background-color: rgba(252, 200, 200, 0.6);
+}

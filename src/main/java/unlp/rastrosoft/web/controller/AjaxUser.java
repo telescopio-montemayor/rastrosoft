@@ -241,4 +241,60 @@ public class AjaxUser  extends HttpServlet{
         result.addElemento("0");
         return result;
     }
+    @JsonView(Views.Public.class)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')")
+    @RequestMapping(value = "/modifyCreditsUser", method=RequestMethod.POST)
+    public AjaxResponse modifyCreditsUser(@RequestBody ExecuteCriteriaTwoValues execute) {            
+
+        AjaxResponse result = new AjaxResponse();
+        
+        int id_user = Integer.valueOf(execute.getValue());
+        int credits = Integer.valueOf(execute.getValue2());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            if(id_user != userDB.getUser(authentication.getName()).getUserId()){
+                String username = userDB.getUser(id_user).getUsername();
+                if(userDB.modifyCredits(id_user, credits))
+                    result.addElemento("1");
+            }
+        }
+        result.addElemento("0");
+        return result;
+    }
+    @JsonView(Views.Public.class)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')")
+    @RequestMapping(value = "/modifyEnabledUser", method=RequestMethod.POST)
+    public AjaxResponse modifyEnabledUser(@RequestBody ExecuteCriteriaTwoValues execute) {            
+
+        AjaxResponse result = new AjaxResponse();
+        
+        int id_user = Integer.valueOf(execute.getValue());
+        int enabled = -1;
+        String op = execute.getValue2();
+        switch(op){
+            case "1":
+                enabled = 1;
+                break;
+            case "0":
+                enabled = 2;
+                break;
+            default:
+                break;
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            UserDB userDB = new UserDB();
+            userDB.connect();
+            if(id_user != userDB.getUser(authentication.getName()).getUserId()){
+                String username = userDB.getUser(id_user).getUsername();
+                if (enabled!=-1)
+                    if(userDB.modifyEnabled(id_user, enabled))
+                        result.addElemento("1");
+            }
+        }
+        result.addElemento("0");
+        return result;
+    }
 }

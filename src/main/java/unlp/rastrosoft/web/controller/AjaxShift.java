@@ -46,7 +46,7 @@ public class AjaxShift {
         String isLive = execute.getValue(), isPublic = execute.getValue2(), datetime = execute.getValue3();
         
         String enabled = "2", live_key = "-1", public_val = "0";
-        int id_user = -1, shift_id = -1;
+        int id_user = -1, shift_id = -1, credits=-1;
         String autoaccepted = "0";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -56,7 +56,7 @@ public class AjaxShift {
             User user = userDB.getUser(username);
             id_user = user.getUserId();
             if (request.isUserInRole("ROLE_ADVANCED")) {
-                int credits = user.getCredits(); 
+                credits = user.getCredits(); 
                 if(credits > 0){
                     enabled="1";
                     autoaccepted = "1";
@@ -91,6 +91,7 @@ public class AjaxShift {
             result.addElemento("-1");
         }
         result.addElemento(autoaccepted);
+        result.addElemento(String.valueOf(credits-1));
         return result;
     }
     

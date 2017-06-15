@@ -95,13 +95,13 @@ function successAjax(data, tipo) {
                         default:
                             break;
                     }
-                    var enabled = (c[7]=="1")?"<i class=\"fa fa-toggle-on\" aria-hidden=\"true\" style=\"color:\"></i>":"<i class=\"fa fa-toggle-off\" aria-hidden=\"true\" style=\"color:\"></i>";
+                    var enabled = (c[7]=="1")?"<a href=\"#\" onclick=\"operationEnabled('0','"+c[0]+"');\"><i class=\"fa fa-toggle-on\" aria-hidden=\"true\" style=\"color:\"></i></a>":"<a href=\"#\" onclick=\"operationEnabled('1','"+c[0]+"');\"><i class=\"fa fa-toggle-off\" aria-hidden=\"true\" style=\"color:\"></i></a>";
                     $("#users tBody").append('<tr><th scope="row">'+c[0]+'</th>'
                         +'<td>'+c[1]+'</td>'
                         +'<td>'+c[2]+'</td>'
                         +'<td>'+c[3]+'</td>'
                         +'<td>'+c[4]+'</td>'
-                        +'<td>'+credits+'</td>'
+                        +'<td><div class="input-group" style="width:90px"><input class="form-control " id="operation-credits-'+c[0]+'" placeholder="Credits" type="text" value="'+credits+'"><span class="input-group-btn"><button class="btn btn-default" type="button" onclick="operationCredits(\''+c[0]+'\');"><i aria-hidden="true" class="fa fa-ticket"></i></button></span></div></td>'
                         +'<td>'+enabled+'</td>'
                         +'<td><select id="operation-role-'+c[0]+'" onchange="operationRole(\''+c[0]+'\');" class="'+actual_class+' form-control input-sm"><option value="advanced" '+advanced+' class="bg-advanced-m">Advanced</option><option value="user" '+user+' class="bg-user-m">Basic user</option><option value="spectator" '+spectator+' class="bg-spectator-m">Spectator</option><option value="moderator" '+moderator+' class="bg-moderator-m">Moderator</option></select></td>'
                         +'</tr>');
@@ -118,8 +118,49 @@ function successAjax(data, tipo) {
             });
             getAllModerationUsers();
             break;
+        case 'modifyCreditsUser':
+            $.each(data, function(key, c) {
+                if (c[0]=="1"){
+                    alert("Se han modificado los creditos del usuario correctamente.");
+                }else{
+                    alert("Ha ocurrido un error al modificar los creditos del usuario.");
+                }
+            });
+            getAllModerationUsers();
+            break;
+        case 'modifyEnabledUser':
+            $.each(data, function(key, c) {
+                if (c[0]=="1"){
+                    alert("Se han modificado al usuario correctamente.");
+                }else{
+                    alert("Ha ocurrido un error al modificar el usuario.");
+                }
+            });
+            getAllModerationUsers();
+            break;
         default:
             break;
+    }
+}
+function operationEnabled(op, id){
+    var msg = (op=="1")?"Seguro que desea desbloquear al usuario #"+id+"?":"Seguro que desea bloquear al usuario #"+id+"?";
+    if (confirm(msg)){
+        var search = {};
+        search["value"] = id;
+        search["value2"] = op;
+        sendAjax(search,'modifyEnabledUser','modifyEnabledUser'); 
+    }
+}
+function operationCredits(id){
+    var selectId = "operation-credits-"+id;
+    var credits = $("#"+selectId).val();
+    if(!$.isNumeric(credits))
+        alert("Ingrese un valor numerico por favor.");
+    else{
+        var search = {};
+        search["value"] = id;
+        search["value2"] = credits;
+        sendAjax(search,'modifyCreditsUser','modifyCreditsUser'); 
     }
 }
 function operationShift(id){
