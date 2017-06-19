@@ -67,6 +67,9 @@
 	var="websocket" />
 <script src="${websocket}"></script>
 
+<spring:url value="/resources/core/css/feedback.css" var="feedbackCss" />
+<link href="${feedbackCss}" rel="stylesheet" />
+
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
@@ -264,7 +267,7 @@
                             <input id="setDec" type="text" class="form-control radec-input"  >
                             <p class="help-label">Set declination</p>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="setRaDec();" >Go!</button>
+                                <button id="setRaDec-btn" class="btn btn-default" type="button" onclick="setRaDec();" >Go!</button>
                             </span>                            
                         </div>
                     </div>
@@ -272,16 +275,16 @@
                 <div style="clear: both"></div>                
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
+                        <span id="telescope_abort_motion_feedback" class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
                         <button id="abortMotion" class="form-control logout-icon" type="button">Abort motion</button>
                     </div>
                 </div>
-                <div class="form-group">
+<!--                <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-camera fa-fw"></i></span>
                         <button id="button-preview" class="form-control logout-icon" type="button" onclick="takePreviewImage();" disabled="disabled">Take preview</button>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-download fa-fw"></i></span>
@@ -354,14 +357,14 @@
                     <div class="form-group">
                         <div class="input-group">
                             <button id="park" class="form-control logout-icon" type="button">Park</button>
-                            <span class="input-group-addon"></span>
+                            <span id="telescope_park_feedback" class="input-group-addon"></span>
                             <button id="unpark" class="form-control logout-icon" type="button">Unpark</button>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
                             <button id="track" class="form-control logout-icon" type="button">Track</button>
-                            <span class="input-group-addon"></span>
+                            <span id="on_coord_set_feedback" class="input-group-addon"></span>
                             <button id="slew" class="form-control logout-icon"  type="button">Slew</button>
                             <span class="input-group-addon"></span>
                             <button id="sync" class="form-control logout-icon"  type="button">Sync</button>                            
@@ -388,14 +391,14 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
+                            <span id="ccd_abort_exposure_feedback" class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
                             <button id="setAbortExposure" class="form-control logout-icon" type="button">Abort exposure</button>
                         </div>
                     </div>
                     <div class="form-group">
                         <p class="input-help">Directory to upload files</p>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-folder-o fa-fw"></i></span>
+                            <span id="upload_dir_feedback" class="input-group-addon"><i class="fa fa-folder-o fa-fw"></i></span>
                             <input type="text" class="form-control" id="uploadDir" placeholder="Set upload directory">
                             <p class="help-label">Set upload directory</p>
                             <span class="input-group-btn">
@@ -406,7 +409,7 @@
                     <div class="form-group">
                         <p class="input-help">Prefix for saven files</p>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-file-image-o fa-fw"></i></span>
+                            <span id="upload_prefix_feedback" class="input-group-addon"><i class="fa fa-file-image-o fa-fw"></i></span>
                             <input type="text" class="form-control" id="uploadPrefix" placeholder="Set prefix">
                             <p class="help-label">Set prefix for saven files</p>
                             <span class="input-group-btn">
@@ -440,7 +443,7 @@
                     <div class="form-group">
                         <p class="input-help">CCD temperature</p>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-thermometer-half fa-fw"></i></span>
+                            <span id="ccd_temperature_feedback" class="input-group-addon"><i class="fa fa-thermometer-half fa-fw"></i></span>
                             <input type="text" class="form-control " id="ccdTemperature" placeholder="Temperature" value="-15">                    
                             <p class="help-label">Set temperature for the CCD</p>
                             <span class="input-group-btn">

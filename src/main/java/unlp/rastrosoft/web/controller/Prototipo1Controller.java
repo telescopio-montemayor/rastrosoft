@@ -1,6 +1,7 @@
 package unlp.rastrosoft.web.controller;
 
 import java.util.logging.Level;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -87,8 +88,11 @@ public class Prototipo1Controller {
 		return "calendar";
 	}
         @RequestMapping(value = "/info", method = RequestMethod.GET)
-	public String info(ModelMap model) {                  
-		return "info";
+	public String info(ModelMap model, HttpServletRequest request) {
+            if(request.isUserInRole("ROLE_MODERATOR")){
+                return "moderation";
+            }
+            return "info";
 	}
         @RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String test(ModelMap model) {                  

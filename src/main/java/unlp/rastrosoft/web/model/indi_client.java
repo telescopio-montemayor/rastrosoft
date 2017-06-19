@@ -121,6 +121,10 @@ public class indi_client implements INDIServerConnectionListener, INDIDeviceList
                 current_step.awake_lock();
             }                
             sessionHandler.updateElement(property.getName(), property.getValuesAsString());
+            if (!property.getState().equals(property.getState().IDLE)){
+                sessionHandler.updateFeedback(property.getName(), property.getState().toString());
+            }
+            
 	}	
 	
 	public void newProperty(INDIDevice device, INDIProperty property) {

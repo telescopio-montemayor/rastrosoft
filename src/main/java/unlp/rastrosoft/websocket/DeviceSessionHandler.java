@@ -82,7 +82,26 @@ public class DeviceSessionHandler {
 //        }
             
     }
-
+    public void updateFeedback(String element, String value) {
+//        Set<String> prop = new HashSet<>();
+//        prop.add("EQUATORIAL_EOD_COORD");
+//        if (prop.contains(element)){
+//            sendFeedback(element, value);
+//        }
+        sendFeedback(element, value);
+    }    
+    public void sendFeedback(String element, String value){
+        String[] values = value.replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+        JsonProvider provider = JsonProvider.provider();
+        JsonObject message;
+        message = provider.createObjectBuilder()
+                        .add("action", "feedback")
+                        .add("size", "1")
+                        .add("element", element)
+                        .add("value", values[0])
+                        .build();
+                sendToAllConnectedSessions(message);
+    }
     private void sendElement(String element, String value){
 
         String[] values = value.replaceAll("\\[", "").replaceAll("\\]", "").split(",");

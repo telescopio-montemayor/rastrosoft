@@ -73,7 +73,83 @@ function onMessage(event) {
         }
         
     }
+    if (device.action === "feedback") {
+//        alert(device.element+" + "+device.value);
+        switch(device.element) {
+            case "EQUATORIAL_EOD_COORD":
+                showFeedback("setRaDec-btn",device.value);
+                break;
+            case "CCD_EXPOSURE":
+                showFeedback("setExposure",device.value);
+                break;
+            case "ON_COORD_SET":
+                showFeedback("on_coord_set_feedback",device.value);
+                break;    
+            case "TELESCOPE_PARK":
+                showFeedback("telescope_park_feedback",device.value);
+                showFeedback("setRaDec-btn",device.value);
+                break;        
+            case "CCD_ABORT_EXPOSURE":
+                showFeedback("ccd_abort_exposure_feedback",device.value);
+                break;
+            case "UPLOAD_SETTINGS":
+                showFeedback("upload_dir_feedback",device.value);
+                showFeedback("upload_prefix_feedback",device.value);
+                break;  
+            case "CCD_BINNING":
+                showFeedback("setBinning",device.value);
+                break;
+            case "CCD_FRAME_TYPE":
+                showFeedback("frameType",device.value);
+                break;
+            case "CCD_TEMPERATURE":
+                showFeedback("ccd_temperature_feedback",device.value);
+                break;        
+            case "CCD_FRAME":
+                showFeedback("setFrame",device.value);
+                showFeedback("setSize",device.value);
+                break; 
+            case "TELESCOPE_ABORT_MOTION":
+                showFeedback("telescope_abort_motion_feedback",device.value);
+                break;  
+            default:
+                break;
+        }
+    }
 } 
+function showFeedback(elementId, feedback){
+    switch(feedback){
+        case "BUSY":
+            $("#"+elementId).removeClass("bg-ok");
+            $("#"+elementId).removeClass("bg-idle");
+            if(!$("#"+elementId).hasClass("bg-busy")){
+                $("#"+elementId).addClass("bg-busy").delay(1000).queue(function(){
+                    $(this).removeClass("bg-busy").dequeue();
+                });
+            }
+            break;
+        case "OK":
+            $("#"+elementId).removeClass("bg-busy");
+            $("#"+elementId).removeClass("bg-idle");
+            if(!$("#"+elementId).hasClass("bg-ok")){
+                $("#"+elementId).addClass("bg-ok").delay(1000).queue(function(){
+                    $(this).removeClass("bg-ok").dequeue();
+                });
+            }
+            break;
+        case "IDLE":
+            $("#"+elementId).removeClass("bg-ok");
+            $("#"+elementId).removeClass("bg-busy");
+            if(!$("#"+elementId).hasClass("bg-idle")){
+                $("#"+elementId).addClass("bg-idle").delay(1000).queue(function(){
+                    $(this).removeClass("bg-idle").dequeue();
+                });
+            }
+            break;
+        default:
+            break;
+    }
+}
 function loadSprite(src, callback) {
     var sprite = new Image();
     sprite.onload = callback;

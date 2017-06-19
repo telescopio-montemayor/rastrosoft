@@ -1,0 +1,15 @@
+
+.bg-ok, .bg-ok:hover, .bg-ok:active, .bg-ok:focus, .bg-ok:disabled{
+    color: white !important;
+    background-color: #57c02c !important;
+}
+.bg-idle, .bg-idle:hover, .bg-idle:active, .bg-idle:focus, .bg-idle:disabled {
+    color: white !important;
+    background-color: #edaf2f !important;
+}
+.bg-busy, .bg-busy:hover, .bg-busy:active, .bg-busy:focus, .bg-busy:disabled{
+/*    color: white !important;
+    background-color: #fc6868  !important;*/
+    color: white !important;
+    background-color: #edaf2f !important;
+}
