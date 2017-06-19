@@ -230,12 +230,12 @@
             <div id="normalScreen">
                 
                 <p></p>
-                <span><i onClick="fade();">Connected as:</i> <i id="username" style="color:green;" onClick="initialize();">Guest</i> - Timeleft: <i id="timeleft" class="label label-success">...</i></span>
+                <div style="margin: 0 auto; text-align:center"><span><i onClick="fade();" class="fa fa-user-o" aria-hidden="true"></i> <i id="username" style="color:green;" onClick="initialize();">Guest</i><div style="float:right"><i class="fa fa-clock-o" aria-hidden="true"></i> Timeleft: <i id="timeleft" class="label label-success">...</i></div></span></div>
                  <div class="input-group">
                     <span class="input-group-btn">
-                        <button id="end_session_button" class="btn btn-default" type="button" style="width:50%; border-bottom-left-radius: 5px; border-top-left-radius: 5px; outline: none;" ><i class="fa fa-sign-out fa-fw"></i>Cerrar sesión</button> 
-                        <button id="panel_button" class="btn btn-default" type="button" style="width:51%; border-bottom-right-radius: 5px; border-top-right-radius: 5px; outline: none;"><i class="fa fa-columns fa-fw"></i>Panel</button>
-                    </span> 
+                        <button id="end_session_button" class="btn btn-default" type="button" style="width:50%; border-bottom-left-radius: 5px; border-top-left-radius: 5px; outline: none;" ><i class="fa fa-sign-out fa-fw"></i><spring:message code="button.sign_out"/></button> 
+                        <button id="panel_button" class="btn btn-default" type="button" style="width:51%; border-bottom-right-radius: 5px; border-top-right-radius: 5px; outline: none;"><i class="fa fa-columns fa-fw"></i><spring:message code="button.panel"/></button>
+                    </span>
                 </div> 
                 <div class="form-group">
                     <p class="input-help">Quick access targets</p>
@@ -267,7 +267,7 @@
                             <input id="setDec" type="text" class="form-control radec-input"  >
                             <p class="help-label">Set declination</p>
                             <span class="input-group-btn">
-                                <button id="setRaDec-btn" class="btn btn-default" type="button" onclick="setRaDec();" >Go!</button>
+                                <button id="setRaDec-btn" class="btn btn-default" type="button" onclick="setRaDec();"><spring:message code="button.go"/></button>
                             </span>                            
                         </div>
                     </div>
@@ -276,7 +276,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span id="telescope_abort_motion_feedback" class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
-                        <button id="abortMotion" class="form-control logout-icon" type="button">Abort motion</button>
+                        <button id="abortMotion" class="form-control logout-icon" type="button"><spring:message code="button.abort_motion"/></button>
                     </div>
                 </div>
 <!--                <div class="form-group">
@@ -289,7 +289,7 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-download fa-fw"></i></span>
 <!--                        <button class="form-control logout-icon" type="button" id="download">Download</button>-->
-                        <a class="form-control logout-icon download-button" id="download" href="">Download</a>
+                        <a class="form-control logout-icon download-button" id="download" href=""><spring:message code="button.download"/></a>
                     </div>
                 </div>
             </div>  
@@ -299,8 +299,8 @@
                             
         <div class="input-group">
             <span class="input-group-btn">
-                <button id="liveTransmit" class="btn btn-default selected" type="button" style="width:50%; border-top-left-radius: 5px; outline: none;" ><span id="liveTransmitSpan"><i class="fa fa-globe fa-fw"></i>Live transmit</span></button> 
-                <button id="enableChat" class="btn btn-default" type="button" style="width:51%; border-top-right-radius: 5px; outline: none;"><i class="fa fa-comments-o fa-fw"></i>Enable chat</button>
+                <button id="liveTransmit" class="btn btn-default selected" type="button" style="width:50%; border-top-left-radius: 5px; outline: none;" ><span id="liveTransmitSpan"><i class="fa fa-globe fa-fw"></i><spring:message code="button.live_transmit"/></span></button> 
+                <button id="enableChat" class="btn btn-default" type="button" style="width:51%; border-top-right-radius: 5px; outline: none;"><i class="fa fa-comments-o fa-fw"></i><spring:message code="button.enable_chat"/></button>
             </span> 
         </div> 
         <div id="chat" class="form-group">
