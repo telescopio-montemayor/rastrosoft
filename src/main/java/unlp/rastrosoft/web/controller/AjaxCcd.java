@@ -161,6 +161,7 @@ public class AjaxCcd {
     @RequestMapping(value = "/setExposure", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse setExposure(@RequestBody ExecuteCriteriaTwoValues execute) {
+        
         AjaxResponse result = new AjaxResponse();        
         String time;       
         time = execute.getValue();
@@ -181,7 +182,7 @@ public class AjaxCcd {
         dec             =   telescope.getDec();
         hBinning        =   "-";//ccd.getHBinning();   //------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
         vBinning        =   "-";//ccd.getVBinning();   //------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
-        temperature     =   ccd.getTemperature();
+        temperature     =   "-";//ccd.getTemperature();
         frameType       =   ccd.getFrameType();
         x               =   ccd.getX();
         y               =   ccd.getY();        

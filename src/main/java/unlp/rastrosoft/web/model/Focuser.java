@@ -12,7 +12,7 @@ package unlp.rastrosoft.web.model;
 public class Focuser extends Device {
     
     public Focuser (){
-        super("Focuser Simulator"); //CAMBIAR: Focuser Simulator / LX200 GPS
+        super("LX200 GPS"); //CAMBIAR: Focuser Simulator / LX200 GPS
     }
     public boolean setFocusIn(){
         return this.modificarBoolean("FOCUS_MOTION", "FOCUS_INWARD", "ON");

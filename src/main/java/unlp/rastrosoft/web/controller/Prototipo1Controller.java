@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import unlp.rastrosoft.web.model.CalendarDB;
+import unlp.rastrosoft.web.model.Fits;
 import unlp.rastrosoft.web.model.UserDB;
 
 @Controller
@@ -79,6 +80,7 @@ public class Prototipo1Controller {
 	}
         @RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(ModelMap model) { 
+//            new Fits().fitsToJpg("/home/ip300/webapp/captures"+"/", "/home/ip300/webapp/captures"+"/", "1.fits");
                 java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
                 java.util.logging.Logger.getLogger("org.spring").setLevel(Level.OFF);
 		return "login";
