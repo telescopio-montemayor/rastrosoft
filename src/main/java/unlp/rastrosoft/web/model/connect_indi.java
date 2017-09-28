@@ -48,9 +48,9 @@ public class connect_indi {
 //        }
 //        return cliente;
 //    }
-    public static indi_client connect(String dispositivo){
+    public static indi_client connect(String dispositivo){ 
         if (cliente == null || cliente.connected == false){
-            cliente = new indi_client("localhost", 7624);            
+            cliente = new indi_client("localhost", 7624);        
         }
         return cliente;
     }

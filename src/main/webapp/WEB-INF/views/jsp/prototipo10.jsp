@@ -224,13 +224,13 @@
                     <button class="icon left-btn-toggle-inside" onclick="toggle_left();">
                         <i class="fa fa-bars" aria-hidden="true" ></i>
                     </button>                    
-                    <span>Opciones</span>
+                    <span><spring:message code="label.options"/></span>
                 </div>  
         <div id="normalScreenContainer">
             <div id="normalScreen">
                 
                 <p></p>
-                <div style="margin: 0 auto; text-align:center"><span><i onClick="fade();" class="fa fa-user-o" aria-hidden="true"></i> <i id="username" style="color:green;" onClick="initialize();">Guest</i><div style="float:right"><i class="fa fa-clock-o" aria-hidden="true"></i> Timeleft: <i id="timeleft" class="label label-success">...</i></div></span></div>
+                <div style="margin: 0 auto; text-align:center"><span><i onClick="fade();" class="fa fa-user-o" aria-hidden="true"></i> <i id="username" style="color:green;" onClick="initialize();">Guest</i><div style="float:right"><i class="fa fa-clock-o" aria-hidden="true"></i> <spring:message code="label.timeleft"/>: <i id="timeleft" class="label label-success">...</i></div></span></div>
                  <div class="input-group">
                     <span class="input-group-btn">
                         <button id="end_session_button" class="btn btn-default" type="button" style="width:50%; border-bottom-left-radius: 5px; border-top-left-radius: 5px; outline: none;" ><i class="fa fa-sign-out fa-fw"></i><spring:message code="button.sign_out"/></button> 
@@ -238,14 +238,14 @@
                     </span>
                 </div> 
                 <div class="form-group">
-                    <p class="input-help">Quick access targets</p>
+                    <p class="input-help"><spring:message code="label.quick_access_targets"/></p>
                     <select class="form-control" id="quickAccessTargets" onchange="setQuickAccessTarget();">                                         
                     </select>
                  </div>
                          
                 <div id="setRaDecNormal">
                     <div id="setRaDec" class="form-group">
-                        <p class="input-help">Right Ascension & Declination</p>
+                        <p class="input-help"><spring:message code="label.right_ascension_&_declination"/></p>
                         <div class="input-group">
                             <div class="input-group-addon joystick">
                                     <button class="icon joystick-left ">
@@ -262,10 +262,10 @@
                                     </button>
                             </div>                                                
                             <input id="setRa" type="text" class="form-control radec-input"  >
-                            <p class="help-label">Set right ascension</p>
+                            <p class="help-label"><spring:message code="help.set_ra"/></p>
                             <span class="input-group-addon">-</span>
                             <input id="setDec" type="text" class="form-control radec-input"  >
-                            <p class="help-label">Set declination</p>
+                            <p class="help-label"><spring:message code="help.set_dec"/></p>
                             <span class="input-group-btn">
                                 <button id="setRaDec-btn" class="btn btn-default" type="button" onclick="setRaDec();"><spring:message code="button.go"/></button>
                             </span>                            
@@ -307,7 +307,7 @@
             <div  id="chatbox" class="form-control" style="overflow-y: scroll; height: 100%"></div>
             <div class="form-group">
                 <div class="input-group" >                            
-                    <input id="msgbox" type="text" class="form-control" placeholder="Message..." >
+                    <input id="msgbox" type="text" class="form-control" placeholder="<spring:message code="label.message"/>" >
                     <span class="input-group-btn">
                         <button id="sendMsgChat" class="btn btn-default" type="button"><i class="fa fa-paper-plane fa-fw"></i></button>
                     </span>  
@@ -348,40 +348,40 @@
                 <button class="icon right-btn-toggle-inside" onclick="toggle_right();">
                     <i class="fa fa-bars" aria-hidden="true" ></i>
                 </button>
-                <span>Opciones avanzadas</span>
+                <span><spring:message code="label.advanced_options"/></span>
             </div>
             <div id="fade" class="fadebox"></div>
             <div id="sidebar-right-container">   
                 <div class="sidebar-box">                    
-                    <label>Telescope</label>
+                    <label><spring:message code="label.telescope"/></label>
                     <div class="form-group">
                         <div class="input-group">
-                            <button id="park" class="form-control logout-icon" type="button">Park</button>
+                            <button id="park" class="form-control logout-icon" type="button"><spring:message code="button.park"/></button>
                             <span id="telescope_park_feedback" class="input-group-addon"></span>
-                            <button id="unpark" class="form-control logout-icon" type="button">Unpark</button>
+                            <button id="unpark" class="form-control logout-icon" type="button"><spring:message code="button.unpark"/></button>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <button id="track" class="form-control logout-icon" type="button">Track</button>
+                            <button id="track" class="form-control logout-icon" type="button"><spring:message code="button.track"/></button>
                             <span id="on_coord_set_feedback" class="input-group-addon"></span>
-                            <button id="slew" class="form-control logout-icon"  type="button">Slew</button>
+                            <button id="slew" class="form-control logout-icon"  type="button"><spring:message code="button.slew"/></button>
                             <span class="input-group-addon"></span>
-                            <button id="sync" class="form-control logout-icon"  type="button">Sync</button>                            
+                            <button id="sync" class="form-control logout-icon"  type="button"><spring:message code="button.sync"/></button>                            
                         </div>
                     </div>
                     <div id="setRaDecFullscreen"></div>
-                    <label>CCD</label>
+                    <label><spring:message code="label.ccd"/></label>
                     <div class="form-group">
-                        <p class="input-help">Exposure time</p>
+                        <p class="input-help"><spring:message code="label.exposure_time"/></p>
                         <div class="input-group">
                             
                             <span class="input-group-addon" title="Time to exposure"><i class="fa fa-clock-o fa-fw"></i></span>
-                            <input id="exposureTime" type="number" class="form-control" placeholder="Exposure">                            
-                            <p class="help-label">Set time to exposure (seconds)</p>
+                            <input id="exposureTime" type="number" class="form-control" placeholder="<spring:message code="label.exposure"/>">                            
+                            <p class="help-label"><spring:message code="help.set_exposure_time"/></p>
                             <input id="exposureTimeHidden" type="hidden" class="form-control" value="0">                            
                             <span class="input-group-btn">
-                                <button id="setExposure" class="btn btn-default" type="button">Capture <i class="fa fa-play fa-fw"></i></button>
+                                <button id="setExposure" class="btn btn-default" type="button"><spring:message code="button.capture"/> <i class="fa fa-play fa-fw"></i></button>
                             </span> 
                         </div>  
                         <div class="progress">
@@ -392,48 +392,48 @@
                     <div class="form-group">
                         <div class="input-group">
                             <span id="ccd_abort_exposure_feedback" class="input-group-addon"><i class="fa fa-stop fa-fw"></i></span>
-                            <button id="setAbortExposure" class="form-control logout-icon" type="button">Abort exposure</button>
+                            <button id="setAbortExposure" class="form-control logout-icon" type="button"><spring:message code="button.abort_exposure"/></button>
                         </div>
                     </div>
                     <div class="form-group">
-                        <p class="input-help">Directory to upload files</p>
+                        <p class="input-help"><spring:message code="label.directory_to_upload_files"/></p>
                         <div class="input-group">
                             <span id="upload_dir_feedback" class="input-group-addon"><i class="fa fa-folder-o fa-fw"></i></span>
                             <input type="text" class="form-control" id="uploadDir" placeholder="Set upload directory">
-                            <p class="help-label">Set upload directory</p>
+                            <p class="help-label"><spring:message code="help.set_upload_directory"/></p>
                             <span class="input-group-btn">
-                                <button id="setUploadDirectory" class="btn btn-default" type="button">Set</button>
+                                <button id="setUploadDirectory" class="btn btn-default" type="button"><spring:message code="button.set"/></button>
                             </span>   
                         </div>
                     </div>
                     <div class="form-group">
-                        <p class="input-help">Prefix for saven files</p>
+                        <p class="input-help"><spring:message code="label.prefix_for_saven_files"/></p>
                         <div class="input-group">
                             <span id="upload_prefix_feedback" class="input-group-addon"><i class="fa fa-file-image-o fa-fw"></i></span>
                             <input type="text" class="form-control" id="uploadPrefix" placeholder="Set prefix">
-                            <p class="help-label">Set prefix for saven files</p>
+                            <p class="help-label"><spring:message code="help.set_prefix"/></p>
                             <span class="input-group-btn">
-                                <button id="setPrefix" class="btn btn-default" type="button">Set</button>
+                                <button id="setPrefix" class="btn btn-default" type="button"><spring:message code="button.set"/></button>
                             </span>     
                         </div>
                     </div>
                     <div class="form-group">
-                        <p class="input-help">Ccd binning (horizontal & vertical)</p>
+                        <p class="input-help"><spring:message code="label.ccd_binning_(horizontal_&_vertical)"/></p>
                         <div class="input-group">                    
                             <input id="hBinning" type="text" class="form-control " placeholder="H"/>
-                            <p class="help-label">Set horizontal binning</p>
+                            <p class="help-label"><spring:message code="help.set_horizontal_binning"/></p>
                             <span class="input-group-addon">x</span>
                             <input id="vBinning" type="text" class="form-control " placeholder="V"/>
-                            <p class="help-label">Set vertical binning</p>
+                            <p class="help-label"><spring:message code="help.set_vertical_binning"/></p>
                             <span class="input-group-btn">
-                                <button id="setBinning" class="btn btn-default" type="button">Binning</button>
+                                <button id="setBinning" class="btn btn-default" type="button"><spring:message code="button.binning"/></button>
                             </span>                            
                         </div>
                     </div>
                     <div class="form-group">
-                        <p class="input-help">Frame type</p>
+                        <p class="input-help"><spring:message code="label.frame_type"/></p>
                         <select class="form-control" id="frameType">
-                         <option disabled selected value> -- select ccd frame type -- </option>   
+                         <option disabled selected value><spring:message code="label.select_ccd_frame_type"/></option>   
                          <option value="frameLight">Light</option>
                          <option value="frameBias">Bias</option>  
                          <option value="frameDark">Dark</option>
@@ -441,41 +441,41 @@
                        </select>
                     </div>
                     <div class="form-group">
-                        <p class="input-help">CCD temperature</p>
+                        <p class="input-help"><spring:message code="label.ccd_temperature"/></p>
                         <div class="input-group">
                             <span id="ccd_temperature_feedback" class="input-group-addon"><i class="fa fa-thermometer-half fa-fw"></i></span>
                             <input type="text" class="form-control " id="ccdTemperature" placeholder="Temperature" value="-15">                    
-                            <p class="help-label">Set temperature for the CCD</p>
+                            <p class="help-label"><spring:message code="help.set_ccd_temperature"/></p>
                             <span class="input-group-btn">
-                                <button id="setCcdTemperature" class="btn btn-default" type="button">°C</button>
+                                <button id="setCcdTemperature" class="btn btn-default" type="button"><spring:message code="button.temperature"/></button>
                             </span>  
                         </div>
                         
                     </div>
                     <div class="form-group">
-                        <p class="input-help">Frame (X & Y)</p>
+                        <p class="input-help"><spring:message code="label.frame_(x_&_y)"/></p>
                         <div class="input-group">                    
                             <input id="frameX" type="text" class="form-control " placeholder="X" />
-                            <p class="help-label">Set image X origin</p>
+                            <p class="help-label"><spring:message code="help.set_frame_x"/></p>
                             <span class="input-group-addon">x</span>
                             <input id="frameY" type="text" class="form-control " placeholder="Y" />
-                            <p class="help-label">Set image Y origin</p>
+                            <p class="help-label"><spring:message code="help.set_frame_y"/></p>
                             <span class="input-group-btn">
-                                <button id="setFrame" class="btn btn-default" type="button">Set</button>
+                                <button id="setFrame" class="btn btn-default" type="button"><spring:message code="button.set"/></button>
                                 
                             </span>                            
                         </div>  
                     </div>
                     <div class="form-group">
-                        <p class="input-help">Image size (width & height)</p>
+                        <p class="input-help"><spring:message code="label.image_size_(width_&_height)"/></p>
                         <div class="input-group">                    
                             <input id="frameWidth" type="text" class="form-control " placeholder="Width" />
-                            <p class="help-label">Set image width</p>
+                            <p class="help-label"><spring:message code="help.set_width"/></p>
                             <span class="input-group-addon">x</span>
                             <input id="frameHeight" type="text" class="form-control " placeholder="Height" />
-                            <p class="help-label">Set image height</p>
+                            <p class="help-label"><spring:message code="help.set_height"/></p>
                             <span class="input-group-btn">
-                                <button id="setSize" class="btn btn-default" type="button">Pixels</button>
+                                <button id="setSize" class="btn btn-default" type="button"><spring:message code="button.pixels"/></button>
                                 
                             </span>                            
                         </div>  
@@ -486,9 +486,9 @@
                 
 <!--                    PARA EL FOCUSER: MICROFOCUSER DEL LX 200-->
                      <div class="form-group">
-                        <p class="input-help">Focus speed</p>
+                        <p class="input-help"><spring:message code="label.focus_speed"/></p>
                         <select class="form-control" id="focusSpeedMicro">
-                         <option disabled selected value> -- select focus speed -- </option>   
+                         <option disabled selected value><spring:message code="label.select_focus_speed"/></option>   
                          <option value="1">Halt</option>
                          <option value="2">Slow</option>  
                          <option value="3">Medium</option>
@@ -496,18 +496,18 @@
                        </select>
                     </div>
                     <div class="form-group">
-                        <p class="input-help">Focus motion</p>                        
+                        <p class="input-help"><spring:message code="label.focus_motion"/></p>                        
                         <div class="input-group">
-                            <input id="focusTimerMicro" type="text" class="form-control" placeholder="Milliseconds"/>
-                            <p class="help-label">Set the timer countdown (milliseconds)</p>  
+                            <input id="focusTimerMicro" type="text" class="form-control" placeholder="<spring:message code="label.milliseconds"/>"/>
+                            <p class="help-label"><spring:message code="help.set_focus_motion"/></p>  
                             <span class="input-group-btn">
-                                <button id="focusInMicro"  class="btn btn-default" type="button">Focus in</button> 
-                                <button id="focusOutMicro" class="btn btn-default" type="button">Focus out</button>
+                                <button id="focusInMicro"  class="btn btn-default" type="button"><spring:message code="button.focus_in"/></button> 
+                                <button id="focusOutMicro" class="btn btn-default" type="button"><spring:message code="button.focus_out"/></button>
                             </span> 
                         </div> 
                     </div                    
                     <div class="form-group">
-                        <p class="input-help">Sequence</p>
+                        <p class="input-help"><spring:message code="label.sequence"/></p>
                         <div class="input-group">                        
                             <select class="form-control" id="sequence">                         
                             </select>
