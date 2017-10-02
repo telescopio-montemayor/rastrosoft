@@ -45,10 +45,10 @@ public class AjaxCcd {
     public AjaxResponseBodyIndiExecute getPreviewImageViaAjax(@RequestBody ExecuteCriteria execute, HttpServletRequest request) {
 
         AjaxResponseBodyIndiExecute result = new AjaxResponseBodyIndiExecute();
-
-        Ccd ccd = new Ccd();
-        ccd.takePreview();
-
+        if (AccessControl.AccessControl()){
+            Ccd ccd = new Ccd();
+            ccd.takePreview();
+        }
         return result;
     }
     
@@ -58,10 +58,12 @@ public class AjaxCcd {
     public AjaxResponse setUploadDirectory(@RequestBody ExecuteCriteria execute) {
 
         AjaxResponse result = new AjaxResponse();        
-        String dir;       
-        dir = execute.getValue();        
-        Ccd ccd = new Ccd();
-        ccd.setUploadDirectory(dir);
+        if (AccessControl.AccessControl()){
+            String dir;
+            dir = execute.getValue();        
+            Ccd ccd = new Ccd();
+            ccd.setUploadDirectory(dir);
+        }
         return result;
     }
     
@@ -71,10 +73,12 @@ public class AjaxCcd {
     public AjaxResponse setPrefix(@RequestBody ExecuteCriteria execute) {
 
         AjaxResponse result = new AjaxResponse();        
-        String prefix;       
-        prefix = execute.getValue();        
-        Ccd ccd = new Ccd();
-        ccd.setPrefix(prefix);
+        if (AccessControl.AccessControl()){
+            String prefix;
+            prefix = execute.getValue();        
+            Ccd ccd = new Ccd();
+            ccd.setPrefix(prefix);
+        }
         return result;
     }
     
@@ -82,12 +86,14 @@ public class AjaxCcd {
     @RequestMapping(value = "/setBinning", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse setBinning(@RequestBody ExecuteCriteriaTwoValues execute) {
-        AjaxResponse result = new AjaxResponse();        
-        String hor, ver;       
-        hor = execute.getValue();
-        ver = execute.getValue2();
-        Ccd ccd = new Ccd();
-        ccd.setBinning(hor, ver);
+        AjaxResponse result = new AjaxResponse();  
+        if (AccessControl.AccessControl()){
+            String hor, ver;       
+            hor = execute.getValue();
+            ver = execute.getValue2();
+            Ccd ccd = new Ccd();
+            ccd.setBinning(hor, ver);
+        }
         return result;
     }
     
@@ -95,25 +101,27 @@ public class AjaxCcd {
     @RequestMapping(value = "/setFrameType", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse setFrameType(@RequestBody ExecuteCriteriaTwoValues execute) {
-        AjaxResponse result = new AjaxResponse();        
-        String frameType;       
-        frameType = execute.getValue();
-        Ccd ccd = new Ccd();
-        switch (frameType){
-            case "frameLight":
-                ccd.setFrameLight();
-                break;
-            case "frameBias":
-                ccd.setFrameBias();
-                break;
-            case "frameDark":
-                ccd.setFrameDark();
-                break;    
-            case "frameFlat":
-                ccd.setFrameFlat();
-                break;
-            default:
-                break;
+        AjaxResponse result = new AjaxResponse();
+        if (AccessControl.AccessControl()){
+            String frameType;       
+            frameType = execute.getValue();
+            Ccd ccd = new Ccd();
+            switch (frameType){
+                case "frameLight":
+                    ccd.setFrameLight();
+                    break;
+                case "frameBias":
+                    ccd.setFrameBias();
+                    break;
+                case "frameDark":
+                    ccd.setFrameDark();
+                    break;    
+                case "frameFlat":
+                    ccd.setFrameFlat();
+                    break;
+                default:
+                    break;
+            }
         }
         return result;
     }
@@ -122,11 +130,13 @@ public class AjaxCcd {
     @RequestMapping(value = "/setCcdTemperature", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse setCcdTemperature(@RequestBody ExecuteCriteria execute) {
-        AjaxResponse result = new AjaxResponse();        
-        String temperature;       
-        temperature = execute.getValue();        
-        Ccd ccd = new Ccd();
-        ccd.setTemperature(temperature);
+        AjaxResponse result = new AjaxResponse();
+        if (AccessControl.AccessControl()){
+            String temperature;
+            temperature = execute.getValue();        
+            Ccd ccd = new Ccd();
+            ccd.setTemperature(temperature);
+        }
         return result;
     }
     
@@ -134,12 +144,14 @@ public class AjaxCcd {
     @RequestMapping(value = "/setFrame", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse setFrame(@RequestBody ExecuteCriteriaTwoValues execute) {
-        AjaxResponse result = new AjaxResponse();        
-        String x, y;       
-        x = execute.getValue();
-        y = execute.getValue2();
-        Ccd ccd = new Ccd();
-        ccd.setFrame(x, y);
+        AjaxResponse result = new AjaxResponse();
+        if (AccessControl.AccessControl()){
+            String x, y;       
+            x = execute.getValue();
+            y = execute.getValue2();
+            Ccd ccd = new Ccd();
+            ccd.setFrame(x, y);
+        }
         return result;
     }
     
@@ -147,12 +159,14 @@ public class AjaxCcd {
     @RequestMapping(value = "/setSize", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse setSize(@RequestBody ExecuteCriteriaTwoValues execute) {
-        AjaxResponse result = new AjaxResponse();        
-        String width, height;       
-        width = execute.getValue();
-        height = execute.getValue2();
-        Ccd ccd = new Ccd();
-        ccd.setSize(width, height);
+        AjaxResponse result = new AjaxResponse();
+        if (AccessControl.AccessControl()){
+            String width, height;       
+            width = execute.getValue();
+            height = execute.getValue2();
+            Ccd ccd = new Ccd();
+            ccd.setSize(width, height);
+        }
         return result;
     }
     
@@ -180,15 +194,15 @@ public class AjaxCcd {
         datetime        =   dateFormat.format(date);
         ra              =   telescope.getRa();
         dec             =   telescope.getDec();
-        hBinning        =   "-";//ccd.getHBinning();   //------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
-        vBinning        =   "-";//ccd.getVBinning();   //------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
-        temperature     =   "-";//ccd.getTemperature();
+        hBinning        =   ccd.getHBinning();   // "-"; ------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
+        vBinning        =   ccd.getVBinning();   // "-"; ------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
+        temperature     =   ccd.getTemperature();// "-";
         frameType       =   ccd.getFrameType();
         x               =   ccd.getX();
         y               =   ccd.getY();        
         width           =   ccd.getWidth();        
         height          =   ccd.getHeight();
-        focusPosition   =   "-";//focuser.getAbsolutePosition();   //------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
+        focusPosition   =   focuser.getAbsolutePosition();   // "-";------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
         exposureTime    =   time;
         
        
@@ -231,14 +245,16 @@ public class AjaxCcd {
     @RequestMapping(value = "/setAbortExposure", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse setAbortExposure(@RequestBody ExecuteCriteriaTwoValues execute) {
-        AjaxResponse result = new AjaxResponse();                
-        Ccd ccd = new Ccd();        
-        if(Double.parseDouble(ccd.getExposureTime()) > 0){
-           CaptureDB captureDB = new CaptureDB();
-           captureDB.connect();
-           captureDB.removeLastCapture();
+        AjaxResponse result = new AjaxResponse();  
+        if (AccessControl.AccessControl()){
+            Ccd ccd = new Ccd();        
+            if(Double.parseDouble(ccd.getExposureTime()) > 0){
+               CaptureDB captureDB = new CaptureDB();
+               captureDB.connect();
+               captureDB.removeLastCapture();
+            }
+            ccd.abortExposure();
         }
-        ccd.abortExposure();
         return result;
     }
     

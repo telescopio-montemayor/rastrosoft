@@ -328,7 +328,7 @@
             </div>
             <div class="loading">                
                  <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
-                <span class="sr-only">Loading...</span>                  
+                <span class="sr-only"><spring:message code="label.loading"/></span>                  
             </div>  
         </div>          
     </div>
@@ -483,7 +483,7 @@
                     
                     
                 </div>
-                
+                <label><spring:message code="label.focuser"/></label>
 <!--                    PARA EL FOCUSER: MICROFOCUSER DEL LX 200-->
                      <div class="form-group">
                         <p class="input-help"><spring:message code="label.focus_speed"/></p>
@@ -551,7 +551,7 @@
                         </div>
                         <div class="loading">                
                              <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
-                            <span class="sr-only">Loading...</span>                  
+                            <span class="sr-only"><spring:message code="label.loading"/></span>                  
                         </div>  
                     </div>
                     

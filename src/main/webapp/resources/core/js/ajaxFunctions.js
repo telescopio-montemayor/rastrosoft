@@ -968,7 +968,7 @@ function startTimer(duration) {
         
         if( parseInt(($("#timeleft").text()).substring(3, 5)) < 10 ){
             if ( new String($("#timeleft").text()).valueOf() == new String("00:09:59").valueOf() ){
-                notify('You have 10 minutes until the session ends!', 'danger');
+                notify('Tienes 10 minutos antes de que termine la sesión!', 'danger');
             }
             $("#timeleft").removeClass("label-success").addClass("label-danger");
             if( $("#timeleft").text() == "00:00:00" ){

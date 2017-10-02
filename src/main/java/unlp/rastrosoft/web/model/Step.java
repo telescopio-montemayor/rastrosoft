@@ -5,6 +5,9 @@
  */
 package unlp.rastrosoft.web.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -91,74 +94,122 @@ public class Step {
         
     }
     public void execute(){
-        Ccd ccd = new Ccd();
-        Focuser focuser = new Focuser();
-        Telescope telescope = new Telescope();
-        
-        if (!this.gethBinning().equals("-") && !this.getvBinning().equals("-")) {
-            ccd.setBinning(this.gethBinning(), this.getvBinning());
-        }
-        if (!this.getX().equals("-") && !this.getY().equals("-")) {
-            ccd.setFrame(this.getX(), this.getY());
-        }        
-        if (!this.getFrameType().equals("-")) {
-            switch(this.getFrameType()){
-                case "light":
-                    ccd.setFrameLight();
-                    break;
-                case "bias":
-                    ccd.setFrameBias();
-                    break;
-                case "dark":
-                    ccd.setFrameDark();
-                    break;
-                case "flat":
-                    ccd.setFrameFlat();
-                    break;
-                default:
-                    break;                
-            }
-        } 
-        if (!this.getWidth().equals("-") && !this.getHeight().equals("-")) {
-            ccd.setSize(this.getWidth(), this.getHeight());
-        } 
-        
-        if (!this.getFocusPosition().equals("-")) {
-            focuser.setAbsolutePosition(this.getFocusPosition());
-        } 
-        
-        if (!this.getRa().equals("-") && !this.getDeclination().equals("-")) {
-            synchronized(lock_key) {
-                //EJECUTAR
-                System.err.println("EJECUTANDO MOVIMIENTO");            
-                telescope.setRaDec(this.getRa(), this.getDeclination());
-                try {
-                        lock_key.wait();
-                    } catch (InterruptedException ex) {                    
-                    }
-            }
-        } 
-        
-        
-        System.err.println("EJECUTANDO CAPTURA");
         String currentUserName = null;        
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();         
         }
-        String path = "/home/ip300/webapp/captures";
-        String source= path+"/"+currentUserName;
-        String dest = path+"/"+currentUserName;
-        String time = this.getExposureTime();
-        
-        ccd.setExposure(time, path, source, dest);
-        synchronized(lock_key_exposure) {
-            try {
-                    lock_key_exposure.wait();
-                } catch (InterruptedException ex) {                    
+        UserDB userDB = new UserDB();
+        userDB.connect();
+        CalendarDB calendarDB = new CalendarDB();
+        calendarDB.connect();
+        int idUserCurrentShift = Integer.valueOf(calendarDB.getCurrentShift().get(0));
+        int idCurrentUser      = userDB.getUser(currentUserName).getUserId();
+        if (idUserCurrentShift == idCurrentUser){
+            
+            Ccd ccd = new Ccd();
+            Focuser focuser = new Focuser();
+            Telescope telescope = new Telescope();
+
+            if (!this.gethBinning().equals("-") && !this.getvBinning().equals("-")) {
+                ccd.setBinning(this.gethBinning(), this.getvBinning());
+            }
+            if (!this.getX().equals("-") && !this.getY().equals("-")) {
+                ccd.setFrame(this.getX(), this.getY());
+            }        
+            if (!this.getFrameType().equals("-")) {
+                switch(this.getFrameType()){
+                    case "light":
+                        ccd.setFrameLight();
+                        break;
+                    case "bias":
+                        ccd.setFrameBias();
+                        break;
+                    case "dark":
+                        ccd.setFrameDark();
+                        break;
+                    case "flat":
+                        ccd.setFrameFlat();
+                        break;
+                    default:
+                        break;                
                 }
-        }
-    
+            } 
+            if (!this.getWidth().equals("-") && !this.getHeight().equals("-")) {
+                ccd.setSize(this.getWidth(), this.getHeight());
+            } 
+
+            if (!this.getFocusPosition().equals("-")) {
+                focuser.setAbsolutePosition(this.getFocusPosition());
+            } 
+
+            if (!this.getRa().equals("-") && !this.getDeclination().equals("-")) {
+                synchronized(lock_key) {
+                    //EJECUTAR
+                    System.err.println("EJECUTANDO MOVIMIENTO");
+                    telescope.setRaDec(this.getRa(), this.getDeclination());
+                    try {
+                            lock_key.wait();
+                        } catch (InterruptedException ex) {
+                        }
+                }
+            }
+
+
+            System.err.println("EJECUTANDO CAPTURA");
+
+    //        String path = "/home/ip300/webapp/captures";
+    //        String source= path+"/"+currentUserName;
+    //        String dest = path+"/"+currentUserName;
+    //        String time = this.getExposureTime();
+    //        
+    //        ccd.setExposure(time, path, source, dest);
+    //---->
+            String time = this.getExposureTime();
+            String  datetime_db, ra_db, dec_db, hBinning_db, vBinning_db, temperature_db, frameType_db, x_db, y_db,
+                    width_db, height_db, focusPosition_db, exposureTime_db, filePath_db;
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();    
+
+            datetime_db        =   dateFormat.format(date);
+            ra_db              =   telescope.getRa();
+            dec_db             =   telescope.getDec();
+            hBinning_db        =   ccd.getHBinning();   // "-"; ------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
+            vBinning_db        =   ccd.getVBinning();   // "-"; ------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
+            temperature_db     =   ccd.getTemperature();// "-";
+            frameType_db       =   ccd.getFrameType();
+            x_db               =   ccd.getX();
+            y_db               =   ccd.getY();        
+            width_db           =   ccd.getWidth();        
+            height_db          =   ccd.getHeight();
+            focusPosition_db   =   focuser.getAbsolutePosition();   // "-";------ DESCOMENTAR!! ---- (SÓLO PARA LX200)
+            exposureTime_db    =   time;
+
+                String folderName = userDB.getUser(idUserCurrentShift).getUsername();
+                String path = "/home/ip300/webapp/captures";
+                String source= path+"/"+folderName;
+                String dest = path+"/"+folderName;
+                ccd.setUploadDirectory(source);
+                ccd.setLocalMode();  
+
+                ccd.setExposure(time, path, source, dest);
+                filePath_db        =   ccd.getFilePath(); //REVISAR TIEMPO DE ESPERA
+
+                CaptureDB captureDB = new CaptureDB();      
+                Capture capture = new Capture("", datetime_db, ra_db, dec_db, hBinning_db, vBinning_db, temperature_db, frameType_db, x_db, y_db, width_db, height_db, focusPosition_db, exposureTime_db, filePath_db); 
+                captureDB.connect();
+                int id_capture = captureDB.insertCapture(capture);
+                captureDB.asociateCaptureToUser(idCurrentUser, id_capture);
+
+            
+    //<----
+            synchronized(lock_key_exposure) {
+                try {
+                        lock_key_exposure.wait();
+                    } catch (InterruptedException ex) {                    
+                    }
+            }
+        }    
     }
     
     

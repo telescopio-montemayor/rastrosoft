@@ -30,15 +30,15 @@ public class AjaxTelescope {
     public AjaxResponse setRaDec(@RequestBody ExecuteCriteriaTwoValues execute) {
 
         AjaxResponse result = new AjaxResponse();
-        
-        String ra, dec;       
-        ra = execute.getValue();
-        dec = execute.getValue2();
-        Telescope telescope = new Telescope();
-        if (telescope.setRaDec(ra, dec)){
-            result.setElementos(telescope.getRaDec());
+        if (AccessControl.AccessControl()){
+            String ra, dec;       
+            ra = execute.getValue();
+            dec = execute.getValue2();
+            Telescope telescope = new Telescope();
+            if (telescope.setRaDec(ra, dec)){
+                result.setElementos(telescope.getRaDec());
+            }
         }
-        
         return result;
 
     }
@@ -49,10 +49,10 @@ public class AjaxTelescope {
     public AjaxResponse setPark(@RequestBody ExecuteCriteriaTwoValues execute) {
 
         AjaxResponse result = new AjaxResponse();
-        
-        Telescope telescope = new Telescope();
-        telescope.setPark();
-        
+        if (AccessControl.AccessControl()){
+            Telescope telescope = new Telescope();
+            telescope.setPark();
+        }
         return result;
 
     }
@@ -61,8 +61,10 @@ public class AjaxTelescope {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
     public AjaxResponse setUnPark(@RequestBody ExecuteCriteriaTwoValues execute) {
         AjaxResponse result = new AjaxResponse();
-        Telescope telescope = new Telescope();
-        telescope.setUnPark();
+        if (AccessControl.AccessControl()){
+            Telescope telescope = new Telescope();
+            telescope.setUnPark();
+        }
         return result;
     }
     @JsonView(Views.Public.class)
@@ -70,8 +72,10 @@ public class AjaxTelescope {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
     public AjaxResponse setTrack(@RequestBody ExecuteCriteriaTwoValues execute) {
         AjaxResponse result = new AjaxResponse();
-        Telescope telescope = new Telescope();
-        telescope.setTrack();
+        if (AccessControl.AccessControl()){
+            Telescope telescope = new Telescope();
+            telescope.setTrack();
+        }
         return result;
     }
     @JsonView(Views.Public.class)
@@ -79,8 +83,10 @@ public class AjaxTelescope {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
     public AjaxResponse setSlew(@RequestBody ExecuteCriteriaTwoValues execute) {
         AjaxResponse result = new AjaxResponse();
-        Telescope telescope = new Telescope();
-        telescope.setSlew();
+        if (AccessControl.AccessControl()){
+            Telescope telescope = new Telescope();
+            telescope.setSlew();
+        }    
         return result;
     }
     @JsonView(Views.Public.class)
@@ -88,8 +94,10 @@ public class AjaxTelescope {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
     public AjaxResponse setSync(@RequestBody ExecuteCriteriaTwoValues execute) {
         AjaxResponse result = new AjaxResponse();
-        Telescope telescope = new Telescope();
-        telescope.setSync();
+        if (AccessControl.AccessControl()){
+            Telescope telescope = new Telescope();
+            telescope.setSync();
+        }
         return result;
     }
     @JsonView(Views.Public.class)
@@ -97,8 +105,10 @@ public class AjaxTelescope {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')") 
     public AjaxResponse setAbortMotion(@RequestBody ExecuteCriteriaTwoValues execute) {
         AjaxResponse result = new AjaxResponse();
-        Telescope telescope = new Telescope();
-        telescope.setAbortMotion();
+        if (AccessControl.AccessControl()){
+            Telescope telescope = new Telescope();
+            telescope.setAbortMotion();
+        }
         return result;
     }
 }

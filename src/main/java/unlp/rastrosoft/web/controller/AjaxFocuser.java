@@ -26,11 +26,13 @@ public class AjaxFocuser {
     @RequestMapping(value = "/setFocusAbsolute", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse setFocusAbsolute(@RequestBody ExecuteCriteria execute) {
-        AjaxResponse result = new AjaxResponse();        
-        String position;       
-        position = execute.getValue();
-        Focuser focuser = new Focuser();
-        focuser.setAbsolutePosition(position);
+        AjaxResponse result = new AjaxResponse();
+        if (AccessControl.AccessControl()){
+            String position;       
+            position = execute.getValue();
+            Focuser focuser = new Focuser();
+            focuser.setAbsolutePosition(position);
+        }
         return result;
     }
     @JsonView(Views.Public.class)
@@ -38,10 +40,12 @@ public class AjaxFocuser {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse focusIn(@RequestBody ExecuteCriteria execute) {
         AjaxResponse result = new AjaxResponse();        
-        String ticks;       
-        ticks = execute.getValue();
-        Focuser focuser = new Focuser();
-        focuser.setFocusIn(ticks);
+        if (AccessControl.AccessControl()){
+            String ticks;
+            ticks = execute.getValue();
+            Focuser focuser = new Focuser();
+            focuser.setFocusIn(ticks);
+        }
         return result;
     }
     @JsonView(Views.Public.class)
@@ -49,10 +53,12 @@ public class AjaxFocuser {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse focusOut(@RequestBody ExecuteCriteria execute) {
         AjaxResponse result = new AjaxResponse();        
-        String ticks;       
-        ticks = execute.getValue();
-        Focuser focuser = new Focuser();
-        focuser.setFocusOut(ticks);
+        if (AccessControl.AccessControl()){
+            String ticks;
+            ticks = execute.getValue();
+            Focuser focuser = new Focuser();
+            focuser.setFocusOut(ticks);
+        }
         return result;
     }
 //    PARA EL FOCUSER: MICROFOCUSER LX 200
@@ -61,22 +67,26 @@ public class AjaxFocuser {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse setFocusSpeedMicro(@RequestBody ExecuteCriteria execute) {
         AjaxResponse result = new AjaxResponse();        
-        String speed;       
-        speed = execute.getValue();
-        Focuser focuser = new Focuser();
-        focuser.setFocusSpeedMicro(speed);
+        if (AccessControl.AccessControl()){
+            String speed;       
+            speed = execute.getValue();
+            Focuser focuser = new Focuser();
+            focuser.setFocusSpeedMicro(speed);
+        }
         return result;
     }
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/focusInMicro", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse focusInMicro(@RequestBody ExecuteCriteria execute) {
-        AjaxResponse result = new AjaxResponse();        
-        String timer;       
-        timer = execute.getValue();
-        Focuser focuser = new Focuser();
-        focuser.setFocusTimerMicro(timer);
-        focuser.setFocusInMicro();
+        AjaxResponse result = new AjaxResponse();
+        if (AccessControl.AccessControl()){
+            String timer;       
+            timer = execute.getValue();
+            Focuser focuser = new Focuser();
+            focuser.setFocusTimerMicro(timer);
+            focuser.setFocusInMicro();
+        }
         return result;
     }
     @JsonView(Views.Public.class)
@@ -84,11 +94,13 @@ public class AjaxFocuser {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse focusOutMicro(@RequestBody ExecuteCriteria execute) {
         AjaxResponse result = new AjaxResponse();        
-        String timer;       
-        timer = execute.getValue();
-        Focuser focuser = new Focuser();
-        focuser.setFocusTimerMicro(timer);
-        focuser.setFocusOutMicro();
+        if (AccessControl.AccessControl()){
+            String timer;       
+            timer = execute.getValue();
+            Focuser focuser = new Focuser();
+            focuser.setFocusTimerMicro(timer);
+            focuser.setFocusOutMicro();
+        }
         return result;
     }
 //    ...
