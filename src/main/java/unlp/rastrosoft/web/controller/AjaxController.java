@@ -572,32 +572,47 @@ public class AjaxController  extends HttpServlet{
     @RequestMapping(value = "/liveTransmit", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponseListOfLists liveTransmit(@RequestBody ExecuteCriteria execute) {
-        AjaxResponseListOfLists result = new AjaxResponseListOfLists();        
-        LiveTransmitDB liveTransmitDB = new LiveTransmitDB();
-        liveTransmitDB.connect();
-        String live;       
-        live = execute.getValue();
-        if (live.equals("true")){
-            liveTransmitDB.startLiveTransmit();
-        }else{
-            liveTransmitDB.stopLiveTransmit();
-        }        
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();   
+        if(AccessControl.AccessControl()){
+            DeviceSessionHandler sessionHandler;
+            sessionHandler = new DeviceSessionHandler();
+            LiveTransmitDB liveTransmitDB = new LiveTransmitDB();
+            liveTransmitDB.connect();
+            String live, value;     
+            live = execute.getValue();
+            if (live.equals("true")){
+                liveTransmitDB.startLiveTransmit();
+                value = "1";
+            }else{
+                liveTransmitDB.stopLiveTransmit();
+                value = "0";
+            }
+            sessionHandler.updateElement("liveTransmit", "["+value+"]");
+        }
+              
         return result;
     }   
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/enableChat", method=RequestMethod.POST)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponseListOfLists enableChat(@RequestBody ExecuteCriteria execute) {
-        AjaxResponseListOfLists result = new AjaxResponseListOfLists();        
-        ChatDB chatDB = new ChatDB();
-        chatDB.connect();
-        String enableChat;       
-        enableChat = execute.getValue();
-        if (enableChat.equals("true")){
-            chatDB.enableChat();
-        }else{
-            chatDB.disableChat();
-        }        
+        AjaxResponseListOfLists result = new AjaxResponseListOfLists();  
+        if(AccessControl.AccessControl()){
+            DeviceSessionHandler sessionHandler;
+            sessionHandler = new DeviceSessionHandler();
+            ChatDB chatDB = new ChatDB();
+            chatDB.connect();
+            String enableChat, value;       
+            enableChat = execute.getValue();
+            if (enableChat.equals("true")){
+                chatDB.enableChat();
+                value = "1";
+            }else{
+                chatDB.disableChat();
+                value = "0";
+            }        
+            sessionHandler.updateElement("enableChat", "["+value+"]");
+        }
         return result;
     }
     
@@ -621,14 +636,15 @@ public class AjaxController  extends HttpServlet{
     public AjaxResponse checkLive(@RequestBody SearchCriteria search) {            
 
         AjaxResponse result = new AjaxResponse();
-
-
+        
+        LiveTransmitDB liveTransmitDB = new LiveTransmitDB();
+        liveTransmitDB.connect();
         CalendarDB shifts = new CalendarDB();    
         shifts.connect();
         ArrayList<String> shift = shifts.getCurrentShift();
-        if (!shift.get(2).equals("-1")){
+        if (!shift.get(2).equals("-1") && liveTransmitDB.isOnLive() ){
             result.addElemento("true");
-            if(shift.get(3).equals("1")){
+            if(shift.get(3).equals("1")){                
                 result.addElemento(shift.get(2));
             }else{
                 result.addElemento("0");

@@ -68,6 +68,12 @@ function onMessage(event) {
             case "stepStateChanged":
                 reloadSteps();
                 break;
+            case "enableChat":
+                updateChatEnabled(device.value);
+                break;
+            case "liveTransmit":
+                updateLiveTransmit(device.value);
+                break;
             default:
                 break;
         }
@@ -338,3 +344,21 @@ function updateFocusSpeedMicro(value){
 function updateFocusTimerMicro(value){
     $("#focusTimerMicro").val(value);   
 } 
+
+function updateChatEnabled(chatEnabled){
+    if(chatEnabled == "1"){
+        $("#sendMsgChat").prop('disabled', false);
+        $("#msgbox").prop('disabled', false);
+    }else{
+        $("#sendMsgChat").prop('disabled', true);
+        $("#msgbox").prop('disabled', true);
+    }   
+}
+
+function updateLiveTransmit(liveTransmit){
+    if(liveTransmit == "1"){
+        $("#liveTransmitSpan").css("color","rgb(255, 0, 0)");
+    }else{
+        $("#liveTransmitSpan").css("color","rgb(0, 0, 0)");
+    } 
+}
