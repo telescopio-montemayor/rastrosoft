@@ -105,20 +105,20 @@
           <ul class="nav navbar-nav">
             
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tkey="shifts">Shifts</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message code="menu.shifts"/></a>
               <ul class="dropdown-menu">
-                  <li id="shifts-menu"><a href="#" onclick="showShifts();" tkey="view-shifts">View shifts</a></li>
-                  <li id="shifts-menu"><a href="#" onclick="showAddShiftNew();" tkey="add-shift">Add shift</a></li>
+                  <li id="shifts-menu"><a href="#" onclick="showShifts();"><spring:message code="menu.view_shifts"/></a></li>
+                  <li id="shifts-menu"><a href="#" onclick="showAddShiftNew();"><spring:message code="menu.add_shift"/></a></li>
               </ul>             
             </li>       
-            <li id="captures-menu"><a href="#" onclick="showCaptures();" tkey="captures">Captures</a></li>
-            <li id="automatization-menu"><a href="#" onclick="showAutomatization();" tkey="automatization">Automatization</a></li>            
+            <li id="captures-menu"><a href="#" onclick="showCaptures();"><spring:message code="menu.captures"/></a></li>
+            <li id="automatization-menu"><a href="#" onclick="showAutomatization();"><spring:message code="menu.automatization"/></a></li>            
             <li id="live">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tkey="on-live"><i id="live-sign" class="fa fa-circle" aria-hidden="true"></i> On live</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i id="live-sign" class="fa fa-circle" aria-hidden="true"></i> <spring:message code="menu.on_live"/></a>
               <ul class="dropdown-menu">
                   <input type="hidden" id="key">
-                  <li id="get-link"><a href="#" onclick="showLink();" tkey="get-link">Get link</a></li>
-                  <li id="view-live"><a href="#" onclick="viewLive();" tkey="view-live">View live stream</a></li>
+                  <li id="get-link"><a href="#" onclick="showLink();" ><spring:message code="menu.get_link"/></a></li>
+                  <li id="view-live"><a href="#" onclick="viewLive();" ><spring:message code="menu.view_live_stream"/></a></li>
               </ul>             
             </li>  
           </ul>
@@ -126,10 +126,10 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username" >Guest</span> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                  <li><a href="#" onclick="showProfile();"><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span tkey="profile">Profile</span></a></li>                  
-                  <li><a href="#"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i> <span tkey="upgrade">Upgrade</span></a></li>
+                  <li><a href="#" onclick="showProfile();"><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span><spring:message code="menu.profile"/></span></a></li>                  
+                  <li><a href="#"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i> <span><spring:message code="menu.upgrade"/></span></a></li>
                 <li class="divider"></li>
-                <li><a href="#" onclick="logout();"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span tkey="logout">Logout</span></a></li>  
+                <li><a href="#" onclick="logout();"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span><spring:message code="menu.logout"/></span></a></li>  
                 <c:url var="logoutUrl" value="/logout"/>
                 <form id="end_session" action="${logoutUrl}" method="post">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -161,30 +161,30 @@
         <div class="intro">
 <!--            <i class="fa fa-tint" style="font-size:240px"></i>-->
             <div class="intro-container">
-                <p>Rastrosoft es </p>
+                <p><spring:message code="banner.rastrosoft_is"/> </p>
                 <b>
                   <span1>
-                    rápido<br /> 
-                    elegante<br />
-                    eficiente<br />
-                    simple.
+                    <spring:message code="banner.fast"/><br /> 
+                    <spring:message code="banner.elegant"/><br />
+                    <spring:message code="banner.efficient"/><br />
+                    <spring:message code="banner.simple"/>
                     </span1>
                 </b>
             </div>
         </div>        
         <div id="tableShifts" class="table-shifts">
-            <h4 style="color:white" class="label-primary text-center" tkey="shifts-otorged">Turnos otorgados</h4>
+            <h4 style="color:white" class="label-primary text-center"><spring:message code="label.shifts_awarded"/></h4>
             <table id="shifts" class="table">
                 <thead>  
                   <tr>                      
                     <th>#</th>
-                    <th><span tkey="name">Nombre</span></th>
-                    <th><span tkey="date">Fecha</span></th>
-                    <th><span tkey="time">Hora</span></th>
-                    <th><span tkey="available">Habilitado</span></th>
-                    <th><span tkey="transmition">Transimisión</span></th>
-                    <th><span tkey="key">Key</span></th>
-                    <th><span tkey="link">Link</span></th>
+                    <th><span><spring:message code="label.name"/></span></th>
+                    <th><span><spring:message code="label.date"/></span></th>
+                    <th><span><spring:message code="label.time"/></span></th>
+                    <th><span><spring:message code="label.available"/></span></th>
+                    <th><span><spring:message code="label.transmition"/></span></th>
+                    <th><span><spring:message code="label.key"/></span></th>
+                    <th><span><spring:message code="label.link"/></span></th>
                   </tr>
                 </thead>
                 <tbody>                                  
@@ -197,18 +197,18 @@
                 <table class="capture_info_table">                   
                 </table>
             </div>
-            <h4 style="color:white" class="label-primary text-center" tkey="my-captures">Mis capturas</h4>
-            <div><span id="capturesQuantity"></span> capturas encontradas</div>
+            <h4 style="color:white" class="label-primary text-center"><spring:message code="label.my_captures"/></h4>
+            <div><span id="capturesQuantity"></span> <spring:message code="label.captures_found"/></div>
             <table id="captures" class="table" >
                 <thead>
                   <tr>
                     <th>#</th>                        
-                    <th><span tkey="date">Fecha</span></th>
-                    <th><span tkey="time">Hora</span></th>
-                    <th><span tkey="ra">RA</span></th>
-                    <th><span tkey="dec">DEC</span></th>
-                    <th><span tkey="exposure">Exposicion</span></th>
-                    <th><span tkey="filepath">Filepath</span></th>
+                    <th><span><spring:message code="label.date"/></span></th>
+                    <th><span><spring:message code="label.time"/></span></th>
+                    <th><span><spring:message code="label.ra"/></span></th>
+                    <th><span><spring:message code="label.dec"/></span></th>
+                    <th><span><spring:message code="label.exposure"/></span></th>
+                    <th><span><spring:message code="label.filepath"/></span></th>
                     <th><i class="fa fa-download" aria-hidden="true"></i></th>
                     <th></th>
                     <th></th>
@@ -221,44 +221,44 @@
         </div>
         <div class="automatization">            
             <div class="automatization-values col-md-3 col-sm-5">
-                <h4 style="color:white" class="label-primary text-center" tkey="settings">Settings</h4> 
+                <h4 style="color:white" class="label-primary text-center"><spring:message code="label.settings"/></h4> 
                 <div class="form-group">
-                    <p class="input-help">Quick access targets</p>
+                    <p class="input-help"><spring:message code="label.quick_access_targets"/></p>
                     <select class="form-control" id="quickAccessTargets" onchange="setQuickAccessTargetAutomatization();">                                         
                     </select>
                 </div>
                 <div id="setRaDec" class="form-group" >
-                    <p class="input-help">Right Ascension & Declination</p>
+                    <p class="input-help"><spring:message code="label.right_ascension_&_declination"/></p>
                     <div class="input-group">                                                                
                         <input id="setRa" type="text" class="form-control radec-input"  placeholder="00:00:00">
-                        <p class="help-label">Set right ascension</p>
+                        <p class="help-label"><spring:message code="help.set_ra"/></p>
                         <span class="input-group-addon">-</span>
                         <input id="setDec" type="text" class="form-control radec-input" placeholder="00:00:00">
-                        <p class="help-label">Set declination</p>                                                     
+                        <p class="help-label"><spring:message code="help.set_dec"/></p>                                                     
                     </div>
                 </div>
                 <div class="form-group">
-                    <p class="input-help">Exposure time</p>
+                    <p class="input-help"><spring:message code="label.exposure_time"/></p>
                     <div class="input-group">
                         <span class="input-group-addon" title="Time to exposure"><i class="fa fa-clock-o fa-fw"></i></span>
                         <input id="exposureTime" type="number" class="form-control" placeholder="Exposure" min="1">                            
-                        <p class="help-label">Set time to exposure (seconds)</p>
+                        <p class="help-label"><spring:message code="help.set_exposure_time"/></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <p class="input-help">Ccd binning (horizontal & vertical)</p>
+                    <p class="input-help"><spring:message code="label.ccd_binning_(horizontal_&_vertical)"/></p>
                     <div class="input-group">                  
                         <input id="hBinning" type="text" class="form-control " placeholder="H"/>
-                        <p class="help-label">Set horizontal binning</p>
+                        <p class="help-label"><spring:message code="help.set_horizontal_binning"/></p>
                         <span class="input-group-addon">x</span>
                         <input id="vBinning" type="text" class="form-control " placeholder="V"/>
-                        <p class="help-label">Set vertical binning</p>                          
+                        <p class="help-label"><spring:message code="help.set_vertical_binning"/></p>                          
                     </div>
                 </div>
                 <div class="form-group">
-                    <p class="input-help">Frame type</p>
+                    <p class="input-help"><spring:message code="label.frame_type"/></p>
                     <select class="form-control" id="frameType">
-                     <option disabled selected value> -- select ccd frame type -- </option>   
+                     <option disabled selected value><spring:message code="label.select_ccd_frame_type"/></option>   
                      <option value="light">Light</option>
                      <option value="bias">Bias</option>  
                      <option value="dark">Dark</option>
@@ -266,23 +266,23 @@
                    </select>
                 </div>
                 <div class="form-group">
-                    <p class="input-help">Frame (X & Y)</p>
+                    <p class="input-help"><spring:message code="label.frame_(x_&_y)"/></p>
                     <div class="input-group">                    
                         <input id="frameX" type="text" class="form-control " placeholder="X" />
-                        <p class="help-label">Set image X origin</p>
+                        <p class="help-label"><spring:message code="help.set_frame_x"/></p>
                         <span class="input-group-addon">x</span>
                         <input id="frameY" type="text" class="form-control " placeholder="Y" />
-                        <p class="help-label">Set image Y origin</p>                          
+                        <p class="help-label"><spring:message code="help.set_frame_y"/></p>                          
                     </div>  
                 </div>
                 <div class="form-group">
-                    <p class="input-help">Image size (width & height)</p>
+                    <p class="input-help"><spring:message code="label.image_size_(width_&_height)"/></p>
                     <div class="input-group">                    
                         <input id="frameWidth" type="text" class="form-control " placeholder="Width" />
-                        <p class="help-label">Set image width</p>
+                        <p class="help-label"><spring:message code="help.set_width"/></p>
                         <span class="input-group-addon">x</span>
                         <input id="frameHeight" type="text" class="form-control " placeholder="Height" />
-                        <p class="help-label">Set image height</p>                       
+                        <p class="help-label"><spring:message code="help.set_height"/></p>                       
                     </div>  
                 </div>
                 <div class="form-group">
@@ -312,9 +312,9 @@
                 <!--<button onclick="tableAutomatization.draw();">Update table</button>-->
             </div>
             <div class="automatization-list col-md-9 col-sm-12">
-                <h4 style="color:white" class="label-primary text-center" tkey="secuences-queue">Sequences queue</h4> 
+                <h4 style="color:white" class="label-primary text-center"><spring:message code="label.sequence_queue"/></h4> 
                 <div class="form-group">
-                    <p class="input-help">Sequence</p>
+                    <p class="input-help"><spring:message code="label.sequence"/></p>
                     <div class="input-group">                        
                         <select class="form-control" id="sequence" onchange="reloadSteps();">                         
                         </select>
@@ -338,20 +338,20 @@
                         <thead>
                           <tr>
                             <th>#</th>
-                            <th><span tkey="ra">RA</span></th>
-                            <th><span tkey="dec">DEC</span></th>
-                            <th><span tkey="exposure" min="1">Exposicion</span></th>
-                            <th><span tkey="horizontal-binnig">H</span></th>
-                            <th><span tkey="vertical-binnig">V</span></th>
-                            <th><span tkey="frame-type">Frame</span></th>
-                            <th><span tkey="frame-x">X</span></th>
-                            <th><span tkey="frame-y">Y</span></th>
-                            <th><span tkey="image-width">width</span></th>
-                            <th><span tkey="image-height">height</span></th>
-                            <th><span tkey="focus-position">Focus</span></th>
-                            <th><span tkey="quantity">Quantity</span></th>
-                            <th><span tkey="delay">Delay</span></th>
-                            <th><span tkey="state">State</span></th>
+                            <th><span><spring:message code="label.ra"/></span></th>
+                            <th><span><spring:message code="label.dec"/></span></th>
+                            <th><span min="1"><spring:message code="label.exposure"/></span></th>
+                            <th><span><spring:message code="label.h"/></span></th>
+                            <th><span><spring:message code="label.v"/></span></th>
+                            <th><span><spring:message code="label.frame"/></span></th>
+                            <th><span><spring:message code="label.x"/></span></th>
+                            <th><span><spring:message code="label.y"/></span></th>
+                            <th><span><spring:message code="label.width"/></span></th>
+                            <th><span><spring:message code="label.height"/></span></th>
+                            <th><span><spring:message code="label.focus"/></span></th>
+                            <th><span><spring:message code="label.quantity"/></span></th>
+                            <th><span><spring:message code="label.delay"/></span></th>
+                            <th><span><spring:message code="label.state"/></span></th>
                           </tr>
                         </thead>
                         <tbody id="tbody-automatization">
