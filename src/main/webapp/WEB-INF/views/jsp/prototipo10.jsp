@@ -342,9 +342,9 @@
         <aside id="sidebarRight" class="sidebar sidebar-default sidebar-stacked-right" role="navigation" >
             <!-- Top bar -->
             <div class="top-bar label-danger">
-                <button class="icon right-btn-toggle-inside-size" onclick="toggle_right_size();">
+<!--                <button class="icon right-btn-toggle-inside-size" onclick="toggle_right_size();">
                     <i id="size-btn-toggle-right" class="fa fa-angle-left" aria-hidden="true" ></i>
-                </button>
+                </button>-->
                 <button class="icon right-btn-toggle-inside" onclick="toggle_right();">
                     <i class="fa fa-bars" aria-hidden="true" ></i>
                 </button>
