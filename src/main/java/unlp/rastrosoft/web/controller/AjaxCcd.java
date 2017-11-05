@@ -26,6 +26,7 @@ import unlp.rastrosoft.web.model.CalendarDB;
 import unlp.rastrosoft.web.model.Capture;
 import unlp.rastrosoft.web.model.CaptureDB;
 import unlp.rastrosoft.web.model.Ccd;
+import unlp.rastrosoft.web.model.ConfigDB;
 import unlp.rastrosoft.web.model.ExecuteCriteria;
 import unlp.rastrosoft.web.model.ExecuteCriteriaTwoValues;
 import unlp.rastrosoft.web.model.Focuser;
@@ -220,7 +221,9 @@ public class AjaxCcd {
         int idCurrentUser      = userDB.getUser(currentUserName).getUserId();
         if (idUserCurrentShift == idCurrentUser){
             String folderName = userDB.getUser(idUserCurrentShift).getUsername();
-            String path = "/home/ip300/webapp/captures";
+                ConfigDB configDB = new ConfigDB();
+                configDB.connect();
+            String path = configDB.getPath();
             String source= path+"/"+folderName;
             String dest = path+"/"+folderName;
             ccd.setUploadDirectory(source);

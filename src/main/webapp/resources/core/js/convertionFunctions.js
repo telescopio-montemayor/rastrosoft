@@ -1,10 +1,19 @@
 function decimalToDegrees(D){
     return [0|D, '\xB0 ', 0|(D<0?D=-D:D)%1*60, "' ", 0|(Math.round(((D<0?D=-D:D)*60%1*60)* 1 )/1 ), '" '].join('');
 }
-function decimalToHours(D){
+function decimalToHours(D){    
+    if (D < 0){
+        negative = true;
+    }else{
+        negative = false;
+    }
     var n = new Date(0,0);
     n.setSeconds(Math.round( (+D * 60 * 60) * 1 )/1 );
-    return(n.toTimeString().slice(0, 8));
+    result = n.toTimeString().slice(0, 8);
+    if (negative){
+        result = "-"+result;
+    }
+    return(result);
 }
 function degreesToDecimal(d) {    
 

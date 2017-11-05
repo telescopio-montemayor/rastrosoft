@@ -230,10 +230,10 @@
                 <div id="setRaDec" class="form-group" >
                     <p class="input-help"><spring:message code="label.right_ascension_&_declination"/></p>
                     <div class="input-group">                                                                
-                        <input id="setRa" type="text" class="form-control radec-input"  placeholder="00:00:00">
+                        <input id="setRaAu" type="text" class="form-control radec-input"  placeholder="00:00:00">
                         <p class="help-label"><spring:message code="help.set_ra"/></p>
                         <span class="input-group-addon">-</span>
-                        <input id="setDec" type="text" class="form-control radec-input" placeholder="00:00:00">
+                        <input id="setDecAu" type="text" class="form-control radec-input" placeholder="00:00:00">
                         <p class="help-label"><spring:message code="help.set_dec"/></p>                                                     
                     </div>
                 </div>
@@ -563,8 +563,8 @@
             $( "input" ).focusout(function() {
                 $( this ).next( ".help-label" ).hide();
             });
-//            $('#setRa').mask('00:00:00');
-//            $('#setDec').mask('00:00:00');
+            $('#setRaAu').mask('00:00:00');
+            $('#setDecAu').mask('00:00:00');
             var ua = window.navigator.userAgent;
             var msie = ua.indexOf("MSIE ");
             if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
@@ -806,8 +806,8 @@
             var id_sequence, number, ra, declination, exposureTime, hBinning, vBinning, frameType, x, y, width, height, focusPosition, quantity, delay;
             id_sequence = $("#sequence").val();            
             number      = Number($("#step-number").val())+1+'';
-            ra          = hoursToDecimal($("#setRa").val());  
-            declination = hoursToDecimal($("#setDec").val());
+            ra          = hoursToDecimal($("#setRaAu").val());  
+            declination = hoursToDecimal($("#setDecAu").val());
             exposureTime= $("#exposureTime").val();
             hBinning    = $("#hBinning").val();
             vBinning    = $("#vBinning").val();

@@ -186,7 +186,9 @@ public class Step {
             exposureTime_db    =   time;
 
                 String folderName = userDB.getUser(idUserCurrentShift).getUsername();
-                String path = "/home/ip300/webapp/captures";
+                    ConfigDB configDB = new ConfigDB();
+                    configDB.connect();
+                String path = configDB.getPath();
                 String source= path+"/"+folderName;
                 String dest = path+"/"+folderName;
                 ccd.setUploadDirectory(source);

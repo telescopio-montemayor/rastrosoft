@@ -12,53 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import unlp.rastrosoft.web.model.CalendarDB;
-import unlp.rastrosoft.web.model.Fits;
 import unlp.rastrosoft.web.model.UserDB;
 
 @Controller
 public class Prototipo1Controller {
 
-	@RequestMapping(value = "/prototipo1", method = RequestMethod.GET)
-	public String printWelcome(ModelMap model) {
-		return "prototipo1";
-	}
-        
-        @RequestMapping(value = "/prototipo2", method = RequestMethod.GET)
-	public String printWelcome2(ModelMap model) {
-		return "prototipo2";
-	}
-        
-        @RequestMapping(value = "/prototipo3", method = RequestMethod.GET)
-	public String printWelcome3(ModelMap model) {                  
-		return "prototipo3";
-	}
-        
-        @RequestMapping(value = "/prototipo4", method = RequestMethod.GET)
-	public String printWelcome4(ModelMap model) {                  
-		return "prototipo4";
-	}
-        
-        @RequestMapping(value = "/prototipo5", method = RequestMethod.GET)
-	public String printWelcome5(ModelMap model) {                  
-		return "prototipo5";
-	}
-        @RequestMapping(value = "/prototipo6", method = RequestMethod.GET)
-	public String printWelcome6(ModelMap model) {                  
-		return "prototipo6";
-	}
-        @RequestMapping(value = "/prototipo7", method = RequestMethod.GET)
-	public String printWelcome7(ModelMap model) {                  
-		return "prototipo7";
-	}
-        @RequestMapping(value = "/prototipo8", method = RequestMethod.GET)
-	public String printWelcome8(ModelMap model) {                  
-		return "prototipo8";
-	}
-        @RequestMapping(value = "/prototipo9", method = RequestMethod.GET)
-	public String printWelcome9(ModelMap model) {                  
-		return "prototipo9";
-	}
-        @RequestMapping(value = "/prototipo10", method = RequestMethod.GET)
+	@RequestMapping(value = "/prototipo10", method = RequestMethod.GET)
 	public String printWelcome10(ModelMap model) {
             CalendarDB shift = new CalendarDB();
             shift.connect();
@@ -80,7 +39,6 @@ public class Prototipo1Controller {
 	}
         @RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(ModelMap model) { 
-//            new Fits().fitsToJpg("/home/ip300/webapp/captures"+"/", "/home/ip300/webapp/captures"+"/", "1.fits");
                 java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
                 java.util.logging.Logger.getLogger("org.spring").setLevel(Level.OFF);
 		return "login";
@@ -114,5 +72,12 @@ public class Prototipo1Controller {
         @PreAuthorize("hasAnyRole('ROLE_MODERATOR')")
 	public String moderation(ModelMap model) {                  
 		return "moderation";
+	}
+        @RequestMapping("/activate")
+	public String activate(@RequestParam("hash") String hash, @RequestParam("mail") String mail) {
+            UserDB userdb = new UserDB();
+            userdb.connect();
+            userdb.validateMail(hash, mail);
+            return "login";
 	}
 }

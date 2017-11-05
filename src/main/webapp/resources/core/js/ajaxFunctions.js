@@ -4,7 +4,7 @@ function beforeAjax (tipo){
             $("#setExposure").prop("disabled", "disabled");
             break;
         case 'executeSequence':
-            alert("Sequence started successfully!");
+            alert("Ha comenzado la secuencia con éxito!");
             break;
         default:
             break;
@@ -87,7 +87,7 @@ function successAjax(data, tipo) {
             var img = $("<img />").attr('src', '<c:url value="/resources/images/preview.jpg"/>').attr('width','20%').attr('height','20%')
             .on('load', function() {
                 if (!this.complete || typeof this.naturalWidth === "undefined" || this.naturalWidth === 0) {
-                    alert('broken image!');
+                    alert('imagen dañada!');
                 } else {
                     $("#previewImage").empty();
                     $("#previewImage").append(img);
@@ -136,7 +136,7 @@ function successAjax(data, tipo) {
                 $.each(value, function(key2, c) {
                     var name="", class_label="", remove="";
                     if(c[1]=="0"){
-                        name = '<td><span tkey="you">You</span></td>';
+                        name = '<td><span tkey="you">Usted</span></td>';
                         class_label='class="label-success"';
                         remove="<a href=\"#\" onclick=\"cancelShift("+c[0]+");\"><i class=\"fa fa-minus fa-fw remove-button-shift\"></i></a>";
 //                      remove= "onmouseenter=\"showRemoveButtonShift("+c[0]+");\"";
@@ -148,20 +148,20 @@ function successAjax(data, tipo) {
                         +name
                         +'<td>'+c[2].slice(0, 10)+'</td>'
                         +'<td>'+c[2].slice(10, 16)+'</td>'
-                        +'<td><span tkey="canceled">Canceled</span></td>'                        
+                        +'<td><span tkey="canceled">Cancelado</span></td>'                        
                         +'<td>-</td>'
                         +'<td>-</td>'
                         +'<td>-</td>'
                         +'</tr>');
                     }else{
-                        var transmition = '<td><span tkey="private">Private</span></td>', key = "-", link = "-";
+                        var transmition = '<td><span tkey="private">Privada</span></td>', key = "-", link = "-";
                         if (c[4]!="-1"){
                             if(c[5]=="1"){
-                                transmition = '<td><span tkey="public">Public</span></td>';
+                                transmition = '<td><span tkey="public">Pública</span></td>';
                                 key = c[4];
                                 link = '<a href="/rastrosoft/live?key='+key+'" tkey="link">link</a>';
                             }else{
-                                transmition = '<td><span tkey="private">Private</span></td>';
+                                transmition = '<td><span tkey="private">Privada</span></td>';
                             }
                         }
                         $("#shifts tBody").append('<tr '+class_label+'><th scope="row">'+c[0]+'</th>'
@@ -217,7 +217,7 @@ function successAjax(data, tipo) {
                             +'<tr><th>Filepath</th><td>'+c[14].split("captures")[1]+'</td></tr>'
                             +'<tr><th>hBinning</th><td>'+c[4]+'</td></tr>'
                             +'<tr><th>vBinning</th><td>'+c[5]+'</td></tr>'
-                            +'<tr><th>Temperature</th><td>'+c[6]+'</td></tr>'
+                            +'<tr><th>Temperatura</th><td>'+c[6]+'</td></tr>'
                             +'<tr><th>Frame</th><td>'+c[7]+'</td></tr>'
                             +'<tr><th>X</th><td>'+c[8]+'</td></tr>'
                             +'<tr><th>Y</th><td>'+c[9]+'</td></tr>'
@@ -232,9 +232,9 @@ function successAjax(data, tipo) {
             $.each(data, function(key, c) {
                 if (c[0]=="true"){
                     getCaptures();
-                    notify('Capture removed successfully!', 'success');
+                    notify('Captura eliminada exitosamente!', 'success');
                 }else{
-                    alert("Unable to remove this capture. Please, try again later.");
+                    alert("No fue posible eliminar la captura. Por favor, intente nuevamente.");
                 }
             });
             break;
@@ -274,10 +274,11 @@ function successAjax(data, tipo) {
                 credits = value[3];
             });
             if (shift_id == "-1"){
-                notify('Error adding shift, please try again.', 'danger');
+                notify('Ha ocurrido un error en la solicitud del turno, por favor intente nuevamente.', 'danger');
             }else{
-                if(credits!="-1")
+                if((credits!="-1")&&(credits!="-2")){
                     alert("Usted tiene "+credits+" creditos para poder solicitar turnos sin confirmacion.");
+                }                    
                 if(autoaccepted=="1")
                     alert("Su turno se ha agregado exitosamente.");
                 else
@@ -358,11 +359,11 @@ function successAjax(data, tipo) {
             getSteps($("#sequence").val());
             break;
         case 'executeSequence':
-            alert("Sequence completed successfully!");
+            alert("Se ha completado exitosamente la secuencia!");
             break;
         case 'getQuickAccessTargets':
             $("#quickAccessTargets").empty();
-            $("#quickAccessTargets").append('<option disabled selected value>- Select a target -</option>');
+            $("#quickAccessTargets").append('<option disabled selected value>- Seleccione objetivo -</option>');
             $.each(data, function(key, value) {
                 $.each(value, function(key2, c) {
                     $("#quickAccessTargets").append('<option value='+c[0]+' data-ra='+c[1]+' data-dec='+c[2]+' title= "RA: '+c[1]+' DEC: '+c[2]+'">NGC '+c[3]+'</option>');
