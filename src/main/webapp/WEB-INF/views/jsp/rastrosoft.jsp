@@ -95,8 +95,8 @@
                 getChat();
                 getSequences();
                 getQuickAccessTargets();
-                //refreshValues();
-                refreshValuesMicro();
+                refreshValues();
+//                refreshValuesMicro();
 
 
 	});
@@ -483,30 +483,21 @@
                     
                     
                 </div>
-                <label><spring:message code="label.focuser"/></label>
-<!--                    PARA EL FOCUSER: MICROFOCUSER DEL LX 200-->
-                     <div class="form-group">
-                        <p class="input-help"><spring:message code="label.focus_speed"/></p>
-                        <select class="form-control" id="focusSpeedMicro">
-                         <option disabled selected value><spring:message code="label.select_focus_speed"/></option>   
-                         <option value="1">Halt</option>
-                         <option value="2">Slow</option>  
-                         <option value="3">Medium</option>
-                         <option value="4">Fast</option>
-                       </select>
-                    </div>
-                    <div class="form-group">
-                        <p class="input-help"><spring:message code="label.focus_motion"/></p>                        
-                        <div class="input-group">
-                            <input id="focusTimerMicro" type="text" class="form-control" placeholder="<spring:message code="label.milliseconds"/>"/>
-                            <p class="help-label"><spring:message code="help.set_focus_motion"/></p>  
-                            <span class="input-group-btn">
-                                <button id="focusInMicro"  class="btn btn-default" type="button"><spring:message code="button.focus_in"/></button> 
-                                <button id="focusOutMicro" class="btn btn-default" type="button"><spring:message code="button.focus_out"/></button>
-                            </span> 
-                        </div> 
-                    </div                    
-                    <div class="form-group">
+                
+                    
+                    <div class="sidebar-box">
+                        <label><spring:message code="label.focuser"/></label>
+                        <div class="form-group">
+                            <p class="input-help"><spring:message code="label.absolute_focus_position"/></p>
+                            <div class="input-group">                    
+                                <input id="focusAbsolute" type="text" class="form-control" placeholder="Ticks"/>
+                                <p class="help-label"><spring:message code="help.absolute_focus_position"/></p>
+                                <span class="input-group-btn">
+                                    <button id="setFocusAbsolute" class="btn btn-default" type="button"><spring:message code="button.set"/></button>
+                                </span>                            
+                            </div>  
+                        </div>     
+                        <div class="form-group">
                         <p class="input-help"><spring:message code="label.sequence"/></p>
                         <div class="input-group">                        
                             <select class="form-control" id="sequence">                         
@@ -516,35 +507,9 @@
                                 <!--<button class="btn btn-default" type="button" id="stopSequenceBtn"><i class="fa fa-stop" aria-hidden="true"></i></button>-->
                             </span>
                         </div>
+                    </div>  
+                        
                     </div>          
-                    
-<!--                    ...-->
-<!--                    
-                       <div class="sidebar-box">
-                        <label>Focuser</label>
-                        <div class="form-group">
-                            <p class="input-help">Current absolute focus position</p>
-                            <div class="input-group">                    
-                                <input id="focusAbsolute" type="text" class="form-control" placeholder="Ticks"/>
-                                <p class="help-label">Set ticks for absolute focus position</p>
-                                <span class="input-group-btn">
-                                    <button id="setFocusAbsolute" class="btn btn-default" type="button">Set</button>
-                                </span>                            
-                            </div>  
-                        </div>     
-                       <div class="form-group">
-                        <p class="input-help">Step</p>
-                        
-                        <div class="input-group">
-                            <input id="focusRelative" type="text" class="form-control" placeholder="Ticks"/>
-                            <p class="help-label">Set ticks for step</p>  
-                            <span class="input-group-btn">
-                                <button id="focusIn"  class="btn btn-default" type="button">Focus in</button> 
-                                <button id="focusOut" class="btn btn-default" type="button">Focus out</button>
-                            </span> 
-                        </div> 
-                        
-                    </div>          -->
                     <div class="form-group previewImage sidebar-fullscreen previewImageFullscreen">            
                         <div class="preview">
                             <img src="<c:url value="/resources/images/preview.jpg"/>" width="100%" height="100%" class="previewImageSrc">                            
