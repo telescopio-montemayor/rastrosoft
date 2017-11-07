@@ -124,10 +124,10 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username" >Guest</span> <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username" ><spring:message code="menu.guest"/></span> <span class="caret"></span></a>
               <ul class="dropdown-menu">
                   <li><a href="#" onclick="showProfile();"><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span><spring:message code="menu.profile"/></span></a></li>                  
-                  <li><a href="#"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i> <span><spring:message code="menu.upgrade"/></span></a></li>
+                  <!--<li><a href="#"><i class="fa fa-graduation-cap fa-fw" aria-hidden="true"></i> <span><spring:message code="menu.upgrade"/></span></a></li>-->
                 <li class="divider"></li>
                 <li><a href="#" onclick="logout();"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span><spring:message code="menu.logout"/></span></a></li>  
                 <c:url var="logoutUrl" value="/logout"/>
@@ -286,25 +286,25 @@
                     </div>  
                 </div>
                 <div class="form-group">
-                    <p class="input-help">Absolute focus position</p>
+                    <p class="input-help"><spring:message code="label.absolute_focus_position"/></p>
                     <div class="input-group" style="width:100%">                    
                         <input id="focusAbsolute" type="text" class="form-control" placeholder="Ticks"/>
-                        <p class="help-label">Set ticks for absolute focus position</p>                           
+                        <p class="help-label"><spring:message code="help.absolute_focus_position"/></p>                           
                     </div>  
                 </div>
                 <div class="form-group">
-                    <p class="input-help">Delay time</p>
+                    <p class="input-help"><spring:message code="label.delay_time"/></p>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-clock-o fa-fw"></i></span>
                         <input id="delayTime" type="number" class="form-control" placeholder="Delay" min="0">                            
-                        <p class="help-label">Set time to delay between exposures (seconds)</p>
+                        <p class="help-label"><spring:message code="help.delay_time"/></p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <p class="input-help">Quantity</p>
+                    <p class="input-help"><spring:message code="label.quantity"/></p>
                     <div class="input-group" style="width:100%">                    
                         <input id="quantity" type="number" min="1" max="100" class="form-control" placeholder="Quantity"/>
-                        <p class="help-label">Set the number of repetitions you need</p>                           
+                        <p class="help-label"><spring:message code="help.quantity"/></p>                           
                     </div>  
                 </div> 
                 <input type="hidden" id="step-number" value="0">

@@ -112,44 +112,44 @@
           <ul class="nav navbar-nav">
             
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tkey="shifts">Shifts</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message code="menu.shifts"/></a>
               <ul class="dropdown-menu">
-                  <li ><a href="#" onclick="showAllModerationShifts();" tkey="view-shifts">View all shifts</a></li>
+                  <li ><a href="#" onclick="showAllModerationShifts();"><spring:message code="menu.view_shifts"/></a></li>
                   <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Filtered shifts</li>
-                  <li ><a href="#" onclick="showPendingShifts();" tkey="pendig-shift">Pending shifts</a></li>
-                  <li ><a href="#" onclick="showAcceptedShifts();" tkey="accepted-shift">Accepted shifts</a></li>
-                  <li ><a href="#" onclick="showRejectedShifts();" tkey="rejected-shift">Rejected shifts</a></li>
+                  <li class="dropdown-header"><spring:message code="menu.filtered_shifts"/></li>
+                  <li ><a href="#" onclick="showPendingShifts();" ><spring:message code="menu.pending_shifts"/></a></li>
+                  <li ><a href="#" onclick="showAcceptedShifts();"><spring:message code="menu.accepted_shifts"/></a></li>
+                  <li ><a href="#" onclick="showRejectedShifts();"><spring:message code="menu.rejected_shifts"/></a></li>
               </ul>             
             </li>
             <li class="dropdown-users">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tkey="users">Users</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><spring:message code="menu.users"/></a>
               <ul class="dropdown-menu">
-                  <li><a href="#" onclick="showAllUsers();" >View users</a></li>
-                  <li><a href="#" onclick="showBannedUsers();" >Banned users</a></li>
-                  <li><a href="#" onclick="showZeroCreditsUsers();" >Zero credits users</a></li>
-                  <li role="separator" class="divider"></li>
+                  <li><a href="#" onclick="showAllUsers();" ><spring:message code="menu.view_users"/></a></li>
+                  <li><a href="#" onclick="showBannedUsers();" ><spring:message code="menu.banned_users"/></a></li>
+                  <li><a href="#" onclick="showZeroCreditsUsers();" ><spring:message code="menu.zero_credits_users"/></a></li>
+<!--                  <li role="separator" class="divider"></li>
                   <li class="dropdown-header">Solicitations</li>
-                  <li><a href="#" onclick="" tkey="">Upgrade solicitations</a></li>
-                  <li><a href="#" onclick="" tkey="">Credits solicitations</a></li>
+                  <li><a href="#" onclick="">Upgrade solicitations</a></li>
+                  <li><a href="#" onclick="">Credits solicitations</a></li>-->
               </ul>             
             </li>         
             <li id="live">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" tkey="on-live"><i id="live-sign" class="fa fa-circle" aria-hidden="true"></i> On live</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i id="live-sign" class="fa fa-circle" aria-hidden="true"></i> <spring:message code="menu.on_live"/></a>
               <ul class="dropdown-menu">
                   <input type="hidden" id="key">
-                  <li id="get-link"><a href="#" onclick="showLink();" tkey="get-link">Get link</a></li>
-                  <li id="view-live"><a href="#" onclick="viewLive();" tkey="view-live">View live stream</a></li>
+                  <li id="get-link"><a href="#" onclick="showLink();"><spring:message code="menu.get_link"/></a></li>
+                  <li id="view-live"><a href="#" onclick="viewLive();" ><spring:message code="menu.view_live_stream"/></a></li>
               </ul>             
             </li>  
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username" >Guest</span> <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username" ><spring:message code="menu.guest"/></span> <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                  <li><a href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span tkey="profile">Profile</span></a></li>
-                <li class="divider"></li>
-                <li><a href="#" onclick="logout();"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span tkey="logout">Logout</span></a></li>  
+<!--                  <li><a href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i> <span><spring:message code="menu.profile"/></span></a></li>
+                <li class="divider"></li>-->
+                <li><a href="#" onclick="logout();"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span><spring:message code="menu.logout"/></span></a></li>  
                 <c:url var="logoutUrl" value="/logout"/>
                 <form id="end_session" action="${logoutUrl}" method="post">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -182,18 +182,18 @@
             </div>
         </div>        
         <div id="tableShifts" class="table-shifts">
-            <h4 style="color:white" class="label-primary text-center" tkey="shifts-administration">Administraci&oacute;n de turnos</h4>
+            <h4 style="color:white" class="label-primary text-center"><spring:message code="label.shift_administration"/></h4>
             <table id="shifts" class="table">
                 <thead>  
                   <tr>                      
                     <th>#</th>
-                    <th><span tkey="username">User</span></th>
-                    <th><span tkey="name">Name</span></th>
-                    <th><span tkey="lastname">Lastname</span></th>
-                    <th><span tkey="mail">Mail</span></th>
-                    <th><span tkey="date">Date</span></th>
-                    <th><span tkey="hour">Hour</span></th>
-                    <th><span tkey="operation">Operation</span></th>
+                    <th><span><spring:message code="label.user"/></span></th>
+                    <th><span><spring:message code="label.name"/></span></th>
+                    <th><span><spring:message code="label.lastname"/></span></th>
+                    <th><span><spring:message code="label.mail"/></span></th>
+                    <th><span><spring:message code="label.date"/></span></th>
+                    <th><span><spring:message code="label.time"/></span></th>
+                    <th><span><spring:message code="label.operation"/></span></th>
                   </tr>
                 </thead>
                 <tbody>                                  
@@ -201,18 +201,18 @@
             </table>
         </div> 
         <div class="table-users">
-            <h4 style="color:white" class="label-primary text-center" tkey="shifts-administration">Administraci&oacute;n de usuarios</h4>
+            <h4 style="color:white" class="label-primary text-center"><spring:message code="label.users_administration"/></h4>
             <table id="users" class="table">
                 <thead>  
                   <tr>                      
                     <th>#</th>
-                    <th><span tkey="username">User</span></th>
-                    <th><span tkey="name">Name</span></th>
-                    <th><span tkey="lastname">Lastname</span></th>
-                    <th><span tkey="mail">Mail</span></th>
-                    <th><span>Créditos</span></th>
-                    <th><span>Habilitado</span></th>
-                    <th><span>Rol</span></th>
+                    <th><span><spring:message code="label.user"/></span></th>
+                    <th><span><spring:message code="label.name"/></span></th>
+                    <th><span><spring:message code="label.lastname"/></span></th>
+                    <th><span><spring:message code="label.mail"/></span></th>
+                    <th><span><spring:message code="label.credits"/></span></th>
+                    <th><span><spring:message code="label.available"/></span></th>
+                    <th><span><spring:message code="label.rol"/></span></th>
                   </tr>
                 </thead>
                 <tbody>                                  

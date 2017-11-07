@@ -228,23 +228,26 @@ $(document).ready(function() {
 $(document).ready(function() {    
     $("#park").click(function(){
         setPark(); 
-        notify('Parking...', 'success');
+        notify('Aparcando...', 'success');
     });
     $("#unpark").click(function(){
         setUnPark(); 
-        notify('Unparking...', 'success');
+        notify('Desaparcando...', 'success');
     });
     $("#track").click(function(){
         setTrack(); 
-        notify('Setting to Track successful! Now, please set the coordinates...', 'success');
+//        notify('Setting to Track successful! Now, please set the coordinates...', 'success');
+        notify('Se ha registrado exitosamente! Por favor indique las coordenadas...', 'success');
     });
     $("#slew").click(function(){
         setSlew(); 
-        notify('Setting to Slew successful! Now, please set the coordinates...', 'success');
+//        notify('Setting to Slew successful! Now, please set the coordinates...', 'success');
+        notify('Se ha registrado exitosamente! Por favor indique las coordenadas...', 'success');
     });
     $("#sync").click(function(){
         setSync(); 
-        notify('Setting to Sync successful! Now, please set the coordinates...', 'success');
+//        notify('Setting to Sync successful! Now, please set the coordinates...', 'success');
+        notify('Se ha registrado exitosamente! Por favor indique las coordenadas...', 'success');
     });
     $("#setUploadDirectory").click(function(){
         setUploadDirectory();         
@@ -270,7 +273,8 @@ $(document).ready(function() {
     $("#setExposure").click(function(){        
         setExposure();  
         if ($("#exposureTime").val()<"0.01"){
-            notify('Exposure time must be greater than 0.01 seconds', 'danger');
+//            notify('Exposure time must be greater than 0.01 seconds', 'danger');
+            notify('El tiempo debe ser mayor a 0.01 segundos', 'danger');
         }
     });
     $("#setAbortExposure").click(function(){

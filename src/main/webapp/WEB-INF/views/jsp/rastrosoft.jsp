@@ -230,7 +230,7 @@
             <div id="normalScreen">
                 
                 <p></p>
-                <div style="margin: 0 auto; text-align:center"><span><i onClick="fade();" class="fa fa-user-o" aria-hidden="true"></i> <i id="username" style="color:green;" onClick="initialize();">Guest</i><div style="float:right"><i class="fa fa-clock-o" aria-hidden="true"></i> <spring:message code="label.timeleft"/>: <i id="timeleft" class="label label-success">...</i></div></span></div>
+                <div style="margin: 0 auto; text-align:center"><span><i onClick="fade();" class="fa fa-user-o" aria-hidden="true"></i> <i id="username" style="color:green;" onClick="initialize();"><spring:message code="menu.guest"/></i><div style="float:right"><i class="fa fa-clock-o" aria-hidden="true"></i> <spring:message code="label.timeleft"/>: <i id="timeleft" class="label label-success">...</i></div></span></div>
                  <div class="input-group">
                     <span class="input-group-btn">
                         <button id="end_session_button" class="btn btn-default" type="button" style="width:50%; border-bottom-left-radius: 5px; border-top-left-radius: 5px; outline: none;" ><i class="fa fa-sign-out fa-fw"></i><spring:message code="button.sign_out"/></button> 
