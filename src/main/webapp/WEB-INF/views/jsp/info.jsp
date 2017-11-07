@@ -705,12 +705,17 @@
             second  = "00";
                     
             d = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
-            
-            //alert(d);
-            
+            var live = false;
+            var public = false;
+            if (confirm("Desea que su turno sea transmitido en directo?")){
+                live = true;
+                if (confirm("Desea que su turno sea p\u00FAblico?")){
+                    public = true;
+                }
+            }
             var search = {};
-            search["value"] = "true"; //live
-            search["value2"] = "true"; //public
+            search["value"] = live; //live
+            search["value2"] = public; //public
             search["value3"] = d; //datetime
             sendAjax(search,'addShift','addShift'); 
         }    

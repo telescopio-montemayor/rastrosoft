@@ -276,6 +276,9 @@ function successAjax(data, tipo) {
                 autoaccepted  =   value[2];
                 credits = value[3];
             });
+            var live_key_message = "";
+            if (live_key != "-1")
+                live_key_message = " La clave de acceso para su p\u00FAblico es "+live_key+". Por favor, guardarla y anotarla en un lugar seguro!";
             if (shift_id == "-1"){
                 notify('Ha ocurrido un error en la solicitud del turno, por favor intente nuevamente.', 'danger');
             }else{
@@ -283,9 +286,9 @@ function successAjax(data, tipo) {
                     alert("Usted tiene "+credits+" creditos para poder solicitar turnos sin confirmacion.");
                 }                    
                 if(autoaccepted=="1")
-                    alert("Su turno se ha agregado exitosamente.");
+                    alert("Su turno se ha agregado exitosamente." + live_key_message);
                 else
-                    alert("Su turno sera confirmado a la brevedad por uno de nuestros operadores.");
+                    alert("Su turno sera confirmado a la brevedad por uno de nuestros operadores." + live_key_message);
 //                notify('Shift added successfully with id: '+shift_id+' and key: '+live_key, 'success');
             }
             break;
@@ -647,14 +650,14 @@ function getCapture(id_capture) {
     sendAjax(search,'getCapture','getCapture');  
 }
 function removeCapture(id_capture) {
-    if(confirm("Are you sure you want to remove the capture #"+id_capture+" ?")){
+    if(confirm("Seguro que desea eliminar la captura #"+id_capture+" ?")){
         var search = {};
         search["value"] = id_capture;
         sendAjax(search,'removeCapture','removeCapture');  
     }    
 }
 function cancelShift(id) {
-    if(confirm("Are you sure you want to cancel the shift #"+id+" ?")){
+    if(confirm("Seguro que desea cancelar el turno #"+id+" ?")){
         var search = {};
         search["value"] = id;
         sendAjax(search,'cancelShift','cancelShift');  
