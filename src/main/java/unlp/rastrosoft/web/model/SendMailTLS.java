@@ -48,7 +48,7 @@ public class SendMailTLS {
             try {
                     
                     Message message = new MimeMessage(session);
-                    message.setFrom(new InternetAddress("welcome@rastrosoft.com"));
+                    message.setFrom(new InternetAddress(maildb.getMail()));
                     message.setRecipients(Message.RecipientType.TO,
                             InternetAddress.parse(to));
                     message.setSubject(subject);

@@ -23,7 +23,7 @@ public class WelcomeController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (!(authentication instanceof AnonymousAuthenticationToken)) {
                 if (user_id.equals(String.valueOf(user.getUser(authentication.getName()).getUserId()))){
-                    return "prototipo10";
+                    return "rastrosoft";
                 }
             }
             return "info";

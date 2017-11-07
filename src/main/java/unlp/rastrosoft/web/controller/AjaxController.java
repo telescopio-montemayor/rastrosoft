@@ -44,6 +44,7 @@ import unlp.rastrosoft.web.model.AjaxResponseListOfLists;
 import unlp.rastrosoft.web.model.CalendarDB;
 import unlp.rastrosoft.web.model.Ccd;
 import unlp.rastrosoft.web.model.ChatDB;
+import unlp.rastrosoft.web.model.ConfigDB;
 import unlp.rastrosoft.web.model.Focuser;
 import unlp.rastrosoft.web.model.LiveTransmitDB;
 import unlp.rastrosoft.web.model.Telescope;
@@ -499,8 +500,9 @@ public class AjaxController  extends HttpServlet{
             if (!(authentication instanceof AnonymousAuthenticationToken)) {
                 currentUserName = authentication.getName();        
             }
-            //String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp/captures";
-            String path = "/home/ip300/webapp/captures";
+            ConfigDB configDB = new ConfigDB();
+            configDB.connect();
+            String path = configDB.getPath();
             String source= path+"/"+currentUserName+"/";
             String dest = path+"/"+currentUserName;
             ccd.setLocalMode();
@@ -544,8 +546,9 @@ public class AjaxController  extends HttpServlet{
             id_user = user.getUserId();
         }
         
-        String message;       
-        message = execute.getValue();
+        String unsafe_message;       
+        unsafe_message = execute.getValue();
+        String message = ScapeString.scape(unsafe_message);
         ChatDB chatDB = new ChatDB();
         chatDB.connect();
         DeviceSessionHandler sessionHandler;
@@ -561,7 +564,7 @@ public class AjaxController  extends HttpServlet{
         String user = inserted_message.get(0);
         message = inserted_message.get(1);
         String datetime = inserted_message.get(2);
-        
+
         sessionHandler.updateElement("newChat", "["+user+", "+message+", "+datetime+"]");
 
         return result;

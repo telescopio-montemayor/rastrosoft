@@ -44,10 +44,15 @@ public class AjaxUser  extends HttpServlet{
     public AjaxResponse createAccount(@RequestBody ExecuteCriteriaFiveValues execute) {
         AjaxResponse result = new AjaxResponse();        
    
-        String username = execute.getValue();
-        String name = execute.getValue2();
-        String lastname = execute.getValue3();
+        String unsafe_username = execute.getValue();
+        String unsafe_name = execute.getValue2();
+        String unsafe_lastname = execute.getValue3();
         String mail = execute.getValue4();
+        
+        String username = ScapeString.scape(unsafe_username);
+        String name = ScapeString.scape(unsafe_name);
+        String lastname = ScapeString.scape(unsafe_lastname);
+        
         String password = execute.getValue5();
         password = (new BCryptPasswordEncoder().encode(password));
         UserDB userDB = new UserDB();
@@ -118,11 +123,14 @@ public class AjaxUser  extends HttpServlet{
     public AjaxResponse modifyAccount(@RequestBody ExecuteCriteriaFiveValues execute) {
         AjaxResponse result = new AjaxResponse();        
    
-        String name = execute.getValue();
-        String lastname = execute.getValue2();
+        String unsafe_name = execute.getValue();
+        String unsafe_lastname = execute.getValue2();
         String mail = execute.getValue3();
         String password_old = execute.getValue4();
         String password_new = execute.getValue5();
+   
+        String name = ScapeString.scape(unsafe_name);
+        String lastname = ScapeString.scape(unsafe_lastname);
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {

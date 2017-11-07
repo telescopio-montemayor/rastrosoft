@@ -41,7 +41,8 @@ public class AjaxSequence {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ADVANCED','ROLE_USER')")
     public AjaxResponse addSequence(@RequestBody ExecuteCriteria execute) {
         AjaxResponse result = new AjaxResponse();    
-        String name = execute.getValue();
+        String unsafe_name = execute.getValue();
+        String name = ScapeString.scape(unsafe_name);
         
         int id_user = -1, sequence_id = -1;
         
@@ -95,8 +96,8 @@ public class AjaxSequence {
     public AjaxResponse modifySequence(@RequestBody ExecuteCriteriaTwoValues execute) {
         AjaxResponse result = new AjaxResponse();    
         int sequence_id = Integer.parseInt(execute.getValue());
-        String name = execute.getValue2();
-        
+        String unsafe_name = execute.getValue2();
+        String name = ScapeString.scape(unsafe_name);
         int id_user = -1;
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

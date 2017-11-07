@@ -59,7 +59,6 @@ public class ChatDB extends Database{
     }
      public List<List<String>> getChatsAsList(){
         String sql = "SELECT message_chat.id, name, message, datetime, message_chat.enabled  FROM message_chat INNER JOIN users ON (message_chat.from= users.id) WHERE ((datetime) >= SUBTIME(CURDATE(), TIME('12:00:00')))  ORDER BY datetime ASC";
-        //String sql = "SELECT enabled INTO @chat_enabled FROM chat WHERE id =1; SELECT message_chat.id, name, message, datetime, message_chat.enabled, @chat_enabled  FROM message_chat INNER JOIN users ON (message_chat.from= users.id) WHERE ((@chat_enabled=1)AND (datetime) >= SUBTIME(CURDATE(), TIME('12:00:00')))  ORDER BY datetime ASC;";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -111,9 +110,6 @@ public class ChatDB extends Database{
                 ps.executeUpdate();
                 int message_id = (int) ps.getLastInsertID();
                 ps.close();
-//                sql = "UPDATE chat SET newmessage = 1 WHERE id = 1";
-//                ps = (PreparedStatement) conn.prepareStatement(sql);
-//                ps.executeUpdate();
                 sql = "SELECT message, name, datetime, message_chat.enabled FROM message_chat INNER JOIN users ON `from` = users.id  WHERE `from` = ? AND message_chat.id = ?";
                 ps = (PreparedStatement) conn.prepareStatement(sql);
                 ps.setInt(1, from);

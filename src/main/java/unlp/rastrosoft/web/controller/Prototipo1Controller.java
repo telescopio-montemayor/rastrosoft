@@ -17,8 +17,8 @@ import unlp.rastrosoft.web.model.UserDB;
 @Controller
 public class Prototipo1Controller {
 
-	@RequestMapping(value = "/prototipo10", method = RequestMethod.GET)
-	public String printWelcome10(ModelMap model) {
+	@RequestMapping(value = "/rastrosoft", method = RequestMethod.GET)
+	public String rastrosoft(ModelMap model) {
             CalendarDB shift = new CalendarDB();
             shift.connect();
             String user_id = shift.getCurrentShift().get(0);            
@@ -27,7 +27,7 @@ public class Prototipo1Controller {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (!(authentication instanceof AnonymousAuthenticationToken)) {                
                 if (user_id.equals(String.valueOf(user.getUser(authentication.getName()).getUserId()))){
-                    return "prototipo10";
+                    return "rastrosoft";
                 }
             }
             return "info";
@@ -42,10 +42,6 @@ public class Prototipo1Controller {
                 java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
                 java.util.logging.Logger.getLogger("org.spring").setLevel(Level.OFF);
 		return "login";
-	}
-        @RequestMapping(value = "/calendar", method = RequestMethod.GET)
-	public String calendar(ModelMap model) {                  
-		return "calendar";
 	}
         @RequestMapping(value = "/info", method = RequestMethod.GET)
 	public String info(ModelMap model, HttpServletRequest request) {
@@ -64,7 +60,7 @@ public class Prototipo1Controller {
             shift.connect();
             String live_key = shift.getCurrentShift().get(2).toUpperCase();
             if ( !(live_key.equals("-1")) && (key.toUpperCase().equals(live_key))){
-                return "prototipo10";
+                return "rastrosoft";
             }
             return "info";
 	}

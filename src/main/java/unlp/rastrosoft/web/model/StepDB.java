@@ -76,8 +76,6 @@ public class StepDB extends Database{
     
     public void removeStep(int id_step, int id_sequence){
         
-//        String sql = "UPDATE step " +
-//                      "SET state = -1 WHERE id = ?";
         String sqlGet = "SELECT number " +
                       "FROM step WHERE id = ? LIMIT 1";
         int number = 0;

@@ -24,7 +24,11 @@ public class connect_indi {
     public static indi_client connect(String telescopio, String ccd, String focuser){
         if (cliente == null){
             try {
-                cliente = new indi_client("localhost", 7624);
+                ConfigDB configDB = new ConfigDB();
+                configDB.connect();
+                String indi_server_location = configDB.getIndiServerLocation();
+                int indi_server_port = configDB.getIndiServerPort();
+                cliente = new indi_client(indi_server_location, indi_server_port);
                 Thread.sleep(500);
                 cliente.conectar(telescopio);
                 cliente.conectar(ccd);
@@ -50,7 +54,11 @@ public class connect_indi {
 //    }
     public static indi_client connect(String dispositivo){ 
         if (cliente == null || cliente.connected == false){
-            cliente = new indi_client("localhost", 7624);        
+            ConfigDB configDB = new ConfigDB();
+            configDB.connect();
+            String indi_server_location = configDB.getIndiServerLocation();
+            int indi_server_port = configDB.getIndiServerPort();
+            cliente = new indi_client(indi_server_location, indi_server_port);       
         }
         return cliente;
     }

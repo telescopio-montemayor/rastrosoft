@@ -200,13 +200,7 @@ public class Ccd extends Device {
         String currentUserName = "default";
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();            
-        }
-        //String path = "/home/ip300/NetBeansProjects/rastrosoft/src/main/webapp/captures";
-//        String path = "/home/ip300/webapp/captures";
-//        String source= path+"/"+currentUserName;
-//        String dest = path+"/"+currentUserName;
-//        this.setUploadDirectory(source);
-//        this.setLocalMode();        
+        }       
         File fits = null;
         int count=0;
         String newFilePath = this.getFilePath();
@@ -218,30 +212,11 @@ public class Ccd extends Device {
             }
         }
         olderFilePath = newFilePath;
-//            try {
-//                Thread.sleep(1500);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-            waitUntilFileIsAvailable(newFilePath);
-            
+        waitUntilFileIsAvailable(newFilePath);            
         fits = findFile(newFilePath);
         new Fits().fitsToJpg(source+"/", dest+"/", fits.getName());
-//            try {
-//                Thread.sleep(1500);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(Ccd.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-            waitUntilFileIsAvailable(source+"/"+fits.getName());
-            alertWhenFileIsAvailable(source+"/"+fits.getName()+".jpg");
-//        count=0;
-//        String newJpg = newFilePath+".jpg";
-//        while (findFile(newJpg)==null){
-//            count++;
-//            if (count>10000){  //block infinite loop
-//                return false;
-//            }
-//        }            
+        waitUntilFileIsAvailable(source+"/"+fits.getName());
+        alertWhenFileIsAvailable(source+"/"+fits.getName()+".jpg");           
         return true;
     }
     public static File findFile(String absolutePath){

@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import unlp.rastrosoft.web.model.ConfigDB;
 
 @WebServlet("/captures/*")
 public class FileServlet extends HttpServlet {
@@ -23,7 +24,10 @@ public class FileServlet extends HttpServlet {
         throws ServletException, IOException
     {
         String filename = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");
-        File file = new File("/home/ip300/webapp/captures", filename);
+        ConfigDB configDB = new ConfigDB();
+        configDB.connect();
+        String path = configDB.getPath();
+        File file = new File(path, filename);
         response.setHeader("Content-Type", getServletContext().getMimeType(filename));
         response.setHeader("Content-Length", String.valueOf(file.length()));
         response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");

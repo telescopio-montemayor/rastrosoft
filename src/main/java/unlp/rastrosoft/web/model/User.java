@@ -119,9 +119,11 @@ public class User {
         SendMailTLS email = new SendMailTLS();
         String to,subject,content;
         to = this.getMail();
-        String activationLink = "http://localhost:8080/rastrosoft/activate?hash=" + hashcode + "&mail=" + to;
-        subject = "Solicitud de registro en rastrosoft";
-        //content = "Bienvenido," + "\n\n Por favor haga <a href=\"http://www.google.com\">click aqui</a> para verificar su cuenta y poder acceder.";
+            ConfigDB configDB = new ConfigDB();
+            configDB.connect();
+            String host_www = configDB.getHostWww();
+        String activationLink = host_www + "/rastrosoft/activate?hash=" + hashcode + "&mail=" + to;
+        subject = "Solicitud de registro en rastrosoft";        
         content = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
                   "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
                   "<head>\n" +
@@ -193,7 +195,7 @@ public class User {
                   "\n" +
                   "  <style type=\"text/css\" media=\"screen\">\n" +
                   "      @media screen {\n" +
-                  "         /*Thanks Outlook 2013! http://goo.gl/XLxpyl*/\n" +
+                  "         /**/\n" +
                   "        td, h1, h2, h3 {\n" +
                   "          font-family: 'Droid Sans', 'Helvetica Neue', 'Arial', 'sans-serif' !important;\n" +
                   "        }\n" +

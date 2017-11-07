@@ -4,7 +4,10 @@ function beforeAjax (tipo){
             $("#setExposure").prop("disabled", "disabled");
             break;
         case 'executeSequence':
-            alert("Ha comenzado la secuencia con éxito!");
+            alert("Ha comenzado la secuencia satisfactoriamente!");
+            break;
+        case 'createAccount':
+            alert("Espere mientras se procesa su solicitud.");
             break;
         default:
             break;
@@ -157,7 +160,7 @@ function successAjax(data, tipo) {
                         var transmition = '<td><span tkey="private">Privada</span></td>', key = "-", link = "-";
                         if (c[4]!="-1"){
                             if(c[5]=="1"){
-                                transmition = '<td><span tkey="public">Pública</span></td>';
+                                transmition = '<td><span tkey="public">Publica</span></td>';
                                 key = c[4];
                                 link = '<a href="/rastrosoft/live?key='+key+'" tkey="link">link</a>';
                             }else{
@@ -969,7 +972,7 @@ function startTimer(duration) {
         
         if( parseInt(($("#timeleft").text()).substring(3, 5)) < 10 ){
             if ( new String($("#timeleft").text()).valueOf() == new String("00:09:59").valueOf() ){
-                notify('Tienes 10 minutos antes de que termine la sesión!', 'danger');
+                notify('Tienes 10 minutos antes de que termine el turno!', 'danger');
             }
             $("#timeleft").removeClass("label-success").addClass("label-danger");
             if( $("#timeleft").text() == "00:00:00" ){

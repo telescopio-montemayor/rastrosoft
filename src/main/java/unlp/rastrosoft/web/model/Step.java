@@ -158,13 +158,7 @@ public class Step {
 
             System.err.println("EJECUTANDO CAPTURA");
 
-    //        String path = "/home/ip300/webapp/captures";
-    //        String source= path+"/"+currentUserName;
-    //        String dest = path+"/"+currentUserName;
-    //        String time = this.getExposureTime();
-    //        
-    //        ccd.setExposure(time, path, source, dest);
-    //---->
+
             String time = this.getExposureTime();
             String  datetime_db, ra_db, dec_db, hBinning_db, vBinning_db, temperature_db, frameType_db, x_db, y_db,
                     width_db, height_db, focusPosition_db, exposureTime_db, filePath_db;
@@ -203,8 +197,6 @@ public class Step {
                 int id_capture = captureDB.insertCapture(capture);
                 captureDB.asociateCaptureToUser(idCurrentUser, id_capture);
 
-            
-    //<----
             synchronized(lock_key_exposure) {
                 try {
                         lock_key_exposure.wait();
