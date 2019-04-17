@@ -29,7 +29,7 @@ public class Database {
     public void connect (){
         if(this.dataSource == null ){
             dataSource = new MysqlDataSource();
-            dataSource.setUser("root");
+            dataSource.setUser("rastro");
             dataSource.setPassword("");
             dataSource.setServerName("localhost");
             dataSource.setPort(3306);
