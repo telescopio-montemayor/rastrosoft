@@ -4,6 +4,7 @@ import java.util.Locale;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
@@ -16,9 +17,11 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
  
-@EnableWebMvc
+
 @Configuration
+@EnableAutoConfiguration
 @ComponentScan({ "unlp.rastrosoft.web" })
+@EnableWebMvc
 public class SpringWebConfig extends WebMvcConfigurerAdapter {
  
 	@Override
@@ -57,4 +60,5 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
             interceptor.setParamName("locale");
             registry.addInterceptor(interceptor);
         }
+
 }
