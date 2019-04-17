@@ -8,7 +8,6 @@ package unlp.rastrosoft.web.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +29,6 @@ import unlp.rastrosoft.web.model.UserDB;
  * @author ip300
  */
 @RestController
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AjaxStep {
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/addStep", method=RequestMethod.POST)

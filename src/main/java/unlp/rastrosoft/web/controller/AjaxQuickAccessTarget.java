@@ -7,7 +7,6 @@ package unlp.rastrosoft.web.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +21,6 @@ import unlp.rastrosoft.web.model.QuickAccessTargetDB;
  * @author ip300
  */
 @RestController
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AjaxQuickAccessTarget {
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/getQuickAccessTargets", method=RequestMethod.POST)

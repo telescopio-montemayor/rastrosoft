@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +33,6 @@ import unlp.rastrosoft.web.model.UserDB;
  * @author ip300
  */
 @RestController
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AjaxSequence {
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/addSequence", method=RequestMethod.POST)

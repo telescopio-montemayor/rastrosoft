@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,7 +36,6 @@ import unlp.rastrosoft.web.model.UserDB;
  * @author ip300
  */
 @RestController
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AjaxUser  extends HttpServlet{
     @JsonView(Views.Public.class)
     @RequestMapping(value = "/createAccount", method=RequestMethod.POST)    

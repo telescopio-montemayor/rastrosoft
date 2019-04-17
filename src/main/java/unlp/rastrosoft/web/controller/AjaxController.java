@@ -32,7 +32,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -53,7 +52,6 @@ import unlp.rastrosoft.web.model.UserDB;
 import unlp.rastrosoft.websocket.DeviceSessionHandler;
 
 @RestController
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AjaxController  extends HttpServlet{
         
 	// @ResponseBody, not necessary, since class is annotated with @RestController
